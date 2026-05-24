@@ -1,0 +1,41 @@
+{
+  "_id": "IN/PRSLegislative/the-repealing-and-amending-bill-2025",
+  "_source": "IN/PRSLegislative",
+  "_type": "legislation",
+  "_fetched_at": "2026-05-09T19:22:18.042483+00:00",
+  "bill_slug": "the-repealing-and-amending-bill-2025",
+  "title": "The Repealing and Amending Bill, 2025",
+  "text": "The Repealing and Amending Bill, 2025 was introduced in Lok Sabha on December 15, 2025.\nRepealing of laws:\nThe Bill repeals 71 Acts.  The Statement of Objects and Reasons to the Bill notes that these Acts have ceased to be in force, are obsolete, or their retention as separate Acts is not necessary.  65 of these are Amendment Acts, whose changes have already been incorporated into the principal Acts.  Other Acts being repealed include the Indian Tramways Act, 1886, the Levy Sugar Price Equalisation Fund Act, 1976, and the Bharat Petroleum Corporation Limited (Determination of Conditions of Service of Employees) Act, 1988.\nAmendments to certain laws:\nThe Bill also amends four Acts.  It amends the General Clauses Act, 1897 and the Code of Civil Procedure, 1908 to update terminologies for registered posts. The Indian Succession Act, 1925 is being amended to remove the requirement to obtain validation of wills by Courts in certain cases.  The Bill also amends the Disaster Management Act, 2005 to rectify a   drafting error.\nDISCLAIMER: This document is being furnished to you for your information.  You may choose to reproduce or redistribute this report for non-commercial purposes in part or in full to any other person with due acknowledgement of PRS Legislative Research (“PRS”).  The opinions expressed herein are entirely those of the author(s).  PRS makes every effort to use reliable and comprehensive information, but PRS does not represent that the contents of the report are accurate or complete.  PRS is an independent, not-for-profit group.",
+  "date": "2025-12-15",
+  "url": "https://prsindia.org/billtrack/the-repealing-and-amending-bill-2025",
+  "ministry": "Law and Justice",
+  "house": "Lok Sabha",
+  "status": "Passed",
+  "status_timeline": [
+    {
+      "house": "Lok Sabha",
+      "date": "Dec 15, 2025",
+      "action": "Introduced"
+    },
+    {
+      "house": "Lok Sabha",
+      "date": "Dec 16, 2025",
+      "action": "Passed"
+    },
+    {
+      "house": "Rajya Sabha",
+      "date": "Dec 17, 2025",
+      "action": "Passed"
+    }
+  ],
+  "pdf_urls": [
+    {
+      "url": "https://prsindia.org/files/bills_acts/bills_parliament/2025/Repealing_And_Amending_Bill,2025.pdf",
+      "label": "Bill Text"
+    },
+    {
+      "url": "https://prsindia.org/files/bills_acts/bills_parliament/2025/The_Repealing_and_Amending_Act_2025.pdf",
+      "label": "The Repealing and Amending Act, 2025"
+    }
+  ]
+}

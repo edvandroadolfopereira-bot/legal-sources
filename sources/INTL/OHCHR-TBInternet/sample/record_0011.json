@@ -1,0 +1,44 @@
+{
+  "_id": "f9d2052b-edd7-4b23-a7b5-b5424740bb9b",
+  "_source": "INTL/OHCHR-TBInternet",
+  "_type": "doctrine",
+  "_fetched_at": "2026-05-11T04:56:26.199218+00:00",
+  "title": "CRPD/C/WSM/CO/1 — Concerns/Observations (CRPD)",
+  "text": "Accessibility (art. 9) 15.The Committee notes with concern: (a)The limited understanding of accessibility as an entitlement and a precondition for the enjoyment of rights, rather than as individual accommodation to be provided only upon request, and the limited resources to implement accessibility measures, including the reliance on cost-related arguments to explain the lack of accessible transportation; (b)The absence of comprehensive accessibility requirements, including for information and communications technology (ICT), and of effective measures to ensure compliance by businesses and service providers; (c)The persistent inaccessibility of the physical environment and transport systems, including public buildings, housing, health facilities, footpaths, public spaces and public transportation, and the weak enforcement of the National Building Code (2017), including the absence of mandatory retrofitting of existing infrastructure and the non-binding nature of accessibility audits; (d)The failure to systematically integrate accessibility as a mandatory and enforceable principle, following a universal design approach, in the development, procurement and regulation of goods, services, equipment and facilities.",
+  "date": "2026-04-08",
+  "url": "https://uhri.ohchr.org/en/search-human-rights-recommendations",
+  "symbol": "CRPD/C/WSM/CO/1",
+  "document_id": "74b4bb5f-8c22-4c05-af4c-bc430015734e",
+  "annotation_type": "Concerns/Observations",
+  "treaty_body": "CRPD",
+  "countries": [
+    "Samoa"
+  ],
+  "regions": [
+    "Asia-Pacific"
+  ],
+  "themes": [
+    "Business & Human Rights",
+    "Legal & institutional reform",
+    "Human rights education, trainings & awareness raising",
+    "National Human Rights Action Plans (or specific areas) / implementation plans",
+    "Persons with disabilities: accessibility, mobility",
+    "Human rights & the environment",
+    "Right to health",
+    "Data collection & research",
+    "Budget & resources (for human rights implementation)"
+  ],
+  "sdgs": [
+    "11 - SUSTAINABLE CITIES AND COMMUNITIES",
+    "3.8 - Achieve universal health coverage",
+    "17 - PARTNERSHIPS FOR THE GOALS",
+    "11.1 - Safe and affordable housing",
+    "17.18 - Enhance availability of reliable data"
+  ],
+  "affected_persons": [
+    "Persons with disabilities"
+  ],
+  "upr_cycle": null,
+  "upr_positions": [],
+  "upr_recommending_countries": []
+}

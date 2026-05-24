@@ -1,0 +1,52 @@
+fetch:
+  max_retries: 3
+  rate_limit: 2.0
+  timeout: 60
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: filing_no
+    required: false
+    type: string
+  - name: case_no
+    required: false
+    type: string
+  - name: case_type
+    required: false
+    type: string
+  - name: petitioner
+    required: false
+    type: string
+  - name: respondent
+    required: false
+    type: string
+  - name: bench
+    required: false
+    type: string
+  - name: location
+    required: false
+    type: string
+source:
+  auth: none
+  country: IN
+  data_types:
+  - case_law
+  description: >
+    Judgments from the National Company Law Appellate Tribunal (NCLAT), India.
+    2 benches (New Delhi, Chennai) handling appeals from NCLT under Companies
+    Act 2013 and IBC 2016. Covers Company Appeals, Competition Appeals,
+    Insolvency appeals, and more. Orders available as digital PDFs via the
+    display-board system at nclat.nic.in.
+  id: IN/NCLAT
+  name: National Company Law Appellate Tribunal
+  url: https://nclat.nic.in/
+license:
+  name: "Government Open Data"
+  url: "https://nclat.nic.in/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Indian government tribunal decisions are public records."

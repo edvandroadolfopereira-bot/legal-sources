@@ -53,8 +53,9 @@ from common.http_client import HttpClient
 
 from common.pdf_extract import extract_pdf_markdown
 
+PDF_SUPPORT = True  # handled by common.pdf_extract
 
-# PDF extraction
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
@@ -141,11 +142,12 @@ class MaltaGovernmentGazetteScraper(BaseScraper):
         return None
 
     def _download_and_extract_pdf(self, pdf_id: str) -> str:
-        """Extract text from PDF using centralized extractor."""
+        """Download PDF from legislation.mt and extract text."""
+        pdf_url = f"{BASE_URL}/getpdf/{pdf_id}"
         return extract_pdf_markdown(
             source="MT/GovernmentGazette",
-            source_id="",
-            pdf_bytes=pdf_id,
+            source_id=pdf_id,
+            pdf_url=pdf_url,
             table="legislation",
         ) or ""
 

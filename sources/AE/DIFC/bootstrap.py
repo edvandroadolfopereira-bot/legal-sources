@@ -53,8 +53,10 @@ ENTRY_RE = re.compile(
     re.DOTALL,
 )
 
-# Regex for pagination total
+# Regex for pagination total (old format: "of X results")
 TOTAL_RE = re.compile(r'of\s+(\d[\d,]*)\s+results', re.IGNORECASE)
+# Regex for last page link (new format: ccm_paging_p=415)
+LAST_PAGE_RE = re.compile(r'ccm_paging_p=(\d+)', re.IGNORECASE)
 
 # HTML tag stripper
 TAG_RE = re.compile(r'<[^>]+>')
@@ -181,12 +183,19 @@ class DIFCCourtsScraper(BaseScraper):
             })
         return entries
 
-    def _get_total_results(self, html: str) -> int:
-        """Extract total result count from listing page."""
+    def _get_total_pages(self, html: str) -> int:
+        """Extract total page count from listing page pagination links."""
+        # Try "of X results" format first
         match = TOTAL_RE.search(html)
         if match:
-            return int(match.group(1).replace(',', ''))
-        return 0
+            total = int(match.group(1).replace(',', ''))
+            return (total + 11) // 12
+
+        # Fallback: find highest ccm_paging_p value in page links
+        pages = [int(m.group(1)) for m in LAST_PAGE_RE.finditer(html)]
+        if pages:
+            return max(pages)
+        return 1
 
     def _fetch_full_text(self, url: str) -> str:
         """Fetch an individual judgment page and extract full text."""
@@ -232,22 +241,15 @@ class DIFCCourtsScraper(BaseScraper):
         """Yield all judgments from DIFC Courts."""
         logger.info("Fetching DIFC Courts judgments listing...")
 
-        # Get first page to determine total
+        # Get first page to determine total pages
         html = self._fetch_listing_page(1)
-        total = self._get_total_results(html)
-        if total == 0:
-            # Count entries on page as fallback
-            entries = self._parse_listing(html)
-            if not entries:
-                logger.error("No entries found on first page")
-                return
-            total = len(entries)
-            total_pages = 1
-        else:
-            total_pages = (total + 11) // 12  # 12 per page
-            entries = self._parse_listing(html)
+        total_pages = self._get_total_pages(html)
+        entries = self._parse_listing(html)
+        if not entries:
+            logger.error("No entries found on first page")
+            return
 
-        logger.info(f"Total results: {total}, pages: {total_pages}")
+        logger.info(f"Total pages: {total_pages}, entries on page 1: {len(entries)}")
 
         # Yield entries from first page
         for entry in entries:
@@ -316,10 +318,10 @@ class DIFCCourtsScraper(BaseScraper):
         print("Testing DIFC Courts Judgments...")
 
         html = self._fetch_listing_page(1)
-        total = self._get_total_results(html)
+        total_pages = self._get_total_pages(html)
         entries = self._parse_listing(html)
 
-        print(f"  Total results: {total}")
+        print(f"  Total pages: {total_pages}")
         print(f"  Entries on page 1: {len(entries)}")
 
         if entries:

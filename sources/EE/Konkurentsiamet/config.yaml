@@ -1,0 +1,48 @@
+source_id: EE/Konkurentsiamet
+country: EE
+name: Estonia Competition Authority (Konkurentsiamet) Decisions
+description: |
+  Merger decisions and competition supervision case decisions from the
+  Estonian Competition Authority (Konkurentsiamet). Includes merger
+  clearance decisions (since 2001) and competition enforcement decisions
+  (since 2004). Full-text PDFs with business secrets redacted.
+
+data_types:
+  - case_law
+
+url: https://www.konkurentsiamet.ee
+dataset_url: https://www.konkurentsiamet.ee/en/koondumiste-teated-ja-otsused
+
+auth:
+  type: none
+
+license:
+  name: "Public Domain (Government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Estonian government competition decisions"
+
+rate_limit:
+  requests_per_minute: 20
+  delay_seconds: 3
+
+schema:
+  key_fields:
+    - name: decision_number
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+  date_fields:
+    - name: date
+      type: date
+      required: false
+
+data_model:
+  update_strategy: append_only
+  dedup_key:
+    - decision_number

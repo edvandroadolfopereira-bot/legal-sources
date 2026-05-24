@@ -1,0 +1,49 @@
+source:
+  id: "BZ/NationalAssembly"
+  country: "BZ"
+  name: "Belize National Assembly Acts"
+  url: "https://www.nationalassembly.gov.bz/acts-of-parliament/"
+  description: |
+    Sessional Acts of Parliament from the Belize National Assembly (2015-2026).
+    Complements BZ/AGMLaws which covers consolidated laws and post-2020 acts.
+    ~340 acts as PDFs with extractable text.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.67
+  burst: 2
+
+api:
+  base_url: "https://www.nationalassembly.gov.bz"
+  endpoints:
+    year_page: "/acts-of-parliament/acts-parliament-{year}/"
+  format: "html"
+  method: "GET"
+  notes: |
+    Each year has a page listing acts with PDF download links.
+    PDFs stored at /wp-content/uploads/{year}/{month}/{filename}.pdf.
+    Parse year pages for <a href="...pdf"> links with "Act No." in title.
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - text
+    - date
+    - url
+    - act_number
+    - year
+
+license:
+  name: "Public Domain (Government of Belize)"
+  url: "https://www.nationalassembly.gov.bz/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government legislation published for public access"

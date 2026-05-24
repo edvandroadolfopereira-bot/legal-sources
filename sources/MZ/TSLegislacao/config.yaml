@@ -1,0 +1,85 @@
+source:
+  id: "MZ/TSLegislacao"
+  country: "MZ"
+  name: "Mozambique Supreme Court Legislation Portal"
+  url: "https://www.ts.gov.mz/legislacao/"
+  description: |
+    Legislation published by the Tribunal Supremo de Moçambique. ~112 PDFs
+    covering constitutions, laws, decrees, resolutions, directives, and
+    dispatches (1975-2026). Content in Portuguese. Fetched from a WordPress
+    page embedding PDF links, with full text extracted via pdfplumber.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "rest"
+  base_url: "https://www.ts.gov.mz"
+  endpoints:
+    page: "/wp-json/wp/v2/pages/95"
+
+data_model:
+  type: "legislation"
+  source_nature: "consolidated"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: 11
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier (MZ/TSLegislacao/{hash})"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Legislation title from link text"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Date extracted from title or upload path (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+  secondary_fields:
+    - name: "url"
+      description: "Direct link to PDF"
+    - name: "doc_type"
+      description: "Document type (constitution, law, decree, etc.)"
+    - name: "doc_number"
+      description: "Law/decree number extracted from title"
+  probably_ignorable: []
+
+license:
+  id: "pd-gov"
+  name: "Public Domain (Government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official legislation is public domain under Mozambican law"
+
+notes: |
+  - WordPress page ID 95 contains all legislation links
+  - ~112 unique PDF links after deduplication
+  - Full text extracted via pdfplumber
+  - Portuguese language content
+  - Covers constitutions (1975-2018), laws, decrees, resolutions, directives
+  - Same domain as MZ/CourtSupremo (case_law) — complementary source

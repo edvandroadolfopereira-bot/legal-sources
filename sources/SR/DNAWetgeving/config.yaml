@@ -1,0 +1,82 @@
+source:
+  id: "SR/DNAWetgeving"
+  country: "SR"
+  name: "Suriname Parliament Legislation (DNA)"
+  url: "https://www.dna.sr/wetgeving/"
+  description: |
+    Suriname laws from De Nationale Assemblee (DNA). ~320 laws total.
+    Pre-2005 consolidated texts (~186) have text-extractable PDFs.
+    Post-2005 Staatsblad PDFs are mostly scanned images.
+    Dutch language.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.67
+  burst: 1
+  max_workers: 1
+
+api:
+  type: "scrape"
+  base_url: "https://www.dna.sr"
+  endpoints:
+    pre_2005_index: "/wetgeving/surinaamse-wetten/geldende-teksten-t-m-2005/"
+    post_2005_index: "/wetgeving/surinaamse-wetten/wetten-na-2005/"
+
+data_model:
+  type: "legislation"
+  source_nature: "consolidated"
+  primary_key: "law_id"
+  update_strategy: "append_only"
+  versioning: "none"
+  dedup_key:
+    - "law_id"
+
+schema:
+  total_fields: 9
+  key_fields:
+    - name: "_id"
+      description: "Law ID derived from URL slug (e.g., SR-DNA-arbeidswet-1963)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Law title in Dutch"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Year of law (ISO 8601 format)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+  secondary_fields:
+    - name: "pdf_url"
+      description: "Direct URL to PDF file"
+    - name: "section"
+      description: "Section on DNA website (pre-2005 or post-2005)"
+  probably_ignorable: []
+
+license:
+  name: "Public Domain (Government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Suriname government legislation is public domain."
+
+notes: |
+  - ~186 pre-2005 consolidated texts with extractable PDF text
+  - ~137 post-2005 laws (mostly scanned PDFs, only text-extractable ones included)
+  - Dutch language
+  - PDF download + pypdf text extraction

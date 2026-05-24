@@ -1,0 +1,55 @@
+source:
+  id: NI/BCN-Regulations
+  name: Banco Central de Nicaragua — Regulaciones
+  country: NI
+  url: https://www.bcn.gob.ni/
+  data_types:
+    - doctrine
+  description: |
+    Regulatory documents from Banco Central de Nicaragua — norms, resolutions,
+    regulations, and financial laws. ~50 documents covering banking supervision,
+    monetary policy, payment systems, and financial sector regulation.
+    Full text extracted from PDF downloads. Content in Spanish.
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+api:
+  type: pdf_download
+  base_url: https://www.bcn.gob.ni
+  format: pdf
+  discovery: wayback_cdx
+  endpoints:
+    normas_disposiciones: /sites/default/files/normas_disposiciones/
+    marco_juridico_financiero: /sites/default/files/marco_juridico_financiero/
+
+schema:
+  key_fields:
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: doc_type
+      type: string
+      required: false
+    - name: pdf_url
+      type: string
+      required: true
+
+license:
+  name: Public Domain (Government of Nicaragua)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official central bank regulations published for public access on bcn.gob.ni.

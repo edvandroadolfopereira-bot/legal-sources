@@ -80,6 +80,8 @@ class VeroGuidance(BaseScraper):
     SOURCE_ID = "FI/Vero-Guidance"
 
     def __init__(self):
+        source_dir = Path(__file__).parent
+        super().__init__(source_dir)
         self.http = HttpClient(base_url="https://www.vero.fi")
 
     def normalize(self, raw: Dict[str, Any]) -> Dict[str, Any]:

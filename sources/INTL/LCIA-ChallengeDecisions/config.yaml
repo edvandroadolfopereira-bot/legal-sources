@@ -1,0 +1,74 @@
+# ===================================================================
+# INTL/LCIA-ChallengeDecisions — LCIA Arbitrator Challenge Decisions
+# ===================================================================
+# Publicly available arbitrator challenge decisions from the London
+# Court of International Arbitration (LCIA). 56 decisions (2010-2022).
+# ===================================================================
+
+source:
+  id: "INTL/LCIA-ChallengeDecisions"
+  country: "INTL"
+  name: "LCIA Arbitrator Challenge Decision Database"
+  url: "https://www.lcia.org/challenge-decision-database.aspx"
+  description: |
+    The only publicly available LCIA decisions — arbitrator challenge
+    decisions rendered under LCIA and UNCITRAL rules. Regular awards
+    remain confidential. 56 decisions from Oct 2010 to Mar 2022.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.7
+  burst: 2
+
+api:
+  type: "html_scraper"
+  base_url: "https://www.lcia.org"
+  listing_url: "/challenge-decision-database.aspx"
+
+data_model:
+  type: "case_law"
+  primary_key: "media_id"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "title"
+      description: "Decision title with reference and date"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the challenge decision"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Date of decision"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "case_reference"
+      description: "LCIA case reference number"
+      type: "string"
+      role: "identifier"
+      required: true
+    - name: "outcome"
+      description: "Decision outcome (Rejected, Upheld, Partially Upheld)"
+      type: "string"
+      role: "content"
+      required: false
+
+license:
+  name: "Custom Terms — Free Access"
+  url: "https://www.lcia.org/challenge-decision-database.aspx"
+  commercial_use: false
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "LCIA publishes these decisions freely but retains copyright. Commercial redistribution unclear."

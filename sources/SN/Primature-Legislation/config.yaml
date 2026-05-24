@@ -1,0 +1,70 @@
+# ===================================================================
+# SN/Primature-Legislation — Senegal Prime Minister Office Laws & Regulations
+# ===================================================================
+# Laws, codes, decrees, mining conventions, and treaties from the
+# official Senegalese government portal (primature.sn).
+# ===================================================================
+
+source:
+  id: "SN/Primature-Legislation"
+  country: "SN"
+  name: "Senegal Prime Minister Office — Laws and Regulations"
+  url: "https://primature.sn/publications/lois-et-reglements"
+  description: |
+    Official laws and regulations published by the Senegalese Prime Minister's
+    office. Categories: Codes, Laws & Decrees, Constitution, Mining Conventions,
+    and International Treaties. Content in French. Mix of HTML body text and
+    downloadable PDFs.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "html_scraper"
+  base_url: "https://primature.sn"
+  listing_url: "/publications/lois-et-reglements/{category}?page={page}"
+
+data_model:
+  type: "legislation"
+  primary_key: "slug"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 11
+  key_fields:
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the law/regulation"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "category"
+      description: "Document category (codes, lois-et-decrets, etc.)"
+      type: "string"
+      role: "content"
+      required: true
+
+license:
+  name: "Public Domain (Government)"
+  url: "https://primature.sn/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government legislation is public domain under Senegalese law."

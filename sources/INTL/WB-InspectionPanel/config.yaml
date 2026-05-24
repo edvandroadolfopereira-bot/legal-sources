@@ -1,0 +1,88 @@
+# ===================================================================
+# INTL/WB-InspectionPanel -- World Bank Inspection Panel Reports
+# ===================================================================
+# ~420 documents: investigation reports, notices of registration,
+# and eligibility reports. Full text via World Bank Documents API.
+# ===================================================================
+
+source:
+  id: "INTL/WB-InspectionPanel"
+  country: "INTL"
+  name: "World Bank Inspection Panel — Cases & Reports"
+  url: "https://www.inspectionpanel.org/panel-cases"
+  description: |
+    Decisions, investigation reports, eligibility reports, and notices of
+    registration from the World Bank Inspection Panel — the independent
+    complaints mechanism for communities affected by World Bank-funded
+    projects. ~186 cases spanning 1994–present, yielding ~420 formal
+    documents. Data retrieved via the World Bank Documents & Reports API
+    (search.worldbank.org) which provides structured metadata and full
+    text extraction.
+  data_types:
+    - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 2
+  burst: 5
+
+api:
+  type: "rest_json"
+  base_url: "https://search.worldbank.org/api/v3/wds"
+  doc_types:
+    - "Inspection Panel Report and Recommendation"
+    - "Inspection Panel Notice of Registration"
+    - "Investigation Report"
+
+data_model:
+  type: "case_law"
+  primary_key: "wb_doc_id"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the document"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Document date (ISO 8601)"
+      type: "string"
+      role: "temporal_key"
+      required: true
+    - name: "document_type"
+      description: "Type (investigation report, notice of registration, etc.)"
+      type: "string"
+      role: "classifier"
+      required: true
+    - name: "country"
+      description: "Country or countries referenced"
+      type: "string"
+      role: "metadata"
+      required: false
+
+license:
+  name: "World Bank Terms of Use"
+  url: "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "World Bank Open Access Policy — free access for any purpose with attribution."
+
+notes: |
+  - Uses World Bank Documents & Reports API (search.worldbank.org)
+  - Three document types: Investigation Reports, Reports & Recommendations,
+    Notices of Registration
+  - Full text available via txturl endpoint (plain text extraction of PDFs)
+  - ~420 documents total; grows slowly (~10-20/year)
+  - API is public, no authentication required

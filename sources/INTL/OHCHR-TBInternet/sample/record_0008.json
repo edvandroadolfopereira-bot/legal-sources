@@ -1,0 +1,50 @@
+{
+  "_id": "2b360243-96c5-43e6-a382-babc3bb21b6d",
+  "_source": "INTL/OHCHR-TBInternet",
+  "_type": "doctrine",
+  "_fetched_at": "2026-05-11T04:56:22.890277+00:00",
+  "title": "CRPD/C/WSM/CO/1 — Recommendations (CRPD)",
+  "text": "Children with disabilities (art. 7) 12. The Committee recommends that the State Party, in close consultation with and with the active involvement of persons with disabilities, through their representative organizations: (a) Review and align all child-related legislation with the Convention and ensure that disability is mainstreamed into child-related policies; (b) Adopt comprehensive measures, such as awareness - raising measures and campaigns, to combat the stigma tization of and harmful practices against children with disabilities, prohibit all forms of violent discipline and establish accessible and child ‑ friendly mechanisms for early identification, reporting and access to justice; (c) Establish age-appropriate mechanisms for the meaningful participation of children with disabilities, including those in rural areas and outer islands , in all decisions affecting them and provide accessible information and support to enable their views to be freely and securely expressed.",
+  "date": "2026-04-08",
+  "url": "https://uhri.ohchr.org/en/search-human-rights-recommendations",
+  "symbol": "CRPD/C/WSM/CO/1",
+  "document_id": "74b4bb5f-8c22-4c05-af4c-bc430015734e",
+  "annotation_type": "Recommendations",
+  "treaty_body": "CRPD",
+  "countries": [
+    "Samoa"
+  ],
+  "regions": [
+    "Asia-Pacific"
+  ],
+  "themes": [
+    "Legal & institutional reform",
+    "Cooperation & consultation with civil society",
+    "Human rights education, trainings & awareness raising",
+    "Persons with disabilities: definition, general principles",
+    "National Human Rights Action Plans (or specific areas) / implementation plans",
+    "Children: definition; general principles; protection",
+    "Constitutional & legislative framework",
+    "Ratification of & accession to international instruments",
+    "Data collection & research"
+  ],
+  "sdgs": [
+    "16.7 - Responsive, inclusive and representative decision-making",
+    "16 - PEACE, JUSTICE AND STRONG INSTITUTIONS",
+    "17 - PARTNERSHIPS FOR THE GOALS",
+    "5 - GENDER EQUALITY",
+    "16.2 - Protect children from abuse, exploitation, trafficking and violence",
+    "5.3 - Eliminate forced marriages and genital mutilation",
+    "16.10 - Ensure public access to information and protect fundamental freedoms",
+    "17.18 - Enhance availability of reliable data",
+    "16.3 - Promote the rule of law and access to justice for all"
+  ],
+  "affected_persons": [
+    "Children",
+    "Persons living in rural areas",
+    "Persons with disabilities"
+  ],
+  "upr_cycle": null,
+  "upr_positions": [],
+  "upr_recommending_countries": []
+}

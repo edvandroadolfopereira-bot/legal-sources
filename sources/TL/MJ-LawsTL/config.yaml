@@ -1,0 +1,90 @@
+# ===================================================================
+# TL/MJ-LawsTL -- Timor-Leste Laws (English Translations)
+# ===================================================================
+# English translations of Timor-Leste legislation by UNMIT Office of
+# Legal Affairs. Covers RDTL laws, decree-laws, government decrees,
+# ministerial orders, resolutions, instructions, presidential decrees,
+# public regulations, and the Constitution. Also includes UNTAET
+# regulations, directives, executive orders, and notifications.
+# ===================================================================
+
+source:
+  id: "TL/MJ-LawsTL"
+  country: "TL"
+  name: "Timor-Leste Laws (English Translations)"
+  url: "https://mj.gov.tl/jornal/lawsTL/index-e.htm"
+  description: |
+    English translations of Timor-Leste legislation produced by UNMIT
+    Office of Legal Affairs. Static HTML index with ~700 PDFs organized
+    by category. Covers RDTL legislation (2002-2012) and UNTAET
+    legislation (1999-2002). Complements TL/JornalRepublica (Portuguese).
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+api:
+  type: "html_scrape"
+  base_url: "https://mj.gov.tl/jornal/lawsTL/"
+  response_format: "html"
+
+data_model:
+  type: "legislation"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: 11
+  key_fields:
+    - name: "_id"
+      description: "Unique document identifier"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title with number and description"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from the PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Promulgation or publication date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "url"
+      description: "URL to the original PDF"
+      type: "string"
+      role: "reference"
+      required: true
+  secondary_fields:
+    - name: "doc_number"
+      description: "Official document number (e.g., 1/2002)"
+    - name: "category"
+      description: "Legislative category (e.g., Parliamentary Laws, Decree-Laws)"
+    - name: "section"
+      description: "Top-level section (RDTL or UNTAET)"
+    - name: "language"
+      description: "Document language (en)"
+
+license:
+  id: "pd-gov"
+  name: "Public Domain (Government)"
+  url: "https://mj.gov.tl/jornal/lawsTL/index-e.htm"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "UN-produced translations of official government legislation, open access."

@@ -1,0 +1,85 @@
+# ===================================================================
+# GN/BCRG-Regulations -- Central Bank of Guinea Regulatory Texts
+# ===================================================================
+# Published by the Banque Centrale de la République de Guinée (BCRG).
+# Banking laws, instructions, insurance codes, microfinance regulations,
+# AML/compliance texts, payment systems regulations. French language.
+# ===================================================================
+
+source:
+  id: "GN/BCRG-Regulations"
+  country: "GN"
+  name: "Central Bank of Guinea — Regulatory Texts (BCRG)"
+  url: "https://www.bcrg-guinee.org/"
+  description: |
+    Regulatory texts from Guinea's central bank (BCRG) covering banking
+    law, insurance code, microfinance regulations, AML/compliance,
+    monetary policy instructions, and payment systems. PDFs with text
+    layers hosted on WordPress site.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+api:
+  type: "html_scrape"
+  base_url: "https://www.bcrg-guinee.org"
+  endpoints:
+    sitemap: "/wp-sitemap-posts-page-1.xml"
+  response_format: "html+pdf"
+
+data_model:
+  type: "legislation"
+  primary_key: "document_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "document_id"
+
+schema:
+  total_fields: 7
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier (GN-BCRG-{slug})"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title from page heading"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date (ISO 8601) if available"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "URL of the page containing the regulation"
+      type: "string"
+      role: "reference"
+      required: true
+  secondary_fields:
+    - name: "pdf_url"
+      description: "Direct URL to the source PDF"
+    - name: "category"
+      description: "Regulatory category (banking, insurance, AML, etc.)"
+
+license:
+  name: "Public Domain (Government of Guinea)"
+  url: "https://www.bcrg-guinee.org/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official central bank regulatory texts. No explicit license; government publications."

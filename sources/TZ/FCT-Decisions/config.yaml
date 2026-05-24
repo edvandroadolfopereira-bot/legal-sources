@@ -1,0 +1,23 @@
+source_id: TZ/FCT-Decisions
+name: "Fair Competition Tribunal — Case Digest"
+country: TZ
+url: https://www.fct.or.tz/
+data_types:
+  - case_law
+
+schema:
+  key_fields:
+    - _id
+    - appeal_number
+    - title
+    - date
+    - text
+
+license:
+  name: "Open Government Data (Tanzania)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official tribunal publication, Tanzanian government open data"

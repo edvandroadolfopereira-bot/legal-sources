@@ -1,0 +1,36 @@
+source:
+  id: LY/CBL-Regulations
+  country: LY
+  name: "Central Bank of Libya — Laws, Circulars & Decisions"
+  url: https://cbl.gov.ly/en/laws/
+  data_types:
+    - legislation
+  language: ar
+license:
+  name: "Public domain (government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Libyan banking legislation and regulatory circulars published by Central Bank of Libya."
+fetcher:
+  type: pdf_download
+  rate_limit: 2.0
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: title
+      required: true
+      type: string
+  date_fields:
+    - _fetched_at
+  text_fields:
+    - text
+    - title
+notes: >
+  Banking laws, financial laws, commercial laws, and regulatory circulars
+  from cbl.gov.ly. WordPress site with PDFs under /en/wp-content/uploads/.
+  Publications (circulars) paginated ~10 pages, laws on single page.

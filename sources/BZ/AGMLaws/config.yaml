@@ -1,0 +1,51 @@
+source:
+  id: "BZ/AGMLaws"
+  country: "BZ"
+  name: "Belize Consolidated Laws (Attorney General's Ministry)"
+  url: "https://www.agm.gov.bz/laws/"
+  description: |
+    Official consolidated laws of Belize from the Attorney General's Ministry.
+    Covers 18 volumes of substantive laws (R.E. 2020), subsidiary laws,
+    annual Acts (2021-2026), and Statutory Instruments (2021-2026).
+    ~1700 legal instruments in English.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.67
+  burst: 2
+
+api:
+  base_url: "https://www.agm.gov.bz"
+  endpoints:
+    laws_list: "/api-laws/"
+  format: "json"
+  method: "POST"
+  notes: |
+    POST /api-laws/ with action (1000=substantive, 1001=others) and volume parameter.
+    Returns JSON with rc:"1" and data array containing HTML links to PDFs.
+    PDFs are stored at /uploads/laws/ and contain full law text.
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - text
+    - date
+    - url
+    - chapter
+    - doc_type
+    - category
+
+license:
+  name: "Public Domain (Government of Belize)"
+  url: "https://www.agm.gov.bz/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government legislation published for public access"

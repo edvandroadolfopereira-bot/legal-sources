@@ -1,0 +1,15 @@
+{
+  "_id": "finfsa_2014_european-banking-authority-eba-issues-revised-list-of-its-validation-rules",
+  "_source": "FI/Finanssivalvonta",
+  "_type": "doctrine",
+  "_fetched_at": "2026-05-15T07:31:20.935821+00:00",
+  "title": "European Banking Authority (EBA) issues revised list of ITS validation rules",
+  "text": "Supervision release 22 December 2014\n-\n90/2014\nEuropean Banking Authority (EBA) issues revised list of ITS validation rules\nThe European Banking Authority (EBA) on 18 December 2014 posted on its website a revised list of ITS validation rules.\nSome of the validation rules have been given the status \"Blocking\". Violation of these rules prevents the submission of reports to EBA starting from the reporting period Q1 2015.\nEBA also deactivated some of the validation rules on 18 December 2014.  The revisions will be taken into account in the definitions of the COREP reporting application to be published in January 2015.\nAs regards FINREP reporting, the formulas will be removed from the reporting application as of the reporting period Q1 2015.   As a result, error messages triggered by the following formulas for the reporting period Q4 2014 can be disregarded: v1221_m, v1251_m, v1930_h, v3898_s, v3957_s, v3959_s, v3960_s, v3961_s, v3968_s.\nIf a reporting institution considers that a formula marked as \"Blocking\" is incorrect, i.e., that it should not prevent the submission of reports to EBA, the reporting institution can submit a question regarding the formula in the\nQ/A section\nof the EBA website.\nThe press release and list of validation rules are available on the\nEBA website\n.\nFor further information, please contact\nSinikka Taskinen, Analyst, tel.\n+358 10 831 5239 0r\nsinikka.taskinen(at)finanssivalvonta.fi\nRiku Thilman, Risk Specialist, tel.\n+358 10 831 5539 or\nriku.thilman(at)finanssivalvonta.fi\nShare this content",
+  "date": "2014-12-22",
+  "url": "https://www.finanssivalvonta.fi/en/publications-and-press-releases/supervision-releases/2014/european-banking-authority-eba-issues-revised-list-of-its-validation-rules",
+  "slug": "european-banking-authority-eba-issues-revised-list-of-its-validation-rules",
+  "year": "2014",
+  "category": "supervision_release",
+  "issuing_body": "Finanssivalvonta (Finnish Financial Supervisory Authority / FIN-FSA)",
+  "language": "en"
+}

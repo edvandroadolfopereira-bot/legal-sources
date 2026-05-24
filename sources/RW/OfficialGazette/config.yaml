@@ -1,0 +1,81 @@
+source:
+  id: "RW/OfficialGazette"
+  country: "RW"
+  name: "Rwanda Official Gazette (Igazeti ya Leta) via RwandaLII"
+  url: "https://rwandalii.org/legislation/"
+  description: |
+    Rwanda legislation via RwandaLII (Laws.Africa platform). ~500 laws including
+    Acts, Ministerial Orders, Presidential Orders, Decrees, Regulations, and
+    Guidelines. Full text in English from Akoma Ntoso (AKN) markup.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+  max_workers: 1
+
+api:
+  type: "html_scrape"
+  base_url: "https://rwandalii.org"
+  endpoints:
+    list: "/legislation/?page={page}"
+    detail: "/akn/rw/{path}"
+
+data_model:
+  type: "legislation"
+  source_nature: "consolidated"
+  primary_key: "frbr_uri"
+  update_strategy: "append_only"
+  versioning: "none"
+  dedup_key:
+    - "frbr_uri"
+
+schema:
+  total_fields: 9
+  key_fields:
+    - name: "_id"
+      description: "FRBR URI (e.g., /akn/rw/act/law/1997/15)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Law title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the law from AKN body markup"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication/enactment date in ISO 8601 format"
+      type: "date"
+      role: "temporal_key"
+      required: true
+  secondary_fields:
+    - name: "law_type"
+      description: "Type of law (law, mo, reg, decree, etc.)"
+    - name: "nature"
+      description: "Nature of the instrument"
+  probably_ignorable: []
+
+license:
+  name: "CC BY-NC 4.0"
+  url: "https://creativecommons.org/licenses/by-nc/4.0/"
+  commercial_use: false
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "RwandaLII / Laws.Africa content licensed under CC BY-NC 4.0."
+
+notes: |
+  - ~500 laws from RwandaLII (Laws.Africa platform)
+  - English language, Akoma Ntoso markup
+  - Covers laws, ministerial orders, presidential orders, decrees, regulations
+  - HTML scraping of AKN markup pages, listing via pagination

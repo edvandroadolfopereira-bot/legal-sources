@@ -125,11 +125,12 @@ class JDIHNScraper(BaseScraper):
         return self._api_get("/api/search", params=params)
 
     def _download_pdf_text(self, id_dokumen: int, id_anggota: int) -> str:
-        """Extract text from PDF using centralized extractor."""
+        """Download PDF from JDIHN and extract text."""
+        pdf_url = f"{BASE_URL}/pencarian/download?id_dokumen={id_dokumen}&id_anggota={id_anggota}"
         return extract_pdf_markdown(
             source="ID/JDIHN",
-            source_id="",
-            pdf_bytes=id_dokumen,
+            source_id=str(id_dokumen),
+            pdf_url=pdf_url,
             table="legislation",
         ) or ""
 

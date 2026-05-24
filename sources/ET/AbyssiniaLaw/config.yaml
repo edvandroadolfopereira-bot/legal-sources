@@ -1,0 +1,93 @@
+# ===================================================================
+# ET/AbyssiniaLaw -- Abyssinia Law Ethiopian Legal Information Portal
+# ===================================================================
+# Downloadable Ethiopian legal documents: cassation decision volumes,
+# federal & regional constitutions, proclamations, codes with
+# commentaries. PDFs with extractable Amharic/English text.
+# ===================================================================
+
+source:
+  id: "ET/AbyssiniaLaw"
+  country: "ET"
+  name: "Abyssinia Law — Ethiopian Legal Information Portal"
+  url: "https://www.abyssinialaw.com"
+  description: |
+    Comprehensive Ethiopian legal portal providing downloadable PDFs of
+    Federal Supreme Court cassation decision volumes (1-28), federal and
+    regional state constitutions, proclamations, and legal codes with
+    commentaries. Content in Amharic and English. Independent portal
+    maintained by Liku Worku Law Office.
+
+data_types:
+  - case_law
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "scraping"
+  base_url: "https://www.abyssinialaw.com"
+  endpoints:
+    decisions: "/decisions/federal-supreme-court-cassation-decisions"
+    constitutions: "/laws/constitutions"
+    latest_laws: "/online-resources/codes-commentaries-and-explanatory-notes/latest-laws"
+  response_format: "html"
+
+data_model:
+  type: "mixed"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: 9
+  key_fields:
+    - name: "_id"
+      description: "Unique document identifier"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "url"
+      description: "Download URL on abyssinialaw.com"
+      type: "string"
+      role: "reference"
+      required: true
+  secondary_fields:
+    - name: "category"
+      description: "Document category (decisions, constitutions, laws)"
+    - name: "section"
+      description: "Site section path"
+    - name: "pages"
+      description: "Number of pages in the PDF"
+
+license:
+  id: "custom-terms"
+  name: "Abyssinia Law Terms of Use"
+  url: "https://www.abyssinialaw.com/about-us"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Independent legal portal; government legal documents are public domain in Ethiopia"
+
+notes: |
+  PDFs contain extractable text (confirmed for cassation volumes in Amharic).
+  Cassation volumes partially overlap with ET/CassationDecisions (lawethiopia.com).
+  Constitutions section includes federal + 10 regional state constitutions.
+  Joomla CMS with edocman document management. Pagination by 20.

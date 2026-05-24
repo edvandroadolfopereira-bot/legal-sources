@@ -1,0 +1,22 @@
+source_id: ZW/ZIMRA-Rulings
+name: "Zimbabwe Revenue Authority — Tax Guidance & Rulings"
+country: ZW
+url: https://www.zimra.co.zw/
+data_types:
+  - doctrine
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - date
+    - text
+
+license:
+  name: "Open Government Data (Zimbabwe)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official tax guidance published by Zimbabwe Revenue Authority"

@@ -1,0 +1,84 @@
+# ===================================================================
+# NO/Finanstilsynet -- Norwegian Financial Supervisory Authority
+# ===================================================================
+# Regulatory doctrine: circulars, supervision reports, formal letters.
+# ~1,400 documents via sitemap + HTML scraping + PDF extraction.
+# Norwegian language. NLOD 2.0 license.
+# ===================================================================
+
+source:
+  id: "NO/Finanstilsynet"
+  country: "NO"
+  name: "Norwegian Financial Supervisory Authority (Finanstilsynet)"
+  url: "https://www.finanstilsynet.no"
+  description: |
+    Finanstilsynet supervises banks, insurance companies, securities firms,
+    auditors, and other financial institutions in Norway. This source collects
+    regulatory doctrine: circulars/guidelines (rundskriv/veiledninger),
+    supervision reports and decisions (tilsynsrapporter og vedtak), and
+    formal letters (brev). ~85 circulars, ~1,111 supervision reports,
+    ~221 formal letters. Full text via inline HTML or PDF extraction.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.67
+  burst: 1
+  notes: "1.5-second delay between requests."
+
+api:
+  type: "sitemap+scraping"
+  base_url: "https://www.finanstilsynet.no"
+  endpoints:
+    sitemap: "/sitemap.xml"
+    rundskriv: "/nyhetsarkiv/rundskriv/{year}/{slug}/"
+    tilsynsrapporter: "/nyhetsarkiv/tilsynsrapporter/{year}/{slug}/"
+    brev: "/nyhetsarkiv/brev/{year}/{slug}/"
+  response_format: "html+pdf"
+
+schema:
+  total_fields: 9
+  key_fields:
+    - name: "_id"
+      description: "MD5 hash of URL (NO-FT-prefix)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text (inline HTML or PDF extraction)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "url"
+      description: "URL to document page"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "category"
+      description: "Document category: rundskriv, tilsynsrapporter, or brev"
+      type: "string"
+      role: "classification"
+      required: true
+
+license:
+  name: "NLOD 2.0"
+  url: "https://data.norge.no/nlod/en/2.0"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Norwegian government open data."

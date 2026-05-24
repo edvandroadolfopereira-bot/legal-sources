@@ -1,0 +1,41 @@
+{
+  "_id": "IN/PRSLegislative/the-sustainable-harnessing-and-advancementof-nuclear-energy-for-transforming-india-bill-2025",
+  "_source": "IN/PRSLegislative",
+  "_type": "legislation",
+  "_fetched_at": "2026-05-09T19:22:20.241312+00:00",
+  "bill_slug": "the-sustainable-harnessing-and-advancementof-nuclear-energy-for-transforming-india-bill-2025",
+  "title": "The Sustainable Harnessing and Advancement of Nuclear Energy for Transforming India Bill, 2025",
+  "text": "The Sustainable Harnessing and Advancement of Nuclear Energy for Transforming India Bill, 2025 was introduced in Lok Sabha on December 15, 2025.  The Bill replaces the Atomic Energy Act, 1962 and the Civil Liability for Nuclear Damage Act, 2010.  The 1962 Act provides for the development and use of atomic energy, and the 2010 Act provides a framework for assigning liability and compensation in case of a nuclear incident.\nLicence to non-government entities:\nThe 1962 Act empowers the central government to grant licences for: (i) working of mines of atomic minerals, and (ii) production, use, or trade of such substances or related equipment.  The licence for these activities may be granted only to a central government entity or government companies.   For specified activities, the Bill empowers the central government to also grant licences to: (i) any other company, except a company incorporated outside India, (ii) joint ventures between government entities and private companies and (iii) any other person expressly permitted by the central government.  These activities include: (i) building, owning, or operating a nuclear plant or reactor and (ii) fabrication, transport, trade or storage of nuclear fuel.  Further, any activity involving radiation exposure will require a safety authorisation from the Atomic Energy Regulatory Board.\nLiability for nuclear damage:\nUnder the 2010 Act, the operator of a nuclear installation is liable for any damage caused by a nuclear incident as per a no-fault principle.  This means that the operator is liable to compensate victims regardless of any negligence or wrongdoing.  The operators must maintain an insurance to cover liabilities.  The operator’s liability is subject to a maximum amount and the central government bears any excess liability.  Liability does not apply in specified cases such as a natural disaster.  The Act also provides for appointment of a Commissioner or a Commission to adjudicate claims.  The Bill retains these provisions.  The 2010 Act specifies a maximum liability of Rs 1,500 crore for a nuclear reactor with thermal power capacity of 10 megawatt or above.  The Bill specifies a tiered structure, with liability limit ranging from Rs 100 crore to Rs 3,000 crore based on power capacity.\nOperator’s right of recourse:\nThe 2010 Act also gives operators a legal right to recover some or all of the compensation paid.  This right could be exercised: (i) when such rights are provided in a contract, (ii) where the incident arises due to the supply of defective equipment or materials, and (iii) when the incident is caused by a deliberate act with the intent to cause damage.  The Bill removes the right to recourse on the ground of supply of defective equipment or materials.\nTerritorial jurisdiction for claims:\nUnder the 2010 Act, compensation may be claimed for damages within India’s territory or its jurisdiction.  The Bill extends the coverage to nuclear damage in the territory of a foreign state from incidents in India, subject to certain conditions.\nAtomic Energy Regulatory Board:\nThe Bill provides statutory recognition to the Atomic Energy Regulatory Board (AERB).  As per the Bill, the Board will take measures to ensure safe use of radiation and nuclear energy.  It will consist of a chairperson, one whole-time member, and up to seven part-time members appointed by the central government.  The Chairperson and the whole-time member must be persons of eminence in the field of nuclear energy.  Appointments to AERB will be made by the central government upon recommendations of a search-cum-selection committee.  The committee will be constituted by the Atomic Energy Commission and will include the Chairperson of the Board in case of selection of its members.  The Chairperson and members of the Board will hold office for an initial period of three years, further extendable up to three years.\nAtomic Energy Redressal Advisory Council:\nThe Bill establishes the Atomic Energy Redressal Advisory Council to hear appeals against the orders or decisions of the central government or AERB.   The Chairperson of the Atomic Energy Commission will chair this Council.  Other members of the Council include: (i) Director of Bhabha Atomic Research Centre, (ii) Chairperson of AERB, and (iii) Chairperson of the Central Electricity Authority.  Appeals against the decisions of the Council will lie before the Appellate Tribunal for Electricity.",
+  "date": "2025-12-15",
+  "url": "https://prsindia.org/billtrack/the-sustainable-harnessing-and-advancementof-nuclear-energy-for-transforming-india-bill-2025",
+  "ministry": "Science and Technology and Earth Sciences",
+  "house": "Lok Sabha",
+  "status": "Passed",
+  "status_timeline": [
+    {
+      "house": "Lok Sabha",
+      "date": "Dec 15, 2025",
+      "action": "Introduced"
+    },
+    {
+      "house": "Lok Sabha",
+      "date": "Dec 17, 2025",
+      "action": "Passed"
+    },
+    {
+      "house": "Rajya Sabha",
+      "date": "Dec 18, 2025",
+      "action": "Passed"
+    }
+  ],
+  "pdf_urls": [
+    {
+      "url": "https://prsindia.org/files/bills_acts/bills_parliament/2025/Sustainable_Harnessing_and_Advancement of_Nuclear_Energy_Bill,2025.pdf",
+      "label": "Bill Text"
+    },
+    {
+      "url": "https://prsindia.org/files/bills_acts/bills_parliament/2025/The_SHANTI_Act_2025.pdf",
+      "label": "The Sustainable Harnessing and Advancement of Nuclear Energy for Transforming India Act, 2025"
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+# ===================================================================
+# BB/ParliamentGazette — Barbados Official Gazette (Parliament)
+# ===================================================================
+# Official Gazette PDFs from 2013-2026. Part A contains Acts &
+# Statutory Instruments. Published 5 days/week.
+# ~2550 gazette issues with full text via PDF extraction.
+# ===================================================================
+
+source:
+  id: "BB/ParliamentGazette"
+  country: "BB"
+  name: "Barbados Official Gazette (Parliament)"
+  url: "https://www.barbadosparliament.com/gazette"
+  description: |
+    The Official Gazette of Barbados published by the Parliament.
+    Contains Acts, Statutory Instruments, Bills, government notices,
+    trademarks, and other official publications. Published in three
+    parts: Part A (legislation), Part B (notices/trademarks),
+    Part C (miscellaneous). ~2550 issues from 2013-2026.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+  notes: "2-second delay between requests. PDF downloads are large."
+
+api:
+  type: "html-scraping"
+  base_url: "https://www.barbadosparliament.com"
+  endpoints:
+    listing: "/gazette"
+    search: "/gazette/search"
+  response_format: "html+pdf"
+  pagination: "offset-based (POST, 50 per page)"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "_id"
+      description: "Unique ID from gazette filename"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Gazette title with volume, number, and contents"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from gazette PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "url"
+      description: "URL to gazette PDF"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "volume"
+      description: "Gazette volume number (Roman numerals)"
+      type: "string"
+      role: "classifier"
+      required: false
+    - name: "issue_number"
+      description: "Gazette issue number"
+      type: "string"
+      role: "classifier"
+      required: false
+    - name: "part"
+      description: "Gazette part (A, B, C)"
+      type: "string"
+      role: "classifier"
+      required: false
+
+license:
+  name: "Barbados Government Open Data"
+  url: "https://www.barbadosparliament.com/gazette"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government gazette, freely published online by Parliament."

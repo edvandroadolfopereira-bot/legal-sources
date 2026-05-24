@@ -1,0 +1,87 @@
+source:
+  id: "VC/GazetteVC"
+  country: "VC"
+  name: "St Vincent & Grenadines Government Gazette"
+  url: "https://legal.gov.vc/legal/index.php/publications"
+  description: |
+    Official Government Gazette of Saint Vincent and the Grenadines,
+    published by the Ministry of Legal Affairs. Contains new legislation,
+    statutory rules and orders, government notices, and proclamations.
+    Available as PDF files from 2016 to present.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "html_scrape"
+  base_url: "https://legal.gov.vc"
+  selectors:
+    publications_page: "/legal/index.php/publications"
+    pdf_pattern: "/legal/images/PDF/{year}Gazettes/Gazette_No_{number}_{year}.pdf"
+
+data_model:
+  type: "legislation"
+  source_nature: "gazette"
+  primary_key: "gazette_id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "gazette_id"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Gazette title (volume, number, year)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of gazette"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date"
+      type: "date"
+      role: "temporal_key"
+      required: false
+  secondary_fields:
+    - name: "volume"
+      description: "Gazette volume number"
+    - name: "number"
+      description: "Gazette issue number"
+    - name: "year"
+      description: "Publication year"
+    - name: "extra_ordinary"
+      description: "Whether this is an extra-ordinary gazette"
+  probably_ignorable: []
+
+license:
+  id: "ogd"
+  name: "Open government data"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government gazette published by authority. No formal open data license."
+
+notes: |
+  - Language: English
+  - Coverage: 2016-present (~50-75 issues per year)
+  - PDF-based gazette with predictable URL patterns
+  - Some issues are marked "Extra-Ordinary"
+  - Text extracted from PDF using pdfplumber/pypdf

@@ -1,0 +1,50 @@
+api:
+  auth: none
+  endpoints:
+    sparql: http://publications.europa.eu/webapi/rdf/sparql
+    cellar_celex: http://publications.europa.eu/resource/celex/
+  rate_limit:
+    delay_seconds: 1.5
+    requests_per_second: 1
+  type: sparql_plus_cellar
+documentation:
+- https://www.esrb.europa.eu/mppa/recommendations/html/index.en.html
+- https://op.europa.eu/en/web/cellar/cellar-data
+pagination:
+  type: none
+schema:
+  key_fields:
+  - name: celex_id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: document_type
+    required: false
+    type: string
+  - name: url
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+source:
+  country: EU
+  data_types:
+  - legislation
+  description: European Systemic Risk Board recommendations, warnings, opinions and decisions
+  id: EU/ESRB
+  name: European Systemic Risk Board (ESRB)
+  url: https://www.esrb.europa.eu
+license:
+  name: "EUR-Lex reuse policy"
+  url: "https://eur-lex.europa.eu/content/legal-notice/legal-notice.html"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "EU legal documents are reusable under EUR-Lex legal notice; attribution to EU required"

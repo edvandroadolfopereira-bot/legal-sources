@@ -1,0 +1,53 @@
+source:
+  id: TZ/BOT-Regulations
+  name: Bank of Tanzania — Regulations, Circulars & Guidelines
+  country: TZ
+  url: https://www.bot.go.tz/BankSupervision/Regulations
+  data_types:
+    - legislation
+    - doctrine
+  description: |
+    Regulatory documents from the Bank of Tanzania (BoT) — acts, regulations,
+    circulars, guidelines, procedures, and codes of conduct. ~115 documents
+    across Acts, Regulations, Circulars, Guidelines, Procedures, and Conducts
+    categories. Full text from PDFs. English and Swahili.
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: html_scrape_pdf
+  base_url: https://www.bot.go.tz
+  format: pdf
+  listing_url: /BankSupervision/Regulations
+
+schema:
+  key_fields:
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: category
+      type: string
+      required: false
+    - name: pdf_url
+      type: string
+      required: true
+
+license:
+  name: Public Domain (Government of Tanzania)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official central bank regulatory documents published for public access on bot.go.tz.

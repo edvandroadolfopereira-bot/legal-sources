@@ -1,0 +1,37 @@
+source:
+  id: ML/SGGCodes
+  country: ML
+  name: "Mali Consolidated Legal Codes (SGG)"
+  url: https://sgg-mali.ml
+  api_url: https://sgg-mali.ml/fr/journal-officiel/les-codes-consolides.html
+  data_types:
+    - legislation
+  language: fr
+license:
+  name: "Public Domain"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official legislation is public domain under Malian law"
+fetcher:
+  type: html_scrape
+  pagination: none
+  rate_limit: 1.5
+  requires_pdf_extraction: true
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+  date_fields:
+    - date
+    - _fetched_at
+  text_fields:
+    - text
+    - title
+notes: >
+  21 consolidated legal codes as PDFs from the SGG website.
+  Includes Penal, Civil, Labor, Mining, Electoral, Customs,
+  and other major codes. PDF text extraction via pdfplumber.

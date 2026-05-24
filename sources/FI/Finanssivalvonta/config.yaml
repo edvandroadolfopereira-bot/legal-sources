@@ -1,0 +1,47 @@
+source_id: FI/Finanssivalvonta
+country: FI
+name: Finnish Financial Supervisory Authority (FIN-FSA)
+description: |
+  Supervision releases, administrative sanctions, penalty decisions, and public
+  warnings from the Finnish Financial Supervisory Authority (Finanssivalvonta / FIN-FSA).
+  Covers banking, insurance, securities, and pension regulation (2013-2026).
+
+data_types:
+  - doctrine
+
+url: https://www.finanssivalvonta.fi/en/
+dataset_url: https://www.finanssivalvonta.fi/en/publications-and-press-releases/
+
+auth:
+  type: none
+
+license:
+  name: "Public Domain (Government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government supervisory decisions and releases"
+
+rate_limit:
+  requests_per_minute: 30
+  delay_seconds: 2
+
+schema:
+  key_fields:
+    - name: slug
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+  date_fields:
+    - name: date
+      type: date
+      required: false
+
+data_model:
+  update_strategy: append_only
+  dedup_key:
+    - slug

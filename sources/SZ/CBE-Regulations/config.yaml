@@ -1,0 +1,38 @@
+source:
+  id: SZ/CBE-Regulations
+  country: SZ
+  name: "Central Bank of Eswatini — Financial Regulations & Circulars"
+  url: https://www.centralbank.org.sz/legislation/
+  data_types:
+    - legislation
+  language: en
+license:
+  name: "Public domain (government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Eswatini banking legislation, regulations, guidelines, and directives published by the Central Bank of Eswatini."
+fetcher:
+  type: wordpress_pdf_scraper
+  rate_limit: 2.0
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: title
+      required: true
+      type: string
+  date_fields:
+    - _fetched_at
+  text_fields:
+    - text
+    - title
+notes: >
+  Banking laws, regulations, guidelines, directives and payment system rules
+  from centralbank.org.sz. PDFs hosted under wp-content/uploads/.
+  Covers legislation page (acts, orders, constitution, regulations),
+  financial regulation (licensing), and national payment systems
+  (guidelines, directives, standards, rules).

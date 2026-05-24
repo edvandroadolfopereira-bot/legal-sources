@@ -1,0 +1,39 @@
+fetch:
+  max_retries: 3
+  rate_limit: 2.0
+  timeout: 60
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: citation
+    required: false
+    type: string
+  - name: case_no
+    required: false
+    type: string
+  - name: subject
+    required: false
+    type: string
+source:
+  auth: none
+  country: SG
+  data_types:
+  - case_law
+  description: >
+    Judgments from the Singapore International Commercial Court (SICC),
+    established 2015. Covers international commercial disputes, arbitration
+    setting-aside, cross-border enforcement. ~242 English-language judgments
+    available via eLitigation (elitigation.sg). Full text as HTML.
+  id: SG/SICC
+  name: Singapore International Commercial Court
+  url: https://www.judiciary.gov.sg/singapore-international-commercial-court
+license:
+  name: "Singapore Government Terms of Use"
+  url: "https://www.judiciary.gov.sg/terms-of-use"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Public court judgments. Non-commercial personal use explicitly permitted; commercial use subject to terms."

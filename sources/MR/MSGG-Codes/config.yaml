@@ -1,0 +1,71 @@
+source:
+  id: "MR/MSGG-Codes"
+  country: "MR"
+  name: "Mauritania Consolidated Legal Codes (MSGG)"
+  url: "https://msgg.gov.mr/fr/droit-mauritanien/les-codes-consolides.html"
+  description: |
+    16 consolidated legal codes from the Secrétariat Général du Gouvernement
+    of Mauritania. Direct PDF downloads covering investment, urban planning,
+    tax, arbitration, customs, forestry, environment, and more. French language.
+    Spans 2000-2025.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+data_model:
+  type: "legislation"
+  primary_key: "code_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "code_id"
+
+schema:
+  total_fields: 8
+  key_fields:
+    - name: "code_id"
+      description: "Identifier derived from PDF filename"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Code title in French"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Year of enactment"
+      type: "string"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "Direct URL to the PDF"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "Public Domain (Government)"
+  url: "https://msgg.gov.mr"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official consolidated codes published by government for public compliance"
+
+notes: |
+  - 16 consolidated codes as direct PDF downloads
+  - Full text extracted via pdfminer
+  - French language
+  - Spans 2000-2025

@@ -1,0 +1,101 @@
+source:
+  id: "INTL/RSCSL"
+  country: "INTL"
+  name: "Residual Special Court for Sierra Leone"
+  url: "https://rscsl.org/"
+  description: |
+    Decisions, judgments, and orders from the Residual Special Court for
+    Sierra Leone (RSCSL) and its predecessor, the Special Court for Sierra
+    Leone (SCSL).  Covers CDF, RUF, AFRC, Charles Taylor, and contempt
+    cases.  Data served via the docs.rscsl.org document archive (Laravel
+    DataTables JSON API backed by S3-hosted PDFs).
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+  max_workers: 2
+
+api:
+  type: "rest"
+  base_url: "https://docs.rscsl.org"
+  endpoints:
+    list: "/embed/decisions"
+    detail: "/document/{doc_no}"
+
+data_model:
+  type: "case_law"
+  source_nature: "bulk_archive"
+  primary_key: "scsl_docno"
+  update_strategy: "append_only"
+  versioning: "none"
+  dedup_key:
+    - "scsl_docno"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "_id"
+      description: "Document number (e.g., RSCSL-04-15-1348)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "scsl_docno"
+      description: "Official SCSL/RSCSL document number (e.g., RSCSL-04-15-1348)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Title of the decision"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Date of the decision"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "case_name"
+      description: "Case name (e.g., RUF, Charles Taylor, CDF, AFRC)"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "document_type"
+      description: "Type of document (Decision, Order, Judgment, etc.)"
+      type: "string"
+      role: "reference"
+      required: false
+  secondary_fields:
+    - name: "case_no"
+      description: "Case number (e.g., SCSL-04-15)"
+    - name: "pages"
+      description: "Page range in the case file"
+    - name: "noofpages"
+      description: "Number of pages"
+  probably_ignorable: []
+
+license:
+  id: "pd-intl"
+  name: "Public Domain (International Court)"
+  url: "https://rscsl.org/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official court documents from UN-backed international criminal tribunal. Public records."
+
+notes: |
+  - 879 decisions (as of 2025-07) spanning SCSL (2002-2013) and RSCSL (2013-present)
+  - PDFs hosted on S3 (scsl.s3.eu-west-1.amazonaws.com)
+  - PDF text quality varies (some scanned, most machine-readable)
+  - English language documents

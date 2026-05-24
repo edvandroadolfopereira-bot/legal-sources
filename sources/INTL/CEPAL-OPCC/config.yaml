@@ -1,0 +1,55 @@
+fetch:
+  base_url: https://api-kobo.cepal.org/api-kobo/data
+  method: json_api_pdf
+  rate_limit_seconds: 2
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: country_code
+    required: false
+    type: string
+  - name: legislative_area
+    required: false
+    type: string
+  - name: status
+    required: false
+    type: string
+  - name: topics
+    required: false
+    type: string
+  - name: law_number
+    required: false
+    type: string
+source:
+  auth: none
+  country: INTL
+  data_types:
+  - legislation
+  description: >
+    CEPAL/ECLAC Parliamentary Observatory on Climate Change and Just Transition
+    (OPCC). Tracks 2,900+ environmental laws, climate change framework legislation,
+    and bills from 28 Latin American and Caribbean countries. Data sourced via
+    KoboToolbox API with full text extracted from attached PDFs.
+  id: INTL/CEPAL-OPCC
+  language: es,en,pt
+  name: CEPAL Parliamentary Observatory — Environmental Legislation Tracker
+  url: https://opcc.cepal.org/en/tracker/environmental-legislation
+license:
+  name: "CEPAL/ECLAC Open Data"
+  url: "https://www.cepal.org/en/about/legal-information"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "CEPAL/ECLAC data is publicly available. Attribution to ECLAC required."

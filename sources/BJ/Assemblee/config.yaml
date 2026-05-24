@@ -1,0 +1,84 @@
+source:
+  id: "BJ/Assemblee"
+  country: "BJ"
+  name: "Assemblée Nationale du Bénin - Textes de Lois"
+  url: "https://documentation-anbenin.org"
+  description: |
+    Laws of the Republic of Benin published by the National Assembly's
+    Documentation and Archives Service via the Omeka S platform.
+    Coverage: 1960-present. 1172+ laws. Language: French.
+    API: Omeka S REST API at /api/items.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 2
+  burst: 5
+
+api:
+  type: "rest"
+  base_url: "https://documentation-anbenin.org"
+  endpoints:
+    list: "/api/items"
+    detail: "/api/items/{id}"
+    media: "/api/media/{id}"
+
+data_model:
+  type: "legislation"
+  source_nature: "gazette"
+  primary_key: "item_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "item_id"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Official law title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the law"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Date of enactment"
+      type: "string"
+      role: "temporal_key"
+      required: true
+  secondary_fields:
+    - name: "law_number"
+      description: "Official law number"
+    - name: "alternative_title"
+      description: "Descriptive title"
+    - name: "pdf_url"
+      description: "URL to original PDF"
+
+license:
+  id: "pd-gov"
+  name: "Public Domain (Government)"
+  url: "https://documentation-anbenin.org/s/textes-de-lois/page/a-propos"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official laws published by the National Assembly Documentation Service"
+
+notes: |
+  - Uses Omeka S REST API for structured metadata
+  - PDFs downloaded and text extracted via pdfplumber
+  - ~90% of PDFs have extractable text; ~10% are scanned images
+  - Coverage: 1960-present, 1172+ laws
+  - All content in French

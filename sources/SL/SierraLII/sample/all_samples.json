@@ -1,7 +1,7 @@
 [
   {
     "_id": "SL-ACT-2022-6",
-    "_source": "SL/SierraLeoneLII",
+    "_source": "SL/SierraLII",
     "_type": "legislation",
     "_fetched_at": "2026-04-19T08:04:24.919847+00:00",
     "title": "Abolition of the Death Penalty Act, 2022",
@@ -11,7 +11,7 @@
   },
   {
     "_id": "SL-ACT-1972-19",
-    "_source": "SL/SierraLeoneLII",
+    "_source": "SL/SierraLII",
     "_type": "legislation",
     "_fetched_at": "2026-04-19T08:04:37.013024+00:00",
     "title": "Administration of Estates (Amendment) Act, 1972",
@@ -21,7 +21,7 @@
   },
   {
     "_id": "SL-ACT-1977-9",
-    "_source": "SL/SierraLeoneLII",
+    "_source": "SL/SierraLII",
     "_type": "legislation",
     "_fetched_at": "2026-04-19T08:04:43.098135+00:00",
     "title": "Airports (Service Charges) (Amendment) Act, 1977",
@@ -31,7 +31,7 @@
   },
   {
     "_id": "SL-ACT-1977-10",
-    "_source": "SL/SierraLeoneLII",
+    "_source": "SL/SierraLII",
     "_type": "legislation",
     "_fetched_at": "2026-04-19T08:04:49.217430+00:00",
     "title": "Airports (Service Charges) (Amendment) (No. 2) Act, 1977",
@@ -41,7 +41,7 @@
   },
   {
     "_id": "SL-ACT-2022-12",
-    "_source": "SL/SierraLeoneLII",
+    "_source": "SL/SierraLII",
     "_type": "legislation",
     "_fetched_at": "2026-04-19T08:05:10.758076+00:00",
     "title": "Anti-Human Trafficking and Migrant Smuggling Act, 2022",
@@ -51,7 +51,7 @@
   },
   {
     "_id": "SL-ACT-2024-4",
-    "_source": "SL/SierraLeoneLII",
+    "_source": "SL/SierraLII",
     "_type": "legislation",
     "_fetched_at": "2026-04-19T08:05:39.946072+00:00",
     "title": "Anti-Money Laundering and Combating of Financing of Terrorism and Financing of Proliferation of Weapons of Mass Destruction Act, 2024",
@@ -61,7 +61,7 @@
   },
   {
     "_id": "SL-ACT-2021-2",
-    "_source": "SL/SierraLeoneLII",
+    "_source": "SL/SierraLII",
     "_type": "legislation",
     "_fetched_at": "2026-04-19T08:05:46.181107+00:00",
     "title": "Appropriation Act, 2021",
@@ -71,7 +71,7 @@
   },
   {
     "_id": "SL-ACT-2025-2",
-    "_source": "SL/SierraLeoneLII",
+    "_source": "SL/SierraLII",
     "_type": "legislation",
     "_fetched_at": "2026-04-19T08:06:14.554487+00:00",
     "title": "Appropriation Act, 2025",
@@ -81,7 +81,7 @@
   },
   {
     "_id": "SL-ACT-2022-18",
-    "_source": "SL/SierraLeoneLII",
+    "_source": "SL/SierraLII",
     "_type": "legislation",
     "_fetched_at": "2026-04-19T08:06:19.930525+00:00",
     "title": "Arbitration Act, 2022",
@@ -91,7 +91,7 @@
   },
   {
     "_id": "SL-ACT-2019-5",
-    "_source": "SL/SierraLeoneLII",
+    "_source": "SL/SierraLII",
     "_type": "legislation",
     "_fetched_at": "2026-04-19T08:06:27.137962+00:00",
     "title": "Bank of Sierra Leone Act, 2019",
@@ -101,7 +101,7 @@
   },
   {
     "_id": "SL-ACT-1976-20",
-    "_source": "SL/SierraLeoneLII",
+    "_source": "SL/SierraLII",
     "_type": "legislation",
     "_fetched_at": "2026-04-19T08:06:33.221733+00:00",
     "title": "Bank of Sierra Leone (Amendment) Act, 1976",
@@ -111,7 +111,7 @@
   },
   {
     "_id": "SL-ACT-2023-23",
-    "_source": "SL/SierraLeoneLII",
+    "_source": "SL/SierraLII",
     "_type": "legislation",
     "_fetched_at": "2026-04-19T08:06:38.510431+00:00",
     "title": "Basic and Senior Secondary Education Act, 2023",
@@ -121,7 +121,7 @@
   },
   {
     "_id": "SL-ACT-2021-6",
-    "_source": "SL/SierraLeoneLII",
+    "_source": "SL/SierraLII",
     "_type": "legislation",
     "_fetched_at": "2026-04-19T08:06:45.963201+00:00",
     "title": "Breast-Milk Substitutes Act, 2021",
@@ -131,7 +131,7 @@
   },
   {
     "_id": "SL-ACT-2019-7",
-    "_source": "SL/SierraLeoneLII",
+    "_source": "SL/SierraLII",
     "_type": "legislation",
     "_fetched_at": "2026-04-19T08:06:55.479219+00:00",
     "title": "Civil Aviation Act, 2019",
@@ -141,7 +141,7 @@
   },
   {
     "_id": "SL-ACT-ci-2024-9",
-    "_source": "SL/SierraLeoneLII",
+    "_source": "SL/SierraLII",
     "_type": "legislation",
     "_fetched_at": "2026-04-19T08:07:01.678986+00:00",
     "title": "Commencement of Second Session of the Sixth Parliament of the Second Republic of Sierra Leone",

@@ -1,0 +1,49 @@
+fetch:
+  max_retries: 3
+  rate_limit: 2.0
+  timeout: 60
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: case_no
+    required: false
+    type: string
+  - name: petitioner
+    required: false
+    type: string
+  - name: respondent
+    required: false
+    type: string
+  - name: bench
+    required: false
+    type: string
+  - name: decision_date
+    required: false
+    type: string
+  - name: case_type
+    required: false
+    type: string
+source:
+  auth: none
+  country: IN
+  data_types:
+  - case_law
+  description: >
+    Final orders from the Customs, Excise & Service Tax Appellate Tribunal
+    (CESTAT), India. 9 benches across India handling indirect tax appeals
+    under Customs Act, Central Excise Act, Service Tax, Anti-dumping, and
+    Central Sales Tax. Orders available as digital PDFs via AJAX API at
+    cestat.gov.in.
+  id: IN/CESTAT
+  name: Customs, Excise & Service Tax Appellate Tribunal
+  url: https://cestat.gov.in/
+license:
+  name: "Government Open Data"
+  url: "https://cestat.gov.in/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Indian government tribunal decisions are public records."

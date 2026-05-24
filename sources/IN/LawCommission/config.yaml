@@ -1,0 +1,50 @@
+source:
+  id: "IN/LawCommission"
+  country: "IN"
+  name: "Law Commission of India Reports"
+  url: "https://lawcommissionofindia.nic.in/law-commission-reports/"
+  description: |
+    All 289 Law Commission of India reports (1955-2024) spanning 22 commissions.
+    Foundational policy/doctrine resource covering IPC, CrPC, evidence law,
+    electoral law, family law, tort, arbitration, and many other areas.
+    PDFs hosted on S3WaaS CDN. Newer reports (post-2015) typically have
+    selectable text; older reports are scanned images.
+  data_types:
+    - doctrine
+  auth: none
+
+rate_limit:
+  requests_per_second: 1.0
+  burst: 2
+
+fetch:
+  max_retries: 3
+  rate_limit: 1.0
+  timeout: 60
+
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: title
+      required: true
+      type: string
+    - name: date
+      required: false
+      type: date
+    - name: report_number
+      required: false
+      type: integer
+    - name: commission
+      required: false
+      type: string
+
+license:
+  name: "Government Open Data (India)"
+  url: "https://data.gov.in/government-open-data-license-india"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Indian government policy documents are public records"

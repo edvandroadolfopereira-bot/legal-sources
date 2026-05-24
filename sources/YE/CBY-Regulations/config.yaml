@@ -1,0 +1,85 @@
+source:
+  id: "YE/CBY-Regulations"
+  country: "YE"
+  name: "Central Bank of Yemen — Circulars & Banking Laws"
+  url: "https://english.cby-ye.com"
+  description: |
+    Banking circulars and major banking laws from the Central Bank of Yemen (Aden).
+    Includes ~15 banking supervision circulars with full text and 7 foundational
+    banking law PDFs. Content primarily in Arabic.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+
+api:
+  type: "scrape"
+  base_url: "https://english.cby-ye.com"
+  endpoints:
+    circulars_list: "/publicationsandcirculars"
+    circular_detail: "/publications/{id}"
+    laws_page: "/rulesandregulations"
+    law_pdf: "/files/{hash}.pdf"
+
+data_model:
+  type: "legislation"
+  source_nature: "regulatory"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: 11
+  key_fields:
+    - name: "doc_id"
+      description: "Unique document identifier"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Title of the circular or law (Arabic)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the document"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+  secondary_fields:
+    - name: "doc_type"
+      description: "circular or law"
+    - name: "circular_number"
+      description: "Circular reference number if present"
+    - name: "pdf_url"
+      description: "URL to the original PDF (for laws)"
+  probably_ignorable: []
+
+license:
+  name: "Public Domain (Government Works)"
+  url: "https://english.cby-ye.com"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government banking regulations and laws published by the Central Bank of Yemen"
+
+notes: |
+  - Uses the Aden branch site (cby-ye.com), as the Sanaa site (centralbank.gov.ye) is unreliable
+  - Circulars have full text embedded in HTML pages
+  - Laws are available as PDF downloads
+  - Content is primarily in Arabic
+  - ~15 circulars + 7 major banking laws

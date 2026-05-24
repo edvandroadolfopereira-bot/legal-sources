@@ -1,0 +1,59 @@
+source:
+  id: DK/Landsskatteretten
+  name: Denmark National Tax Tribunal (Landsskatteretten)
+  country: DK
+  url: https://info.skat.dk/data.aspx?oid=16010
+  data_types:
+    - case_law
+  description: |
+    Decisions from Landsskatteretten (the Danish National Tax Tribunal),
+    published via info.skat.dk. Covers tax assessment, VAT, customs, and duties.
+    Principled decisions of general interest dating back to 2000.
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: html_scraping
+  base_url: https://info.skat.dk
+  format: html
+  endpoints:
+    year_page: "/data.aspx?oid={year_oid}"
+    decision_page: "/data.aspx?oid={decision_oid}"
+
+schema:
+  key_fields:
+    - name: skm_number
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: decision_date
+      type: string
+      required: false
+    - name: publication_date
+      type: string
+      required: false
+    - name: case_number
+      type: string
+      required: false
+    - name: topics
+      type: string
+      required: false
+
+license:
+  name: "Public Domain (Danish Government)"
+  url: "https://info.skat.dk/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Danish government tax decisions are public documents freely available."

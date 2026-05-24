@@ -1,0 +1,66 @@
+source:
+  id: "KZ/AIFC-Court"
+  country: "KZ"
+  name: "Astana International Financial Centre Court"
+  url: "https://court.aifc.kz"
+  description: |
+    English-language common law court in Kazakhstan handling international
+    commercial disputes. ~245 English judgments and orders since 2019.
+    Unique jurisdiction — common law island in a civil law country.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+api:
+  type: "rest"
+  base_url: "https://court.aifc.kz/wp-json/wp/v2"
+  endpoints:
+    list: "/judgment"
+
+data_model:
+  type: "case_law"
+  source_nature: "gazette"
+  primary_key: "_id"
+  update_strategy: "append_only"
+  versioning: "none"
+  dedup_key:
+    - "_id"
+
+schema:
+  key_fields:
+    - name: "_id"
+      type: "string"
+      required: true
+    - name: "case_number"
+      type: "string"
+      required: false
+    - name: "text"
+      type: "string"
+      required: true
+  text_fields:
+    - text
+    - title
+  date_fields:
+    - date
+    - _fetched_at
+
+license:
+  name: "Public Domain"
+  url: "https://court.aifc.kz"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Court decisions are publicly published. English language."
+
+notes: |
+  WP REST API lists judgments, individual pages have PDF links.
+  245 English judgments (out of 664 total including Kazakh/Russian translations).
+  pdfplumber extraction. Requires pdfplumber on VPS.

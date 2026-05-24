@@ -1,0 +1,47 @@
+source_id: RS/NBS
+country: RS
+name: Serbia National Bank Regulations
+description: |
+  Regulations, decisions, and guidelines from the National Bank of Serbia (NBS).
+  Covers monetary policy, bank supervision, insurance, payment systems, digital
+  assets, AML, financial leasing, pension funds, and more.
+
+data_types:
+  - legislation
+
+url: https://www.nbs.rs/en/drugi-nivo-navigacije/propisi/
+dataset_url: https://www.nbs.rs/en/drugi-nivo-navigacije/propisi/
+
+auth:
+  type: none
+
+license:
+  name: "Public Domain (Government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government regulatory publications"
+
+rate_limit:
+  requests_per_minute: 20
+  delay_seconds: 3
+
+schema:
+  key_fields:
+    - name: pdf_url
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+  date_fields:
+    - name: date
+      type: date
+      required: false
+
+data_model:
+  update_strategy: append_only
+  dedup_key:
+    - pdf_url

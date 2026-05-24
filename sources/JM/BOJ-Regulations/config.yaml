@@ -1,0 +1,57 @@
+source:
+  id: JM/BOJ-Regulations
+  name: Bank of Jamaica — Regulations & Standards
+  country: JM
+  url: https://boj.org.jm/
+  data_types:
+    - legislation
+    - doctrine
+  description: |
+    Legislation (acts, regulations, codes of conduct) and supervisory guidance
+    (standards of sound practice, consultation papers, AML guidance notes) from
+    the Bank of Jamaica. ~70 PDF documents covering banking services, deposit
+    insurance, AML/CFT, terrorism prevention, microcredit, credit reporting,
+    Basel III capital adequacy, cyber risk, corporate governance, and more.
+    Full text via PDF extraction. English language. Free access.
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: html_pdf
+  base_url: https://boj.org.jm
+  format: pdf
+  endpoints:
+    legislation: /about-boj/legislation/
+    supervisory_guidance: /core-functions/financial-system/supervisory-guidance-notes-reporting-requirements/
+
+schema:
+  key_fields:
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: document_type
+      type: string
+      required: true
+    - name: category
+      type: string
+      required: false
+
+license:
+  name: Open Government Data (Jamaica)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official central bank regulatory documents published for public access.

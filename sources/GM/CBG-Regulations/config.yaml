@@ -1,0 +1,35 @@
+source:
+  id: GM/CBG-Regulations
+  country: GM
+  name: "Central Bank of The Gambia — Guidelines & Regulations"
+  url: https://www.cbg.gm/guidelines-3
+  data_types:
+    - legislation
+  language: en
+license:
+  name: "Public domain (government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Gambian central bank regulations published by the Central Bank of The Gambia."
+fetcher:
+  type: pdf_download
+  rate_limit: 2.0
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: title
+      required: true
+      type: string
+  date_fields:
+    - _fetched_at
+  text_fields:
+    - text
+    - title
+notes: >
+  Financial regulations, guidelines, insurance acts, FX policy, payment rules
+  from the Central Bank of The Gambia. PDFs downloaded via UUID download links.

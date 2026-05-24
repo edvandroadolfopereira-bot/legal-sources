@@ -1,0 +1,96 @@
+# ═══════════════════════════════════════════════════════════════════
+# Legal Data Hunter — IN/PRSLegislative
+# PRS Legislative Research — Bill Tracking
+# ═══════════════════════════════════════════════════════════════════
+
+source:
+  id: "IN/PRSLegislative"
+  country: "IN"
+  name: "PRS Legislative Research — Bill Tracking"
+  url: "https://prsindia.org/billtrack"
+  description: |
+    Independent bill tracker for India's central Parliament, 1993-present.
+    Bill summaries, analysis, key features, issues for consideration.
+    Covers ~960 bills introduced in Lok Sabha and Rajya Sabha.
+    CC BY 4.0 license.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "html_scrape"
+  base_url: "https://prsindia.org"
+  selectors:
+    list_page: "https://prsindia.org/billtrack?field_bill_category=All&field_bill_status=All&field_bill_year=All"
+    item_selector: "div.views-row"
+
+data_model:
+  type: "legislation"
+  source_nature: "gazette"
+  primary_key: "bill_slug"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "bill_slug"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "bill_slug"
+      description: "URL slug identifier for the bill"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Full bill title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of PRS summary/analysis"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Date of introduction"
+      type: "date"
+      role: "temporal_key"
+      required: true
+  secondary_fields:
+    - name: "ministry"
+      description: "Responsible ministry"
+    - name: "status"
+      description: "Current bill status"
+    - name: "status_timeline"
+      description: "List of status changes with dates"
+    - name: "house"
+      description: "House where introduced (Lok Sabha/Rajya Sabha)"
+    - name: "pdf_urls"
+      description: "Links to bill text and summary PDFs"
+  probably_ignorable: []
+
+license:
+  id: "cc-by-4.0"
+  name: "CC BY 4.0"
+  url: "https://creativecommons.org/licenses/by/4.0/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Attribution to PRS Legislative Research required"
+
+notes: |
+  - Drupal-based site, HTML scraping required (no API)
+  - All ~960 bills listed on single page, no pagination
+  - Each bill has full summary/analysis text (10K+ chars typical)
+  - Status timeline with dates for each legislative step
+  - PDF links for bill text and PRS summaries
+  - Coverage: 1993-present
+  - Language: English

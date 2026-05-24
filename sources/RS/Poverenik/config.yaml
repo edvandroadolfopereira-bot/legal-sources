@@ -1,0 +1,47 @@
+source_id: RS/Poverenik
+country: RS
+name: Serbia Commissioner for Information & Data Protection
+description: |
+  Decisions from the Serbian Commissioner for Information of Public Importance
+  and Personal Data Protection (Poverenik). Covers FOI complaints, data protection
+  cases, and harmonization opinions from 2015-2026.
+
+data_types:
+  - case_law
+
+url: https://praksa.poverenik.rs
+dataset_url: https://praksa.poverenik.rs
+
+auth:
+  type: none
+
+license:
+  name: "Public Domain (Government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government decisions and opinions"
+
+rate_limit:
+  requests_per_minute: 20
+  delay_seconds: 3
+
+schema:
+  key_fields:
+    - name: case_number
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+  date_fields:
+    - name: date
+      type: date
+      required: false
+
+data_model:
+  update_strategy: append_only
+  dedup_key:
+    - case_number

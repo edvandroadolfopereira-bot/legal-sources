@@ -1,0 +1,55 @@
+source:
+  id: CZ/UOHS
+  name: "Czech Competition Authority Decisions (ÚOHS)"
+  country: CZ
+  url: https://uohs.gov.cz
+  data_types:
+    - case_law
+  language: cs
+  auth: none
+
+discovery:
+  method: api
+  jsonld_url: https://uohs.gov.cz/opendata/rozhodnuti.jsonld
+  notes: >
+    JSON-LD index with 10K+ decision metadata. Each item links to an HTML
+    detail page with full text and a PDF download.
+
+fetch:
+  rate_limit: 1.5
+  timeout: 30
+
+schema:
+  required_fields:
+    - _id
+    - _source
+    - _type
+    - _fetched_at
+    - title
+    - text
+    - date
+    - url
+  key_fields:
+    - name: case_reference
+      type: string
+      required: true
+    - name: file_reference
+      type: string
+      required: true
+  optional_fields:
+    - subject
+    - participants
+    - instance
+    - department
+    - proceeding_type
+    - decision_type
+    - document_urls
+
+license:
+  name: "Open Government Data (Czech Republic)"
+  url: "https://data.gov.cz"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Registered on data.gov.cz. Published under Czech open data regulations."

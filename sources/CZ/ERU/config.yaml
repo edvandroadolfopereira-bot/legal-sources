@@ -1,0 +1,57 @@
+source:
+  id: CZ/ERU
+  name: "Czech Energy Regulatory Office Decisions (ERÚ)"
+  country: CZ
+  url: https://eru.gov.cz
+  data_types:
+    - case_law
+  language: cs
+  auth: none
+
+discovery:
+  method: html_scrape
+  list_url: https://eru.gov.cz/pravomocna-rozhodnuti
+  pagination: "?page={n}"
+  total_pages: 574
+  notes: >
+    5,700+ binding decisions from ERÚ supervisory activities.
+    Paginated at 10 per page. Each decision has metadata on HTML page
+    and full text in attached PDF files.
+
+fetch:
+  rate_limit: 1.5
+  timeout: 30
+  pdf_extraction: true
+
+schema:
+  required_fields:
+    - _id
+    - _source
+    - _type
+    - _fetched_at
+    - title
+    - text
+    - date
+    - url
+  key_fields:
+    - name: file_reference
+      type: string
+      required: true
+    - name: case_reference
+      type: string
+      required: false
+  optional_fields:
+    - party_name
+    - ico
+    - legal_effect_date
+    - summary
+    - pdf_urls
+
+license:
+  name: "Open Government Data (Czech Republic)"
+  url: "https://data.gov.cz"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Published on official government website under Czech open data regulations."

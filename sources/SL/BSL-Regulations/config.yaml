@@ -1,0 +1,35 @@
+source:
+  id: SL/BSL-Regulations
+  country: SL
+  name: "Bank of Sierra Leone — Banking Regulations & Guidelines"
+  url: https://bsl.gov.sl/
+  data_types:
+    - legislation
+  language: en
+license:
+  name: "Public domain (government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Sierra Leonean banking legislation, regulations, and guidelines published by the Bank of Sierra Leone."
+fetcher:
+  type: html_pdf_scrape
+  rate_limit: 2.0
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: title
+      required: true
+      type: string
+  date_fields:
+    - _fetched_at
+  text_fields:
+    - text
+    - title
+notes: >
+  Banking acts, prudential guidelines, directives, and regulations from bsl.gov.sl.
+  Static HTML site with PDFs in root directory. Legislation.html is the main index.

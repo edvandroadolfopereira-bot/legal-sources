@@ -1,0 +1,43 @@
+auth: none
+country: IS
+data_types:
+- doctrine
+fetch_method: api_graphql
+id: IS/Personuvernd
+language: isl
+license:
+  name: "Public Domain (official government decisions)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official data protection decisions published on island.is"
+name: Persónuvernd (Data Protection Authority)
+notes: >
+  The Icelandic Data Protection Authority (Persónuvernd) publishes rulings,
+  decisions, and opinions (úrskurðir, ákvarðanir og álit) via the island.is
+  GraphQL API. 1237 decisions available as of May 2026. Data is served from
+  Contentful CMS via island.is unified government platform.
+rate_limit: 1s
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  optional_fields:
+  - case_number
+  - language
+  required_fields:
+  - _id
+  - _source
+  - _type
+  - _fetched_at
+  - title
+  - text
+  - date
+  - url
+url: https://island.is/s/personuvernd/urskurdir-akvardanir-og-alit

@@ -1,0 +1,47 @@
+source_id: DK/Finanstilsynet
+country: DK
+name: Danish Financial Supervisory Authority (Finanstilsynet)
+description: |
+  Supervisory decisions, sanctions, inspection reports, warnings, and orders
+  from the Danish Financial Supervisory Authority (Finanstilsynet).
+  Covers banking, insurance, securities, and pension regulation (2000-2026).
+
+data_types:
+  - doctrine
+
+url: https://www.finanstilsynet.dk
+dataset_url: https://www.finanstilsynet.dk/tilsyn/inspektion-og-afgoerelser
+
+auth:
+  type: none
+
+license:
+  name: "Public Domain (Government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government supervisory decisions"
+
+rate_limit:
+  requests_per_minute: 30
+  delay_seconds: 2
+
+schema:
+  key_fields:
+    - name: slug
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+  date_fields:
+    - name: date
+      type: date
+      required: false
+
+data_model:
+  update_strategy: append_only
+  dedup_key:
+    - slug

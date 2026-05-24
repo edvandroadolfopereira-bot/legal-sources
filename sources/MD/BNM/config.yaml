@@ -1,0 +1,58 @@
+source_id: MD/BNM
+country: MD
+name: National Bank of Moldova — Regulations & Decisions
+description: |
+  Banking regulations, prudential requirements, AML/CFT rules, licensing,
+  governance, payment systems, insurance, and non-bank lending regulations
+  from the National Bank of Moldova (Banca Națională a Moldovei).
+  ~95 regulations published as PDF documents.
+
+data_types:
+  - legislation
+  - doctrine
+
+url: https://www.bnm.md/en/content/regulations-list
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: html_scrape
+  base_url: https://www.bnm.md
+  list_url: https://www.bnm.md/en/content/regulations-list
+
+data_model:
+  type: legislation
+  source_nature: gazette
+  primary_key: url_slug
+  update_strategy: append_only
+  dedup_key:
+    - url_slug
+
+schema:
+  key_fields:
+    - name: url_slug
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: category
+      type: string
+      required: false
+
+license:
+  id: pd-gov
+  name: Public Domain (Government regulations)
+  url: https://www.bnm.md/en
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official central bank regulations published in the public interest."

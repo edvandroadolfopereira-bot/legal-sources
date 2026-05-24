@@ -1,0 +1,39 @@
+{
+  "_id": "280191d7-95a6-41d2-ab07-40b737938f40",
+  "_source": "INTL/OHCHR-TBInternet",
+  "_type": "doctrine",
+  "_fetched_at": "2026-05-11T04:56:28.450381+00:00",
+  "title": "CRPD/C/WSM/CO/1 — Concerns/Observations (CRPD)",
+  "text": "Right to life (art. 10) 17.The Committee notes with concern the lack of disability-disaggregated data on mental health and the need to ensure that all mental health policies, including those providing crisis support for suicide prevention, are disability-inclusive.",
+  "date": "2026-04-08",
+  "url": "https://uhri.ohchr.org/en/search-human-rights-recommendations",
+  "symbol": "CRPD/C/WSM/CO/1",
+  "document_id": "74b4bb5f-8c22-4c05-af4c-bc430015734e",
+  "annotation_type": "Concerns/Observations",
+  "treaty_body": "CRPD",
+  "countries": [
+    "Samoa"
+  ],
+  "regions": [
+    "Asia-Pacific"
+  ],
+  "themes": [
+    "Right to life",
+    "Right to health",
+    "Economic & political crisis, natural disasters or other emergencies",
+    "Persons with disabilities: independence, inclusion",
+    "Data collection & research"
+  ],
+  "sdgs": [
+    "17 - PARTNERSHIPS FOR THE GOALS",
+    "3 - GOOD HEALTH AND WELL-BEING",
+    "17.18 - Enhance availability of reliable data",
+    "3.4 - Reduce mortality from non-communicable diseases and promote mental health"
+  ],
+  "affected_persons": [
+    "Persons with disabilities"
+  ],
+  "upr_cycle": null,
+  "upr_positions": [],
+  "upr_recommending_countries": []
+}

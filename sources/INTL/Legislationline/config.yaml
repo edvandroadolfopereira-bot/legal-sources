@@ -1,0 +1,84 @@
+source:
+  id: "INTL/Legislationline"
+  country: "INTL"
+  name: "OSCE Legislationline — Human Rights & Rule of Law Legislation Database"
+  url: "https://legislationline.org/"
+  description: |
+    OSCE/ODIHR legislative database covering 57 OSCE participating states.
+    Human rights, rule of law, elections, and governance legislation.
+    English translations and original language texts. ~14,000 documents,
+    ~7,000 with inline full text via Drupal JSON:API.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "rest"
+  base_url: "https://legislationline.org/jsonapi"
+  endpoints:
+    list: "/taxonomy_term/files?page[limit]=50&page[offset]={offset}"
+
+data_model:
+  type: "legislation"
+  source_nature: "consolidated"
+  primary_key: "drupal_internal__tid"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "drupal_internal__tid"
+
+schema:
+  total_fields: 14
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier (legislationline-{tid})"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the legislation (HTML stripped)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "country"
+      description: "ISO 3166-1 alpha-2 country code"
+      type: "string"
+      role: "reference"
+      required: false
+    - name: "topics"
+      description: "Thematic topics (e.g., Elections, Fair Trial)"
+      type: "array"
+      role: "content"
+      required: false
+    - name: "document_type"
+      description: "Document category (Constitutions, Legislation, etc.)"
+      type: "string"
+      role: "content"
+      required: false
+
+license:
+  id: "custom-terms"
+  name: "OSCE/ODIHR Custom Terms"
+  url: "https://legislationline.org/disclaimer"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Legislation texts are public domain. OSCE analysis/commentary has no explicit license; disclaimer does not restrict reuse."

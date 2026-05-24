@@ -203,6 +203,7 @@ class RFBSolucoesConsulta(BaseScraper):
             "date": raw["date"],
             "url": f"{DETAIL_URL}?antigo=1&idAto={raw['id_ato']}",
             "language": "pt",
+            "in_force": True,
             "dou_date": raw["dou_date"],
             "dou_section": raw["dou_section"],
             "dou_page": raw["dou_page"],

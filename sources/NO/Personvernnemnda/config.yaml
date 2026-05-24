@@ -1,0 +1,82 @@
+# ===================================================================
+# NO/Personvernnemnda -- Norwegian Privacy Appeals Board
+# ===================================================================
+# Data protection appeal decisions (PVN cases). ~405 decisions from
+# 2001-2025 via WordPress REST API. Full text in HTML content field.
+# Norwegian language. NLOD 2.0 license.
+# ===================================================================
+
+source:
+  id: "NO/Personvernnemnda"
+  country: "NO"
+  name: "Norwegian Privacy Appeals Board (Personvernnemnda)"
+  url: "https://www.personvernnemnda.no"
+  description: |
+    Personvernnemnda is the independent appeals body for decisions by
+    Datatilsynet (the Norwegian Data Protection Authority). This source
+    collects all appeal decisions (PVN cases) since 2001 — privacy rights,
+    GDPR enforcement, data breach penalties, surveillance complaints,
+    and processing disputes. ~405 decisions. Full text via WP REST API.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 1
+  notes: "1-second delay between paginated API requests."
+
+api:
+  type: "wordpress-rest"
+  base_url: "https://www.personvernnemnda.no"
+  endpoints:
+    posts: "/wp-json/wp/v2/posts"
+  response_format: "json"
+  pagination: "offset"
+  per_page: 100
+
+schema:
+  total_fields: 9
+  key_fields:
+    - name: "_id"
+      description: "WordPress post ID with NO-PVN prefix"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Decision title with PVN reference"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the decision"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "url"
+      description: "URL to decision page"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "reference"
+      description: "PVN case reference number"
+      type: "string"
+      role: "identifier"
+      required: false
+
+license:
+  name: "NLOD 2.0"
+  url: "https://data.norge.no/nlod/en/2.0"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Norwegian government open data."

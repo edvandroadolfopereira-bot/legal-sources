@@ -1,0 +1,82 @@
+source:
+  id: "GA/JournalOfficiel"
+  country: "GA"
+  name: "Journal Officiel de la République Gabonaise"
+  url: "https://journal-officiel.ga"
+  description: |
+    Official Gazette of Gabon — publishes laws, decrees, ordinances,
+    and regulatory texts. Full text available in French. Coverage from
+    1984 to present.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "html_scrape"
+  base_url: "https://journal-officiel.ga"
+
+data_model:
+  type: "legislation"
+  source_nature: "gazette"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: null
+  key_fields:
+    - name: "doc_id"
+      description: "Unique document ID from site"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text content"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date"
+      type: "date"
+      role: "temporal_key"
+      required: false
+  secondary_fields:
+    - name: "doc_type"
+      description: "Type of legal act (loi, decret, ordonnance)"
+    - name: "doc_number"
+      description: "Official document number"
+    - name: "journal_number"
+      description: "Journal Officiel issue number"
+  probably_ignorable: []
+
+license:
+  id: "pd-gov"
+  name: "Public Domain (Government Work)"
+  url: "https://journal-officiel.ga"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government gazette — Gabonese law does not restrict reuse of official legal texts"
+
+notes: |
+  - Language: French
+  - HTML scraping of journal-officiel.ga
+  - Documents accessible at /{id}-{slug}/ pattern
+  - Decree listing at /738-decret/
+  - IDs range from ~1000 to 21000+
+  - Full text available directly in HTML pages

@@ -1,0 +1,88 @@
+source:
+  id: "JM/CourtOfAppeal"
+  country: "JM"
+  name: "Jamaica Court of Appeal Judgments"
+  url: "https://www.courtofappeal.gov.jm"
+  description: |
+    Jamaica Court of Appeal civil and criminal judgments.
+    Coverage: 1990-2026. Full text extracted from PDF judgments.
+    Includes civil judgments, criminal judgments, and endorsements/memoranda.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+  max_workers: 1
+
+api:
+  type: "html_scrape"
+  base_url: "https://www.courtofappeal.gov.jm"
+
+data_model:
+  type: "case_law"
+  source_nature: "gazette"
+  primary_key: "node_id"
+  update_strategy: "append_only"
+  versioning: "none"
+  dedup_key:
+    - "node_id"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "node_id"
+      description: "Drupal node ID"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Case title (parties)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of judgment extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Date of delivery"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "citation"
+      description: "Neutral citation e.g. [2025] JMCA Civ 10"
+      type: "string"
+      role: "reference"
+      required: false
+  secondary_fields:
+    - name: "category"
+      description: "civil, criminal, civil_endorsement, criminal_endorsement"
+    - name: "year"
+      description: "Year of decision"
+    - name: "pdf_url"
+      description: "URL to the original PDF"
+    - name: "url"
+      description: "URL to the judgment page"
+
+license:
+  id: "pd-gov"
+  name: "Public Domain (Government Work)"
+  url: "https://www.courtofappeal.gov.jm"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Jamaica government court judgments are public records"
+
+notes: |
+  - Drupal 10 site with PDF judgment attachments
+  - Year filter uses taxonomy term IDs (not year values directly)
+  - Four listing paths: civil, criminal, civil endorsements, criminal endorsements
+  - Full text extracted from PDF via pdfplumber
+  - ~200+ judgments total across all years and categories

@@ -1,0 +1,65 @@
+source:
+  id: "CO/SuperFinanciera"
+  country: "CO"
+  name: "Superintendencia Financiera de Colombia"
+  url: "https://www.superfinanciera.gov.co/publicaciones/20149/"
+  description: |
+    Circulares Externas, Cartas Circulares, and Resoluciones issued by
+    Colombia's financial regulator (Superintendencia Financiera) since 2005.
+    Covers banking, insurance, pensions, securities, and consumer protection.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "html_scrape"
+  base_url: "https://www.superfinanciera.gov.co"
+
+data_model:
+  type: "legislation"
+  source_nature: "gazette"
+  primary_key: "circular_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "circular_id"
+
+schema:
+  total_fields: null
+  key_fields:
+    - name: "id"
+      description: "Unique identifier (type-number-year)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text content extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date"
+      type: "date"
+      role: "temporal_key"
+      required: true
+
+license:
+  id: "ogd"
+  name: "Open Government Data (Colombia)"
+  url: "https://www.superfinanciera.gov.co/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulatory documents published by Colombian government agency"

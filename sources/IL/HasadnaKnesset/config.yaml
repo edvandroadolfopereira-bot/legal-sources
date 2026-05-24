@@ -1,0 +1,49 @@
+source_id: IL/HasadnaKnesset
+name: Israel Knesset Data (Hasadna Open Source)
+country: IL
+url: https://production.oknesset.org/pipelines/data/laws/
+description: |
+  Israeli legislation from the Hasadna Open Knesset data pipeline.
+  Uses CSV data dumps from production.oknesset.org containing metadata
+  for 2,008 Israeli laws with 9,642 linked PDF documents hosted on
+  fs.knesset.gov.il. Text extracted from PDFs via pdfplumber.
+
+data_types:
+  - legislation
+
+license:
+  name: "Open Government Data (Israel)"
+  url: "https://www.hasadna.org.il/en/projects/open-knesset/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Open Knesset by Hasadna (The Public Knowledge Workshop). Israeli government data."
+
+language: he
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+update_frequency: quarterly
+
+schema:
+  key_fields:
+    - name: title
+      required: true
+      type: string
+    - name: law_id
+      required: true
+      type: string
+  date_field: date
+  text_field: text
+  title_field: title
+  url_field: url
+
+notes: |
+  CSV pipeline at production.oknesset.org bypasses Knesset OData geo-blocking.
+  Joins kns_law + kns_document_law for PDF links. 2,807 official publications.

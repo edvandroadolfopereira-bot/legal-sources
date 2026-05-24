@@ -1,0 +1,53 @@
+source:
+  id: PS/PMA-Regulations
+  name: Palestine Monetary Authority — Regulations
+  country: PS
+  url: https://www.pma.ps/
+  data_types:
+    - doctrine
+  description: |
+    Regulatory documents from the Palestine Monetary Authority (PMA) — laws,
+    circulars, instructions, and regulations for banking and financial
+    supervision in Palestine. ~2054 documents via Supabase REST API.
+    Full text extracted from PDFs. Content primarily in Arabic.
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 2
+  burst: 5
+
+api:
+  type: supabase_rest
+  base_url: https://fayupjvyvxedvgathafk.supabase.co
+  format: json
+  table: documents
+  pagination: offset
+
+schema:
+  key_fields:
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: category
+      type: string
+      required: false
+    - name: file_url
+      type: string
+      required: true
+
+license:
+  name: Public Domain (Palestinian Authority)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official monetary authority regulations published for public access on pma.ps.

@@ -1,0 +1,79 @@
+source:
+  id: "GN/CourSupremeJuricaf"
+  country: "GN"
+  name: "Guinea Courts (Juricaf)"
+  url: "https://juricaf.org"
+  description: |
+    Court decisions from Guinea via the Juricaf database (AHJUCAF).
+    128 decisions from Cour suprême and Cour d'appel. French language.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+data_model:
+  type: "case_law"
+  primary_key: "decision_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "decision_id"
+
+schema:
+  total_fields: 9
+  key_fields:
+    - name: "decision_id"
+      description: "Juricaf decision identifier"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Decision title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the court decision"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "court"
+      description: "Court name"
+      type: "string"
+      role: "category"
+      required: false
+    - name: "docket_number"
+      description: "Case/docket number"
+      type: "string"
+      role: "identifier"
+      required: false
+    - name: "url"
+      description: "URL on juricaf.org"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "ODbL 1.0"
+  url: "https://opendatacommons.org/licenses/odbl/1-0/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: true
+  no_derivatives: false
+  notes: "Juricaf data is available under Open Database License"
+
+notes: |
+  - 128 decisions via juricaf.org JSON API + HTML full text
+  - Courts: Cour suprême (126), Cour d'appel (2)
+  - Full text extracted from div#textArret
+  - French language

@@ -1,0 +1,92 @@
+# ===================================================================
+# MM/DICA -- Myanmar Directorate of Investment and Company Administration
+# ===================================================================
+# Laws, rules, and notifications related to Myanmar investment and
+# company administration. ~80 English-language PDFs covering the
+# Myanmar Companies Law, Investment Law, Insolvency Law, and related
+# notifications and directives.
+# ===================================================================
+
+source:
+  id: "MM/DICA"
+  country: "MM"
+  name: "Myanmar DICA Laws, Rules and Notifications"
+  url: "https://www.dica.gov.mm/laws-rules-and-notifications/"
+  description: |
+    Official laws, rules, and notifications from the Myanmar Directorate
+    of Investment and Company Administration (DICA). Covers the Myanmar
+    Companies Law 2017, Myanmar Investment Law 2016, Insolvency Law 2020,
+    Special Economic Zone Law, and related regulations and notifications.
+    English-language documents accessed via WordPress JSON API.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "rest"
+  base_url: "https://www.dica.gov.mm"
+  endpoints:
+    documents: "/wp-json/wl/v1/wl_doc"
+  response_format: "json"
+  params:
+    category_name: "rules-and-notifications"
+    language: "en"
+
+data_model:
+  type: "legislation"
+  primary_key: "document_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "document_id"
+
+schema:
+  total_fields: 8
+  key_fields:
+    - name: "_id"
+      description: "Unique document identifier (MM-DICA-{wp_id})"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Upload/publication date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "Direct URL to PDF file"
+      type: "string"
+      role: "reference"
+      required: true
+  secondary_fields:
+    - name: "file_size"
+      description: "File size as reported by API"
+    - name: "categories"
+      description: "Document categories from DICA"
+    - name: "language"
+      description: "Document language"
+
+license:
+  name: "Public Domain (Government)"
+  url: "https://www.dica.gov.mm/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Myanmar government official publications"

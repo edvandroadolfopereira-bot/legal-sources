@@ -1,0 +1,61 @@
+source:
+  id: MG/HCC
+  name: Madagascar Haute Cour Constitutionnelle
+  country: MG
+  url: https://www.hcc.gov.mg
+  data_types:
+    - case_law
+  description: >
+    Constitutional court decisions from Madagascar's Haute Cour Constitutionnelle.
+    Includes Arrêts (rulings), Avis (advisory opinions), D1 (international conventions),
+    D2 (unconstitutionality exceptions), D3 (national legislation), election decisions,
+    and deliberations. ~1,331 decisions via WordPress REST API. French language.
+
+fetch:
+  method: wp_rest_api
+  base_url: https://www.hcc.gov.mg
+  api_route: "/?rest_route=/wp/v2/posts"
+  pagination:
+    type: page_param
+    param: page
+    start: 1
+    items_per_page: 20
+  categories:
+    - 3   # Arrêts
+    - 20  # Arrêts (second category)
+    - 4   # Avis
+    - 7   # D1 - Conventions Internationales
+    - 8   # D2 - Exceptions d'inconstitutionnalité
+    - 9   # D3 - Législation nationale
+    - 6   # Elections
+    - 24  # DB - Délibération
+  rate_limit:
+    requests_per_second: 0.67
+    delay_between_requests: 1.5
+
+schema:
+  key_fields:
+    - decision_number
+    - wp_id
+  fields:
+    - _id
+    - _source
+    - _type
+    - _fetched_at
+    - title
+    - text
+    - date
+    - url
+    - decision_number
+    - decision_type
+    - categories
+    - wp_id
+
+license:
+  name: Public Domain (Government)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official constitutional court decisions of Madagascar. Public domain under Malagasy law.

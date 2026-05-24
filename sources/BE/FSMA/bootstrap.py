@@ -378,10 +378,6 @@ def main():
         parser.print_help()
         sys.exit(1)
 
-    if not PDF_AVAILABLE:
-        print("ERROR: pdfplumber or pypdf library required for PDF text extraction", file=sys.stderr)
-        sys.exit(1)
-
     session = get_session()
 
     if args.command == "bootstrap":

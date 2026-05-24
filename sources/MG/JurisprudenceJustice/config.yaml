@@ -1,0 +1,37 @@
+source:
+  id: MG/JurisprudenceJustice
+  country: MG
+  name: "Madagascar Ministry of Justice Jurisprudence Database"
+  url: https://jurisprudence.justice.gov.mg/
+  data_types:
+    - case_law
+  language: fr
+license:
+  name: "Madagascar Government — public domain"
+  url: https://jurisprudence.justice.gov.mg/
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Court of Cassation decisions published by the Ministry of Justice."
+fetcher:
+  type: html_scraper
+  pagination: page_number
+  rate_limit: 2.0
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: docket_number
+      required: false
+      type: string
+  date_fields:
+    - date
+    - _fetched_at
+  text_fields:
+    - text
+    - title
+notes: >
+  1,003 Court of Cassation decisions (853 civil, 46 commercial, 104 social),
+  2009-2019. Full text from HTML pages with embedded CSS.

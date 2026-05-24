@@ -1,0 +1,85 @@
+source:
+  id: "LB/ConstitutionalCouncil"
+  country: "LB"
+  name: "Lebanon Constitutional Council Decisions"
+  url: "https://cc.gov.lb"
+  description: |
+    Decisions of the Lebanese Constitutional Council (المجلس الدستوري).
+    Includes constitutionality review decisions and parliamentary election
+    dispute rulings. ~170 decisions available as PDFs in Arabic with some
+    English translations. Council established 1993, decisions from 1994 onward.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "html_scrape"
+  base_url: "https://cc.gov.lb"
+
+data_model:
+  type: "case_law"
+  source_nature: "constitutional_court"
+  primary_key: "decision_id"
+  update_strategy: "append_only"
+  versioning: "none"
+  dedup_key:
+    - "decision_id"
+
+schema:
+  total_fields: null
+  key_fields:
+    - name: "id"
+      description: "Unique decision identifier (e.g., 2026/7)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Decision title/number"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text content extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision date"
+      type: "date"
+      role: "temporal_key"
+      required: false
+  secondary_fields:
+    - name: "decision_type"
+      description: "Type (constitutionality_review, parliamentary_election)"
+    - name: "petition_number"
+      description: "Petition/review number"
+    - name: "law_challenged"
+      description: "Description of the law challenged"
+    - name: "petitioners"
+      description: "Petitioner names"
+    - name: "pdf_url"
+      description: "URL to the source PDF"
+  probably_ignorable: []
+
+license:
+  name: "Public Domain (Government Works)"
+  url: "https://cc.gov.lb"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government judicial decisions - public domain under Lebanese law"
+
+notes: |
+  - ~170 decisions (21 pages constitutionality + 23 pages parliamentary)
+  - Decisions in Arabic PDFs with occasional English translations
+  - AJAX endpoint returns JSON with paginated HTML content
+  - Text extraction via PyMuPDF (fitz) handles Arabic better than pdfplumber
+  - Site uses cc.gov.lb (not www.cc.gov.lb)

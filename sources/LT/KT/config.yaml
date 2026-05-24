@@ -1,0 +1,57 @@
+source_id: LT/KT
+country: LT
+name: Lithuanian Competition Council — Decisions
+description: |
+  Decisions (nutarimai) of the Lithuanian Competition Council
+  (Konkurencijos taryba). Covers antitrust, mergers, abuse of
+  dominance, public entities, state aid, advertising, and retail trade.
+  Decisions from 1999 to present, published as PDFs.
+
+data_types:
+  - case_law
+
+url: https://kt.gov.lt/lt/dokumentai
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 2
+  burst: 5
+
+api:
+  type: html_scrape
+  base_url: https://kt.gov.lt
+  list_url: https://kt.gov.lt/lt/dokumentai?page={page}
+
+data_model:
+  type: case_law
+  source_nature: gazette
+  primary_key: decision_number
+  update_strategy: append_only
+  dedup_key:
+    - decision_number
+
+schema:
+  key_fields:
+    - name: decision_number
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: date
+      required: true
+
+license:
+  id: pd-gov
+  name: Public Domain (Government decisions)
+  url: https://kt.gov.lt/lt/atviri-duomenys
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government decisions published in the public interest."

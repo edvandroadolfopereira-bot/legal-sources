@@ -1,0 +1,49 @@
+fetcher:
+  base_url: https://centralbank.org.ls
+  rate_limit: 2.0
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: category
+    required: false
+    type: string
+  - name: doc_type
+    required: false
+    type: string
+  - name: url
+    required: true
+    type: string
+source:
+  auth: none
+  country: LS
+  data_types:
+  - legislation
+  description: >
+    Financial sector regulations from the Central Bank of Lesotho (CBL).
+    ~70 PDF documents covering acts, regulations, guidelines across banking,
+    insurance, pensions, capital markets, microfinance, AML/CFT, and
+    consumer protection. Text extracted from PDFs via pdfplumber.
+  format: html+pdf
+  id: LS/CBL-Regulations
+  language: en
+  name: Central Bank of Lesotho — Financial Sector Regulations
+  url: https://centralbank.org.ls/legislations/
+license:
+  name: "Public domain (government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official financial regulations published by the Central Bank of Lesotho for public access."

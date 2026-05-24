@@ -1,0 +1,55 @@
+source:
+  id: DO/BCRD-Regulations
+  name: Banco Central de la República Dominicana — Regulaciones
+  country: DO
+  url: https://www.bancentral.gov.do/
+  data_types:
+    - doctrine
+  description: |
+    Monetary Board resolutions (Resoluciones JM), current financial regulations
+    (Reglamentos Vigentes), and instructivos from the Central Bank of the
+    Dominican Republic. ~320 documents covering monetary policy, banking
+    supervision, payment systems, and exchange rate regulation. Full text via
+    PDF extraction. Spanish language. Free access.
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: rest
+  base_url: https://www.bancentral.gov.do
+  format: json_pdf
+  endpoints:
+    resolutions: /Home/GetJmResolutions
+    article_content: /Home/GetContentForRender
+
+schema:
+  key_fields:
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: document_type
+      type: string
+      required: true
+    - name: descriptors
+      type: string
+      required: false
+
+license:
+  name: Open Government Data (Dominican Republic)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official government regulatory documents published for public access.

@@ -1,0 +1,76 @@
+# ===================================================================
+# INTL/EBRD-Tribunal -- EBRD Administrative Tribunal Decisions
+# ===================================================================
+# ~61 decisions since 2003. Full text extracted from PDFs via pdfplumber.
+# ===================================================================
+
+source:
+  id: "INTL/EBRD-Tribunal"
+  country: "INTL"
+  name: "EBRD Administrative Tribunal — Decisions"
+  url: "https://www.ebrd.com/home/who-we-are/our-organisation/ebrd-governance-leadership/corporate-governance/administrative-tribunal.html"
+  description: |
+    Decisions of the European Bank for Reconstruction and Development
+    Administrative Tribunal, which adjudicates employment disputes between
+    EBRD staff and the bank. ~61 decisions from 2003 to present.
+    PDFs downloaded from ebrd.com and text extracted via pdfplumber.
+  data_types:
+    - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+api:
+  type: "html_scrape_pdf"
+  listing_url: "https://www.ebrd.com/home/who-we-are/our-organisation/ebrd-governance-leadership/corporate-governance/administrative-tribunal.html"
+  base_url: "https://www.ebrd.com"
+
+data_model:
+  type: "case_law"
+  primary_key: "case_ref"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "title"
+      description: "Case title (e.g., 'Appellant v. EBRD, EBRDAT 2023-AT-01 Decision')"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision year (ISO 8601, year only when exact date unavailable)"
+      type: "string"
+      role: "temporal_key"
+      required: false
+    - name: "case_ref"
+      description: "Case reference (e.g., 'EBRDAT-2023-AT-01')"
+      type: "string"
+      role: "identifier"
+      required: true
+
+license:
+  name: "Custom — EBRD public documents"
+  url: "https://www.ebrd.com/terms-of-use.html"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Tribunal decisions published for public access on the EBRD website."
+
+notes: |
+  - Listing page parsed for decision cards (div.main-download-module__main-block)
+  - PDFs at ebrd.com/content/dam/ebrd_dxp/assets/pdfs/administrative-tribunal/
+  - Text extracted from PDFs using pdfplumber
+  - 2-second delays between PDF downloads
+  - ~61 decisions covering 2003-2025
+  - Annual reports excluded (only tribunal decisions fetched)

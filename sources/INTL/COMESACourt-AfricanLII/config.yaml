@@ -1,0 +1,39 @@
+schema:
+  key_fields:
+  - name: citation
+    required: false
+    type: string
+  - name: case_number
+    required: false
+    type: string
+  - name: judges
+    required: false
+    type: string
+  - name: language
+    required: false
+    type: string
+  - name: date
+    required: false
+    type: date
+source:
+  auth: none
+  country: INTL
+  data_types:
+  - case_law
+  description: >
+    COMESA Court of Justice decisions (2001-2025) via AfricanLII.
+    ~45 judgments covering trade disputes, human rights, and institutional matters
+    across 21 COMESA member states. Full text extracted from PDF via AfricanLII.
+  id: INTL/COMESACourt-AfricanLII
+  license: CC BY-NC-SA (AfricanLII)
+  method: HTML scraping of AfricanLII listing + metadata pages, PDF text extraction
+  name: COMESA Court of Justice (via AfricanLII)
+  url: https://africanlii.org/judgments/COMESACJ/
+license:
+  name: "CC BY-NC-SA"
+  url: "https://africanlii.org/"
+  commercial_use: false
+  attribution_required: true
+  share_alike: true
+  no_derivatives: false
+  notes: "AfricanLII content under CC BY-NC-SA license"

@@ -1,0 +1,60 @@
+source:
+  id: JM/FTC-Decisions
+  name: Jamaica Fair Trading Commission — Decisions
+  country: JM
+  url: https://jftc.gov.jm/
+  data_types:
+    - case_law
+    - doctrine
+  description: |
+    Case reports, court judgments, consent agreements, market studies,
+    and regulatory guidelines from the Jamaica Fair Trading Commission.
+    Competition law enforcement under the Fair Competition Act.
+    Full text via PDF extraction and HTML scraping.
+    English language. Free access.
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: html_pdf
+  base_url: https://jftc.gov.jm
+  format: pdf_and_html
+  endpoints:
+    case_reports: /publications/case-reports/
+    judgments: /enforcement/judgments/
+    consent_agreements: /enforcement/consent-agreements/
+    market_studies: /publications/market-studies/
+    advisories: /publications/advisories/
+    legislation: /enforcement/legislation/
+
+schema:
+  key_fields:
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: document_type
+      type: string
+      required: true
+    - name: category
+      type: string
+      required: false
+
+license:
+  name: Open Government Data (Jamaica)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official competition authority documents published for public access.

@@ -1,0 +1,56 @@
+source:
+  id: IQ/CBI-Regulations
+  name: Central Bank of Iraq — Regulations & Circulars
+  country: IQ
+  url: https://cbi.iq/
+  data_types:
+    - doctrine
+  description: |
+    Banking regulations, circulars, guidelines, and standards from the Central
+    Bank of Iraq (CBI). ~600 circulars across 30 paginated pages covering
+    banking supervision, capital adequacy, AML/CFT, exchange licensing, and
+    reform documents. ~30 standalone guidelines/standards PDFs. Full text via
+    PDF extraction. Primarily Arabic with some English. Free access.
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: html_scrape
+  base_url: https://cbi.iq
+  format: html_pdf
+  endpoints:
+    circulars_list: /news/section/77
+    circular_detail: /news/view/{id}
+    guidelines: /page/99
+
+schema:
+  key_fields:
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: document_type
+      type: string
+      required: true
+    - name: category
+      type: string
+      required: false
+
+license:
+  name: Open Government Data (Iraq)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official central bank regulatory documents published for public access.

@@ -1,0 +1,47 @@
+api:
+  auth: none
+  base_url: https://www.diskrimineringsnemnda.no
+  rate_limit:
+    delay_seconds: 1.0
+    requests_per_minute: 40
+  type: rest_api
+  endpoints:
+    list: /umbraco/delivery/api/v2/content?filter=contentType%3Avedtak&skip={skip}&take=100&fields=properties%5B%24all%5D
+    detail: /umbraco/delivery/api/v2/content/item/{id}
+data:
+  coverage:
+    estimated_records: 4670
+  encoding: utf-8
+  format: json
+  language: nob
+  notes: >
+    Decisions from the Norwegian Equality and Anti-Discrimination Tribunal
+    (Diskrimineringsnemnda) via Umbraco Content Delivery API. Older decisions
+    (pre-2021) have inline HTML text; newer ones require PDF extraction.
+license:
+  name: NLOD 2.0
+  url: https://data.norge.no/nlod/en/2.0
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: Norwegian License for Open Government Data
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: saksnummer
+    required: false
+    type: string
+  required_fields:
+  - title
+  - text
+  - date
+  - url
+source:
+  country: 'NO'
+  id: NO/Diskrimineringsnemnda
+  name: Norwegian Equality and Anti-Discrimination Tribunal
+  type: case_law
+  url: https://www.diskrimineringsnemnda.no

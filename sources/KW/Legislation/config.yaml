@@ -1,0 +1,63 @@
+source:
+  id: "KW/Legislation"
+  country: "KW"
+  name: "Kuwait e-Government Laws and Regulations"
+  url: "https://e.gov.kw/sites/kgoenglish/Pages/Business/InfoSubPages/LawsAndRegulations.aspx"
+  description: |
+    Major Kuwaiti laws published as PDF files on the e-Government portal.
+    Covers Constitution, Civil Law, Commercial Law, Labor Law, Criminal
+    Procedures, and other key legislation. Content in Arabic.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+api:
+  type: "pdf_download"
+  base_url: "https://e.gov.kw"
+
+data_model:
+  type: "legislation"
+  source_nature: "consolidated"
+  primary_key: "_id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "_id"
+
+schema:
+  key_fields:
+    - name: "_id"
+      type: "string"
+      required: true
+    - name: "title"
+      type: "string"
+      required: true
+    - name: "text"
+      type: "string"
+      required: true
+  text_fields:
+    - text
+    - title
+  date_fields:
+    - _fetched_at
+
+license:
+  name: "Public Domain"
+  url: "https://e.gov.kw"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Government legislation is public domain."
+
+notes: |
+  Static PDF collection — 20 major Kuwaiti laws. pdfplumber extraction.
+  Content is in Arabic. Small but important source covering key legislation.
+  Requires pdfplumber on VPS for PDF text extraction.

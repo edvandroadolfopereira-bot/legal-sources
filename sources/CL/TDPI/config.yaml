@@ -1,0 +1,63 @@
+source:
+  id: "CL/TDPI"
+  country: "CL"
+  name: "Tribunal de Propiedad Industrial — Patent Rulings & Trademark Bulletins"
+  url: "https://www.tdpi.cl/fallos-relevantes-de-patentes/"
+  description: |
+    Patent rulings and trademark jurisprudence bulletins from Chile's
+    Intellectual Property Court (TDPI). ~102 individual patent case PDFs
+    and ~21+ quarterly trademark bulletins. Spanish language.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+data_model:
+  type: "case_law"
+  primary_key: "_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "_id"
+
+schema:
+  total_fields: 8
+  key_fields:
+    - name: "_id"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "doc_type"
+      type: "string"
+      role: "classifier"
+      required: true
+
+license:
+  name: "Public Domain (Government of Chile)"
+  url: "https://www.tdpi.cl/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Public rulings from Chile's Intellectual Property Court"

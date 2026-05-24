@@ -1,0 +1,36 @@
+source:
+  id: SD/RedressLegal
+  name: Sudan Legal Resources (REDRESS — Bilingual Laws)
+  country: SD
+  url: https://redress.org/sudan-legal-resources/
+  data_types:
+    - legislation
+  description: >
+    ~80+ key Sudanese laws in full text PDF, bilingual Arabic/English.
+    Criminal laws, constitutional laws, transitional justice, peace agreements.
+    Curated by REDRESS (UK-based human rights NGO).
+
+fetch:
+  method: html_scrape_pdf
+  base_url: https://redress.org/sudan-legal-resources/
+  rate_limit: 1.5
+  auth: none
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - text
+    - date
+    - url
+    - language
+    - category
+
+license:
+  name: "Custom — REDRESS open access"
+  url: "https://redress.org/sudan-legal-resources/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Laws are public domain; REDRESS provides open access to translations and compiled resources."

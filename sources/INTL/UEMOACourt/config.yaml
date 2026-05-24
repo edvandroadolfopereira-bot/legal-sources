@@ -1,0 +1,91 @@
+source:
+  id: "INTL/UEMOACourt"
+  country: "INTL"
+  name: "UEMOA Court of Justice Decisions"
+  url: "https://courdejusticeuemoa.org"
+  description: |
+    Decisions from the UEMOA Court of Justice (Cour de Justice de l'Union
+    Économique et Monétaire Ouest Africaine) via WordPress AJAX API.
+    ~86 decisions (arrêts, avis, ordonnances). Member states: Benin,
+    Burkina Faso, Côte d'Ivoire, Guinea-Bissau, Mali, Niger, Senegal, Togo.
+    French language. PDFs extracted via pdfplumber.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+data_model:
+  type: "case_law"
+  primary_key: "decision_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "decision_id"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "decision_id"
+      description: "Unique decision identifier (type + number)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Decision title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the court decision (extracted from PDF)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "decision_number"
+      description: "Official decision number"
+      type: "string"
+      role: "identifier"
+      required: false
+    - name: "decision_type"
+      description: "Type: Arrêt, Avis, or Ordonnance"
+      type: "string"
+      role: "category"
+      required: true
+    - name: "keywords"
+      description: "Subject keywords"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "parties"
+      description: "Parties involved in the case"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "url"
+      description: "URL on courdejusticeuemoa.org"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "pdf_url"
+      description: "Direct URL to the PDF document"
+      type: "string"
+      role: "reference"
+      required: false
+
+license:
+  name: "Public Domain (Government Judicial Decisions)"
+  url: "https://courdejusticeuemoa.org"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official judicial decisions of an international court are public domain."

@@ -1,0 +1,51 @@
+source:
+  id: "IN/IBBI"
+  country: "IN"
+  name: "Insolvency and Bankruptcy Board of India"
+  url: "https://ibbi.gov.in/"
+  description: |
+    Orders from courts at all levels (Supreme Court, High Courts, NCLAT, NCLT,
+    DRAT, DRTs, IBBI disciplinary) and regulatory documents (circulars,
+    notifications, guidelines) from the Insolvency and Bankruptcy Board of India.
+    All documents are PDFs with full text extraction. ~40,000+ orders and
+    ~300+ regulatory documents since 2016.
+  data_types:
+    - case_law
+    - doctrine
+  auth: none
+
+rate_limit:
+  requests_per_second: 1.5
+  burst: 3
+
+fetch:
+  max_retries: 3
+  rate_limit: 1.5
+  timeout: 60
+
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: title
+      required: true
+      type: string
+    - name: date
+      required: false
+      type: date
+    - name: court
+      required: false
+      type: string
+    - name: remarks
+      required: false
+      type: string
+
+license:
+  name: "Government Open Data (India)"
+  url: "https://ibbi.gov.in/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Indian government orders and regulations are public records"

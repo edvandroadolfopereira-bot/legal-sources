@@ -1,0 +1,56 @@
+last_bootstrap: null
+last_error: '''NoneType'' object has no attribute ''lower'''
+last_run: '2026-05-12T14:02:12.940147+00:00'
+run_history:
+- error_message: '''NoneType'' object has no attribute ''lower'''
+  errors: 0
+  finished_at: '2026-05-12T13:02:02.381287+00:00'
+  records_fetched: 0
+  records_new: 0
+  records_skipped: 0
+  records_updated: 0
+  sample_records_saved: 0
+  skip_exception: 0
+  skip_normalize_none: 0
+  started_at: '2026-05-12T13:02:00.065598+00:00'
+- errors: 0
+  finished_at: '2026-05-12T13:02:42.196754+00:00'
+  records_fetched: 1
+  records_new: 0
+  records_skipped: 0
+  records_updated: 0
+  sample_records_saved: 1
+  skip_exception: 0
+  skip_normalize_none: 0
+  started_at: '2026-05-12T13:02:42.196366+00:00'
+- errors: 0
+  finished_at: '2026-05-12T13:12:04.141351+00:00'
+  records_fetched: 14
+  records_new: 0
+  records_skipped: 0
+  records_updated: 0
+  sample_records_saved: 14
+  skip_exception: 0
+  skip_normalize_none: 0
+  started_at: '2026-05-12T13:04:01.783595+00:00'
+- errors: 0
+  finished_at: '2026-05-12T13:21:35.396308+00:00'
+  records_fetched: 11
+  records_new: 0
+  records_skipped: 0
+  records_updated: 0
+  sample_records_saved: 11
+  skip_exception: 0
+  skip_normalize_none: 0
+  started_at: '2026-05-12T13:13:20.152485+00:00'
+- errors: 0
+  finished_at: '2026-05-12T14:02:12.940147+00:00'
+  records_fetched: 11
+  records_new: 0
+  records_skipped: 0
+  records_updated: 0
+  sample_records_saved: 11
+  skip_exception: 0
+  skip_normalize_none: 0
+  started_at: '2026-05-12T13:56:24.456256+00:00'
+total_records: 0

@@ -1,0 +1,48 @@
+fetcher:
+  endpoints:
+  - https://www.ecdc.europa.eu/sitemap.xml
+  pagination: sitemap-based
+  pdf_extraction: pdfplumber
+  type: scrape_with_pdf
+schema:
+  fields:
+    document_type:
+      description: Publication type (risk_assessment, epidemiological_update, technical_report, guidance, etc.)
+      type: string
+    publication_date:
+      description: Date the document was published
+      type: date
+    text:
+      description: Full text content extracted from HTML body or PDF
+      type: text
+    title:
+      description: Document title
+      type: string
+  key_fields:
+  - name: title
+    required: true
+    type: string
+  - name: publication_date
+    required: false
+    type: date
+source:
+  auth: none
+  country: EU
+  data_types:
+  - doctrine
+  description: >
+    ECDC publications including rapid risk assessments, threat assessment briefs,
+    epidemiological updates, technical reports, and scientific guidance documents.
+    Many publications have full text inline on the page; others require PDF extraction.
+  id: EU/ECDC
+  name: European Centre for Disease Prevention and Control
+  rate_limit: 1 request per second
+  url: https://www.ecdc.europa.eu/en/publications-data
+license:
+  name: "ECDC Copyright / Reuse Policy"
+  url: "https://www.ecdc.europa.eu/en/copyright"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "ECDC allows reproduction provided the source is acknowledged. See reuse policy."

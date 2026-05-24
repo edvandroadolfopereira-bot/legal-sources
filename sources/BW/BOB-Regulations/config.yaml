@@ -1,0 +1,66 @@
+# ===================================================================
+# BW/BOB-Regulations -- Bank of Botswana Regulations & Directives
+# ===================================================================
+# Banking legislation, regulations, circulars, directives, and
+# prudential guidelines from the Bank of Botswana. ~32 PDF documents.
+# ===================================================================
+
+source:
+  id: "BW/BOB-Regulations"
+  country: "BW"
+  name: "Bank of Botswana — Regulations & Directives"
+  url: "https://www.bankofbotswana.bw/"
+  description: |
+    Banking legislation, regulations, prudential guidelines, circulars
+    and directives from the Bank of Botswana. Covers the Banking Act,
+    capital adequacy (Basel), AML/CFT, corporate governance, cybersecurity,
+    exchange control, and licensing requirements.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "html_scrape_pdf"
+  base_url: "https://www.bankofbotswana.bw"
+  file_prefix: "/sites/default/files/"
+  notes: "Scrape regulatory section pages for PDF links, download and extract text"
+
+data_model:
+  type: "doctrine"
+  primary_key: "url"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "title"
+      description: "Document title from page link text"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date if available"
+      type: "date"
+      role: "temporal_key"
+      required: false
+
+license:
+  name: "Public Government Documents (Botswana)"
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulatory documents published for public compliance use"

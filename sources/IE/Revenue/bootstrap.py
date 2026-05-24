@@ -66,10 +66,12 @@ def curl_download(url: str, output_path: str, timeout: int = 60) -> bool:
 
 def extract_pdf_text(pdf_path: str) -> str:
     """Extract text from PDF using centralized extractor."""
+    with open(pdf_path, 'rb') as f:
+        data = f.read()
     return extract_pdf_markdown(
         source="IE/Revenue",
         source_id="",
-        pdf_bytes=pdf_path,
+        pdf_bytes=data,
         table="doctrine",
     ) or ""
 

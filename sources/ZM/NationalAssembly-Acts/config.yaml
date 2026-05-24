@@ -1,0 +1,69 @@
+# ===================================================================
+# ZM/NationalAssembly-Acts — Zambia National Assembly Acts of Parliament
+# ===================================================================
+# Official Acts of Parliament from 2005-2026, published by the National
+# Assembly of Zambia. PDFs with extractable text.
+# ===================================================================
+
+source:
+  id: "ZM/NationalAssembly-Acts"
+  country: "ZM"
+  name: "Zambia National Assembly Acts of Parliament"
+  url: "https://www.parliament.gov.zm/acts-of-parliament"
+  description: |
+    Official Acts of Parliament from the National Assembly of Zambia.
+    Covers 2005-2026, approximately 960+ acts. Each act is a PDF with
+    extractable text. Site uses Drupal with paginated listing views.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "html_scraper"
+  base_url: "https://www.parliament.gov.zm"
+  listing_url: "/acts-of-parliament?page={page}"
+
+data_model:
+  type: "legislation"
+  primary_key: "node_id"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "title"
+      description: "Act title with act number"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the act"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Year of enactment"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "act_number"
+      description: "Act number (e.g., Act No. 11 of 2026)"
+      type: "string"
+      role: "content"
+      required: false
+
+license:
+  name: "Public Domain (Government)"
+  url: "https://www.parliament.gov.zm/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government legislation is public domain under Zambian law."

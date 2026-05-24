@@ -1,0 +1,88 @@
+source:
+  id: "IN/LokSabhaDebates"
+  country: "IN"
+  name: "Parliament Digital Library — Lok Sabha Debates"
+  url: "https://elibrary.sansad.in/"
+  description: |
+    Lok Sabha (House of the People) debate transcripts from the Indian Parliament
+    Digital Library. Covers the 1st through 18th Lok Sabha (1952–present),
+    approximately 6,650 debate sessions. Full text extracted from PDFs by DSpace
+    Tika filter. English-language original version.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+  max_workers: 3
+
+api:
+  type: "rest"
+  base_url: "https://elibrary.sansad.in/server/api"
+  endpoints:
+    search: "/discover/search/objects?scope={collection_uuid}&size=100&page={page}&sort=dc.date.issued,DESC"
+    bundles: "/core/items/{uuid}/bundles"
+    bitstream_content: "/core/bitstreams/{uuid}/content"
+
+data_model:
+  type: "doctrine"
+  source_nature: "bulk_archive"
+  primary_key: "item_uuid"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "item_uuid"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "id"
+      description: "DSpace item UUID"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title (always 'Lok Sabha Debates')"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the debate transcript"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Date of the debate session"
+      type: "date"
+      role: "temporal_key"
+      required: true
+  secondary_fields:
+    - name: "lok_sabha_number"
+      description: "Lok Sabha number (1–18)"
+    - name: "session_number"
+      description: "Session number (Roman numerals)"
+    - name: "handle"
+      description: "DSpace handle URI"
+  probably_ignorable: []
+
+license:
+  id: "custom-nc"
+  name: "Lok Sabha Secretariat Copyright"
+  url: "https://eparlib.sansad.in/help/copyright-policy.jsp"
+  commercial_use: false
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Non-commercial use permitted for research, study, criticism, review, and news reporting. Commercial use requires explicit permission from Lok Sabha Secretariat."
+
+notes: |
+  - Uses DSpace 7 REST API on elibrary.sansad.in (not eparlib.sansad.in which has no API)
+  - Full text comes from DSpace's Tika-extracted TEXT bundle (pre-extracted .txt files)
+  - Older debates (pre-1980s) may have poor OCR quality
+  - 6,653 items in the Lok Sabha Debates (Text) collection
+  - English original version; Hindi debates are in a separate collection
+  - Server can be slow (10-20 second responses)

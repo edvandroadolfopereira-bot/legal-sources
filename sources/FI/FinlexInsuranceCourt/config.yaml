@@ -1,0 +1,55 @@
+source:
+  id: FI/FinlexInsuranceCourt
+  name: "Finland Insurance Court Decisions (Finlex)"
+  country: FI
+  url: https://www.finlex.fi/fi/oikeuskaytanto/vakuutusoikeus
+  data_types:
+    - case_law
+  language: fi
+  auth: none
+
+discovery:
+  method: html_scrape
+  year_index_url: https://www.finlex.fi/fi/oikeuskaytanto/vakuutusoikeus/{year}/
+  detail_url: https://www.finlex.fi/fi/oikeuskaytanto/vakuutusoikeus/{year}/{number}
+  notes: >
+    ~1,500-2,000 insurance court decisions (vakuutusoikeus) from 1957-present.
+    Next.js SPA — full text embedded in RSC payload, extracted from
+    highlightable spans. Year-based browsing, ~20-50 decisions per year.
+
+fetch:
+  rate_limit: 1.5
+  timeout: 30
+
+schema:
+  required_fields:
+    - _id
+    - _source
+    - _type
+    - _fetched_at
+    - title
+    - text
+    - date
+    - url
+  key_fields:
+    - name: case_number
+      type: string
+      required: true
+    - name: ecli
+      type: string
+      required: false
+    - name: year
+      type: string
+      required: true
+  optional_fields:
+    - subject_tags
+    - headings
+
+license:
+  name: "CC BY 4.0"
+  url: "https://creativecommons.org/licenses/by/4.0/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Finlex open data is provided under CC BY 4.0 license."

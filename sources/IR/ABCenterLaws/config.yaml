@@ -1,0 +1,33 @@
+source:
+  id: IR/ABCenterLaws
+  country: IR
+  name: "Abdorrahman Boroumand Center — Iranian Laws (English Translations)"
+  url: https://www.iranrights.org/library/collection/112/laws
+  data_types:
+    - legislation
+  language: en
+license:
+  name: "Abdorrahman Boroumand Center terms"
+  url: https://www.iranrights.org
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "English translations of Iranian laws published by the Abdorrahman Boroumand Center for human rights documentation."
+fetcher:
+  type: html_scraper
+  rate_limit: 2.0
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+  date_fields:
+    - date
+    - _fetched_at
+  text_fields:
+    - text
+    - title
+notes: >
+  ~35 English-translated Iranian laws. Full text embedded in HTML pages.
+  Covers Islamic Penal Code, Criminal Procedure, Civil Code, Constitution, etc.

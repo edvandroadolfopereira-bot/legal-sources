@@ -1,0 +1,26 @@
+source_id: CV/TribunalSupremo
+name: Cabo Verde Supreme Court Decisions
+country: CV
+url: https://www.stj.cv/
+data_types:
+  - case_law
+
+schedule:
+  frequency: weekly
+  mode: full
+
+schema:
+  key_fields:
+    - _id
+    - case_number
+    - year
+    - section
+
+license:
+  name: "Public Domain (Official Court Decisions)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official judicial decisions of the Republic of Cabo Verde, published by the Supreme Court of Justice."

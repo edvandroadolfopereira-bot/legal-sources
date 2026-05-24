@@ -1,0 +1,48 @@
+source_id: HN/TSC-Biblioteca
+name: Honduras TSC Virtual Library (Tribunal Superior de Cuentas)
+country: HN
+url: https://www.tsc.gob.hn/biblioteca/index.php/leyes
+description: |
+  Laws from the Virtual Library of Honduras's Tribunal Superior de Cuentas.
+  ~300 Honduran laws including the Constitution, codes, and decrees.
+  Documents are PDFs downloaded and text-extracted via pdfplumber.
+
+data_types:
+  - legislation
+
+license:
+  name: "Honduras Government Publications"
+  url: "https://www.tsc.gob.hn/biblioteca/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Honduran government legislation published by the TSC"
+
+language: es
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+update_frequency: quarterly
+
+schema:
+  key_fields:
+    - name: title
+      required: true
+      type: string
+    - name: decreto
+      required: false
+      type: string
+  date_field: date
+  text_field: text
+  title_field: title
+  url_field: url
+
+notes: |
+  TSC Biblioteca Virtual lists laws across 25 paginated pages (12 per page).
+  Each entry has a direct PDF download link. Text extracted via pdfplumber.

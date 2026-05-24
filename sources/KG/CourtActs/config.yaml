@@ -1,0 +1,72 @@
+source:
+  id: "KG/CourtActs"
+  country: "KG"
+  name: "Kyrgyzstan Judicial Acts Database (All Courts)"
+  url: "https://portal.sot.kg"
+  description: |
+    State Registry of Judicial Acts (GRSA) — Digital Justice Portal.
+    Covers all 73 Kyrgyz courts: Supreme Court, regional/oblast courts,
+    city and district courts, and administrative courts.
+    213,000+ cases with published judicial acts since 2013.
+    Languages: Kyrgyz and Russian. Anonymized (depersonified).
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.67
+  burst: 1
+
+api:
+  type: "rest"
+  base_url: "https://portal.sot.kg/api/v1"
+  endpoints:
+    list: "/cc_court_case/?case_act_exist=true"
+    courts: "/court/"
+
+data_model:
+  type: "case_law"
+  source_nature: "gazette"
+  primary_key: "_id"
+  update_strategy: "append_only"
+  versioning: "none"
+  dedup_key:
+    - "_id"
+
+schema:
+  key_fields:
+    - name: "_id"
+      type: "string"
+      required: true
+    - name: "case_number"
+      type: "string"
+      required: false
+    - name: "text"
+      type: "string"
+      required: true
+    - name: "court"
+      type: "string"
+      required: false
+  text_fields:
+    - text
+    - title
+  date_fields:
+    - date
+    - _fetched_at
+
+license:
+  name: "Public Domain"
+  url: "https://portal.sot.kg"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Government judicial decisions are public domain under Kyrgyz law."
+
+notes: |
+  REST API at portal.sot.kg/api/v1/ — 213K+ cases with inline HTML full text
+  across all 73 Kyrgyz courts. No auth required. Broader than KG/SupremeCourt
+  (which only covers court_id=87). Supported by USAID/IDLO e-justice initiative.

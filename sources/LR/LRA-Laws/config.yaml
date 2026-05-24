@@ -1,0 +1,63 @@
+source:
+  id: "LR/LRA-Laws"
+  country: "LR"
+  name: "Liberia Revenue Authority — Tax and Customs Laws"
+  url: "https://revenue.lra.gov.lr/laws-issuances/"
+  description: |
+    Tax legislation, customs codes, executive orders, and administrative
+    regulations from the Liberia Revenue Authority. ~65 PDF documents.
+    English language.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+data_model:
+  type: "legislation"
+  primary_key: "_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "_id"
+
+schema:
+  total_fields: 8
+  key_fields:
+    - name: "_id"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "category"
+      type: "string"
+      role: "category"
+      required: false
+
+license:
+  name: "Public Domain (Government of Liberia)"
+  url: "https://revenue.lra.gov.lr/laws-issuances/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government legislation and regulations published for public access"

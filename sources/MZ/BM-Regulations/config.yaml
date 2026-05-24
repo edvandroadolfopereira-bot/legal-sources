@@ -1,0 +1,54 @@
+source:
+  id: MZ/BM-Regulations
+  name: Banco de Moçambique — Avisos & Regulamentos
+  country: MZ
+  url: https://www.bancomoc.mz/
+  data_types:
+    - doctrine
+  description: |
+    Regulatory notices (avisos), circulars, decrees, and instructions from
+    Banco de Moçambique, the central bank of Mozambique. ~311 documents
+    covering banking supervision, monetary policy, payment systems, and
+    financial sector regulation. Full text extracted from PDF downloads.
+    Content in Portuguese. Free access, no authentication required.
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+api:
+  type: html_scraping_with_pdf
+  base_url: https://www.bancomoc.mz
+  format: html+pdf
+  endpoints:
+    normativos: /pt/o-banco/normativos/
+
+schema:
+  key_fields:
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: doc_type
+      type: string
+      required: false
+    - name: pdf_url
+      type: string
+      required: true
+
+license:
+  name: Public Domain (Government of Mozambique)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official central bank regulations published for public access on bancomoc.mz.

@@ -1,0 +1,80 @@
+source:
+  id: "GA/CourConstitutionnelle"
+  country: "GA"
+  name: "Cour Constitutionnelle du Gabon"
+  url: "https://journal-officiel.ga"
+  description: |
+    Constitutional Court of Gabon — decisions on constitutionality of laws,
+    election disputes, and institutional matters. Full text published in the
+    Journal Officiel. Coverage: 2010–present.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "html_scrape"
+  base_url: "https://journal-officiel.ga"
+
+data_model:
+  type: "case_law"
+  source_nature: "court_decisions"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: null
+  key_fields:
+    - name: "doc_id"
+      description: "Unique document ID from journal-officiel.ga"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Decision title/header"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the decision"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision date"
+      type: "date"
+      role: "temporal_key"
+      required: false
+  secondary_fields:
+    - name: "decision_number"
+      description: "Official decision number (e.g., 015/CC)"
+    - name: "journal_number"
+      description: "Journal Officiel issue number"
+    - name: "subject"
+      description: "Subject of the decision"
+  probably_ignorable: []
+
+license:
+  name: "Public Domain (Government Work)"
+  url: "https://journal-officiel.ga"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government gazette — Gabonese law does not restrict reuse of official legal texts"
+
+notes: |
+  - Language: French
+  - Decisions published in Journal Officiel at journal-officiel.ga
+  - URL pattern: /{id}-{slug}/ where slug contains "cc" or "cct"
+  - Filters for decisions containing "Cour Constitutionnelle" or decision numbers matching N°XXX/CC
+  - Coverage: ~2010–present (older decisions may exist at lower IDs)

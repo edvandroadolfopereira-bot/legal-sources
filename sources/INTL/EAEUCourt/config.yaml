@@ -1,0 +1,82 @@
+source:
+  id: "INTL/EAEUCourt"
+  country: "INTL"
+  name: "Eurasian Economic Union Court Decisions"
+  url: "https://courteurasian.org/court_cases/eaeu/"
+  description: |
+    Decisions from the Court of the Eurasian Economic Union (EAEU) and
+    historical EurAsEC Court cases. ~113 EAEU + ~22 EurAsEC = ~135 total.
+    Member states: Russia, Kazakhstan, Belarus, Armenia, Kyrgyzstan.
+    Full text extracted from PDF decisions. Case summaries in Russian HTML.
+    Sitemap-based discovery for complete coverage.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+data_model:
+  type: "case_law"
+  primary_key: "case_number"
+  update_strategy: "upsert"
+  dedup_key:
+    - "case_number"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "case_number"
+      description: "Case number (e.g., C-1.21)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Case title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the court decision (from PDF)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "case_type"
+      description: "Type of case (dispute resolution, advisory opinion, etc.)"
+      type: "string"
+      role: "category"
+      required: false
+    - name: "applicant"
+      description: "Applicant/plaintiff"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "defendant"
+      description: "Defendant/respondent"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "url"
+      description: "Case page URL on courteurasian.org"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  id: "pd-gov"
+  name: "Public Domain (Government)"
+  url: "https://courteurasian.org/court_cases/eaeu/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official decisions of the EAEU Court, an international judicial body."

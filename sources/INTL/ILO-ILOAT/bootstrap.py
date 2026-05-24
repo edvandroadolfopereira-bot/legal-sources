@@ -221,10 +221,6 @@ class ILOILOATScraper(BaseScraper):
 
 
 if __name__ == "__main__":
-    if not PDF_AVAILABLE:
-        print("ERROR: pypdf required for PDF text extraction", file=sys.stderr)
-        sys.exit(1)
-
     scraper = ILOILOATScraper()
 
     if len(sys.argv) < 2:

@@ -1,0 +1,82 @@
+source:
+  id: "PS/SecurityLegislation"
+  country: "PS"
+  name: "Palestine Security Sector Legal Database (DCAF)"
+  url: "https://security-legislation.ps"
+  description: |
+    DCAF-operated database of Palestinian security sector legislation.
+    Contains 2000+ legal texts: laws, decrees, law by decree, decisions,
+    bylaws, and emergency legislation. English translations available.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 2
+  burst: 5
+
+api:
+  type: "rest"
+  base_url: "https://security-legislation.ps/wp-json/wp/v2"
+  endpoints:
+    list: "/latest-laws?per_page=100&page={page}"
+    detail: "/latest-laws/{id}"
+
+data_model:
+  type: "legislation"
+  source_nature: "consolidated"
+  primary_key: "id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "id"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "id"
+      description: "WordPress post ID"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Title of the legal text"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the legal document"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date"
+      type: "date"
+      role: "temporal_key"
+      required: true
+  secondary_fields:
+    - name: "text_type"
+      description: "Type of legal text (Law, Decree, Decision, etc.)"
+    - name: "status_label"
+      description: "Applicable or Repealed"
+    - name: "url"
+      description: "Link to original document"
+
+license:
+  id: "ogd"
+  name: "Open Government Data"
+  url: "https://security-legislation.ps/about-the-database/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "DCAF-operated open legal database for transparency purposes"
+
+notes: |
+  - WordPress REST API at /wp-json/wp/v2/latest-laws
+  - Taxonomy endpoints for text type, status, institution categories
+  - Documents in English (some may have Arabic originals)
+  - ~2200 legal texts covering security sector legislation

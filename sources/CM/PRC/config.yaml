@@ -1,0 +1,80 @@
+source:
+  id: "CM/PRC"
+  country: "CM"
+  name: "Cameroon Official Acts (Presidency)"
+  url: "https://www.prc.cm"
+  description: |
+    Official acts from the Presidency of the Republic of Cameroon.
+    Laws, decrees, and ordinances. Bilingual (French/English).
+    ~900+ documents published as PDFs.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+
+api:
+  type: "html_scrape"
+  base_url: "https://prc.cm"
+
+data_model:
+  type: "legislation"
+  source_nature: "gazette"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier (Joomla article ID)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Full title of the act"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Date in ISO 8601"
+      type: "date"
+      role: "temporal_key"
+      required: false
+  secondary_fields:
+    - name: "act_type"
+      description: "Type of act (law, decree, ordinance)"
+    - name: "url"
+      description: "URL to detail page"
+    - name: "pdf_url"
+      description: "Direct URL to PDF file"
+  probably_ignorable: []
+
+license:
+  id: "pd-gov"
+  name: "Public Domain (Government Work)"
+  url: "https://www.prc.cm"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official presidential acts — public domain under Cameroonian law"
+
+notes: |
+  - Joomla CMS with paginated listing by category (laws, decrees, ordinances)
+  - PDFs are scanned documents; text extraction via pdfplumber works but may have OCR artifacts
+  - ~184 laws + ~712 decrees + ordinances
+  - Bilingual: French and English

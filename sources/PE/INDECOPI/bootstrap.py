@@ -172,11 +172,20 @@ class INDECOPIScraper(BaseScraper):
         return ""
 
     def _extract_pdf_text(self, bundle_uuid: str) -> str:
-        """Extract text from PDF using centralized extractor."""
+        """Download PDF from DSpace ORIGINAL bundle and extract text."""
+        bs_url = f"{API_BASE}/core/bundles/{bundle_uuid}/bitstreams"
+        data = self._get_json(bs_url)
+        if not data:
+            return ""
+        bitstreams = data.get("_embedded", {}).get("bitstreams", [])
+        if not bitstreams:
+            return ""
+        bs = bitstreams[0]
+        pdf_url = f"{API_BASE}/core/bitstreams/{bs['uuid']}/content"
         return extract_pdf_markdown(
             source="PE/INDECOPI",
-            source_id="",
-            pdf_bytes=bundle_uuid,
+            source_id=bs["uuid"],
+            pdf_url=pdf_url,
             table="case_law",
         ) or ""
 

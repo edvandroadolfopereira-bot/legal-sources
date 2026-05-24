@@ -1,0 +1,36 @@
+source_id: CD/LegalRDC
+name: "LegalRDC — DRC Constitutional Court, Cassation and CCJA Decisions"
+country: CD
+url: "https://legalrdc.com/"
+data_types:
+  - case_law
+language: fr
+update_frequency: monthly
+auth_required: false
+
+fetch:
+  method: api
+  base_url: "https://legalrdc.com/wp-json/wp/v2/posts"
+  format: json
+  pagination: offset
+  rate_limit_ms: 2000
+  notes: "WordPress REST API + PDF download with text extraction"
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - court
+    - date
+    - case_number
+    - text
+    - url
+
+license:
+  name: "Custom — free access, no explicit license"
+  url: "https://legalrdc.com/"
+  commercial_use: false
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "No explicit license stated; decisions freely accessible but terms unclear. Flagged as non-commercial out of caution."

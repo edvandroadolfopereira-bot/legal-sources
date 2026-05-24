@@ -163,7 +163,7 @@ class LegislationGovUKScraper(BaseScraper):
 
                 if rel == "self":
                     doc_id = href
-                elif link_type == "application/xml":
+                elif rel == "alternate" and link_type == "application/xml":
                     xml_url = href
                 elif not rel and not doc_url:
                     # First link without rel attribute

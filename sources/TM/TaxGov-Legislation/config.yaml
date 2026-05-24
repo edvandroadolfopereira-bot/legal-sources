@@ -1,0 +1,35 @@
+source:
+  id: TM/TaxGov-Legislation
+  country: TM
+  name: "Turkmenistan State Tax Directorate — Normative Legal Acts"
+  url: https://tax.gov.tm/
+  data_types:
+    - legislation
+  language: tk
+license:
+  name: "Public domain (government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official tax laws, codes, decrees, and regulations published by the State Tax Directorate of Turkmenistan."
+fetcher:
+  type: pdf_catalog_scraper
+  rate_limit: 2.0
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: title
+      required: true
+      type: string
+  date_fields:
+    - _fetched_at
+  text_fields:
+    - text
+    - title
+notes: >
+  Tax legislation PDFs from tax.gov.tm. Covers laws (Constitution, Tax Code,
+  Budget Code, etc.), decrees/orders, and regulations. All in Turkmen.

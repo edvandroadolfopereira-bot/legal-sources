@@ -1,4 +1,4 @@
-# BD/BDLaws — Laws of Bangladesh (Bangladesh Code)
+# BD/BdLaws — Laws of Bangladesh (Bangladesh Code)
 
 **Source:** [http://bdlaws.minlaw.gov.bd/](http://bdlaws.minlaw.gov.bd/)
 **Data types:** legislation

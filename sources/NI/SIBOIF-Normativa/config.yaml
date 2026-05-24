@@ -1,0 +1,64 @@
+source:
+  id: NI/SIBOIF-Normativa
+  name: Superintendencia de Bancos — Normativa
+  country: NI
+  url: https://www.superintendencia.gob.ni/
+  data_types:
+    - doctrine
+  description: |
+    Regulatory documents from SIBOIF (Superintendencia de Bancos y de Otras
+    Instituciones Financieras) — laws, norms, resolutions, circulars, and
+    regulations covering banking, insurance, securities, and warehouse
+    supervision in Nicaragua. ~1125 documents. Full text extracted from PDF
+    downloads. Content in Spanish.
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: html_scrape_pdf
+  base_url: https://www.superintendencia.gob.ni
+  format: pdf
+  listing_url: /consultas/documentos
+  pagination: query_param
+  page_param: page
+
+schema:
+  key_fields:
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: doc_type
+      type: string
+      required: false
+    - name: doc_code
+      type: string
+      required: false
+    - name: category
+      type: string
+      required: false
+    - name: departments
+      type: string
+      required: false
+    - name: pdf_url
+      type: string
+      required: true
+
+license:
+  name: Public Domain (Government of Nicaragua)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official banking supervision regulations published for public access on superintendencia.gob.ni.

@@ -1,0 +1,36 @@
+api:
+  documentation: https://www.finlex.fi/en/open-data/integration-quick-guide
+  endpoint: https://opendata.finlex.fi/finlex/avoindata/v1/akn/fi/doc/labour-court-decision/list
+  type: rest_json
+auth:
+  type: none
+country: FI
+data_types:
+- case_law
+license:
+  name: "CC BY 4.0"
+  url: "https://creativecommons.org/licenses/by/4.0/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Finlex Open Data"
+name: Finland Labour Court Decisions (Finlex Open Data)
+rate_limit:
+  requests_per_second: 0.67
+schema:
+  key_fields:
+  - name: case_number
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: string
+  - name: ecli
+    required: false
+    type: string
+  - name: year
+    required: true
+    type: string
+source_id: FI/FinlexLabourCourt
+url: https://www.finlex.fi/fi/oikeus/tt

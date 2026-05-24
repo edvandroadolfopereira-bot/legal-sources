@@ -1,0 +1,86 @@
+# ===================================================================
+# TM/Legislation -- Turkmenistan Parliament (Mejlis) Legislation
+# ===================================================================
+# Official legislation from mejlis.gov.tm, the website of the
+# Parliament of Turkmenistan. Includes laws, codes, and
+# constitutional laws with full text in Turkmen language.
+#
+# Discovery: HTML scraping of list and detail pages
+# Full text: Rendered directly in HTML on individual law pages
+# License: Public domain (government legislation)
+# ===================================================================
+
+source:
+  id: "TM/Legislation"
+  country: "TM"
+  name: "Turkmenistan Parliament (Mejlis) Legislation"
+  url: "https://mejlis.gov.tm"
+  description: |
+    Official legislation of Turkmenistan from the Parliament (Mejlis)
+    website. Includes laws (~700), codes (9), and constitutional laws.
+    Full text in Turkmen language, scraped from individual law detail pages.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+
+fetch:
+  delay: 2.0
+  page_size: 10
+  sample_count: 15
+
+api:
+  type: "html_scrape"
+  base_url: "https://mejlis.gov.tm"
+  endpoints:
+    laws_list: "/laws/{page}?lang=tm"
+    codes_list: "/codes?lang=tm"
+    constitutional_list: "/constitutional-law/{page}?lang=tm"
+    single_law: "/single-law/{id}?lang=tm"
+    single_code: "/single-code/{id}?lang=tm"
+    single_constitutional: "/single-constitutional-law/{id}?lang=tm"
+
+data_model:
+  type: "legislation"
+  primary_key: "legislation_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "legislation_id"
+
+schema:
+  key_fields:
+    - name: "legislation_id"
+      type: "string"
+      required: true
+    - name: "title"
+      type: "string"
+      required: true
+    - name: "text"
+      type: "string"
+      required: true
+    - name: "date"
+      type: "string"
+      required: false
+    - name: "url"
+      type: "string"
+      required: true
+  text_fields:
+    - text
+  date_fields:
+    - date
+    - _fetched_at
+
+license:
+  name: "Public Domain (Government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government legislation of Turkmenistan"

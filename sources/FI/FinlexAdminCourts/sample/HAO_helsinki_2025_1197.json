@@ -1,0 +1,16 @@
+{
+  "_id": "HAO_helsinki_2025_1197",
+  "_source": "FI/FinlexAdminCourts",
+  "_type": "case_law",
+  "_fetched_at": "2026-05-07T22:50:34.156036+00:00",
+  "title": "Helsingin HAO 27.02.2025 1197/2025 | Helsingin hallinto-oikeus | Hallinto-oikeudet | Finlex",
+  "text": "Asiassa oli ratkaistavana, oliko Ruotsissa perintönä saadun omaisuuden luovutuksesta maksettu vero otettava huomioon perintöverotuksessa Suomessa.\nRuotsiin asunnon ja rahastojen luovutuksen perusteella maksetuissa veroissa ei ollut kyse perintösaannon eli perinnönjättäjän kuoleman perusteella suoritetusta verosta. Näin ollen asiassa ei tullut soveltaa perintö- ja lahjaverolain 4 §:n 2 momentin säännöstä ulkomaisen veron hyvityksestä eikä Ruotsiin maksettua veroa ollut vähennettävä valittajalle Suomessa maksuunpannusta perintöverosta.\nValittajan mukaan perintöverotuksessa omaisuuden arvoa alentavana seikkana oli otettava huomioon piilevä verovelka eli se, että Ruotsissa perittävän elinaikana tapahtuneesta omaisuuden arvonnoususta syntyi veronalaista tuloa, mistä menevästä verosta perilliset joutuivat vastaamaan. Hallinto-oikeus katsoi, ettei kuolinpesän osakkaiden myöhemmin maksettavaksi tullut vero alentanut omaisuuden käypää arvoa eli todennäköistä luovutushintaa perittävän kuolinpäivänä. Asunto ja rahastot oli myyty perinnönjättäjän kuoleman jälkeen, joten kyseisten luovutusten perusteella Ruotsiin maksettu luovutusvoittovero ei ollut myöskään sellainen perinnönjättäjän elinaikaan kohdistunut vero, joka olisi ollut perintö- ja lahjaverolain 9 §:n 2 momentin nojalla perintöverotuksessa kuolinpesän omaisuudesta vähennyskelpoinen.\nPerintö- ja lahjaverolaki 4 § 1 mom 1 k, 4 § 2 mom, 5 § sekä 9 § 1 ja 2 mom\nAsian ovat ratkaisseet hallinto-oikeuden jäsenet Paula Makkonen, Elina Fasoúlas, joka on myös esitellyt asian, ja Anneli Järvenpää.\nLainvoimainen",
+  "date": "2025-02-27",
+  "url": "https://www.finlex.fi/fi/oikeuskaytanto/hallinto-oikeudet/2025/helsinki/1197",
+  "court": "Helsingin hallinto-oikeus",
+  "court_en": "Helsinki Administrative Court",
+  "court_slug": "helsinki",
+  "case_number": "1197/2025",
+  "year": 2025,
+  "language": "fi"
+}

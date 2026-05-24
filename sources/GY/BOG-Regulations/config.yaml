@@ -1,0 +1,59 @@
+source:
+  id: GY/BOG-Regulations
+  name: Bank of Guyana — Regulations & Guidelines
+  country: GY
+  url: https://www.bankofguyana.org.gy/
+  data_types:
+    - legislation
+    - doctrine
+  description: |
+    Legislation, supervision guidelines, insurance/pension guidelines, and
+    circulars from the Bank of Guyana. ~80 documents covering banking
+    regulation, AML/CFT, insurance, credit reporting, deposit insurance,
+    money transfer, and national payments. Full text via PDF extraction.
+    English language. Free access.
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: html_pdf
+  base_url: https://www.bankofguyana.org.gy
+  format: pdf
+  endpoints:
+    legislation: /bog/regulatory-framework/legislation
+    fi_guidelines: /bog/regulated-sectors/financial-institutions/guidelines
+    insurance_guidelines: /bog/regulated-sectors/insurance/guidelines
+    pension_guidelines: /bog/regulated-sectors/pension/guidelines
+    circulars: /bog/media-centre/circulars
+
+schema:
+  key_fields:
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: document_type
+      type: string
+      required: true
+    - name: category
+      type: string
+      required: false
+
+license:
+  name: Open Government Data (Guyana)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official central bank regulatory documents published for public access.

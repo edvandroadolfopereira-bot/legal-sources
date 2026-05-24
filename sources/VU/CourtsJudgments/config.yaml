@@ -1,0 +1,78 @@
+source:
+  id: "VU/CourtsJudgments"
+  country: "VU"
+  name: "Vanuatu Judiciary Judgments Database"
+  url: "https://courts.gov.vu/court-activity/judgments"
+  description: |
+    Judgments from the Vanuatu judiciary: Court of Appeal, Supreme Court,
+    Island Court, and Magistrate's Court. ~2,698 judgments from 2017+.
+    Joomla/SEBLOD CMS with server-side rendered HTML tables.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "html_scrape"
+  base_url: "https://courts.gov.vu"
+  selectors:
+    list_page: "/court-activity/judgments?start={offset}"
+    items_per_page: 25
+    item_selector: "table.table-striped tr"
+    detail_link_col: 3
+    pagination: "?start={offset}"
+
+data_model:
+  type: "case_law"
+  source_nature: "gazette"
+  primary_key: "judgment_id"
+  update_strategy: "append_only"
+  dedup_key:
+    - "judgment_id"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "_id"
+      description: "Unique judgment identifier (numeric ID from URL)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Case name"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of judgment"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision date"
+      type: "date"
+      role: "temporal_key"
+      required: true
+
+license:
+  id: "pd-gov"
+  name: "Public domain (government)"
+  url: "https://courts.gov.vu/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Vanuatu government judiciary portal"
+
+notes: |
+  - English-language judgments from all Vanuatu courts
+  - Pagination: 25 per page, 108 pages, ~2698 total
+  - Full text in div.cck-line-body on detail pages
+  - Metadata in div.cck-line-top (court, case type, case number, dates)
+  - URL pattern: /court-activity/judgments/{id}-{slug}

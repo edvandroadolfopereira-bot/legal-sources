@@ -1,0 +1,74 @@
+source:
+  id: "NI/SajurinGacetas"
+  country: "NI"
+  name: "Nicaragua Official Gazette Archive (Biblioteca Enrique Bolaños)"
+  url: "https://sajurin.enriquebolanos.org/"
+  description: |
+    Digital archive of La Gaceta (Diario Oficial de Nicaragua) from the
+    Enrique Bolaños Foundation. ~20,211 gazette issues from 1940s-2015+.
+    Laws, decrees, presidential orders, official announcements. PDF format
+    with extractable text layers. Spanish language.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "html_scrape"
+  base_url: "https://sajurin.enriquebolanos.org"
+
+data_model:
+  type: "legislation"
+  source_nature: "gazette"
+  primary_key: "gazette_id"
+  update_strategy: "append_only"
+  versioning: "none"
+  dedup_key:
+    - "gazette_id"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "_id"
+      description: "Gazette issue identifier (date-based)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Gazette issue title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from gazette PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date"
+      type: "date"
+      role: "temporal_key"
+      required: true
+
+license:
+  id: "pd-gov"
+  name: "Government of Nicaragua — official gazette (public domain)"
+  url: "https://sajurin.enriquebolanos.org/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government gazette issues digitized by non-profit foundation"
+
+notes: |
+  Language: Spanish
+  ~20,211 gazette issues
+  PDF format with text layers (extractable via pdfplumber)
+  Date range: 1940s-2015+
+  Foundation site, not government — but content is official gazette

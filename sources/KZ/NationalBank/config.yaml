@@ -1,0 +1,45 @@
+country: KZ
+source_id: KZ/NationalBank
+name: Kazakhstan National Bank Regulations
+data_types:
+  - legislation
+language: ru,kk
+endpoints:
+  search: https://adilet.zan.kz/rus/search/docs/?kv=1_117
+  document: https://adilet.zan.kz/rus/docs/{code}
+  portal: https://nationalbank.kz/
+fetcher:
+  rate_limit_ms: 1500
+  max_retries: 3
+  timeout_s: 60
+  ssl_verify: false
+  total_documents: 3000
+schema:
+  date_format: ISO8601
+  text_field: text
+  key_fields:
+    - name: _id
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: date
+      required: false
+license:
+  name: Open Data (Ministry of Justice of Kazakhstan)
+  url: https://adilet.zan.kz/
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Government open data via Adilet legal information system"
+notes: |
+  ~3000+ regulatory acts from the National Bank of Kazakhstan.
+  Fetched from adilet.zan.kz (Adilet LIS) filtered by organ code kv=1_117.
+  202 pages of search results, V-prefix document codes (MoJ registered acts).
+  Full text extracted from HTML. SSL uses Kazakhstan national PKI.

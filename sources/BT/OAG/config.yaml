@@ -1,0 +1,49 @@
+source:
+  id: "BT/OAG"
+  country: "BT"
+  name: "Bhutan Office of Attorney General - Acts"
+  url: "https://oag.gov.bt/language/en/resources/acts-2/"
+  description: |
+    Acts of Parliament of the Kingdom of Bhutan from the Office of the
+    Attorney General. ~120 acts (1953-2024) including the Constitution,
+    Penal Code, Civil Procedure Code, and sector-specific legislation.
+    PDFs with extractable text in English and Dzongkha.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.67
+  burst: 2
+
+api:
+  base_url: "https://oag.gov.bt"
+  endpoints:
+    acts_page: "/language/en/resources/acts-2/"
+  format: "html+pdf"
+  method: "GET"
+  notes: |
+    WordPress site with all acts on a single page. PDFs stored at
+    /wp-content/uploads/{year}/{month}/{filename}.pdf.
+    Parse page for <a href="...pdf"> links, download and extract text.
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - text
+    - date
+    - url
+    - year
+
+license:
+  name: "Public Domain (Government of Bhutan)"
+  url: "https://oag.gov.bt/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government legislation published for public access"

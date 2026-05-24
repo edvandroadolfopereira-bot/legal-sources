@@ -1,0 +1,73 @@
+source:
+  id: "LB/ParliamentLaws"
+  country: "LB"
+  name: "Lebanese Parliament Approved Laws"
+  url: "https://www.lp.gov.lb"
+  description: |
+    Laws approved by the Lebanese Parliament (مجلس النواب), from 1994 onward.
+    Accessed via ASMX web service endpoints (GetLawsByYear, GetLawsBySection,
+    GetLaws, GetLawFile). Full text extracted from base64-encoded PDFs.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.7
+  burst: 2
+
+api:
+  type: "rest"
+  base_url: "https://www.lp.gov.lb/Webservice.asmx"
+
+data_model:
+  type: "legislation"
+  source_nature: "parliament"
+  primary_key: "law_id"
+  update_strategy: "append_only"
+  versioning: "none"
+  dedup_key:
+    - "law_id"
+
+schema:
+  total_fields: null
+  key_fields:
+    - name: "_id"
+      description: "Unique record identifier (LB/ParliamentLaws/{law_id})"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Law title in Arabic"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text content extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication/approval date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+  secondary_fields:
+    - name: "year"
+      description: "Legislative year"
+    - name: "section"
+      description: "Session/section name"
+    - name: "law_id"
+      description: "Internal law ID from lp.gov.lb"
+  probably_ignorable: []
+
+license:
+  name: "Public Domain (Government Works)"
+  url: "https://www.lp.gov.lb"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official parliamentary legislation - public domain under Lebanese law"

@@ -1,0 +1,87 @@
+# ===================================================================
+# SN/JournalOfficiel -- Senegal Official Gazette (via primature.sn)
+# ===================================================================
+# Laws, decrees, codes and administrative orders from the Senegalese
+# Government Secretary General (Secrétariat Général du Gouvernement).
+# ~60 documents with full text. French language. No authentication.
+# ===================================================================
+
+source:
+  id: "SN/JournalOfficiel"
+  country: "SN"
+  name: "Journal Officiel de la République du Sénégal"
+  url: "https://primature.sn/publications/lois-et-reglements"
+  description: |
+    Official legislation from Senegal: codes, laws, decrees, and administrative
+    orders published by the Primature (formerly Secrétariat Général du Gouvernement).
+    Full text available inline for decrees/laws. French language.
+    No authentication required.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+data_model:
+  type: "legislation"
+  primary_key: "document_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "document_id"
+
+schema:
+  total_fields: 8
+  key_fields:
+    - name: "document_id"
+      description: "Slug-based document identifier"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the legal document"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Document date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "document_type"
+      description: "Type: code, loi, decret, arrete"
+      type: "string"
+      role: "category"
+      required: false
+    - name: "url"
+      description: "URL on primature.sn"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "Public Domain (Government Works)"
+  url: "https://primature.sn/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Senegalese government publications"
+
+notes: |
+  - ~60 documents via primature.sn HTML scraping
+  - Codes section: 2 pages of ~18 codes
+  - Lois et Décrets section: 4 pages of ~40 decrees/laws
+  - Full text extracted from div.field--name-body on each document page
+  - 2-second delay between requests
+  - French language
+  - Original source jo.gouv.sn is unreachable; primature.sn is the active alternative

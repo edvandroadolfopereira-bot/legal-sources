@@ -102,11 +102,12 @@ class MahkamahKonstitusiScraper(BaseScraper):
         return self._api_get("/api/search", params={"jenis": MK_JENIS_ID, "page": page})
 
     def _download_pdf_text(self, id_dokumen: int, id_anggota: int) -> str:
-        """Extract text from PDF using centralized extractor."""
+        """Download PDF from JDIHN proxy and extract text."""
+        pdf_url = f"https://jdihn.go.id/pencarian/download?id_dokumen={id_dokumen}&id_anggota={id_anggota}"
         return extract_pdf_markdown(
             source="ID/MahkamahKonstitusi",
-            source_id="",
-            pdf_bytes=id_dokumen,
+            source_id=str(id_dokumen),
+            pdf_url=pdf_url,
             table="case_law",
         ) or ""
 

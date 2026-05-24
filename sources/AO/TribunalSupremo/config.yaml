@@ -1,0 +1,93 @@
+source:
+  id: "AO/TribunalSupremo"
+  country: "AO"
+  name: "Angola Supreme Court (Tribunal Supremo)"
+  url: "https://tribunalsupremo.ao"
+  description: |
+    Decisions (acórdãos) from the Supreme Court of Angola (Tribunal Supremo).
+    Accessed via WordPress REST API. Full text extracted from PDF attachments.
+    ~490 decisions across Criminal, Civil/Administrative/Tax, Labor, Family
+    chambers and Plenário. Content in Portuguese.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "rest"
+  base_url: "https://tribunalsupremo.ao"
+  endpoints:
+    criminal: "/wp-json/wp/v2/posts?categories=163&per_page=100&page={N}"
+    civil: "/wp-json/wp/v2/posts?categories=209&per_page=100&page={N}"
+    labor: "/wp-json/wp/v2/posts?categories=165&per_page=100&page={N}"
+    family: "/wp-json/wp/v2/posts?categories=166&per_page=100&page={N}"
+    plenary: "/wp-json/wp/v2/posts?categories=162&per_page=100&page={N}"
+
+data_model:
+  type: "case_law"
+  source_nature: "consolidated"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier (AO/TribunalSupremo/{wp_id})"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Case title / process number"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the decision (extracted from PDF)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "chamber"
+      description: "Court chamber (Criminal, Civil, Labor, etc.)"
+      type: "string"
+      role: "reference"
+      required: true
+  secondary_fields:
+    - name: "url"
+      description: "Link to original post"
+    - name: "pdf_url"
+      description: "Direct link to PDF decision"
+    - name: "court"
+      description: "Court name"
+  probably_ignorable: []
+
+license:
+  name: "Public Domain (Government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official court decisions are public domain under Angolan law"
+
+notes: |
+  - WordPress site with REST API at /wp-json/wp/v2/posts
+  - Full text in PDF attachments, not in post content
+  - Categories: 163 (Criminal ~303), 209 (Civil ~163), 165 (Labor ~21),
+    166 (Family ~1), 162 (Plenário ~2)
+  - PDF text extraction via pdfplumber
+  - Portuguese language content

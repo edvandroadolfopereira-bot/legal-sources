@@ -1,0 +1,41 @@
+{
+  "_id": "IN/PRSLegislative/the-sabka-bima-sabki-raksha-amendment-of-insurance-laws-bill-2025",
+  "_source": "IN/PRSLegislative",
+  "_type": "legislation",
+  "_fetched_at": "2026-05-09T19:22:15.773043+00:00",
+  "bill_slug": "the-sabka-bima-sabki-raksha-amendment-of-insurance-laws-bill-2025",
+  "title": "The Sabka Bima Sabki Raksha (Amendment of Insurance Laws) Bill, 2025",
+  "text": "The Sabka Bima Sabki Raksha (Amendment of Insurance Laws) Bill, 2025 was introduced in Lok Sabha on December 16, 2025.  It seeks to amend the Insurance Act, 1938, the Life Insurance Corporation Act, 1956, and the Insurance Regulatory and Development Authority Act, 1999.\n100% FDI permitted in an Indian Insurance Company:\nThe Bill proposes to increase the Foreign Direct Investment (FDI) limit in Indian Insurance companies from 74% to 100% of the paid-up equity capital.\nNet-owned fund requirements for foreign re-insurers lowered:\nThe Bill reduces the net-owned fund requirements for foreign entities engaged in the re-insurance business from Rs 5,000 crore to Rs 1,000 crore.  Net owned-fund consists of paid-up equity capital, free reserves, balance in share premium account, and capital reserves made up of surplus arising out of sale proceeds.\nRegistration of transfer of shares:\nUnder the\n1938\nAct, a public company in the insurance business is allowed to register the transfer of its shares only after the approval of the Insurance Regulatory and Development Authority of India (IRDAI).  An approval for registration from IRDAI is required in all cases where the value of the shares to be transferred exceeds 1% of the paid-up share capital of the insurer.  The Bill proposes to increase this threshold to 5% of the paid-up share capital of the insurer.\nMinimum paid-up share capital for insurance co-operative societies:\nThe Bill amends the definition of an insurance co-operative society to remove the requirement of minimum paid-up share capital of Rs 100 crore for life, general, and health insurance businesses.\nApplication of the Act to insurers in SEZs:\nUnder the 1938 Act, the central government may direct that any of the provisions of the Act will not apply to insurers operating in Special Economic Zones (SEZs).  It may also direct that provisions will apply with certain modifications or adaptations.  The Bill extends these powers to International Financial Services Centres (IFSCs) set up in SEZs.  Further, these powers will also apply to insurance intermediaries operating in SEZs and IFSCs in SEZs.\nInsurance intermediaries:\nUnder the Act, intermediaries include brokers, insurance consultants, and third-party administrators.  The Bill broadens this to also include managing general agents and insurance repositories.\nPowers of IRDAI:\nThe Bill adds certain powers to IRDAI.  It empowers IRDAI to approve the scheme of arrangement between an insurer and a company not engaged in insurance business.  It also empowers IRDAI to supersede the Board of Directors of an insurer where it appoints an Administrator.  This may be done if the insurer is carrying on business prejudicial to the interests of its policyholders.  IRDAI may specify regulations on remuneration, commission, or reward payable to insurance agents or intermediaries, including limits, manner of payments, and related disclosures.  The Bill also extends the powers of IRDAI to inspect and investigate to insurance intermediaries.\nPolicyholders’ Education and Protection Fund:\nThe Bill provides for the constitution of a Policyholders’ Education and Protection Fund to be administered by IRDAI.  The Fund will be utilised to protect the interests of policyholders and educate them.  It will be funded by: (i) donations or grants from the central government, state governments, IRDAI, companies, or any other institutions, (ii) sums received as penalties by the IRDAI, and (iii) any other sums specified by regulations.",
+  "date": "2025-12-16",
+  "url": "https://prsindia.org/billtrack/the-sabka-bima-sabki-raksha-amendment-of-insurance-laws-bill-2025",
+  "ministry": "Finance",
+  "house": "Lok Sabha",
+  "status": "Passed",
+  "status_timeline": [
+    {
+      "house": "Lok Sabha",
+      "date": "Dec 16, 2025",
+      "action": "Introduced"
+    },
+    {
+      "house": "Lok Sabha",
+      "date": "Dec 16, 2025",
+      "action": "Passed"
+    },
+    {
+      "house": "Rajya Sabha",
+      "date": "Dec 17, 2025",
+      "action": "Passed"
+    }
+  ],
+  "pdf_urls": [
+    {
+      "url": "https://prsindia.org/files/bills_acts/bills_parliament/2025/Sabka_Bima_Sabki_Raksha(Amendment_of_Insurance_Laws)Bill,2025.pdf",
+      "label": "Bill Text"
+    },
+    {
+      "url": "https://prsindia.org/files/bills_acts/bills_parliament/2025/Sabka_Bima_Sabki_Raksha_(Amendment_of_Insurance_Laws)_Act_2025.pdf",
+      "label": "The Sabka Bima Sabki Raksha (Amendment of Insurance Laws) Act, 2025"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "_id": "IN/PRSLegislative/the-central-armed-police-forces-general-administration-bill-2026",
+  "_source": "IN/PRSLegislative",
+  "_type": "legislation",
+  "_fetched_at": "2026-05-09T19:22:00.417077+00:00",
+  "bill_slug": "the-central-armed-police-forces-general-administration-bill-2026",
+  "title": "The Central Armed Police Forces (General Administration) Bill, 2026",
+  "text": "The Central Armed Police Forces (General Administration) Bill, 2026 was introduced in Rajya Sabha on March 25, 2026.  The Bill seeks to regulate certain matters related to officers of the Central Armed Police Forces (CAPFs).  Currently, such matters are regulated under respective Acts.  The Bill aims to ensure legislative clarity, preserve operational distinctiveness, and harmonise judicial directions with administrative and federal requirements.\nPowers to make Rules:\nThe Bill empowers the central government to make Rules on matters related to officers of specified CAPFs.  These include recruitment, deputation, promotion, and conditions of service.  The Bill applies to five CAPFs listed in the Schedule to the Bill.  These are:  (i) Central Reserve Police Force, (ii) Border Security Force, (iii) Central Industrial Security Force, (iv) Indo-Tibetan Border Police, and (v) Sashastra Seema Bal.  The central government may amend the Schedule by notification to make the Bill applicable to other CAPFs.  Officers include: (i) Group A (general duty or executive) officers of the rank of Assistant Commandant and above in CAPFs, (ii) officers on deputation from the Indian Police Service (IPS), and (iii) officers of the Indian Army on deputation or re-employment.\nThe Bill provides that the central government may frame Rules notwithstanding any other law, any judgement or order of any Court, or any government order.  Specified Rules under the respective Acts will continue to apply until amended or replaced.  Any orders on financial benefits will also continue to apply, until new orders are issued.\nPositions to be filled by deputation:\nThe following positions in CAPFs must be filled by deputation of IPS officers:  (i) 50% of the posts in the rank of Inspector General, (ii) a minimum of 67% of the posts in the rank of Additional Director General, and (iii) all posts in the ranks of Director General and Special Director General.\nOverriding effect:\nIn case of any inconsistency between the Bill and any other law, the provisions of the Bill will prevail.\nDISCLAIMER: This document is being furnished to you for your information.  You may choose to reproduce or redistribute this report for non-commercial purposes in part or in full to any other person with due acknowledgement of",
+  "date": "2026-03-25",
+  "url": "https://prsindia.org/billtrack/the-central-armed-police-forces-general-administration-bill-2026",
+  "ministry": "Home Affairs",
+  "house": "Rajya Sabha",
+  "status": "Passed",
+  "status_timeline": [
+    {
+      "house": "Rajya Sabha",
+      "date": "Mar 25, 2026",
+      "action": "Introduced"
+    },
+    {
+      "house": "Rajya Sabha",
+      "date": "Apr 01, 2026",
+      "action": "Passed"
+    },
+    {
+      "house": "Lok Sabha",
+      "date": "Apr 02, 2026",
+      "action": "Passed"
+    }
+  ],
+  "pdf_urls": [
+    {
+      "url": "https://prsindia.org/files/bills_acts/bills_parliament/2026/CAPF_Bill_2026_Text.pdf",
+      "label": "Bill Text"
+    }
+  ]
+}

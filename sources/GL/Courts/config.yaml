@@ -1,0 +1,38 @@
+name: "Greenland Court Decisions"
+description: "Court decisions from Greenland courts via Domsdatabasen (Danish Courts Database)"
+country: GL
+source_id: "GL/Courts"
+url: "https://domsdatabasen.dk"
+data_types:
+  - case_law
+language: da
+update_frequency: weekly
+
+api:
+  base_url: "https://domsdatabasen.dk/webapi/api"
+  type: rest_json
+  auth: none
+  rate_limit: "1 request per 1.5 seconds"
+  endpoints:
+    search: "POST /Case/advanced"
+    case_detail: "GET /Case/get/{id}"
+    document: "GET /Case/document/{id}"
+
+schema:
+  key_fields:
+    - _id
+    - ecli
+    - court_case_number
+    - court
+    - date
+    - title
+    - text
+
+license:
+  name: "Public Domain (Danish Copyright Act §9)"
+  url: "https://www.retsinformation.dk/eli/lta/2014/1144"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Court decisions are excluded from copyright under Danish Copyright Act §9"

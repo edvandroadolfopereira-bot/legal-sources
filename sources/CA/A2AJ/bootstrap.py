@@ -76,7 +76,11 @@ class A2AJScraper(BaseScraper):
             resp = self.client.get("/coverage", params={"doc_type": doc_type})
             resp.raise_for_status()
             data = resp.json()
-            return data.get("results", []) if isinstance(data, dict) else data
+            if isinstance(data, list):
+                return data
+            # Handle both 'results' and 'caseDatabases' keys (#584)
+            return (data.get("results") or data.get("caseDatabases")
+                    or data.get("databases") or [])
         except Exception as e:
             logger.error(f"Failed to get coverage: {e}")
             return []
@@ -236,13 +240,15 @@ class A2AJScraper(BaseScraper):
         citation = raw.get("citation_en") or raw.get("citation_fr", "")
         text = raw.get("unofficial_text_en") or raw.get("unofficial_text_fr", "")
 
-        # Parse date
-        date_str = raw.get("document_date_en") or raw.get("document_date_fr", "")
+        # Parse date — fall back to year from citation if missing (#585)
+        date_str = raw.get("document_date_en") or raw.get("document_date_fr") or raw.get("decisionDate", "")
         if date_str:
             # Handle ISO datetime like "2020-02-28T00:00:00"
             date_str = date_str[:10]  # Just the date part
         else:
-            date_str = None
+            # Parse year from citation (e.g., "2019 SCC 12 (CanLII)" → "2019-01-01")
+            year_match = re.match(r'(\d{4})\s', citation)
+            date_str = f"{year_match.group(1)}-01-01" if year_match else None
 
         # Clean text - remove any stray HTML if present
         if text:

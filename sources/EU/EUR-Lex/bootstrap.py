@@ -38,9 +38,11 @@ logger = logging.getLogger(__name__)
 
 # Constants
 BASE_URL = "https://eur-lex.europa.eu"
-SPARQL_ENDPOINT = "http://publications.europa.eu/webapi/rdf/sparql"
-CELLAR_CELEX_BASE = "http://publications.europa.eu/resource/celex/"
-CELLAR_BASE = "http://publications.europa.eu/resource/cellar/"
+# Issue #633: HTTPS + POST avoids the AWS WAF challenge that returns HTTP 202
+# with an empty body when long SPARQL queries are sent via GET.
+SPARQL_ENDPOINT = "https://publications.europa.eu/webapi/rdf/sparql"
+CELLAR_CELEX_BASE = "https://publications.europa.eu/resource/celex/"
+CELLAR_BASE = "https://publications.europa.eu/resource/cellar/"
 SEARCH_API = f"{BASE_URL}/search.html"
 
 # Resource type URIs for SPARQL queries
@@ -69,19 +71,41 @@ class EurLexFetcher:
         })
 
     def _make_request(self, url: str, params: Optional[Dict] = None,
-                     headers: Optional[Dict] = None, silent: bool = False) -> requests.Response:
-        """Make HTTP request with retry logic"""
-        max_retries = 3
+                     headers: Optional[Dict] = None, silent: bool = False,
+                     method: str = 'GET', data: Optional[Dict] = None) -> requests.Response:
+        """Make HTTP request with retry logic + AWS WAF challenge handling (issue #633)."""
+        max_retries = 5
         for attempt in range(max_retries):
             try:
-                response = self.session.get(url, params=params, headers=headers, timeout=(15, 60))
+                if method == 'POST':
+                    response = self.session.post(url, data=data, headers=headers, timeout=(15, 120))
+                else:
+                    response = self.session.get(url, params=params, headers=headers, timeout=(15, 60))
                 response.raise_for_status()
+
+                # WAF challenge detection: publications.europa.eu sits behind AWS WAF,
+                # which returns HTTP 202 + JS challenge stub when it rate-limits. The
+                # 202 is a 2xx, so raise_for_status doesn't fire — we have to catch it
+                # explicitly and retry, otherwise SPARQL responses look like empty JSON
+                # and CELLAR responses look like a tiny JS document.
+                waf_action = response.headers.get('x-amzn-waf-action', '')
+                is_waf_challenge = (
+                    response.status_code == 202 and (
+                        waf_action == 'challenge' or
+                        'awsWafCookieDomainList' in response.text[:500]
+                    )
+                )
+                if is_waf_challenge:
+                    raise requests.HTTPError(
+                        f"AWS WAF challenge (status=202, x-amzn-waf-action={waf_action!r})"
+                    )
+
                 return response
             except requests.exceptions.RequestException as e:
                 if not silent:
                     logger.warning(f"Request failed (attempt {attempt + 1}/{max_retries}): {e}")
                 if attempt < max_retries - 1:
-                    time.sleep(2 ** attempt)  # Exponential backoff
+                    time.sleep(3 * (2 ** attempt))  # 3, 6, 12, 24, 48s
                 else:
                     raise
 
@@ -117,13 +141,26 @@ LIMIT {limit}
 OFFSET {offset}
 '''
 
-        params = {
+        # Issue #633: POST instead of GET. AWS WAF challenges long GET query strings
+        # against publications.europa.eu, returning an empty 202 that breaks .json().
+        # POST is also the W3C SPARQL 1.1 Protocol §2.1.3 recommended method.
+        data_payload = {
             'query': query,
             'format': 'application/sparql-results+json'
         }
+        sparql_headers = {'Accept': 'application/sparql-results+json'}
 
         try:
-            response = self._make_request(SPARQL_ENDPOINT, params=params)
+            response = self._make_request(SPARQL_ENDPOINT, method='POST',
+                                          data=data_payload, headers=sparql_headers)
+
+            content_type = response.headers.get('content-type', '')
+            if 'json' not in content_type:
+                raise ValueError(
+                    f"SPARQL endpoint returned non-JSON content-type={content_type!r} "
+                    f"status={response.status_code} body[:200]={response.text[:200]!r}"
+                )
+
             data = response.json()
             results = data.get('results', {}).get('bindings', [])
 
@@ -152,8 +189,11 @@ OFFSET {offset}
             return documents
 
         except Exception as e:
-            logger.error(f"SPARQL query failed: {e}")
-            return []
+            # Issue #633: re-raise instead of swallowing. The previous behaviour
+            # silently returned [] on WAF challenges, causing the year loop to log
+            # "Year XXXX complete: 0 documents fetched" for 67 consecutive years.
+            logger.error(f"SPARQL query failed for year={year} offset={offset}: {e}")
+            raise
 
     def _fetch_document_via_cellar(self, celex: str, silent: bool = False) -> Optional[Dict[str, Any]]:
         """
@@ -295,12 +335,20 @@ OFFSET {offset}
                     break
 
                 logger.info(f"SPARQL discovery: year={year}, offset={offset}...")
-                documents = self._discover_celex_via_sparql(
-                    resource_types=doc_types,
-                    limit=batch_size,
-                    offset=offset,
-                    year=year
-                )
+                try:
+                    documents = self._discover_celex_via_sparql(
+                        resource_types=doc_types,
+                        limit=batch_size,
+                        offset=offset,
+                        year=year
+                    )
+                except Exception as e:
+                    # Issue #633: persist position so the next run can resume here
+                    # instead of silently skipping forward to min_year.
+                    if checkpoint_file:
+                        self._save_checkpoint_v2(checkpoint_file, year, offset, fetched)
+                    logger.error(f"Aborting fetch_all: SPARQL failed at year={year} offset={offset}: {e}")
+                    raise
 
                 if not documents:
                     break
@@ -336,7 +384,7 @@ OFFSET {offset}
                     else:
                         logger.debug(f"No text for {celex}")
 
-                    time.sleep(0.5)  # Rate limiting
+                    time.sleep(1.0)  # Rate limiting (issue #633: 0.5s tripped AWS WAF)
 
                 offset += batch_size
 
@@ -449,11 +497,16 @@ def main():
         is_full = '--full' in sys.argv
 
         if is_sample:
-            target_count = 15
-            min_year = 2024
-            max_year = datetime.now().year
+            # Multi-era sampling: verify cross-decade access works
+            # Fetches 5 docs from each era to confirm older legislation is accessible
+            sample_eras = [
+                (datetime.now().year, 2024, 5),   # Recent
+                (2016, 2016, 5),                   # Mid-2010s (GDPR era)
+                (2005, 2005, 5),                   # Mid-2000s
+            ]
+            target_count = None  # Handled per-era below
             checkpoint_file = None
-            logger.info("Fetching sample documents (15 records from 2024+)...")
+            logger.info("Fetching multi-era sample (5 docs × 3 eras: recent, 2016, 2005)...")
         elif is_full:
             target_count = None  # Unlimited
             min_year = 1952
@@ -461,35 +514,49 @@ def main():
             checkpoint_file = str(Path(__file__).parent / 'checkpoint.json')
             logger.info("Fetching ALL documents (year-by-year from present to 1952)...")
         else:
-            target_count = 100
-            min_year = 2020
+            target_count = 500
+            min_year = 2000
             max_year = datetime.now().year
             checkpoint_file = None
-            logger.info("Fetching 100 documents from 2020+ (use --full for complete bootstrap)...")
+            logger.info("Fetching 500 documents from 2000+ (use --full for complete bootstrap)...")
 
         sample_count = 0
 
-        for raw_doc in fetcher.fetch_all(max_docs=target_count, min_year=min_year,
-                                          max_year=max_year, checkpoint_file=checkpoint_file):
-            if target_count is not None and sample_count >= target_count:
-                break
-
-            normalized = fetcher.normalize(raw_doc)
-
-            # Validate that we have actual text content
-            if len(normalized.get('text', '')) < 100:
-                logger.warning(f"Skipping {normalized['_id']} - insufficient text content")
-                continue
-
-            # Save to sample directory
-            filename = f"{normalized['_id'].replace(':', '_').replace('/', '_')}.json"
-            filepath = sample_dir / filename
-
-            with open(filepath, 'w', encoding='utf-8') as f:
-                json.dump(normalized, f, indent=2, ensure_ascii=False)
-
-            logger.info(f"Saved: {normalized['title'][:80]}... ({len(normalized['text'])} chars)")
-            sample_count += 1
+        if is_sample:
+            # Multi-era sampling: fetch from each era separately
+            for era_max, era_min, era_limit in sample_eras:
+                era_count = 0
+                logger.info(f"Sampling era {era_min}-{era_max} (up to {era_limit} docs)...")
+                for raw_doc in fetcher.fetch_all(max_docs=era_limit, min_year=era_min, max_year=era_max):
+                    if era_count >= era_limit:
+                        break
+                    normalized = fetcher.normalize(raw_doc)
+                    if len(normalized.get('text', '')) < 100:
+                        logger.warning(f"Skipping {normalized['_id']} - insufficient text content")
+                        continue
+                    filename = f"{normalized['_id'].replace(':', '_').replace('/', '_')}.json"
+                    filepath = sample_dir / filename
+                    with open(filepath, 'w', encoding='utf-8') as f:
+                        json.dump(normalized, f, indent=2, ensure_ascii=False)
+                    logger.info(f"Saved: {normalized['title'][:80]}... ({len(normalized['text'])} chars)")
+                    sample_count += 1
+                    era_count += 1
+                logger.info(f"Era {era_min}-{era_max}: saved {era_count} documents")
+        else:
+            for raw_doc in fetcher.fetch_all(max_docs=target_count, min_year=min_year,
+                                              max_year=max_year, checkpoint_file=checkpoint_file):
+                if target_count is not None and sample_count >= target_count:
+                    break
+                normalized = fetcher.normalize(raw_doc)
+                if len(normalized.get('text', '')) < 100:
+                    logger.warning(f"Skipping {normalized['_id']} - insufficient text content")
+                    continue
+                filename = f"{normalized['_id'].replace(':', '_').replace('/', '_')}.json"
+                filepath = sample_dir / filename
+                with open(filepath, 'w', encoding='utf-8') as f:
+                    json.dump(normalized, f, indent=2, ensure_ascii=False)
+                logger.info(f"Saved: {normalized['title'][:80]}... ({len(normalized['text'])} chars)")
+                sample_count += 1
 
         logger.info(f"Bootstrap complete. Saved {sample_count} documents to {sample_dir}")
 

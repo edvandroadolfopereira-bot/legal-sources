@@ -1,0 +1,47 @@
+data_model:
+  update_strategy: upsert
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: _source
+    required: false
+    type: string
+  - name: _type
+    required: false
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: url
+    required: true
+    type: string
+source:
+  auth: none
+  country: PH
+  data_types:
+  - legislation
+  - case_law
+  description: >
+    Philippine legislation (Republic Acts, Presidential Decrees, Acts, Batas Pambansa,
+    Commonwealth Acts) and Supreme Court jurisprudence (1901-present) from Corpus Juris,
+    a free legal database with ~58,786 case decisions and thousands of laws.
+  id: PH/CorpusJuris
+  language: en
+  name: Corpus Juris — Free Philippine Law Database
+  url: https://thecorpusjuris.com/
+license:
+  name: Public Domain (Government)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Philippine government works are public domain. Site explicitly states content is free and never paywalled.

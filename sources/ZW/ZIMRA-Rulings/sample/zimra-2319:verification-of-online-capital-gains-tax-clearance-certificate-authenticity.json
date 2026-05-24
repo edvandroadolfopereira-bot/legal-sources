@@ -1,0 +1,13 @@
+{
+  "_id": "zimra-2319:verification-of-online-capital-gains-tax-clearance-certificate-authenticity",
+  "_source": "ZW/ZIMRA-Rulings",
+  "_type": "doctrine",
+  "_fetched_at": "2026-05-11T23:58:29.715753+00:00",
+  "title": "Verification of Online Capital Gains Tax Clearance Certificate authenticity",
+  "text": "Clients can check authenticity of the capital gains tax clearance certificate produced online to find if it is a valid tax clearance certificate. Checking for authenticity of the tax clearance assists in preventing fraudulent tax certificate generation that can be issued by untrustworthy people who are bent to deprive the fiscus of revenue.\nHow to check the authenticity of an online capital gains tax clearance certificate:\nElectronic Capital Gains Tax Clearance Certificate presented can have its authenticity validated using either of the two methods indicated below:\nValidation by authentication code\nEnter the URL\nhttps://mytaxselfservice.zimra.co.zw/\non the internet browser and click\nEnter\n, and the SSP Homepage appears.\nClick\nVerify Certificate\non the page.\nA window will appear, and under\nSelect Certificate Type\n, click the dropdown icon and select\nCGT Certificate.\nInsert the Tax Payer\nFill in the authentication code as it appears on the CGT certificate that is to be validated\nClick\nVerify\nA message “The CGT Certificate of\nSAMPLE LTD\n(name of taxpayer) with\n2001676900 TIN\n(Taxpayer TIN) exists in the system” will appear if the certificate exists, otherwise the certificate will not be found.\nValidation by Scanning QR Code\nScan the QR code using a scanning device\nA message “The CGT Certificate of SAMPLE LTD (name of taxpayer) with\n2001676900\nTIN (Taxpayer TIN) exists in the system” will appear if the certificate exists, otherwise the certificate will not be found.\nMy Taxes, My Duties: Building my Zimbabwe.\nTaxman\nVerification of Online Capital Gains Tax Clearance Certificate authenticity published on 22/05/2025\nDisclaimer\nThis article was compiled by the Zimbabwe Revenue Authority (ZIMRA) for information purposes only. ZIMRA shall not accept responsibility for loss or damage arising from use of material in this article and no liability will attach to the Zimbabwe Revenue Authority.",
+  "date": "2025-05-22",
+  "url": "https://www.zimra.co.zw/news/2319:verification-of-online-capital-gains-tax-clearance-certificate-authenticity",
+  "category": "Taxman's Corner",
+  "jurisdiction": "ZW",
+  "authority": "Zimbabwe Revenue Authority"
+}

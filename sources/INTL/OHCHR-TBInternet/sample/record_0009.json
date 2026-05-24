@@ -1,0 +1,41 @@
+{
+  "_id": "85a99b18-1a2a-4f6c-82b1-97876d8453bc",
+  "_source": "INTL/OHCHR-TBInternet",
+  "_type": "doctrine",
+  "_fetched_at": "2026-05-11T04:56:23.935439+00:00",
+  "title": "CRPD/C/WSM/CO/1 — Concerns/Observations (CRPD)",
+  "text": "Awareness-raising (art. 8) 13.The Committee recognizes the importance of the State Party’s cultural values and of fa’a Samoa (the Samoan way of life), according to which strong emphasis is placed on protecting and caring for the most vulnerable members of society. However, it notes with concern: (a)The prevalence of stigmatization, stereotypes and discriminatory attitudes towards persons with disabilities, particularly persons with intellectual disabilities, and of social and cultural practices that normalize segregation and exclusion; (b)The limited awareness of the Convention among families, communities, churches and service providers, including practices whereby professionals address the relatives of persons with disabilities instead of the persons with disabilities themselves and the overreliance on organizations of persons with disabilities to disseminate the Convention.",
+  "date": "2026-04-08",
+  "url": "https://uhri.ohchr.org/en/search-human-rights-recommendations",
+  "symbol": "CRPD/C/WSM/CO/1",
+  "document_id": "74b4bb5f-8c22-4c05-af4c-bc430015734e",
+  "annotation_type": "Concerns/Observations",
+  "treaty_body": "CRPD",
+  "countries": [
+    "Samoa"
+  ],
+  "regions": [
+    "Asia-Pacific"
+  ],
+  "themes": [
+    "Equality & non-discrimination",
+    "Human rights education, trainings & awareness raising",
+    "Data collection & research"
+  ],
+  "sdgs": [
+    "10.2 - Promote universal social, economical and political inclusion",
+    "17 - PARTNERSHIPS FOR THE GOALS",
+    "4 - QUALITY EDUCATION",
+    "4.7 - Education for sustainable development and global citizenship",
+    "10 - REDUCED INEQUALITIES",
+    "17.18 - Enhance availability of reliable data"
+  ],
+  "affected_persons": [
+    "Vulnerable persons/groups",
+    "Minorities/ racial, ethnic, linguistic, religious or descent-based groups",
+    "Persons with disabilities"
+  ],
+  "upr_cycle": null,
+  "upr_positions": [],
+  "upr_recommending_countries": []
+}

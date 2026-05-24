@@ -62,24 +62,30 @@ def parse_case_metadata(text: str, raw_metadata: dict) -> dict:
         # "1/15/1985"
         r"(\d{1,2}/\d{1,2}/\d{4})",
     ]
+    date_formats = (
+        "%B %d, %Y", "%B %d %Y", "%b. %d, %Y", "%b. %d %Y",
+        "%b %d, %Y", "%b %d %Y", "%m/%d/%Y",
+        "%d %B %Y", "%d %b %Y", "%d %b. %Y",
+    )
     for pattern in date_patterns:
-        match = re.search(pattern, text[:5000])
+        match = re.search(pattern, text[:8000])
         if match:
             raw_date = match.group(1)
-            for fmt in (
-                "%B %d, %Y", "%B %d %Y", "%b. %d, %Y", "%b. %d %Y",
-                "%b %d, %Y", "%b %d %Y", "%m/%d/%Y",
-                "%d %B %Y", "%d %b %Y", "%d %b. %Y",
-            ):
+            for fmt in date_formats:
                 try:
                     dt = datetime.strptime(raw_date, fmt)
                     result["decision_date"] = dt.strftime("%Y-%m-%d")
                     break
                 except ValueError:
                     continue
-            else:
-                result["decision_date"] = raw_date
-            break
+            if result["decision_date"]:
+                break
+
+    # Fallback: extract a 4-digit year from the first 2000 chars (court header area)
+    if not result["decision_date"]:
+        year_match = re.search(r'\b(1[789]\d{2}|20[0-2]\d)\b', text[:2000])
+        if year_match:
+            result["decision_date"] = f"{year_match.group(1)}-01-01"
 
     # Get author from metadata if available
     if raw_metadata and "author" in raw_metadata:

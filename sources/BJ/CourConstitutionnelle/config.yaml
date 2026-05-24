@@ -1,0 +1,33 @@
+source:
+  id: "BJ/CourConstitutionnelle"
+  country: "BJ"
+  name: "Cour Constitutionnelle du Bénin"
+  url: "https://courconstitutionnelle.bj"
+  description: |
+    Constitutional Court of Benin — all decisions (DCC, EL, EP, EG) from 1993 to present.
+    ~7,450 decisions. Full text extracted from PDF. French language.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.7
+  burst: 2
+
+schema:
+  key_fields:
+    - case_number
+    - date
+    - decision_type
+
+license:
+  name: "Public Domain (Government Works)"
+  url: "https://courconstitutionnelle.bj"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government decisions are public domain under Beninese law."

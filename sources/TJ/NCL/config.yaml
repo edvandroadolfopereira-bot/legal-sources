@@ -1,0 +1,93 @@
+source:
+  id: "TJ/NCL"
+  country: "TJ"
+  name: "National Center of Legislation (MMK)"
+  url: "https://mmk.tj"
+  description: |
+    Official legislation database of Tajikistan maintained by the National Center
+    of Legislation (Маркази миллии қонунгузорӣ) under the President. Provides full
+    text of laws, codes, presidential decrees, and government resolutions in Tajik.
+    Also accessible via ncl.tj (English) and ncz.tj (Russian).
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+  max_workers: 1
+
+api:
+  type: "html_scrape"
+  base_url: "https://mmk.tj"
+
+data_model:
+  type: "legislation"
+  source_nature: "consolidated"
+  primary_key: "url_slug"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "url_slug"
+
+schema:
+  total_fields: null
+  key_fields:
+    - name: "url_slug"
+      description: "URL slug from mmk.tj content path"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Title of the law/code"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the legislation"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "classification"
+      description: "Document type (e.g., Конститутсия, Қонун, Кодекс)"
+      type: "string"
+      role: "status"
+      required: false
+    - name: "number"
+      description: "Official law number"
+      type: "string"
+      role: "reference"
+      required: false
+    - name: "authority"
+      description: "Issuing authority"
+      type: "string"
+      role: "reference"
+      required: false
+    - name: "status"
+      description: "Legal status (e.g., Амалкунанда = Active)"
+      type: "string"
+      role: "status"
+      required: false
+  secondary_fields: []
+  probably_ignorable: []
+
+license:
+  id: "pd-gov"
+  name: "Public Domain (Government)"
+  url: "https://mmk.tj"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government legislation of Tajikistan, published for public access."
+
+notes: |
+  - Content in Tajik language primarily, some in Russian
+  - mmk.tj is the Tajik version; ncl.tj is English; ncz.tj is Russian
+  - Laws have full text embedded in Drupal body field
+  - Also provides downloadable .doc/.pdf/.zip files at /system/files/Legislation/{id}_tj.{ext}
+  - Site uses Drupal 7 with SSL cert issues on ncl.tj (works on mmk.tj via HTTPS)
+  - Taxonomy term 760 lists legislation content

@@ -1,0 +1,81 @@
+# ===================================================================
+# INTL/OHCHR-TBInternet -- UN Treaty Body Documentation (UHRI Export)
+# ===================================================================
+# Country-specific observations and recommendations from all 10 UN
+# Treaty Bodies, Special Procedures, and the Universal Periodic Review.
+# Data sourced via the Universal Human Rights Index (UHRI) JSON export.
+# ===================================================================
+
+source:
+  id: "INTL/OHCHR-TBInternet"
+  country: "INTL"
+  name: "UN Treaty Body Documentation (TBInternet)"
+  url: "https://tbinternet.ohchr.org/"
+  description: |
+    Country-specific observations and recommendations from the 10 UN
+    Treaty Bodies (CCPR, CESCR, CERD, CEDAW, CAT, CRC, CMW, CRPD,
+    CED, SPT), Special Procedures mandate holders, and the Universal
+    Periodic Review (UPR). Data sourced from the Universal Human Rights
+    Index (UHRI) full JSON export at dataex.ohchr.org. Covers all UN
+    member states with thematic classifications and SDG mappings.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "json_export"
+  base_url: "https://dataex.ohchr.org"
+  export_url: "https://dataex.ohchr.org/uhri/export-results/export-full-en.json"
+  notes: "365MB JSON array; daily refresh"
+
+data_model:
+  type: "doctrine"
+  primary_key: "AnnotationId"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 14
+  key_fields:
+    - name: "text"
+      description: "Full text of the recommendation or observation"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "title"
+      description: "Document symbol and annotation type"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "symbol"
+      description: "UN document symbol (e.g. CRPD/C/WSM/CO/1)"
+      type: "string"
+      role: "identifier"
+      required: true
+
+license:
+  name: "United Nations Open Access"
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "UN document content is publicly available; attribution to OHCHR required"
+
+notes: |
+  - UHRI JSON export at dataex.ohchr.org (~365MB, updated daily)
+  - Contains annotations (recommendations + observations) from all treaty bodies
+  - Each record has text, countries, themes, SDGs, affected persons
+  - HTML tags in text field — stripped during normalization
+  - File too large to load in memory; streaming parser required

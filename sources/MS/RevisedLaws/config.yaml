@@ -1,0 +1,42 @@
+source:
+  id: MS/RevisedLaws
+  country: MS
+  name: "Montserrat Revised Laws"
+  url: https://www.gov.ms/government/legal-department/attorney-generals-chambers/acts-revised-2019/
+  data_types:
+    - legislation
+  language: en
+license:
+  name: "Government of Montserrat (Open Access)"
+  url: https://www.gov.ms
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government legislation published by the Attorney General's Chambers. Government documents are public records."
+fetcher:
+  type: html_scraper
+  pagination: none
+  rate_limit: 2.0
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: pdf_url
+      required: false
+      type: string
+    - name: category
+      required: false
+      type: string
+  date_fields:
+    - _fetched_at
+  text_fields:
+    - text
+    - title
+notes: >
+  ~1449 legislation documents from Montserrat AG's Chambers.
+  Covers Revised Laws (2019 & 2025), Acts Passed (2016-2026),
+  SROs (2013-2026), and Omitted Laws.
+  Full text extracted from PDFs via pdfplumber.
+  SSL verification disabled due to gov.ms certificate issues.

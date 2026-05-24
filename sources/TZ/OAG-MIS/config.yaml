@@ -1,0 +1,82 @@
+source:
+  id: "TZ/OAG-MIS"
+  country: "TZ"
+  name: "Tanzania Attorney General's Office - Management Information System"
+  url: "https://oagmis.oag.go.tz/portal/acts"
+  description: |
+    Official legislation portal of the Attorney General's Office of the
+    United Republic of Tanzania. Provides parliament acts (314+), subsidiary
+    legislation (4,479+), and revised acts (542+) as downloadable PDFs
+    via a JSON/DataTables AJAX API.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+  max_workers: 2
+
+api:
+  type: "rest"
+  base_url: "https://oagmis.oag.go.tz"
+  endpoints:
+    acts: "/portal/acts-ajax"
+    subsidiary: "/portal/legislation-ajax"
+    revised: "/portal/revised-acts-ajax"
+    act_download: "/portal/acts/{id}/download"
+    sub_download: "/portal/legislation/{id}/download"
+    revised_download: "/portal/revised-acts/revised/{id}/download"
+
+data_model:
+  type: "legislation"
+  source_nature: "gazette"
+  primary_key: "act_id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "act_id"
+    - "doc_type"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "id"
+      description: "Unique document identifier"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Title of the act or regulation"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text content extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date"
+      type: "date"
+      role: "temporal_key"
+      required: true
+
+license:
+  id: "ogd"
+  name: "Open Government Data (Tanzania)"
+  url: "https://oagmis.oag.go.tz/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government legislation published by the Attorney General's Office."
+
+notes: |
+  Three AJAX endpoints return paginated JSON via DataTables server-side processing.
+  Each record includes a documentPath for PDF download.
+  PDFs contain full text of Tanzanian legislation (Swahili and English).
+  Text extraction via pdfminer.six.

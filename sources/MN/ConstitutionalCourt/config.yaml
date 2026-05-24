@@ -1,0 +1,71 @@
+source_id: MN/ConstitutionalCourt
+country: MN
+name: Mongolia Constitutional Court (Tsets) — Decisions
+description: |
+  Decisions of the Constitutional Court of Mongolia (Монгол Улсын Үндсэн хуулийн цэц).
+  Includes магадлал (conclusions), дүгнэлт (opinions), тогтоол (resolutions), and
+  тойм (decision digests/summaries).
+  Phase 1: Decision digests from WP posts in court session categories (HTML content).
+  Phase 2: Full decision text from PDF embeds on WP pages (requires pdfminer).
+
+data_types:
+  - case_law
+
+url: https://constitutionalcourt.mn/
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+
+api:
+  type: wp_rest_api
+  base_url: https://constitutionalcourt.mn
+  endpoints:
+    posts: /wp-json/wp/v2/posts?categories=6,7
+    pages: /wp-json/wp/v2/pages
+
+data_model:
+  type: case_law
+  source_nature: court_website
+  primary_key: _id
+  update_strategy: append_only
+  dedup_key:
+    - _id
+
+schema:
+  key_fields:
+    - name: _id
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: date
+      required: false
+    - name: decision_type
+      type: string
+      required: false
+    - name: decision_number
+      type: string
+      required: false
+    - name: decision_year
+      type: string
+      required: false
+    - name: source_method
+      type: string
+      required: false
+
+license:
+  name: Public Domain (Government)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official constitutional court decisions of Mongolia, published in the public interest."

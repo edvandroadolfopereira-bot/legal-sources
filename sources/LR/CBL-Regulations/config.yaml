@@ -1,0 +1,74 @@
+source:
+  id: "LR/CBL-Regulations"
+  country: "LR"
+  name: "Central Bank of Liberia — Regulations and Directives"
+  url: "https://www.cbl.org.lr"
+  description: |
+    Banking regulations, directives, and guidelines from the Central Bank
+    of Liberia. ~84 PDF documents spanning 2000-2026. English language.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+data_model:
+  type: "legislation"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: 8
+  key_fields:
+    - name: "doc_id"
+      description: "Document identifier derived from PDF filename"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "doc_type"
+      description: "Type: regulation, directive, or guideline"
+      type: "string"
+      role: "category"
+      required: true
+    - name: "url"
+      description: "URL to the PDF file"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "Public Domain (Government)"
+  url: "https://www.cbl.org.lr"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government regulatory documents published for public compliance"
+
+notes: |
+  - ~84 PDF documents: regulations (45), directives (20), guidelines (19)
+  - Full text extracted via pdfplumber
+  - English language
+  - Spans 2000-2026

@@ -1,0 +1,48 @@
+source:
+  id: "IN/CERC"
+  country: "IN"
+  name: "Central Electricity Regulatory Commission"
+  url: "https://cercind.gov.in/"
+  description: |
+    Orders, regulations, and tariff orders from India's Central Electricity
+    Regulatory Commission (CERC). Covers 2017-present with structured table
+    listings and PDF full text. ~4800+ orders and ~200 regulations.
+  data_types:
+    - doctrine
+  auth: none
+
+rate_limit:
+  requests_per_second: 1.5
+  burst: 3
+
+fetch:
+  max_retries: 3
+  rate_limit: 1.5
+  timeout: 60
+
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: title
+      required: true
+      type: string
+    - name: date
+      required: false
+      type: date
+    - name: category
+      required: false
+      type: string
+    - name: petition_no
+      required: false
+      type: string
+
+license:
+  name: "Government Open Data (India)"
+  url: "https://cercind.gov.in/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Indian government orders and regulations are public records"

@@ -1,19 +1,20 @@
 # US Code (Codified Federal Statutes)
 
-**Source:** [https://uscode.house.gov](https://uscode.house.gov)
+**Source:** [GovInfo — US Code](https://www.govinfo.gov/app/collection/uscode)
 **Country:** US
 **Data types:** legislation
-**Status:** Blocked
+**Status:** Complete
 
-## Why this source is blocked
+All 54 titles of the United States Code, fetched as section-level records
+with full statutory text from GovInfo public content URLs (no API key required).
 
-**Category:** Unknown
+## Coverage
 
-**Details:** BLOCKED: uscode.house.gov download page times out/blocks requests. GovInfo bulk USCODE endpoint returns error page. GovInfo API needs api.data.gov key. All 54 titles of codified US law. Need admin to register at api.data.gov or try from VPS.
+- All 54 USC titles (Title 1 through Title 54, excluding Title 53 which does not exist)
+- Current edition (2024)
+- ~60,000+ individual code sections
+- Includes statutory text, source credits, and citation paths
 
-## How you can help
+## License
 
-- If you have access to this data source or know of an alternative, please file an issue
-- Open a PR with suggestions or a working scraper
-
-- File an issue or open a PR at [worldwidelaw/legal-sources](https://github.com/worldwidelaw/legal-sources)
+[Public Domain — 17 U.S.C. § 105](https://www.law.cornell.edu/uscode/text/17/105) — US federal government works are not subject to copyright.

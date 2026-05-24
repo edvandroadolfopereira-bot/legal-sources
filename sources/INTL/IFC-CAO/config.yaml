@@ -1,0 +1,77 @@
+# ===================================================================
+# INTL/IFC-CAO -- IFC/MIGA Compliance Advisor Ombudsman Cases
+# ===================================================================
+# ~250+ cases since 2000. Full text extracted from PDF reports.
+# ===================================================================
+
+source:
+  id: "INTL/IFC-CAO"
+  country: "INTL"
+  name: "IFC/MIGA Compliance Advisor Ombudsman — Cases"
+  url: "https://www.cao-ombudsman.org/cases"
+  description: |
+    Cases of the Compliance Advisor Ombudsman (CAO), the independent
+    accountability mechanism of the International Finance Corporation (IFC)
+    and Multilateral Investment Guarantee Agency (MIGA), World Bank Group.
+    Includes assessment reports, compliance investigation reports, and
+    dispute resolution documents. PDFs downloaded and text extracted.
+  data_types:
+    - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+api:
+  type: "html_scrape_pdf"
+  csv_export: "https://www.cao-ombudsman.org/export-all-cases"
+  sitemap: "https://www.cao-ombudsman.org/sitemap.xml"
+  base_url: "https://www.cao-ombudsman.org"
+
+data_model:
+  type: "case_law"
+  primary_key: "case_slug"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 14
+  key_fields:
+    - name: "title"
+      description: "Case name (e.g., 'Rwanda: AB Bank-01')"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF reports"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Last updated date (ISO 8601)"
+      type: "string"
+      role: "temporal_key"
+      required: false
+    - name: "case_slug"
+      description: "URL slug identifier for the case"
+      type: "string"
+      role: "identifier"
+      required: true
+
+license:
+  name: "Custom — CAO public documents"
+  url: "https://www.cao-ombudsman.org/terms-use"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "CAO reports and decisions are published for public accountability."
+
+notes: |
+  - CSV export at /export-all-cases provides case metadata (255 rows)
+  - Sitemap provides ~84 case page URLs
+  - Each case page links to PDF documents (assessment reports, investigation reports, etc.)
+  - Full text extracted from PDFs using PyMuPDF (fitz)
+  - 2-second delays between requests

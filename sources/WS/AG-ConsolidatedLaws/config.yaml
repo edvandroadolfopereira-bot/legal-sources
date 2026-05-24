@@ -1,0 +1,84 @@
+# ===================================================================
+# WS/AG-ConsolidatedLaws -- Samoa Attorney General Consolidated Laws
+# ===================================================================
+# Official consolidated laws of Samoa (2023 edition) published by the
+# Office of the Attorney General. ~267 Acts and Ordinances as PDFs.
+# No authentication required.
+# ===================================================================
+
+source:
+  id: "WS/AG-ConsolidatedLaws"
+  country: "WS"
+  name: "Samoa Attorney General Consolidated Laws 2023"
+  url: "https://www.ag.gov.ws/consolidation-of-laws-of-samoa/"
+  description: |
+    Official consolidated laws of Samoa (2023 edition) from the
+    Office of the Attorney General. Covers all Acts and Ordinances
+    from 1908 to 2021, consolidated as of 2023. ~267 documents.
+    Language: English.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 3
+
+api:
+  type: "html_ssr"
+  base_url: "https://www.ag.gov.ws/consolidation-of-laws-of-samoa/"
+  pdf_host: "https://www.ag.gov.ws/wp-content/uploads/"
+
+data_model:
+  type: "legislation"
+  primary_key: "_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "_id"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "_id"
+      description: "Unique ID derived from PDF filename slug"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Act or Ordinance title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "url"
+      description: "PDF download URL"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "date"
+      description: "Year of enactment (ISO 8601)"
+      type: "string"
+      role: "temporal"
+      required: false
+
+license:
+  name: "Public Domain (Government of Samoa)"
+  url: "https://www.ag.gov.ws/consolidation-of-laws-of-samoa/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government legislation published for public access"
+
+notes: |
+  - 267 consolidated Acts/Ordinances as PDFs
+  - All hosted at ag.gov.ws/wp-content/uploads/2024/02/
+  - Legislation spans 1908-2021, consolidated 2023
+  - English language (official language of Samoa's legal system)

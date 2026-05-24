@@ -1,0 +1,73 @@
+source:
+  id: "IR/IRANHRDC-Codes"
+  country: "IR"
+  name: "Iran Human Rights Documentation Center — Iranian Legal Codes (English)"
+  url: "https://iranhrdc.org/category/english/human-rights-documents/iranian-codes/"
+  description: |
+    English translations of major Iranian legal codes published by the Iran
+    Human Rights Documentation Center (US-based). ~20 codes including
+    Islamic Penal Code, Civil Code, Constitution, Criminal Procedure Code,
+    Press Law, Election Law, Family Protection Law. Open access.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "html_scrape"
+  base_url: "https://iranhrdc.org"
+
+data_model:
+  type: "legislation"
+  source_nature: "consolidated"
+  primary_key: "slug"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "slug"
+
+schema:
+  total_fields: 9
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier (URL slug)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the legal code"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date on IRANHRDC"
+      type: "date"
+      role: "temporal_key"
+      required: true
+
+license:
+  id: "custom-terms"
+  name: "IRANHRDC open access translations"
+  url: "https://iranhrdc.org/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "US-based NGO translations of Iranian legal codes. Open access."
+
+notes: |
+  Language: English (translations from Persian/Farsi)
+  ~20 major legal codes translated
+  Some documents have full text inline in HTML, others have PDF attachments
+  WordPress site but WP REST API is locked (401)

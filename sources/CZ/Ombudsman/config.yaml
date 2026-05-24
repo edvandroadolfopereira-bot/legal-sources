@@ -1,0 +1,58 @@
+source:
+  id: CZ/Ombudsman
+  name: "Czech Ombudsman ESO Database (Veřejný ochránce práv)"
+  country: CZ
+  url: https://eso.ochrance.cz
+  data_types:
+    - doctrine
+  language: cs
+  auth: none
+
+discovery:
+  method: html_scrape
+  search_url: https://eso.ochrance.cz/Vyhledavani/Search
+  results_url: https://eso.ochrance.cz/Nalezene/GetTableContent
+  detail_url: https://eso.ochrance.cz/Nalezene/Edit/{id}
+  notes: >
+    ~6,500+ ombudsman findings, investigation reports, and legal opinions.
+    Session-based search: POST search form, then paginate results via AJAX.
+    Full text in HTML detail pages (text_dokumentu class).
+
+fetch:
+  rate_limit: 1.5
+  timeout: 30
+
+schema:
+  required_fields:
+    - _id
+    - _source
+    - _type
+    - _fetched_at
+    - title
+    - text
+    - date
+    - url
+  key_fields:
+    - name: file_reference
+      type: string
+      required: true
+    - name: legal_area
+      type: string
+      required: false
+    - name: subject
+      type: string
+      required: false
+  optional_fields:
+    - finding_type
+    - result
+    - submission_date
+    - issue_date
+
+license:
+  name: "Open Government Data (Czech Republic)"
+  url: "https://data.gov.cz"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Published on official government website as public transparency data."

@@ -1,0 +1,78 @@
+source:
+  id: "DO/TransparenciaSCJ"
+  country: "DO"
+  name: "Dominican Republic Judicial Decisions (Juristeca + Decisiones API)"
+  url: "https://justicia.gob.do/apis-judiciales/"
+  description: |
+    Judicial decisions from Dominican Republic courts via official open APIs.
+    Uses Juristeca API for discovery/metadata and Decisiones API for PDF full text.
+    Coverage: All Dominican courts (SCJ, Constitutional Tribunal, Appeals Courts,
+    First Instance, Juzgados de Paz). Decisions from ~2005 to present.
+    Language: Spanish.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1.5
+  burst: 3
+  max_workers: 3
+
+api:
+  type: "rest"
+  base_url: "https://api.poderjudicial.gob.do"
+  endpoints:
+    search: "/Juristeca/api/v1/jurisprudencia/search"
+    detail: "/Juristeca/api/v1/jurisprudencia/{id}"
+    decisiones: "/Decisiones/Decisiones/ObtenerDecisiones"
+
+data_model:
+  type: "case_law"
+  source_nature: "gazette"
+  primary_key: "id"
+  update_strategy: "append_only"
+  versioning: "none"
+  dedup_key:
+    - "id"
+
+schema:
+  total_fields: 15
+  key_fields:
+    - name: "id"
+      description: "Juristeca document ID"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Decision title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the judicial decision"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision date"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "tribunal"
+      description: "Court name"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  id: "pd-gov"
+  name: "Public Domain (Government)"
+  url: "https://justicia.gob.do/apis-judiciales/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official open APIs with no authentication required. Public judicial decisions."

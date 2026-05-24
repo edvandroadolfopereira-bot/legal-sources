@@ -1,0 +1,84 @@
+# ===================================================================
+# NO/Forbrukertilsynet -- Norwegian Consumer Authority
+# ===================================================================
+# Consumer protection enforcement decisions (vedtak): prohibition
+# orders, coercive fines, administrative penalties. ~50 decisions
+# since 2021 via HTML scraping of forbrukertilsynet.no.
+# Norwegian language. NLOD 2.0 license.
+# ===================================================================
+
+source:
+  id: "NO/Forbrukertilsynet"
+  country: "NO"
+  name: "Norwegian Consumer Authority (Forbrukertilsynet)"
+  url: "https://www.forbrukertilsynet.no"
+  description: |
+    Forbrukertilsynet enforces the Marketing Control Act, the Consumer
+    Contracts Act, the Transparency Act, and related consumer protection
+    legislation in Norway. This source collects enforcement decisions
+    (vedtak): prohibition orders with coercive fines (forbudsvedtak med
+    tvangsmulkt), administrative penalty decisions (overtredelsesgebyr),
+    and compliance orders. ~50 decisions from 2021 onwards. Full text
+    via HTML page content.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+  notes: "2-second delay between requests."
+
+api:
+  type: "scraping"
+  base_url: "https://www.forbrukertilsynet.no"
+  endpoints:
+    vedtak_index: "/lov-og-rett/vedtak"
+    vedtak_archive: "/dokumenttype/vedtak"
+  response_format: "html"
+
+schema:
+  total_fields: 9
+  key_fields:
+    - name: "_id"
+      description: "MD5 hash of URL (NO-FBT-prefix)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Decision title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the decision"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "url"
+      description: "URL to decision page"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "reference"
+      description: "FOV case reference number"
+      type: "string"
+      role: "identifier"
+      required: false
+
+license:
+  name: "NLOD 2.0"
+  url: "https://data.norge.no/nlod/en/2.0"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Norwegian government open data."

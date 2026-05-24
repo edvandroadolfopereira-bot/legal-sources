@@ -1,0 +1,62 @@
+source:
+  id: CZ/RozhodnutiJustice
+  name: "Czech Court Decisions Open Data (rozhodnutí.justice.cz)"
+  country: CZ
+  url: https://rozhodnuti.justice.cz
+  data_types:
+    - case_law
+  language: cs
+  auth: none
+
+discovery:
+  method: api
+  api_index: https://rozhodnuti.justice.cz/api/opendata
+  notes: >
+    Hierarchical REST API: /api/opendata → years → months → days → decisions.
+    Each decision links to /api/finaldoc/{uuid} for full structured text.
+
+fetch:
+  base_url: https://rozhodnuti.justice.cz/api/finaldoc/{uuid}
+  rate_limit: 1.0
+  timeout: 30
+
+schema:
+  required_fields:
+    - _id
+    - _source
+    - _type
+    - _fetched_at
+    - title
+    - text
+    - date
+    - url
+  key_fields:
+    - name: ecli
+      type: string
+      required: true
+    - name: case_number
+      type: string
+      required: true
+  optional_fields:
+    - court
+    - judge
+    - case_subject
+    - decision_type
+    - keywords
+    - regulations_cited
+    - verdict_text
+
+license:
+  name: "Open Government Data (Czech Republic)"
+  url: "https://rozhodnuti.justice.cz"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Czech Ministry of Justice open data initiative per Act No. 106/1999 on free access to information"
+
+notes: >
+  Czech court decisions open data portal operated by the Ministry of Justice.
+  Covers all Czech courts (district, regional, high, supreme) from 2020 onwards.
+  ~580K decisions with full text, ECLI identifiers, anonymized parties,
+  keywords, and cited legal provisions. Structured JSON API with no auth required.

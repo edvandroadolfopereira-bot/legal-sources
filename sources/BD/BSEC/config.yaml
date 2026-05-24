@@ -1,0 +1,25 @@
+source_id: BD/BSEC
+name: "Bangladesh Securities & Exchange Commission — Circulars & Regulations"
+country: BD
+url: https://sec.gov.bd/home/laws
+data_types:
+  - legislation
+  - doctrine
+schedule: monthly
+schema:
+  key_fields:
+    - _id
+    - title
+    - date
+    - text
+    - url
+    - category
+
+license:
+  name: "Public Domain (Government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government regulatory publications"

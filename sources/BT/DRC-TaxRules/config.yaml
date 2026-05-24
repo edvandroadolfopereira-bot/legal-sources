@@ -1,0 +1,35 @@
+source:
+  id: BT/DRC-TaxRules
+  country: BT
+  name: "Bhutan Department of Revenue and Customs — Tax Legislation"
+  url: https://www.drc.gov.bt/acts-policy/
+  data_types:
+    - legislation
+  language: en
+license:
+  name: "Public domain (government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Bhutanese government tax legislation published by the Department of Revenue and Customs, Ministry of Finance."
+fetcher:
+  type: pdf_download
+  rate_limit: 2.0
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: title
+      required: true
+      type: string
+  date_fields:
+    - _fetched_at
+  text_fields:
+    - text
+    - title
+notes: >
+  21 tax acts, rules and regulations from the Bhutan DRC.
+  PDFs downloaded from the Acts & Policy page and text extracted via PyMuPDF/pdfplumber.

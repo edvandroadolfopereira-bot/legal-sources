@@ -1,0 +1,41 @@
+{
+  "_id": "bfad0401-7961-47bd-b37a-4aba0ad19309",
+  "_source": "INTL/OHCHR-TBInternet",
+  "_type": "doctrine",
+  "_fetched_at": "2026-05-11T04:56:21.743265+00:00",
+  "title": "CRPD/C/WSM/CO/1 — Concerns/Observations (CRPD)",
+  "text": "Children with disabilities (art. 7) 11.The Committee notes with concern: (a)That laws affecting children’s rights are not fully aligned with the Convention and that disability is not mainstreamed into child-related policies; (b)The persistent stigmatization of children with disabilities, including children with intellectual and/or psychosocial disabilities, reported cases of violent discipline against children with disabilities and the lack of a child-friendly reporting system; (c)The lack of mechanisms to ensure the meaningful participation of children with disabilities, including those in rural areas and outer islands, in decisions affecting them.",
+  "date": "2026-04-08",
+  "url": "https://uhri.ohchr.org/en/search-human-rights-recommendations",
+  "symbol": "CRPD/C/WSM/CO/1",
+  "document_id": "74b4bb5f-8c22-4c05-af4c-bc430015734e",
+  "annotation_type": "Concerns/Observations",
+  "treaty_body": "CRPD",
+  "countries": [
+    "Samoa"
+  ],
+  "regions": [
+    "Asia-Pacific"
+  ],
+  "themes": [
+    "Legal & institutional reform",
+    "Children: definition; general principles; protection",
+    "Data collection & research"
+  ],
+  "sdgs": [
+    "16 - PEACE, JUSTICE AND STRONG INSTITUTIONS",
+    "17 - PARTNERSHIPS FOR THE GOALS",
+    "16.2 - Protect children from abuse, exploitation, trafficking and violence",
+    "3 - GOOD HEALTH AND WELL-BEING",
+    "17.18 - Enhance availability of reliable data",
+    "3.4 - Reduce mortality from non-communicable diseases and promote mental health"
+  ],
+  "affected_persons": [
+    "Children",
+    "Persons living in rural areas",
+    "Persons with disabilities"
+  ],
+  "upr_cycle": null,
+  "upr_positions": [],
+  "upr_recommending_countries": []
+}

@@ -1,0 +1,80 @@
+source:
+  id: "TH/ConstitutionalCourt"
+  country: "TH"
+  name: "Thailand Constitutional Court Decisions"
+  url: "https://iss.constitutionalcourt.or.th/"
+  description: |
+    Constitutional review decisions from the Constitutional Court of Thailand,
+    sourced via the court's Intelligent Search System (ISS) API. Includes ruling
+    summaries and court orders. Full text extracted from PDF attachments.
+    Content is primarily in Thai.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+
+api:
+  type: "rest_json"
+  base_url: "https://iss.constitutionalcourt.or.th"
+  endpoints:
+    - path: "/api/search"
+      method: "POST"
+      format: "json"
+      notes: "Search and paginate through decisions. Supports organization/country filters."
+
+data_model:
+  type: "case_law"
+  source_nature: "constitutional_review"
+  primary_key: "_id"
+  update_strategy: "upsert"
+  versioning: "none"
+
+schema:
+  total_fields: 11
+  key_fields:
+    - name: "_id"
+      description: "Unique decision identifier from ISS MongoDB ObjectId"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Decision topic/title in Thai"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the decision extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date in ISO 8601"
+      type: "date"
+      role: "temporal_key"
+      required: false
+  secondary_fields:
+    - name: "case_id"
+      description: "Thai case identifier (e.g. คำวินิจฉัยที่ 1/2569)"
+    - name: "decision_type"
+      description: "Type of decision: rulings or injunctions"
+    - name: "url"
+      description: "Reference URL to decision page"
+    - name: "pdf_url"
+      description: "Direct URL to the PDF attachment"
+    - name: "year"
+      description: "Publication year"
+
+license:
+  name: "Thai Government Publication"
+  url: "https://www.constitutionalcourt.or.th/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Constitutional Court decisions published for public access via the ISS system."

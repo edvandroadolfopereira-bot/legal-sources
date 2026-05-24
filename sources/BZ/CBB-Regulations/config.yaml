@@ -1,0 +1,73 @@
+# ===================================================================
+# BZ/CBB-Regulations -- Central Bank of Belize Laws & Regulations
+# ===================================================================
+# Banking legislation, amendments, regulations, practice directions,
+# and AML/CFT guidelines from the Central Bank of Belize. ~119 PDFs.
+# ===================================================================
+
+source:
+  id: "BZ/CBB-Regulations"
+  country: "BZ"
+  name: "Central Bank of Belize — Laws & Regulations"
+  url: "https://www.centralbank.org.bz/about-the-bank/laws-and-regulations"
+  description: |
+    Banking legislation, amendments, regulations, practice directions,
+    and AML/CFT guidelines from the Central Bank of Belize. Covers the
+    Central Bank Act, Domestic Banks & Financial Institutions Act,
+    International Banking Act, Credit Unions Act, Money Laundering &
+    Terrorism Prevention Act, Exchange Control Act, Treasury Bill Act,
+    National Payment System Act, Moneylenders Act, Deposit Insurance Act,
+    and Credit Reporting Act.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "html_scrape_pdf"
+  base_url: "https://www.centralbank.org.bz"
+  notes: "Scrape 11 category pages for PDF links, download and extract text"
+
+data_model:
+  type: "legislation"
+  primary_key: "url"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "title"
+      description: "Document title from page link text"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication or amendment date if extractable"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "category"
+      description: "Legislative category (e.g. central-bank-act)"
+      type: "string"
+      role: "metadata"
+      required: true
+
+license:
+  name: "Public Government Documents (Belize)"
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulatory documents published for public compliance use"

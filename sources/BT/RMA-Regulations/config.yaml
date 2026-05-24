@@ -1,0 +1,35 @@
+source:
+  id: BT/RMA-Regulations
+  country: BT
+  name: "Royal Monetary Authority of Bhutan — Prudential Regulations"
+  url: https://www.rma.org.bt/legislation/
+  data_types:
+    - legislation
+  language: en
+license:
+  name: "Public domain (government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Bhutanese central bank regulations published by the Royal Monetary Authority."
+fetcher:
+  type: pdf_download
+  rate_limit: 2.0
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: title
+      required: true
+      type: string
+  date_fields:
+    - _fetched_at
+  text_fields:
+    - text
+    - title
+notes: >
+  Financial regulations, rules, guidelines from the Royal Monetary Authority of Bhutan.
+  PDFs from legislation page sections and text extracted via PyMuPDF/pdfplumber.

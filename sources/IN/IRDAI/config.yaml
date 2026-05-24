@@ -1,0 +1,46 @@
+source:
+  id: "IN/IRDAI"
+  country: "IN"
+  name: "Insurance Regulatory and Development Authority of India"
+  url: "https://irdai.gov.in/"
+  description: |
+    Circulars, guidelines, and notifications from IRDAI — India's insurance
+    regulator. Covers insurance regulation, policyholder protection, market
+    conduct, investment norms, and reinsurance. ~720+ documents, 1999-present.
+    All documents are PDFs with full text extraction.
+  data_types:
+    - doctrine
+  auth: none
+
+rate_limit:
+  requests_per_second: 1.5
+  burst: 3
+
+fetch:
+  max_retries: 3
+  rate_limit: 1.5
+  timeout: 60
+
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: title
+      required: true
+      type: string
+    - name: date
+      required: false
+      type: date
+    - name: category
+      required: false
+      type: string
+
+license:
+  name: "Government Open Data (India)"
+  url: "https://irdai.gov.in/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Indian government regulatory documents are public records"

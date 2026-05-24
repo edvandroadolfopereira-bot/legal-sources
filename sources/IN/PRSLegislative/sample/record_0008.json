@@ -1,0 +1,37 @@
+{
+  "_id": "IN/PRSLegislative/the-transgender-persons-protection-of-rights-amendment-bill-2026",
+  "_source": "IN/PRSLegislative",
+  "_type": "legislation",
+  "_fetched_at": "2026-05-09T19:22:07.042019+00:00",
+  "bill_slug": "the-transgender-persons-protection-of-rights-amendment-bill-2026",
+  "title": "The Transgender Persons (Protection of Rights) Amendment Bill, 2026",
+  "text": "The Transgender Persons (Protection of Rights) Amendment Bill, 2026 was introduced in Lok Sabha on March 13, 2026.  The Bill seeks to amend the Transgender Persons (Protection of Rights) Act, 2019.  The Act provides for rights of transgender persons and their welfare.\nDefinition of a transgender person:\nThe Act defines a transgender person as a person whose gender does not match with the gender assigned at birth, and specifies certain persons who are included.  The Bill removes this definition.  It instead lists categories of persons to be included.  The Bill also states that it will not include or will never have included persons with different sexual orientations and self-perceived sexual identities.\nThe Act includes: (i) a person with socio-cultural identity such as kinner, hijra, aravani, or jogta, and (ii) a person with variations at birth in characteristics such as primary sexual characteristics, external genitalia, chromosomes, or hormones from the normative standard of male or female body.  The Bill retains these categories.\nThe Bill removes the following categories included in the Act: (i) a trans-man or trans-woman, irrespective of whether such a person has undergone sex reassignment surgery, hormone therapy, laser therapy, or such other therapy, and (ii) genderqueer.\nThe Bill also includes: (i) eunuch, and (ii) a person who is forced to assume a transgender identity by mutilation, emasculation, castration, surgical, chemical or hormonal procedures.\nRecognition of transgender identity:\nUnder the Act, a transgender person may apply to the District Magistrate for issuing a certificate of identity as a transgender person.  The Bill adds that the District Magistrate will issue the certificate after examining the recommendation of a designated medical board.  The board will be headed by a Chief Medical Officer or a Deputy Chief Medical Officer.  The District Magistrate may take assistance of other medical experts.  The Bill adds that that transgender persons will be entitled to change the first name in the birth certificate and other official documents based on the certificate of identity.\nChange in gender:\nThe Act provides that a revised certificate of identity may be obtained where a transgender person undergoes surgery to change gender.  The Bill instead mandates the person to obtain a revised certificate.  The Bill adds that the concerned medical institution must furnish information regarding the gender change surgery to the District Magistrate.\nOffences and penalties:\nUnder the Act, offences against transgender persons include: (i) compelling or enticing into forced or bonded labour, (ii) denying the right of passage or obstructing use of public place, (iii) forcing or causing to leave household, village, or other places of residence, and (iv) harm or injury.  These are punishable with imprisonment between six months and two years, and a fine.   The Bill adds certain offences.  Kidnapping and causing grievous hurt or severe injury in order to force a person to assume a transgender identity will carry: (i) imprisonment between 10 years and life and a minimum fine of two lakh rupees if the victim is an adult, and (ii) imprisonment for life and a fine of at least five lakh rupees if the victim is a child.\nForcing a person to present as a transgender person and engage in begging, servitude or bonded labour will be punishable with: (i) imprisonment between five and 10 years and a fine of at least one lakh rupees, if the victim is an adult, and (ii) imprisonment between 10 and 14 years and a fine of at least three lakh rupees if the victim is a child.",
+  "date": "2026-03-13",
+  "url": "https://prsindia.org/billtrack/the-transgender-persons-protection-of-rights-amendment-bill-2026",
+  "ministry": "Social Justice and Empowerment",
+  "house": "Lok Sabha",
+  "status": "Passed",
+  "status_timeline": [
+    {
+      "house": "Lok Sabha",
+      "date": "Mar 13, 2026",
+      "action": "Introduced"
+    },
+    {
+      "house": "Lok Sabha",
+      "date": "Mar 24, 2026",
+      "action": "Passed"
+    },
+    {
+      "house": "Rajya Sabha",
+      "date": "Mar 25, 2026",
+      "action": "Passed"
+    }
+  ],
+  "pdf_urls": [
+    {
+      "url": "https://prsindia.org/files/bills_acts/bills_parliament/2026/Transgender_Bill_2026_Text.pdf",
+      "label": "Bill Text"
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+source:
+  id: "IN/DRAT"
+  country: "IN"
+  name: "Debt Recovery Tribunals & Appellate Tribunals"
+  url: "https://drt.gov.in/"
+  description: |
+    Orders from India's Debt Recovery Tribunals (DRTs) and Debt Recovery
+    Appellate Tribunals (DRATs). 39 DRTs + 5 DRATs across India handling
+    banking debt recovery under RDDBFI Act and SARFAESI Act.
+    Data via the e-DRT portal's public JSON API (no auth required).
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "rest"
+  base_url: "https://drt.gov.in/drtapi"
+
+data_model:
+  type: "case_law"
+  source_nature: "bulk_archive"
+  primary_key: "item_no"
+  update_strategy: "append_only"
+  versioning: "none"
+  dedup_key:
+    - "item_no"
+    - "tribunal_id"
+
+schema:
+  total_fields: 15
+  key_fields:
+    - name: "item_no"
+      description: "Unique order item number from DRT system"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "text"
+      description: "Full text of the order (extracted from PDF)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Date of the order"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "title"
+      description: "Case number and parties"
+      type: "string"
+      role: "content"
+      required: true
+  secondary_fields:
+    - name: "tribunal_name"
+      description: "Name of the DRT/DRAT"
+    - name: "case_type"
+      description: "Type of case (OA, SA, Appeal, etc.)"
+    - name: "applicant"
+      description: "Applicant / petitioner name"
+    - name: "respondent"
+      description: "Respondent name"
+    - name: "pronounced_by"
+      description: "Judge/officer who pronounced the order"
+
+license:
+  id: "pd-gov"
+  name: "Indian Government Public Data"
+  url: "https://drt.gov.in/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Government tribunal orders are public records under Indian law"
+
+notes: |
+  - API at drt.gov.in/drtapi uses multipart/form-data POST
+  - 44 tribunals (39 DRTs + 5 DRATs)
+  - Orders are PDFs — some text-based, some scanned images
+  - Scanned-image PDFs yield empty text (OCR not attempted)
+  - Case numbers must be enumerated sequentially per tribunal/type/year
+  - Hindi and English orders

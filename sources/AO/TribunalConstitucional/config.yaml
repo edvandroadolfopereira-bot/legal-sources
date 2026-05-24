@@ -1,0 +1,93 @@
+source:
+  id: "AO/TribunalConstitucional"
+  country: "AO"
+  name: "Angola Constitutional Court (Tribunal Constitucional)"
+  url: "https://www.tribunalconstitucional.ao"
+  description: |
+    Decisions (acórdãos) from the Constitutional Court of Angola.
+    666+ decisions (2008-2026) covering constitutional review, habeas corpus,
+    extraordinary appeals of unconstitutionality, and plenary appeals.
+    Full text in Portuguese, extracted from HTML pages (Umbraco CMS).
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+
+api:
+  type: "html_scrape"
+  base_url: "https://www.tribunalconstitucional.ao"
+  endpoints:
+    listing: "/pt/jurisprudencia/acordaos/?altTemplate=jGeneralListingPaging"
+    decision: "/pt/acordaos/{slug}/"
+
+data_model:
+  type: "case_law"
+  source_nature: "consolidated"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: 14
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier (AO/TribunalConstitucional/{decision_number})"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Decision number (e.g. Acórdão N.º 1085/2026)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the decision (extracted from HTML)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "formation"
+      description: "Court formation (Plenário, 1ª Secção, etc.)"
+      type: "string"
+      role: "reference"
+      required: true
+  secondary_fields:
+    - name: "url"
+      description: "Link to original decision page"
+    - name: "process_number"
+      description: "Case/process number"
+    - name: "decision_type"
+      description: "Type of decision (REI, Habeas Corpus, etc.)"
+    - name: "rapporteur"
+      description: "Reporting judge"
+    - name: "court"
+      description: "Court name"
+  probably_ignorable: []
+
+license:
+  name: "Public Domain (Government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official court decisions are public domain under Angolan law"
+
+notes: |
+  - Umbraco CMS with custom AJAX pagination
+  - POST to /?altTemplate=jGeneralListingPaging with txtPageNum_GL (1, 11, 21, ...)
+  - 666 total decisions, 10 per page, 67 pages
+  - Full text in HTML within div.umb-grid on individual decision pages
+  - Portuguese language content

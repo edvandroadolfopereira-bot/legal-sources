@@ -1,0 +1,54 @@
+source:
+  id: "INTL/UNESCO-Conventions"
+  country: "INTL"
+  name: "UNESCO Legal Instruments (Conventions, Recommendations, Declarations)"
+  url: "https://www.unesco.org/en/legal-affairs/standard-setting/conventions"
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 1
+
+api:
+  type: "rest-json"
+  base_url: "https://data.unesco.org/api/explore/v2.1/catalog/datasets/la0001/records"
+  response_format: "json"
+  pagination: "offset"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "_id"
+      description: "Unique ID from UNESCO record"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Instrument title (English)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text in English, French, and Spanish"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Adoption date"
+      type: "date"
+      role: "temporal_key"
+      required: false
+
+license:
+  name: "UNESCO Open Access"
+  url: "https://www.unesco.org/en/legal-affairs"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "UNESCO open data policy."

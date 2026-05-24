@@ -1,0 +1,41 @@
+data:
+  coverage: Current consolidated regulations and laws
+  estimated_records: ~150
+  format: PDF (with text extraction)
+  language: en (English translations)
+  rate_limit: 2 seconds between requests
+endpoints:
+  base_url: https://www.cbcg.me
+  regulations_page: /en/about-us/legislation/regulations
+  laws_page: /en/about-us/legislation/laws
+schema:
+  key_fields:
+  - name: pdf_path
+    required: true
+    type: string
+  - name: category
+    required: false
+    type: string
+  required_fields:
+  - title
+  - text
+  - date
+  - url
+source:
+  auth: none
+  country: ME
+  data_types:
+  - legislation
+  id: ME/CBCG
+  name: Montenegro Central Bank Regulations
+  priority: 3
+  status: planned
+  url: https://www.cbcg.me/en/about-us/legislation/regulations
+license:
+  name: Public Domain (Government)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official government regulations published for public use

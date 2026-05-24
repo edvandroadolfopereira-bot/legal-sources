@@ -1,0 +1,80 @@
+source:
+  id: "GY/OfficialGazette"
+  country: "GY"
+  name: "Official Gazette of Guyana"
+  url: "https://officialgazette.gov.gy"
+  description: |
+    Official Gazette of Guyana published by the Ministry of Legal Affairs.
+    Contains bills, notices, legal supplements, regulations, and
+    extraordinary gazettes. ~2900 issues available as PDFs.
+    English language.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "html_scrape"
+  base_url: "https://officialgazette.gov.gy"
+
+data_model:
+  type: "legislation"
+  source_nature: "gazette"
+  primary_key: "gazette_id"
+  update_strategy: "append_only"
+  versioning: "none"
+  dedup_key:
+    - "gazette_id"
+
+schema:
+  total_fields: null
+  key_fields:
+    - name: "id"
+      description: "Unique gazette issue identifier"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Title of the gazette issue"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text content extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date"
+      type: "date"
+      role: "temporal_key"
+      required: false
+  secondary_fields:
+    - name: "gazette_type"
+      description: "Type of gazette (official, extraordinary, legal supplement)"
+    - name: "pdf_url"
+      description: "URL to the source PDF"
+  probably_ignorable: []
+
+license:
+  id: "pd-gov"
+  name: "Public Domain (Government Works)"
+  url: "https://officialgazette.gov.gy"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government gazette publications"
+
+notes: |
+  - ~2900 gazette issues across 147 pages
+  - PDFs range from 200 KB to 25+ MB
+  - Behind Cloudflare but accessible
+  - URL pattern uses backslashes in HTML (converted to forward slashes)
+  - Includes regular gazettes, extraordinary gazettes, and legal supplements

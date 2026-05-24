@@ -1,0 +1,80 @@
+# ===================================================================
+# MW/Judiciary -- Malawi Judiciary Judgments
+# ===================================================================
+# Court judgments from the official Malawi Judiciary website.
+# PDF documents with full text extraction via pdfplumber.
+# ~240 judgments across Supreme Court, High Court, and subordinate courts.
+# ===================================================================
+
+source:
+  id: "MW/Judiciary"
+  country: "MW"
+  name: "Malawi Judiciary Judgments"
+  url: "https://www.judiciary.mw/judgements"
+  description: |
+    Court judgments from the official Malawi Judiciary website (judiciary.mw).
+    Contains Supreme Court, High Court, and subordinate court decisions in PDF format.
+    Full text extracted from PDF documents using pdfplumber.
+    No authentication required. Permissive robots.txt (Allow: /).
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+data_model:
+  type: "case_law"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: 8
+  key_fields:
+    - name: "_id"
+      description: "Document ID derived from filename"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Case title (parties and case type)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the judgment"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Upload date (YYYY-MM from file path)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "Direct URL to PDF on judiciary.mw"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "Public Domain (Government Works)"
+  url: "https://www.judiciary.mw/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government court decisions — public domain under Malawi law"
+
+notes: |
+  - ~240 judgments across 24 pages
+  - PDFs stored at /sites/default/files/YYYY-MM/filename.pdf
+  - Metadata parsed from filenames (party names, case type)
+  - Upload date from file path YYYY-MM component
+  - English language

@@ -1,0 +1,90 @@
+# ===================================================================
+# INTL/GlobalHealthRightsDB — Global Health & Human Rights Database
+# ===================================================================
+# Case law from 122 countries on health-related human rights.
+# ~1,450 cases with detailed summaries, facts, reasoning, excerpts.
+# ===================================================================
+
+source:
+  id: "INTL/GlobalHealthRightsDB"
+  country: "INTL"
+  name: "Global Health and Human Rights Database"
+  url: "https://www.globalhealthrights.org/"
+  description: |
+    Free online database of case law from 122 countries relating to
+    health and human rights. Developed by Lawyers Collective and the
+    O'Neill Institute at Georgetown University. ~1,450 cases with
+    detailed summaries, facts, decision reasoning, and key excerpts.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+  notes: "2-second delay between requests. Respectful crawl of academic resource."
+
+api:
+  type: "html-scraping"
+  base_url: "https://www.globalhealthrights.org"
+  endpoints:
+    sitemap: "/wp-sitemap-posts-post-1.xml"
+    case_page: "/{case-slug}/"
+  response_format: "html"
+  pagination: "sitemap"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "_id"
+      description: "Unique ID from case slug"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Case name"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full case summary including facts, decision, reasoning, and excerpts"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Year of decision"
+      type: "string"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "URL to case page"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "country"
+      description: "Country of the case"
+      type: "string"
+      role: "classifier"
+      required: false
+    - name: "court"
+      description: "Court or tribunal"
+      type: "string"
+      role: "classifier"
+      required: false
+    - name: "citation"
+      description: "Legal citation"
+      type: "string"
+      role: "reference"
+      required: false
+
+license:
+  name: "Open Access Academic Database"
+  url: "https://www.globalhealthrights.org/about-the-database/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Free online database. Georgetown University / O'Neill Institute."

@@ -1,0 +1,82 @@
+# ===================================================================
+# INTL/CODICES -- Venice Commission Constitutional Case Law Database
+# ===================================================================
+# ~10,000 constitutional decisions from 100+ courts worldwide.
+# Summaries in English and French, full texts in 43 languages.
+# REST API at codices.coe.int/api — no auth required for reads.
+# ===================================================================
+
+source:
+  id: "INTL/CODICES"
+  country: "INTL"
+  name: "Venice Commission — CODICES Constitutional Case Law Database"
+  url: "https://codices.coe.int/"
+  description: |
+    The CODICES database of the Venice Commission (Council of Europe)
+    presents leading constitutional case-law from 100+ Constitutional
+    Courts and Courts with equivalent jurisdiction. Contains summaries
+    (précis), full decision texts, thesaurus classifications, and
+    cross-references. Covers Europe, Asia, Africa, and the Americas.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "rest_json"
+  base_url: "https://codices.coe.int/api"
+  search_endpoint: "POST /search"
+  precis_endpoint: "GET /precis/{id}?lang=eng"
+  tree_endpoint: "GET /tree?entityType=precis"
+
+data_model:
+  type: "case_law"
+  primary_key: "referenceCode"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 14
+  key_fields:
+    - name: "title"
+      description: "Decision title or number"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Case summary/précis text (EN or FR)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "reference_code"
+      description: "CODICES reference code (e.g., CZE-1999-1-001)"
+      type: "string"
+      role: "identifier"
+      required: true
+
+license:
+  name: "Council of Europe Open Access"
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Open access research tool; attribution to Venice Commission required"
+
+notes: |
+  - REST JSON API at codices.coe.int/api (no auth for reads)
+  - POST /search returns paginated results (Page/Size params)
+  - GET /precis/{guid}?lang=eng returns full précis with summary
+  - Each précis has EN + FR translations (~5-7K chars each)
+  - Full original-language texts linked via fullTexts array
+  - Thesaurus classifications and alpha-index cross-references

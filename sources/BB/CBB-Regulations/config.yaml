@@ -1,0 +1,66 @@
+# ===================================================================
+# BB/CBB-Regulations -- Central Bank of Barbados Regulatory Guidelines
+# ===================================================================
+# Prudential standards, AML/CFT guidelines, exchange control circulars,
+# capital adequacy guidelines, and related legislation. ~84 PDF documents.
+# ===================================================================
+
+source:
+  id: "BB/CBB-Regulations"
+  country: "BB"
+  name: "Central Bank of Barbados — Regulatory Guidelines"
+  url: "https://www.centralbank.org.bb/"
+  description: |
+    Regulatory guidelines, prudential standards, exchange control circulars,
+    and key financial legislation from the Central Bank of Barbados.
+    Covers capital adequacy (Basel II/III), AML/CFT, operational risk,
+    corporate governance, payments regulation, and more.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "html_scrape_pdf"
+  base_url: "https://www.centralbank.org.bb"
+  cdn_url: "https://cdn.centralbank.org.bb/documents/"
+  notes: "Scrape regulatory pages for PDF links, download and extract text"
+
+data_model:
+  type: "doctrine"
+  primary_key: "url"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "title"
+      description: "Document title derived from filename"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date from CDN URL timestamp"
+      type: "date"
+      role: "temporal_key"
+      required: false
+
+license:
+  name: "Public Government Documents (Barbados)"
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulatory documents published for public compliance use"

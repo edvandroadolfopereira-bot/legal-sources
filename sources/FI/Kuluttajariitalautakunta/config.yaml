@@ -1,0 +1,48 @@
+source_id: FI/Kuluttajariitalautakunta
+country: FI
+name: Finnish Consumer Disputes Board
+description: |
+  Consumer dispute decisions from the Finnish Consumer Disputes Board
+  (Kuluttajariitalautakunta). 1,255+ decisions covering vehicle sales, housing,
+  real estate brokerage, travel, banking services, and other consumer matters.
+  Data via WordPress REST API (custom post type "paatos").
+
+data_types:
+  - case_law
+
+url: https://www.kuluttajariita.fi/paatokset/
+dataset_url: https://www.kuluttajariita.fi/wp-json/wp/v2/paatos
+
+auth:
+  type: none
+
+license:
+  name: "Public Domain (Government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Finnish government consumer dispute decisions"
+
+rate_limit:
+  requests_per_minute: 30
+  delay_seconds: 2
+
+schema:
+  key_fields:
+    - name: decision_number
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+  date_fields:
+    - name: date
+      type: date
+      required: false
+
+data_model:
+  update_strategy: append_only
+  dedup_key:
+    - decision_number

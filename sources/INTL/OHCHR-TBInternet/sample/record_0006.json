@@ -1,0 +1,59 @@
+{
+  "_id": "5df80d9c-4606-4794-b902-65920d9a96ee",
+  "_source": "INTL/OHCHR-TBInternet",
+  "_type": "doctrine",
+  "_fetched_at": "2026-05-11T04:56:20.593216+00:00",
+  "title": "CRPD/C/WSM/CO/1 — Recommendations (CRPD)",
+  "text": "Women with disabilities (art. 6) 10. The Committee recommends that the State Party, in close consultation with and with the active involvement of persons with disabilities, through their representative organizations: (a) Adopt comprehensive legislation and policies to address intersect ional discrimination against women and girls with disabilities and ensure the systematic mainstreaming of disability across frameworks on gender equality and the prevention of violence; (b) Implement comprehensive measures to prevent early marriage and teenage pregnancy among girls with disabilities, ensure access to menstrual hygiene support and age-appropriate and accessible information and services on sexual and reproductive health and implement social protection measures for widows with disabilities.",
+  "date": "2026-04-08",
+  "url": "https://uhri.ohchr.org/en/search-human-rights-recommendations",
+  "symbol": "CRPD/C/WSM/CO/1",
+  "document_id": "74b4bb5f-8c22-4c05-af4c-bc430015734e",
+  "annotation_type": "Recommendations",
+  "treaty_body": "CRPD",
+  "countries": [
+    "Samoa"
+  ],
+  "regions": [
+    "Asia-Pacific"
+  ],
+  "themes": [
+    "Equality & non-discrimination",
+    "Rights related to marriage & family",
+    "Legal & institutional reform",
+    "Cooperation & consultation with civil society",
+    "Right to health",
+    "Constitutional & legislative framework",
+    "Sexual & gender-based violence",
+    "Right to social security",
+    "Discrimination against women",
+    "Safe drinking water & sanitation",
+    "Sexual & reproductive health and rights"
+  ],
+  "sdgs": [
+    "5.1 - End discrimination against women and girls",
+    "16.7 - Responsive, inclusive and representative decision-making",
+    "16 - PEACE, JUSTICE AND STRONG INSTITUTIONS",
+    "17 - PARTNERSHIPS FOR THE GOALS",
+    "5 - GENDER EQUALITY",
+    "5.c - Adopt policies and enforce legislation for gender equality",
+    "10.4 - Adopt fiscal and social policies that promote equality",
+    "5.2 - End all violence against and exploitation of women",
+    "3.7 - Universal access to reproductive care, planning and education",
+    "5.6 - Universal access to reproductive health and rights",
+    "10 - REDUCED INEQUALITIES",
+    "5.3 - Eliminate forced marriages and genital mutilation",
+    "16.10 - Ensure public access to information and protect fundamental freedoms",
+    "3 - GOOD HEALTH AND WELL-BEING",
+    "17.18 - Enhance availability of reliable data",
+    "5.5 - Equal opportunities and participation in leadership"
+  ],
+  "affected_persons": [
+    "Youth & juveniles",
+    "Women & girls",
+    "Persons with disabilities"
+  ],
+  "upr_cycle": null,
+  "upr_positions": [],
+  "upr_recommending_countries": []
+}

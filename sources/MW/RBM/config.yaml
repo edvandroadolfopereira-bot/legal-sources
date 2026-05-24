@@ -1,0 +1,49 @@
+fetcher:
+  base_url: https://www.rbm.mw
+  rate_limit: 2.0
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: category
+    required: false
+    type: string
+  - name: doc_type
+    required: false
+    type: string
+  - name: url
+    required: true
+    type: string
+source:
+  auth: none
+  country: MW
+  data_types:
+  - legislation
+  description: >
+    Financial sector regulations from the Reserve Bank of Malawi (RBM).
+    Covers Banking directives/guidelines, Capital Markets & Microfinance,
+    Pensions & Insurance, and Consumer Protection. ~200 PDF documents
+    downloaded via GetContentFile endpoint. Text extracted from PDFs.
+  format: html+pdf
+  id: MW/RBM
+  language: en
+  name: Reserve Bank of Malawi — Financial Sector Regulations
+  url: https://www.rbm.mw/FinancialSectorRegulation/
+license:
+  name: "Government open access (Access to Information Act 2017)"
+  url: "https://www.rbm.mw/Home/AccessToInformation"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official financial regulations published by the Reserve Bank of Malawi for public access under the Access to Information Act 2017."

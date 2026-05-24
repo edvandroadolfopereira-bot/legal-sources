@@ -1,0 +1,59 @@
+source:
+  id: KG/NationalBank-Regulations
+  name: National Bank of Kyrgyzstan — Regulations
+  country: KG
+  url: https://www.nbkr.kg/
+  data_types:
+    - legislation
+    - doctrine
+  description: |
+    Normative acts, banking supervision regulations, monetary policy rules,
+    and banking laws from the National Bank of the Kyrgyz Republic (NBKR).
+    Content in English and Russian. Full text via HTML scraping of JSP pages.
+    Free access, no authentication required.
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: html_scraping
+  base_url: https://www.nbkr.kg
+  format: html
+  endpoints:
+    normative_acts_eng: /index1.jsp?item=101&lang=ENG
+    normative_acts_rus: /index1.jsp?item=101&lang=RUS
+    banking_laws: /index1.jsp?item=40&lang=ENG
+
+schema:
+  key_fields:
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: material_id
+      type: string
+      required: false
+    - name: category
+      type: string
+      required: true
+    - name: language
+      type: string
+      required: true
+
+license:
+  name: Public Domain (Government of Kyrgyzstan)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official central bank regulations and laws published for public access.

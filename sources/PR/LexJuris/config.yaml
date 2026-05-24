@@ -1,0 +1,83 @@
+# ===================================================================
+# PR/LexJuris -- Puerto Rico Laws & Jurisprudence
+# ===================================================================
+# Puerto Rico legislation from lexjuris.com.
+# HTML full text, no auth required. ~5000+ laws (1997-2026).
+# No robots.txt restrictions.
+# ===================================================================
+
+source:
+  id: "PR/LexJuris"
+  country: "PR"
+  name: "Puerto Rico Laws & Jurisprudence (LexJuris)"
+  url: "https://www.lexjuris.com/"
+  description: |
+    Puerto Rico legislation database. Contains all laws enacted by the
+    Puerto Rico Legislature from 1997 to present. Full text in HTML format.
+    Spanish language. No authentication required. No robots.txt restrictions.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+data_model:
+  type: "legislation"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: 7
+  key_fields:
+    - name: "_id"
+      description: "Document ID (e.g., PR-Ley-2024-001)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Law title/description"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the law"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Approval date"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "law_number"
+      description: "Law number (e.g., Ley Num. 1 de 2024)"
+      type: "string"
+      role: "metadata"
+      required: true
+    - name: "url"
+      description: "URL on lexjuris.com"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "Public domain (US government)"
+  url: "https://www.law.cornell.edu/uscode/text/17/105"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Puerto Rico laws are US government works in the public domain"
+
+notes: |
+  - ~200+ laws per year from 1997-2026
+  - Full text in HTML format
+  - Spanish language
+  - URL pattern: lexjuris.com/lexlex/Leyes{YEAR}/lexl{YEAR}{NUM}.htm

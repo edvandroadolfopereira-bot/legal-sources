@@ -1,0 +1,81 @@
+source:
+  id: "GY/MOLA"
+  country: "GY"
+  name: "Laws of Guyana (Ministry of Legal Affairs)"
+  url: "https://mola.gov.gy/laws-of-guyana"
+  description: |
+    Consolidated Laws of Guyana organized by volume and chapter,
+    published by the Ministry of Legal Affairs. ~460 acts covering
+    constitutional, civil, criminal, commercial, and administrative law.
+    English language. PDF-based with text extraction via pdfplumber.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "html_scrape"
+  base_url: "https://mola.gov.gy"
+
+data_model:
+  type: "legislation"
+  source_nature: "consolidated"
+  primary_key: "chapter"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "chapter"
+
+schema:
+  total_fields: null
+  key_fields:
+    - name: "id"
+      description: "Unique identifier (chapter number)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Title of the act"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text content extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "chapter"
+      description: "Chapter number (e.g., 001:01)"
+      type: "string"
+      role: "reference"
+      required: true
+  secondary_fields:
+    - name: "volume"
+      description: "Volume containing this chapter"
+    - name: "pdf_url"
+      description: "URL to the source PDF"
+  probably_ignorable: []
+
+license:
+  id: "pd-gov"
+  name: "Public Domain (Government Works)"
+  url: "https://mola.gov.gy/laws-of-guyana"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official consolidated laws published by the Government of Guyana"
+
+notes: |
+  - ~460 acts organized by volume and chapter
+  - English language
+  - PDFs are text-based (not scanned), extractable with pdfplumber
+  - AJAX endpoint at /ajax-search-law provides paginated HTML listing
+  - 9 entries per page, ~52 pages total
+  - Some PDFs are large (10+ MB for constitutional documents)

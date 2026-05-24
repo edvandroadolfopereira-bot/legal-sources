@@ -1,0 +1,75 @@
+# ===================================================================
+# NO/KOFA -- Norwegian Public Procurement Complaints Board
+# ===================================================================
+# KOFA decisions via klagenemndssekretariatet.no (WordPress REST API).
+# ~4,900 decisions from 2003-present. Norwegian language.
+# Full text from PDF decision documents.
+# ===================================================================
+
+source:
+  id: "NO/KOFA"
+  country: "NO"
+  name: "Norwegian Public Procurement Complaints Board (KOFA)"
+  url: "https://www.klagenemndssekretariatet.no"
+  description: |
+    Klagenemnda for offentlige anskaffelser (KOFA) — the Norwegian complaints
+    board for public procurement. ~4,900 decisions on procurement law disputes.
+    Full text extracted from official PDF decisions. WordPress REST API for
+    pagination, HTML pages for metadata, PDF downloads for full text.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+  notes: "1-second delay between requests."
+
+api:
+  type: "rest+scraping"
+  base_url: "https://www.klagenemndssekretariatet.no"
+  endpoints:
+    list: "/wp-json/wp/v2/sak?per_page=50&page={page}"
+    detail: "/sak/{slug}"
+  response_format: "json+html+pdf"
+
+schema:
+  total_fields: 14
+  key_fields:
+    - name: "case_number"
+      description: "Case number (e.g. 2024/1606)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Case number as title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the decision (from PDF)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "url"
+      description: "URL to case page"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "NLOD 2.0"
+  url: "https://data.norge.no/nlod/en/2.0"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Norwegian government open data."

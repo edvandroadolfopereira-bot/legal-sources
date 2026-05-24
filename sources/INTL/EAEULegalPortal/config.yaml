@@ -1,0 +1,79 @@
+source:
+  id: "INTL/EAEULegalPortal"
+  country: "INTL"
+  name: "EAEU Legal Portal (Treaties and Legislation)"
+  url: "https://docs.eaeunion.org/"
+  description: |
+    Official legal portal of the Eurasian Economic Union (EAEU/EEU).
+    Contains Supreme Council acts, Intergovernmental Council acts,
+    EEC Commission acts (decisions, recommendations, dispositions),
+    international treaties, CU/CES documents, memoranda, and
+    official announcements. ~10,000+ documents. Russian primary,
+    some documents available in Armenian, Belarusian, Kazakh, Kyrgyz, English.
+    Full text extracted from DOCX attachments (preferred) or PDF.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+data_model:
+  type: "legislation"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: 11
+  key_fields:
+    - name: "doc_id"
+      description: "Document ID from portal URL (e.g., 10650)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Full title of the document"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from DOCX/PDF attachment"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Date of adoption (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "doc_number"
+      description: "Document number"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "doc_type"
+      description: "Document type/category"
+      type: "string"
+      role: "category"
+      required: false
+    - name: "url"
+      description: "Document page URL on docs.eaeunion.org"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  id: "pd-gov"
+  name: "Public Domain (Government)"
+  url: "https://docs.eaeunion.org/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official acts and decisions of the EAEU, an international organization."

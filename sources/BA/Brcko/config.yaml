@@ -43,7 +43,7 @@ source:
   country: BA
   data_types:
   - legislation
-  id: BA/BrckoDistrikt
+  id: BA/Brcko
   license: Open Government Data
   name: Brčko District Official Gazette (Službeni glasnik Brčko distrikta)
   notes: 'Legislation of Brčko District, an autonomous administrative unit in Bosnia

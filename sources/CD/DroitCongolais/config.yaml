@@ -1,0 +1,84 @@
+source:
+  id: "CD/DroitCongolais"
+  country: "CD"
+  name: "Droit Congolais — DRC Legislation and Case Law Portal"
+  url: "https://www.droitcongolais.info/"
+  description: |
+    NGO-run portal providing a systematic collection (Recueil systématique)
+    of DRC laws, ordinances, international treaties, administrative decisions,
+    and case law. Covers 9 legal domains, 26 provinces, and jurisprudence
+    from constitutional, administrative, private, and criminal courts.
+    All documents are PDFs. French language.
+
+data_types:
+  - legislation
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+  max_workers: 1
+
+api:
+  type: "html_scrape"
+  base_url: "https://www.droitcongolais.info"
+
+data_model:
+  type: "legislation"
+  source_nature: "consolidated"
+  primary_key: "document_id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "document_id"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "_id"
+      description: "Hash-based unique identifier from PDF URL"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title from link text"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Document date parsed from filename/title"
+      type: "date"
+      role: "temporal_key"
+      required: false
+  secondary_fields:
+    - name: "category"
+      description: "Legal domain category"
+    - name: "data_type"
+      description: "legislation or case_law"
+    - name: "pdf_url"
+      description: "Original PDF URL"
+
+license:
+  id: "custom-terms"
+  name: "Custom Terms (NGO educational portal)"
+  url: "https://www.droitcongolais.info/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official legal texts are public domain under DRC law. Portal adds classification/organization."
+
+notes: |
+  - All documents are PDFs; text extracted via pdfplumber
+  - French language
+  - Coverage: 1886 to present
+  - ~1500+ documents across legislation, treaties, admin decisions, case law
+  - Classification follows Swiss-inspired systematic numbering (RS)

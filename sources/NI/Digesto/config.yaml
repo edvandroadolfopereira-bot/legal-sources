@@ -1,0 +1,95 @@
+source:
+  id: "NI/Digesto"
+  country: "NI"
+  name: "Digesto Jurídico Nicaragüense"
+  url: "http://digesto.asamblea.gob.ni/"
+  description: |
+    Nicaragua's Digesto Jurídico — consolidated legal norms organized by subject
+    matter. 41,000+ records including laws, decrees, executive agreements, and
+    international instruments from 1821 to present. Maintained by the National
+    Assembly's Directorate of the Legal Digest.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "rest"
+  base_url: "http://digesto.asamblea.gob.ni"
+  endpoints:
+    list: "/consultas/util/ws/proxy.php"
+    detail: "/consultas/util/ws/proxy.php"
+
+data_model:
+  type: "legislation"
+  source_nature: "consolidated"
+  primary_key: "norm_id"
+  update_strategy: "upsert"
+  versioning: "consolidated"
+  dedup_key:
+    - "norm_id"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier (NI-DIG-{numeric_id})"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Title of the norm"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the consolidated norm"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Approval date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "category"
+      description: "Norm category (Ley, Decreto Legislativo, etc.)"
+      type: "string"
+      role: "reference"
+      required: false
+    - name: "number"
+      description: "Official norm number"
+      type: "string"
+      role: "reference"
+      required: false
+  secondary_fields:
+    - name: "rango"
+      description: "Legal rank/type"
+    - name: "registro"
+      description: "Registry status"
+
+license:
+  id: "pd-gov"
+  name: "Public domain (government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Nicaraguan legislation published by the National Assembly for public access."
+
+notes: |
+  - WordPress frontend with PHP/MySQL backend
+  - API endpoint: /consultas/util/ws/proxy.php (POST)
+  - Listing via hddQueryType=getJuridicNorms with pagination
+  - Full text via hddQueryType=getNormaHtmlAccordion with base64 ID
+  - Document IDs are base64-encoded integers
+  - Some minor decrees/agreements lack full text (no XML version stored)
+  - Language: Spanish
+  - Coverage: 1821-present

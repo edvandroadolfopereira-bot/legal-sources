@@ -1,0 +1,48 @@
+source:
+  id: "ZM/Judiciary"
+  country: "ZM"
+  name: "Zambia Judiciary Court Decisions"
+  url: "https://judiciaryzambia.com"
+  description: |
+    Official Zambia Judiciary portal court decisions. Covers Supreme Court,
+    Constitutional Court, Court of Appeal, and High Court. Decisions published
+    as PDFs via WordPress site with WP REST API.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "wp-rest-api"
+  base_url: "https://judiciaryzambia.com/wp-json/wp/v2"
+  endpoints:
+    posts: "/posts"
+    categories: "/categories"
+  decision_categories:
+    constitutional_court: 197
+    court_of_appeal: 198
+    high_court: 199
+    general_decisions: 189
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - court
+    - date
+    - text
+
+license:
+  name: "Public domain (government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Zambia Judiciary publications"

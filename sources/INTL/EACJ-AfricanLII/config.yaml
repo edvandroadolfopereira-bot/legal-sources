@@ -1,0 +1,36 @@
+source:
+  id: INTL/EACJ-AfricanLII
+  country: INTL
+  name: East African Court of Justice (via AfricanLII)
+  url: https://africanlii.org/en/judgments/EACJ/
+  description: >
+    East African Court of Justice decisions (2006-2026) via AfricanLII.
+    ~390 judgments covering trade, human rights, and institutional disputes
+    across EAC member states (Burundi, DRC, Kenya, Rwanda, South Sudan,
+    Tanzania, Uganda). Full text extracted from PDF.
+  auth: none
+  data_types:
+  - case_law
+  method: HTML scraping of AfricanLII listing + PDF text extraction
+schema:
+  key_fields:
+  - name: citation
+    required: false
+    type: string
+  - name: case_number
+    required: false
+    type: string
+  - name: judges
+    required: false
+    type: string
+  - name: date
+    required: false
+    type: date
+license:
+  name: "CC BY-NC-SA"
+  url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+  commercial_use: false
+  attribution_required: true
+  share_alike: true
+  no_derivatives: false
+  notes: "AfricanLII content under CC BY-NC-SA license"

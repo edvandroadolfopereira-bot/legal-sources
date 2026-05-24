@@ -1,0 +1,72 @@
+source:
+  id: "MN/BOM"
+  country: "MN"
+  name: "Bank of Mongolia Regulations"
+  url: "https://www.mongolbank.mn/en/"
+  description: |
+    Bank of Mongolia (Mongol Bank) regulatory documents.
+    Banking supervision, monetary policy, forex, payment systems regulations.
+    English translations of central bank rules, guidelines, and instructions.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "html_scrape"
+  base_url: "https://www.mongolbank.mn"
+
+data_model:
+  type: "doctrine"
+  source_nature: "gazette"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: null
+  key_fields:
+    - name: "doc_id"
+      description: "Document page ID from mongolbank.mn"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Title of the regulation"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the regulation"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date"
+      type: "date"
+      role: "temporal_key"
+      required: false
+
+license:
+  id: "ogd"
+  name: "Open Government Data (Mongolia)"
+  url: "https://www.mongolbank.mn/en/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official central bank regulatory documents published for public access"
+
+notes: |
+  - English translations of Mongolian central bank regulations
+  - Content delivered as PDF files on mongolbank.mn/en/r/ pages
+  - Categories: BOM law, banking supervision, monetary policy, forex, payment systems
+  - ~35 regulations with English translations available
+  - PDF text extraction via pdfplumber

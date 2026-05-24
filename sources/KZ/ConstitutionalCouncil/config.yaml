@@ -1,0 +1,47 @@
+country: KZ
+source_id: KZ/ConstitutionalCouncil
+name: Kazakhstan Constitutional Court & Council Decisions
+data_types:
+  - case_law
+language: ru,kk
+endpoints:
+  search: https://zan.gov.kz/api/documents/search
+  document: https://zan.gov.kz/api/documents/{id}/{lang}
+  portal: https://adilet.zan.kz/
+fetcher:
+  page_size: 10
+  rate_limit_ms: 1500
+  max_retries: 3
+  timeout_s: 60
+  ssl_verify: false
+  total_documents: 94
+schema:
+  date_format: ISO8601
+  text_field: text
+  key_fields:
+    - name: id
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: date
+      required: true
+license:
+  name: Open Data (Ministry of Justice of Kazakhstan)
+  url: https://zan.gov.kz/
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Government open data via zan.gov.kz API"
+notes: |
+  94 normative resolutions: 77 Constitutional Court (2023+) and 17 Constitutional Council (2008-2022).
+  The Constitutional Council was replaced by the Constitutional Court on January 1, 2023.
+  Data fetched via the zan.gov.kz REST API (same backend as KZ/Adilet) filtered by actType НПОС
+  and requisites containing "Конституционн" + "Суда"/"Совета".
+  SSL uses Kazakhstan national PKI — requires verify=False / curl -k.

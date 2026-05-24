@@ -1,0 +1,33 @@
+api:
+  documentation: https://www.finlex.fi/fi/oikeuskaytanto/hovioikeudet
+  endpoint: https://www.finlex.fi/fi/oikeuskaytanto/hovioikeudet
+  type: website_rsc
+auth:
+  type: none
+country: FI
+data_types:
+- case_law
+license:
+  name: "CC BY 4.0"
+  url: "https://creativecommons.org/licenses/by/4.0/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Finlex Open Data"
+name: Finnish Courts of Appeal Decisions (Finlex)
+rate_limit:
+  requests_per_second: 0.5
+schema:
+  key_fields:
+  - name: case_id
+    required: true
+    type: string
+  - name: court
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: string
+source_id: FI/FinlexCourtsOfAppeal
+url: https://www.finlex.fi/fi/oikeuskaytanto/hovioikeudet

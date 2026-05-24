@@ -126,11 +126,12 @@ def parse_date(date_str: str) -> Optional[str]:
     return None
 
 
-def search_norms(page: int = 1, per_page: int = 20, tipo_norma: int = 0) -> tuple:
+def search_norms(page: int = 1, per_page: int = 20, tipo_norma: int = 0, max_retries: int = 3) -> tuple:
     """
     Search for norms via the buscarjson endpoint.
 
     Returns (results_list, total_items).
+    Retries on transient server errors (502, 503, 504) with exponential backoff.
     """
     params = {
         'string': '',
@@ -139,16 +140,25 @@ def search_norms(page: int = 1, per_page: int = 20, tipo_norma: int = 0) -> tupl
         'itemsporpagina': str(per_page),
         'orden': '2',  # Order by publication date desc
     }
-    response = requests.get(SEARCH_URL, params=params, headers=HEADERS, timeout=30)
-    response.raise_for_status()
-    data = response.json()
+    for attempt in range(max_retries + 1):
+        try:
+            response = requests.get(SEARCH_URL, params=params, headers=HEADERS, timeout=30)
+            response.raise_for_status()
+            data = response.json()
 
-    if isinstance(data, list) and len(data) >= 2:
-        results = data[0] if isinstance(data[0], list) else []
-        meta = data[1] if isinstance(data[1], dict) else {}
-        total = int(meta.get('totalitems', 0))
-        return results, total
-    return [], 0
+            if isinstance(data, list) and len(data) >= 2:
+                results = data[0] if isinstance(data[0], list) else []
+                meta = data[1] if isinstance(data[1], dict) else {}
+                total = int(meta.get('totalitems', 0))
+                return results, total
+            return [], 0
+        except requests.exceptions.HTTPError as e:
+            if response.status_code in (502, 503, 504) and attempt < max_retries:
+                wait = 2 ** (attempt + 1)
+                logger.warning(f"Page {page}: {response.status_code} error, retrying in {wait}s (attempt {attempt + 1}/{max_retries})...")
+                time.sleep(wait)
+                continue
+            raise
 
 
 def fetch_norm_text(id_norma: int) -> Optional[dict]:

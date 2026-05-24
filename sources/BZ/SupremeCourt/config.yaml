@@ -1,0 +1,35 @@
+source_id: BZ/SupremeCourt
+name: Belize Supreme Court Judgments
+country: BZ
+url: https://judiciary.bz/judgements2/
+data_types:
+  - case_law
+
+description: >
+  Supreme Court judgments from the Judiciary of Belize. Covers Criminal
+  cases (Indictments, 1977-2022) and Civil cases (1972-2022). Judgments
+  are published as PDFs by the Office of the Registrar General.
+
+schedule:
+  frequency: monthly
+  mode: full
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - case_number
+    - case_type
+    - date
+    - court
+    - url
+    - text
+
+license:
+  name: "Public Domain"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government court decisions are public domain in Belize."

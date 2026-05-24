@@ -180,11 +180,12 @@ class PeraturanGOScraper(BaseScraper):
         return meta
 
     def _download_pdf_text(self, slug: str) -> str:
-        """Extract text from PDF using centralized extractor."""
+        """Download PDF from peraturan.go.id and extract text."""
+        pdf_url = f"{BASE_URL}/files/{slug}.pdf"
         return extract_pdf_markdown(
             source="ID/PeraturanGO",
-            source_id="",
-            pdf_bytes=slug,
+            source_id=slug,
+            pdf_url=pdf_url,
             table="legislation",
         ) or ""
 

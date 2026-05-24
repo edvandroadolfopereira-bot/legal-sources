@@ -1,0 +1,41 @@
+source:
+  id: BW/BotswanaLaws
+  name: "Botswana Consolidated Legislation"
+  url: https://botswanalaws.com
+  country: BW
+  data_types:
+    - legislation
+  description: >
+    354 consolidated principal acts of Botswana. Full text in HTML.
+    Organized alphabetically with pagination. Joomla-based site.
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+
+schema:
+  key_fields:
+    - name: _id
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: url
+      type: string
+      required: true
+
+license:
+  name: "Public domain (government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Government of Botswana legislation. Open access."

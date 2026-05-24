@@ -1,0 +1,45 @@
+fetch:
+  max_retries: 3
+  rate_limit: 2.0
+  timeout: 60
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: case_no
+    required: false
+    type: string
+  - name: petitioner
+    required: false
+    type: string
+  - name: respondent
+    required: false
+    type: string
+  - name: bench
+    required: false
+    type: string
+  - name: decision_date
+    required: false
+    type: string
+source:
+  auth: none
+  country: IN
+  data_types:
+  - case_law
+  description: >
+    Final orders and judgments from the Central Administrative Tribunal (CAT),
+    India. 19 benches across India handling service disputes for central
+    government employees. ~800,000+ cases disposed since 1985. Judgments
+    available as PDFs via the CIS portal at cis.cgat.gov.in.
+  id: IN/CAT
+  name: Central Administrative Tribunal
+  url: https://cis.cgat.gov.in/catlive/
+license:
+  name: "Government Open Data"
+  url: "https://cgat.gov.in/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Indian government tribunal decisions are public records."

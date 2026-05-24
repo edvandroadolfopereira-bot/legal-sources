@@ -1,0 +1,83 @@
+source:
+  id: "YE/Parliament"
+  country: "YE"
+  name: "Yemen House of Representatives Legislative Encyclopedia"
+  url: "https://yemenparliament.gov.ye"
+  description: |
+    Legislative encyclopedia of the Yemeni House of Representatives (مجلس النواب اليمني).
+    Laws from 1990–2019 across five legislative periods. Full text in Arabic, stored as PDFs.
+    ~292 laws covering all major legislative areas.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "rest"
+  base_url: "https://yemenparliament.gov.ye"
+  endpoints:
+    list: "/PWS.asmx/CategoryPosts"
+    detail: "/Details?Post={id}"
+
+data_model:
+  type: "legislation"
+  source_nature: "gazette"
+  primary_key: "post_id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "post_id"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "post_id"
+      description: "Unique post identifier from the parliament website"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Title of the law (Arabic)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the law extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date (Gregorian)"
+      type: "date"
+      role: "temporal_key"
+      required: true
+  secondary_fields:
+    - name: "category"
+      description: "Legislative period category"
+    - name: "pdf_url"
+      description: "URL to the original PDF"
+  probably_ignorable: []
+
+license:
+  id: "pd-gov"
+  name: "Public Domain (Government Works)"
+  url: "https://yemenparliament.gov.ye"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government legislation published by the Yemeni Parliament"
+
+notes: |
+  - Content is in Arabic
+  - PDFs have selectable text (not scanned images)
+  - AJAX endpoint at PWS.asmx/CategoryPosts for paginated listings
+  - 5 categories: 1990-1993, 1993-1997, 1997-2003, 2004-2009, 2010-2019
+  - ~292 laws total
+  - PyMuPDF (fitz) used for PDF text extraction

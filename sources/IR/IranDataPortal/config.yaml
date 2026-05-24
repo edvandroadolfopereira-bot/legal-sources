@@ -1,0 +1,75 @@
+# ===================================================================
+# IR/IranDataPortal -- Iran Data Portal (Syracuse University)
+# ===================================================================
+# Curated English translations of Iranian laws, regulations, court
+# decisions, and constitutional documents. Hosted by Syracuse University.
+# ===================================================================
+
+source:
+  id: "IR/IranDataPortal"
+  country: "IR"
+  name: "Iran Data Portal (Syracuse University)"
+  url: "https://irandataportal.syr.edu/"
+  description: |
+    Academic portal with English translations of Iranian legal texts.
+    Covers constitutional law, election law, banking regulations,
+    criminal codes, labor law, and Guardian Council decisions.
+
+data_types:
+  - legislation
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+
+api:
+  type: "html_scrape"
+  base_url: "https://irandataportal.syr.edu/"
+  sitemap: "https://irandataportal.syr.edu/wp-sitemap-posts-page-1.xml"
+
+data_model:
+  type: "legislation"
+  primary_key: "document_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "document_id"
+
+schema:
+  total_fields: 8
+  key_fields:
+    - name: "_id"
+      description: "Unique document identifier (IR-IDP-{hash})"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Law/document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the legal document (English translation)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "url"
+      description: "URL to the document on irandataportal.syr.edu"
+      type: "string"
+      role: "reference"
+      required: true
+  secondary_fields:
+    - name: "language"
+      description: "Language code (en for English translations)"
+
+license:
+  name: "Open government data"
+  url: "https://irandataportal.syr.edu/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Academic open access portal by Syracuse University"

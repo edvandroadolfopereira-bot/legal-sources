@@ -1,0 +1,87 @@
+source:
+  id: "MH/Nitijela"
+  country: "MH"
+  name: "Marshall Islands Parliament (Nitijela) Legislation"
+  url: "https://rmiparliament.org/cms/legislation.html"
+  description: |
+    Acts of the Nitijela (Parliament of the Marshall Islands), including principal
+    legislation, subordinate regulations, and amending acts. Coverage from 1966 to
+    present. English language. Powered by the iLAWS legislation management system.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.1
+  burst: 1
+  max_workers: 1
+
+api:
+  type: "html_scrape"
+  base_url: "https://rmiparliament.org"
+  selectors:
+    list_page: "https://rmiparliament.org/cms/legislation/acts-of-nitijela/by-title.html"
+    item_selector: "tr"
+    pdf_link: "a.npWrap[href$='.pdf']"
+
+data_model:
+  type: "legislation"
+  source_nature: "consolidated"
+  primary_key: "legislation_number"
+  update_strategy: "upsert"
+  versioning: "temporal"
+  dedup_key:
+    - "legislation_number"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier (MH-Nitijela-{code})"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Short title of the act"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Commencement date"
+      type: "date"
+      role: "temporal_key"
+      required: true
+  secondary_fields:
+    - name: "legislation_number"
+      description: "Official legislation code (e.g., 2023-0088)"
+    - name: "version"
+      description: "Current version number"
+    - name: "long_title"
+      description: "Full descriptive title from notes popover"
+  probably_ignorable: []
+
+license:
+  id: "custom-nc"
+  name: "Custom Terms (Non-Commercial)"
+  url: "https://rmiparliament.org/cms/legislation.html"
+  commercial_use: false
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Legislation can be downloaded and printed for private use. Commercial entities must obtain permission from the Marshall Islands Attorney General's Chambers."
+
+notes: |
+  - PDFs are digitally created (not scanned), text is selectable
+  - robots.txt specifies 10-second crawl delay
+  - ~305 principal acts, ~15 repealed acts
+  - Coverage: 1966-2025
+  - English language
+  - Also includes subordinate regulations and amending acts

@@ -1,0 +1,94 @@
+source:
+  id: "AR/BCRA-Normativa"
+  country: "AR"
+  name: "Argentina Central Bank Regulations (BCRA Communications)"
+  url: "https://www.bcra.gob.ar/buscador-de-comunicaciones/"
+  description: |
+    Regulatory communications (Comunicaciones "A") from the Banco Central
+    de la República Argentina (BCRA). Covers banking regulations, monetary
+    policy, foreign exchange rules, and financial system norms.
+    8,500+ A-type communications dating back to the 1930s.
+    Language: Spanish.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.7
+  burst: 3
+  max_workers: 1
+
+api:
+  type: "rest"
+  base_url: "https://www.bcra.gob.ar"
+  endpoints:
+    search: "/api/endpoints/buscador-comunicaciones.php"
+
+data_model:
+  type: "legislation"
+  source_nature: "gazette"
+  primary_key: "communication_number"
+  update_strategy: "append_only"
+  versioning: "none"
+  dedup_key:
+    - "communication_type"
+    - "communication_number"
+
+schema:
+  total_fields: 11
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier (AR/BCRA-Normativa/A{number})"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Communication title/reference"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Date of issuance"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "communication_number"
+      description: "Communication number"
+      type: "integer"
+      role: "reference"
+      required: true
+  secondary_fields:
+    - name: "communication_type"
+      description: "Type of communication (A)"
+    - name: "boletín_number"
+      description: "Official gazette number"
+    - name: "boletín_date"
+      description: "Official gazette date"
+  probably_ignorable: []
+
+license:
+  id: "pd-gov"
+  name: "Public Domain (Government Works)"
+  url: "https://www.bcra.gob.ar/Institucional/Normativa-transparencia-activa.asp"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Argentine government regulatory communications are public information under transparency laws."
+
+notes: |
+  - API endpoint: POST /api/endpoints/buscador-comunicaciones.php
+  - mode=tipo-fecha filters by communication type and date range
+  - Full text from PDFs at /archivos/Pdfs/comytexord/{tipo}{numero}.pdf
+  - A-type = permanent normative, B-type = transitional, C-type = informative
+  - We focus on A-type (regulatory/normative) communications
+  - PDF extraction via pdfminer works reliably
+  - ~8,500 A-type communications total

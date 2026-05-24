@@ -1,0 +1,37 @@
+{
+  "_id": "46b05089-ef51-42c3-b220-0c11caa7947b",
+  "_source": "INTL/OHCHR-TBInternet",
+  "_type": "doctrine",
+  "_fetched_at": "2026-05-11T04:56:17.197071+00:00",
+  "title": "CRPD/C/WSM/CO/1 — Concerns/Observations (CRPD)",
+  "text": "Equality and non-discrimination (art. 5) 7.The Committee notes with concern: (a)The State Party’s failure to recognize disability explicitly among prohibited grounds of discrimination in its constitutional and legal framework, including the failure to recognize intersectional discrimination, and the absence of legal provisions establishing the denial of reasonable accommodation as a form of discrimination; (b)The lack of accessible and effective procedures to report, investigate and redress cases of discrimination, including intersectional discrimination, in full compliance with the Convention ; (c)The lack of comprehensive measures to ensure the enjoyment by persons with autism of their rights under the Convention on an equal basis with others.",
+  "date": "2026-04-08",
+  "url": "https://uhri.ohchr.org/en/search-human-rights-recommendations",
+  "symbol": "CRPD/C/WSM/CO/1",
+  "document_id": "74b4bb5f-8c22-4c05-af4c-bc430015734e",
+  "annotation_type": "Concerns/Observations",
+  "treaty_body": "CRPD",
+  "countries": [
+    "Samoa"
+  ],
+  "regions": [
+    "Asia-Pacific"
+  ],
+  "themes": [
+    "Equality & non-discrimination",
+    "Constitutional & legislative framework",
+    "Data collection & research"
+  ],
+  "sdgs": [
+    "16 - PEACE, JUSTICE AND STRONG INSTITUTIONS",
+    "17 - PARTNERSHIPS FOR THE GOALS",
+    "10 - REDUCED INEQUALITIES",
+    "17.18 - Enhance availability of reliable data"
+  ],
+  "affected_persons": [
+    "Persons with disabilities"
+  ],
+  "upr_cycle": null,
+  "upr_positions": [],
+  "upr_recommending_countries": []
+}

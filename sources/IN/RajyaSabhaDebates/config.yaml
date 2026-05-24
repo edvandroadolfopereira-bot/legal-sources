@@ -1,0 +1,90 @@
+source:
+  id: "IN/RajyaSabhaDebates"
+  country: "IN"
+  name: "Rajya Sabha Official Debates"
+  url: "https://rsdebate.nic.in/"
+  description: |
+    Rajya Sabha (Council of States) verbatim debate transcripts from the official
+    Rajya Sabha Debates portal (rsdebate.nic.in), a DSpace 5.6 instance maintained
+    by the Rajya Sabha Secretariat and NIC. Covers sessions 1–267 (1952–present),
+    approximately 746K debate entries across Part 1 (Questions & Answers) and
+    Part 2 (Other proceedings). Full text extracted from text-layer PDFs using
+    pdfplumber.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+  max_workers: 1
+
+api:
+  type: "html_scraping"
+  base_url: "https://rsdebate.nic.in"
+  endpoints:
+    browse: "/browse?type=debatedate&sort_by=1&order=DESC&rpp=100&start={offset}"
+    item: "/handle/{handle_id}"
+    bitstream: "/bitstream/{handle_id}/1/{filename}"
+
+data_model:
+  type: "doctrine"
+  source_nature: "bulk_archive"
+  primary_key: "handle_id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "handle_id"
+
+schema:
+  total_fields: 11
+  key_fields:
+    - name: "id"
+      description: "DSpace handle ID (e.g., 123456789_760270)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Debate title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the debate transcript extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Date of the debate session (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: true
+  secondary_fields:
+    - name: "session_number"
+      description: "Rajya Sabha session number (1–267+)"
+    - name: "debate_type"
+      description: "Part 1 (Q&A) or Part 2 (Other)"
+    - name: "subject"
+      description: "Debate title subject category"
+    - name: "members"
+      description: "List of members who participated"
+  probably_ignorable: []
+
+license:
+  name: "Rajya Sabha Secretariat Copyright"
+  url: "https://rsdebate.nic.in/help/copyright-policy.jsp"
+  commercial_use: false
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Copyright of Rajya Sabha Secretariat. Non-commercial use permitted for research, study, criticism, review, and news reporting."
+
+notes: |
+  - Uses DSpace 5.6 HTML scraping on rsdebate.nic.in (no REST API available)
+  - Full text extracted from text-layer PDFs (PD_ prefix) using pdfplumber
+  - Two sub-collections: Part 1 (648K Q&A items) and Part 2 (98K proceedings)
+  - Older debates (pre-1980s) may have poor OCR quality
+  - Server can be slow; rate limiting to 0.5 req/s recommended

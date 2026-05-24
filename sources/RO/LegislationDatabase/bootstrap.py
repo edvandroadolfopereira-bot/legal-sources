@@ -15,7 +15,7 @@ WSDL: https://legislatie.just.ro/apiws/FreeWebService.svc?wsdl
 Docs: http://legislatie.just.ro/ServiciulWebLegislatie.htm
 
 Usage:
-  python bootstrap.py bootstrap          # Full initial pull (150K+ records)
+  python bootstrap.py bootstrap          # Full initial pull (~240K+ records)
   python bootstrap.py bootstrap --sample  # Fetch sample records for validation
   python bootstrap.py update             # Incremental update (recent years)
   python bootstrap.py test-api           # Quick API connectivity test
@@ -54,9 +54,8 @@ SOAP_NS = "http://schemas.xmlsoap.org/soap/envelope/"
 SERVICE_NS = "http://tempuri.org/"
 DATA_NS = "http://schemas.datacontract.org/2004/07/FreeWebService"
 
-# Years to search (Romania provides data from 1989 onwards)
-START_YEAR = 1989
-CURRENT_YEAR = datetime.now().year
+# API returns max 10 results per page regardless of RezultatePagina value
+API_PAGE_SIZE = 10
 
 
 class RoLegislationScraper(BaseScraper):
@@ -264,48 +263,57 @@ class RoLegislationScraper(BaseScraper):
         logger.error(f"All {max_retries} retries failed for page {page}: {last_error}")
         return []
 
-    def _paginate_year(
-        self, year: int, max_pages: Optional[int] = None, max_consecutive_empty: int = 3
+    def _paginate(
+        self,
+        year: Optional[int] = None,
+        max_pages: Optional[int] = None,
+        max_consecutive_empty: int = 3,
     ) -> Generator[dict, None, None]:
         """
-        Generator that paginates through all legislation for a given year.
+        Generator that paginates through legislation records.
 
-        Yields individual legislation records (raw dicts from the API).
+        The API caps results at 10 per page regardless of RezultatePagina value.
+        The SearchAn (year) filter acts as a "start from year" offset, not a strict
+        filter — records beyond the specified year will appear on later pages.
+
+        For full bootstrap, call with year=None to paginate through all records.
+        For updates, use year=<recent_year> to start from that year.
 
         Args:
-            year: Year to fetch legislation for
+            year: Optional year to start from (None = all records from beginning)
             max_pages: Maximum number of pages to fetch (None = unlimited)
-            max_consecutive_empty: How many consecutive empty responses before giving up
-                                   (helps recover from temporary server issues)
+            max_consecutive_empty: How many consecutive empty responses before stopping
         """
         page = 1
-        results_per_page = 50  # API supports up to 50 per page
+        results_per_page = API_PAGE_SIZE
         consecutive_empty = 0
         total_yielded = 0
+
+        year_str = str(year) if year else None
 
         while True:
             if max_pages and page > max_pages:
                 logger.info(f"Reached max_pages={max_pages}, stopping pagination")
                 return
 
-            logger.info(f"Fetching year {year}, page {page}...")
-            records = self._search(page=page, results_per_page=results_per_page, year=str(year))
+            if page % 100 == 1:
+                logger.info(f"Fetching page {page} (year={year_str or 'all'}, yielded so far: {total_yielded})...")
+            records = self._search(page=page, results_per_page=results_per_page, year=year_str)
 
             if not records:
                 consecutive_empty += 1
                 logger.warning(
-                    f"Empty response for year {year}, page {page} "
+                    f"Empty response at page {page} "
                     f"(consecutive empty: {consecutive_empty}/{max_consecutive_empty})"
                 )
 
                 if consecutive_empty >= max_consecutive_empty:
                     logger.info(
-                        f"Stopping pagination for year {year} after {max_consecutive_empty} "
+                        f"Stopping pagination after {max_consecutive_empty} "
                         f"consecutive empty responses. Total yielded: {total_yielded}"
                     )
                     return
 
-                # Wait a bit longer before retrying on empty response
                 wait_time = 5 * consecutive_empty
                 logger.info(f"Waiting {wait_time}s before trying next page...")
                 time.sleep(wait_time)
@@ -318,11 +326,6 @@ class RoLegislationScraper(BaseScraper):
             for record in records:
                 yield record
                 total_yielded += 1
-
-            # If we got fewer than requested, we've reached the end
-            if len(records) < results_per_page:
-                logger.info(f"Fetched all records for year {year} ({page} pages, {total_yielded} total)")
-                return
 
             page += 1
 
@@ -350,23 +353,19 @@ class RoLegislationScraper(BaseScraper):
         """
         Yield all legislation records from the Romanian Legislative Portal.
 
-        WARNING: Full fetch is 150K+ records. Use sample mode for testing.
+        Paginates through all records without year filter (~240K+ records).
+        The API returns 10 records per page.
         """
-        for year in range(START_YEAR, CURRENT_YEAR + 1):
-            logger.info(f"Fetching legislation for year {year}")
-            for record in self._paginate_year(year):
-                yield record
+        logger.info("Fetching ALL legislation (no year filter, full pagination)")
+        yield from self._paginate(year=None)
 
     def fetch_updates(self, since: datetime) -> Generator[dict, None, None]:
         """
-        Yield records from recent years (no date filter in API, so we fetch all).
+        Yield records from recent years using the year filter as a start offset.
         """
-        # API doesn't support date-based filtering, so we fetch recent years
-        current_year = datetime.now().year
-        for year in range(current_year - 1, current_year + 1):
-            logger.info(f"Fetching updates for year {year}")
-            for record in self._paginate_year(year):
-                yield record
+        start_year = since.year
+        logger.info(f"Fetching updates starting from year {start_year}")
+        yield from self._paginate(year=start_year)
 
     def normalize(self, raw: dict) -> dict:
         """

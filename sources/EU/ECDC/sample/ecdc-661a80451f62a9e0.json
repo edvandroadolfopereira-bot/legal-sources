@@ -1,0 +1,14 @@
+{
+  "_id": "ecdc-661a80451f62a9e0",
+  "_source": "EU/ECDC",
+  "_type": "doctrine",
+  "_fetched_at": "2026-05-11T00:33:58.369167Z",
+  "title": "Zoonotic influenza - Annual Epidemiological Report for 2022",
+  "text": "Zoonotic influenza - Annual Epidemiological Report for 2022 Citation European Centre for Disease Prevention and Control. Zoonotic influenza. In: ECDC. Annual epidemiological report for 2022. Stockholm: ECDC; 2023. Surveillance report 23 May 2023 Publication series: Annual Epidemiological Report Time period covered: This report is based on data for 2022, retrieved in March 2023 from different sources. Sporadic human infections with avian influenza virus A(H3N8), A(H5N1), A(H5N6), A(H9N2) and A(H10N3) were reported globally in 2022. Executive Summary Sporadic human infections with avian influenza virus A(H3N8), A(H5N1), A(H5N6), A(H9N2) and A(H10N3) were reported globally in 2022. Outbreaks and detections of highly pathogenic avian influenza viruses, mainly A(H5N1), affected poultry, wild and captive birds worldwide in 2022. In 2022, human infections with influenza virus A(H1N1)v and A(H1N2)v of swine origin were detected in two EU/EEA countries: Germany and the Netherlands, respectively. Outside of the EU/EEA, influenza virus A(H1N1)v, A(H1N2)v, and A(H3N2)v of swine origin caused sporadic human infections in Brazil, China, Taiwan, and the United States (US). Publication file Zoonotic influenza - Annual Epidemiological Report for 2022 English (300.07 KB - PDF) Download",
+  "date": "2023-05-23",
+  "url": "https://www.ecdc.europa.eu/en/publications-data/zoonotic-influenza-annual-epidemiological-report-2022",
+  "publication_type": "annual_report",
+  "description": "Sporadic human infections with avian influenza virus A(H3N8), A(H5N1), A(H5N6), A(H9N2) and A(H10N3) were reported globally in 2022.",
+  "pdf_url": "https://www.ecdc.europa.eu/sites/default/files/documents/AER_zoonoticFlu_2022_Final.pdf",
+  "text_source": "html"
+}

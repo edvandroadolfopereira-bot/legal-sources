@@ -1,0 +1,14 @@
+{
+  "_id": "VAKO-2025-1902-2023",
+  "_source": "FI/FinlexInsuranceCourt",
+  "_type": "case_law",
+  "_fetched_at": "2026-05-08T10:36:11.629357+00:00",
+  "title": "VakO 17.9.2025/1902:2023 (L)",
+  "text": "Vakuutusoikeus katsoi, että Kelan käyttämä tartuntatautipäivärahan laskukaava ei perustu lakiin eikä sitä tule soveltaa, mikäli se johtaa epäedullisempaan lopputulokseen kuin lain sanamuodon mukainen laskukaava. Sairausvakuutuslain 11 luvun 15 §:n 1 momentissa tartuntatautipäivärahan määräksi on säädetty kuukausitulon kahdeskymmenesviidesosa. Kela oli ilmoituksensa mukaan määrittänyt A:n tartuntatautipäivärahan jakamalla A:n kuukausipalkan kuukauteen sisältyvillä kalenteripäivillä, kertomalla poissaoloajanjaksoon sisältyvillä kalenteripäivillä ja jakamalla kyseiseen ajanjaksoon sisältyvillä suorituspäivillä. Vako kumosi valituksenalaisen päätöksen ja palautti asian Kansaneläkelaitokselle uudelleen käsiteltäväksi ja A:lle maksettavan tartuntatautipäivärahan määrittämiseksi sairausvakuutuslain 11 luvun 15 §:n mukaista laskukaavaa käyttäen, mikäli tämä johtaa A:n kannalta edullisempaan lopputulokseen.",
+  "date": "2025-09-17",
+  "url": "https://www.finlex.fi/fi/oikeuskaytanto/vakuutusoikeus/2025/1902-2023",
+  "case_number": "1902-2023",
+  "year": "2025",
+  "ecli": "ECLI:FI:VAKO:2025:1902",
+  "subject_tags": []
+}

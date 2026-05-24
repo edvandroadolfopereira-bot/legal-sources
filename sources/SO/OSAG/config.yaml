@@ -1,0 +1,37 @@
+source:
+  id: SO/OSAG
+  name: Somalia Office of the State Attorney General — Official Gazette
+  country: SO
+  url: https://osagsomalia.com/en/resources/bulletins-contents/
+  data_types:
+    - legislation
+  description: >
+    Official Gazette (Faafinta Rasmiga Ah) of the Federal Republic of Somalia.
+    ~280 individual laws, cabinet decisions, resolutions, and agreements published
+    as PDFs from 2014-present. Content primarily in Somali.
+
+fetch:
+  method: html_scrape_pdf
+  base_url: https://osagsomalia.com/en/resources/bulletins-contents/
+  rate_limit: 1.5
+  auth: none
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - text
+    - date
+    - url
+    - reference_number
+    - issuing_organization
+    - language
+
+license:
+  name: "Government of Somalia — Official Gazette"
+  url: "https://osagsomalia.com/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government legislation published in the Official Gazette. Public domain under Somali law."

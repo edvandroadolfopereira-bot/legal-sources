@@ -95,6 +95,7 @@ class RevenueTDM(BaseScraper):
     SOURCE_ID = "IE/Revenue-TDM"
 
     def __init__(self):
+        super().__init__(str(Path(__file__).parent))
         self.http = HttpClient(base_url=BASE_URL)
 
     def normalize(self, raw: Dict[str, Any]) -> Dict[str, Any]:

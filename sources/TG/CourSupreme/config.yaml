@@ -1,0 +1,37 @@
+source:
+  id: TG/CourSupreme
+  country: TG
+  name: "Togo Courts (Juricaf)"
+  url: https://juricaf.org/recherche/+/facet_pays:Togo
+  data_types:
+    - case_law
+  language: fr
+license:
+  name: "Open Access (Juricaf/AHJUCAF)"
+  url: https://juricaf.org
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Court decisions published on Juricaf by AHJUCAF."
+fetcher:
+  type: api_json
+  pagination: page_number
+  rate_limit: 2.0
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: docket_number
+      required: false
+      type: string
+  date_fields:
+    - date
+    - _fetched_at
+  text_fields:
+    - text
+    - title
+notes: >
+  223 court decisions (2005-2023) via Juricaf JSON API.
+  Covers Cour suprême, Cour d'appel, and Tribunal de première instance.

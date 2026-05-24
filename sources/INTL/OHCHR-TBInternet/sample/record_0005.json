@@ -1,0 +1,49 @@
+{
+  "_id": "3dbb8623-3947-4967-b620-0d0cd2a36b91",
+  "_source": "INTL/OHCHR-TBInternet",
+  "_type": "doctrine",
+  "_fetched_at": "2026-05-11T04:56:19.451657+00:00",
+  "title": "CRPD/C/WSM/CO/1 — Concerns/Observations (CRPD)",
+  "text": "Women with disabilities (art. 6) 9.The Committee notes with concern: (a)The absence of comprehensive legislation and measures to address intersecting forms of discrimination faced by women and girls with disabilities, and the fact that disability is not mainstreamed into gender policies; (b)The need for intersectional measures to protect girls with disabilities from early marriage and teenage pregnancy, to provide menstrual hygiene support and age-appropriate information on sexual and reproductive health, and the lack of targeted measures for widows with disabilities, who represent a high percentage of women with disabilities.",
+  "date": "2026-04-08",
+  "url": "https://uhri.ohchr.org/en/search-human-rights-recommendations",
+  "symbol": "CRPD/C/WSM/CO/1",
+  "document_id": "74b4bb5f-8c22-4c05-af4c-bc430015734e",
+  "annotation_type": "Concerns/Observations",
+  "treaty_body": "CRPD",
+  "countries": [
+    "Samoa"
+  ],
+  "regions": [
+    "Asia-Pacific"
+  ],
+  "themes": [
+    "Equality & non-discrimination",
+    "Rights related to marriage & family",
+    "Right to health",
+    "Constitutional & legislative framework",
+    "Sexual & gender-based violence",
+    "Discrimination against women",
+    "Safe drinking water & sanitation",
+    "Sexual & reproductive health and rights"
+  ],
+  "sdgs": [
+    "5.1 - End discrimination against women and girls",
+    "17 - PARTNERSHIPS FOR THE GOALS",
+    "5 - GENDER EQUALITY",
+    "3.7 - Universal access to reproductive care, planning and education",
+    "5.6 - Universal access to reproductive health and rights",
+    "5.3 - Eliminate forced marriages and genital mutilation",
+    "3 - GOOD HEALTH AND WELL-BEING",
+    "17.18 - Enhance availability of reliable data",
+    "5.5 - Equal opportunities and participation in leadership"
+  ],
+  "affected_persons": [
+    "Youth & juveniles",
+    "Women & girls",
+    "Persons with disabilities"
+  ],
+  "upr_cycle": null,
+  "upr_positions": [],
+  "upr_recommending_countries": []
+}

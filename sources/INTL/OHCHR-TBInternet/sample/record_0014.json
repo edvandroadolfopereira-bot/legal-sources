@@ -1,0 +1,42 @@
+{
+  "_id": "68da1b11-968f-4c2f-a551-3df126492838",
+  "_source": "INTL/OHCHR-TBInternet",
+  "_type": "doctrine",
+  "_fetched_at": "2026-05-11T04:56:29.581265+00:00",
+  "title": "CRPD/C/WSM/CO/1 — Recommendations (CRPD)",
+  "text": "Right to life (art. 10) 18. The Committee recommends that the State P arty, in close consultation with and with the active involvement of persons with disabilities, through their representative organi z ations , e nsure the systematic collection of disability-disaggregated data on mental health and integrate disability inclusion into all mental health policies and services, including on suicide prevention and crisis support.",
+  "date": "2026-04-08",
+  "url": "https://uhri.ohchr.org/en/search-human-rights-recommendations",
+  "symbol": "CRPD/C/WSM/CO/1",
+  "document_id": "74b4bb5f-8c22-4c05-af4c-bc430015734e",
+  "annotation_type": "Recommendations",
+  "treaty_body": "CRPD",
+  "countries": [
+    "Samoa"
+  ],
+  "regions": [
+    "Asia-Pacific"
+  ],
+  "themes": [
+    "Right to life",
+    "Right to health",
+    "Economic & political crisis, natural disasters or other emergencies",
+    "Persons with disabilities: independence, inclusion",
+    "Data collection & research"
+  ],
+  "sdgs": [
+    "16.7 - Responsive, inclusive and representative decision-making",
+    "10.2 - Promote universal social, economical and political inclusion",
+    "17 - PARTNERSHIPS FOR THE GOALS",
+    "10 - REDUCED INEQUALITIES",
+    "3 - GOOD HEALTH AND WELL-BEING",
+    "17.18 - Enhance availability of reliable data",
+    "3.4 - Reduce mortality from non-communicable diseases and promote mental health"
+  ],
+  "affected_persons": [
+    "Persons with disabilities"
+  ],
+  "upr_cycle": null,
+  "upr_positions": [],
+  "upr_recommending_countries": []
+}

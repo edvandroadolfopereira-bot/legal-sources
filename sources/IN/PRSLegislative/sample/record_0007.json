@@ -1,0 +1,32 @@
+{
+  "_id": "IN/PRSLegislative/the-corporate-laws-amendment-bill-2026",
+  "_source": "IN/PRSLegislative",
+  "_type": "legislation",
+  "_fetched_at": "2026-05-09T19:22:04.922537+00:00",
+  "bill_slug": "the-corporate-laws-amendment-bill-2026",
+  "title": "The Corporate Laws (Amendment) Bill, 2026",
+  "text": "The Corporate Laws (Amendment) Bill, 2026 was introduced in Lok Sabha on March 23, 2026.  It seeks to amend the Companies Act, 2013 and the Limited Liability Partnership (LLP) Act, 2008.  Key amendments under the Bill include:\nDecriminalisation of offences:\nThe Bill decriminalises several offences under the two Acts.  It imposes civil penalty for such offences instead of imprisonment or fine.  These include: (i) wilful failure to furnish information related to the affairs of a producer company, (ii) contravention of Rules, (iii) failure to furnish information or document required by the Registrar, (iv) violation of requirements on books of account, and (v) failure to comply with a requisition (other than summons) of the Registrar.\nThe Companies Act, 2013\nCorporate Social Responsibility (CSR):\nUnder the Act, companies meeting either of the following thresholds are required to contribute at least two percent of their average net profit in the last three years towards CSR Policy: (i) net worth of Rs 500 crore or more, (ii) turnover of Rs 1,000 crore or more, or (iii) net profit of Rs 5 crore or more.  The Bill changes the net profit threshold to Rs 10 crore or such other sum that may be prescribed.  The Bill states that companies which fulfil prescribed conditions, will not be required to comply with provisions related to CSR.\nCompliances:\nThe Bill seeks to simplify certain compliances.  It allows for electronic service of prescribed classes of documents by prescribed classes of companies.  It provides that a company may hold its annual general meeting physically or through video conferencing or other audio-visual means, however, it must hold a physical meeting at least once in every three years.  The Bill exempts companies which meet prescribed conditions, from the requirement to appoint an auditor.  It replaces certain affidavits with self-declarations.\nSmall companies:\nUnder the Act, a small company is a company with: (i) paid-up share capital not exceeding Rs 50 lakh or a higher prescribed amount not exceeding Rs 10 crore, and (ii) turnover not exceeding Rs 2 crore or a higher prescribed amount not exceeding Rs 100 crore.  The Bill increases the upper limit of: (i) share capital to Rs 20 crore, and (ii) turnover to Rs 200 crore.\nScheme of merger or amalgamation:\nThe Act specifies approval requirements for merger or amalgamation of certain companies such as: (i) two or more small companies, and (ii) a holding company and its wholly-owned subsidiary companies.  A scheme of merger or amalgamation must be approved by respective shareholders holding at least 90% of the total shares.  The Bill proposes to change this threshold to approval of majority of members present and voting who hold at least 75% of the shares among members present and voting.  The Bill also reduces threshold for approval of creditors from 90% to 75%.\nBuy-back of shares:\nUnder the Act, a company may purchase its own shares or other specified securities (referred to as buy-back).  Buy-back must not exceed 25% of the aggregate of paid-up capital and free reserves of the company.  The Bill adds that for prescribed classes of companies, buyback may be up to a prescribed percentage.\nValuation Authority:\nThe Bill designates the Insolvency and Bankruptcy Board of India (IBBI) as the Valuation Authority.  IBBI will be responsible for granting certificates of registration and recognition to valuers.  It will make recommendations to the central government on valuation standards, and ensure compliance.\nNational Financial Reporting Authority (NFRA):\nThe Act establishes NFRA for monitoring activities related to accounting and auditing standards.  The Bill expands the powers of NFRA.  For example, NFRA may specify regulations on the manner of investigation, and issue advisory, censure, or warning.\nEmployee compensation schemes:\nThe Act recognises issuance of employees’ stock option.\nThe Bill also recognises other schemes linked to the value of the share capital of a company.  These may include compensation schemes such as Restricted Stock Units, and Stock Appreciation Rights.\nThe Limited Liability Partnership Act, 2008\nConversion of trusts into LLP:\nThe Bill provides for conversion of specified trusts into LLPs.  This applies to trusts that: (i) have been established under the Indian Trusts Act, 1882 or any other central or state Act, (ii) are registered with SEBI or IFSC Authority, and (iii) are engaged in prescribed activities.",
+  "date": "2026-03-23",
+  "url": "https://prsindia.org/billtrack/the-corporate-laws-amendment-bill-2026",
+  "ministry": "Corporate Affairs",
+  "house": "Lok Sabha",
+  "status": "In Committee",
+  "status_timeline": [
+    {
+      "house": "Lok Sabha",
+      "date": "Mar 23, 2026",
+      "action": "Introduced"
+    },
+    {
+      "house": "Joint Parliamentary Committee",
+      "date": "Mar 23, 2026",
+      "action": "In Committee"
+    }
+  ],
+  "pdf_urls": [
+    {
+      "url": "https://prsindia.org/files/bills_acts/bills_parliament/2026/Corporate_Laws_(A)_Bill_2026_Text.pdf",
+      "label": "Bill Text"
+    }
+  ]
+}

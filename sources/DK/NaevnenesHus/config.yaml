@@ -1,0 +1,60 @@
+source:
+  id: DK/NaevnenesHus
+  name: Denmark Centralized Tribunal Portal (Naevnenes Hus)
+  country: DK
+  url: https://naevneneshus.dk/afgoerelsesportaler/
+  data_types:
+    - case_law
+  description: |
+    Decisions from 14 Danish administrative tribunals hosted by Naevnenes Hus,
+    covering planning, environment, food safety, energy, consumer complaints,
+    public procurement, patents, real estate, auditing, and more.
+    ~51,000 decisions available via structured JSON API.
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: rest_json
+  format: json
+  endpoints:
+    settings: "https://{subdomain}.naevneneshus.dk/api/sitesettings"
+    search: "https://{subdomain}.naevneneshus.dk/api/search"
+    publication: "https://{subdomain}.naevneneshus.dk/api/publication/{id}"
+
+schema:
+  key_fields:
+    - name: decision_id
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: true
+    - name: tribunal
+      type: string
+      required: true
+    - name: case_number
+      type: string
+      required: false
+    - name: categories
+      type: array
+      required: false
+
+license:
+  name: "Public Domain (Danish Government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Danish administrative tribunal decisions are public documents."

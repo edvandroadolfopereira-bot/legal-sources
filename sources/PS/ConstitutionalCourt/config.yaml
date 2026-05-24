@@ -1,0 +1,40 @@
+source_id: PS/ConstitutionalCourt
+name: Palestinian Supreme Constitutional Court
+country: PS
+language: ar
+url: https://www.tscc.pna.ps
+data_types:
+  - case_law
+
+fetch:
+  method: html_scrape_with_pdf
+  base_url: https://www.tscc.pna.ps
+  pages:
+    - id: court_decisions
+      category: interpretive_decision
+    - id: court_provisions
+      category: constitutional_provision
+    - id: competence_disputes
+      category: competence_dispute
+  rate_limit_seconds: 1.5
+  verify_ssl: false
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - text
+    - date
+    - url
+    - category
+    - case_number
+    - year
+
+license:
+  name: "Public domain (government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Palestinian government court decisions are public domain"

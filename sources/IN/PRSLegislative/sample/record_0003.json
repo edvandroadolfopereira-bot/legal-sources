@@ -1,0 +1,37 @@
+{
+  "_id": "IN/PRSLegislative/the-andhra-pradesh-reorganisation-amendment-bill-2026",
+  "_source": "IN/PRSLegislative",
+  "_type": "legislation",
+  "_fetched_at": "2026-05-09T19:21:56.175696+00:00",
+  "bill_slug": "the-andhra-pradesh-reorganisation-amendment-bill-2026",
+  "title": "The Andhra Pradesh Reorganisation (Amendment) Bill, 2026",
+  "text": "The Andhra Pradesh Reorganisation (Amendment) Bill, 2026 was introduced in Lok Sabha on April 1, 2026.  It seeks to amend the Andhra Pradesh Reorganisation Act, 2014.  The Act provides for reorganisation of the erstwhile state of Andhra Pradesh into two states — Andhra Pradesh and Telangana.\nCapital of Andhra Pradesh:\nThe Act provides that Hyderabad will be the common capital of Telangana and Andhra Pradesh for 10 years, after which Hyderabad will be the capital of Telangana and there will be a new capital for Andhra Pradesh.  The Bill states that Amaravati will be the new capital of Andhra Pradesh.\nDISCLAIMER: This document is being furnished to you for your information.  You may choose to reproduce or redistribute this report for non-commercial purposes in part or in full to any other person with due acknowledgement of PRS Legislative Research (“PRS”).  The opinions expressed herein are entirely those of the author(s).  PRS makes every effort to use reliable and comprehensive information, but PRS does not represent that the contents of the report are accurate or complete.  PRS is an independent, not-for-profit group.",
+  "date": "2026-04-01",
+  "url": "https://prsindia.org/billtrack/the-andhra-pradesh-reorganisation-amendment-bill-2026",
+  "ministry": "Home Affairs",
+  "house": "Lok Sabha",
+  "status": "Passed",
+  "status_timeline": [
+    {
+      "house": "Lok Sabha",
+      "date": "Apr 01, 2026",
+      "action": "Introduced"
+    },
+    {
+      "house": "Lok Sabha",
+      "date": "Apr 01, 2026",
+      "action": "Passed"
+    },
+    {
+      "house": "Rajya Sabha",
+      "date": "Apr 02, 2026",
+      "action": "Passed"
+    }
+  ],
+  "pdf_urls": [
+    {
+      "url": "https://prsindia.org/files/bills_acts/bills_parliament/2026/AP_Reorganisation_(Amendment)_Bill,_2026.pdf",
+      "label": "Bill Text"
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+source:
+  id: "SN/CourtSupreme"
+  country: "SN"
+  name: "Senegal Supreme Court (Cour Suprême)"
+  url: "https://juricaf.org/recherche/+/facet_pays:S%C3%A9n%C3%A9gal,facet_pays_juridiction:S%C3%A9n%C3%A9gal_%7C_Cour_supr%C3%AAme"
+  description: |
+    Senegal Supreme Court decisions via Juricaf (AHJUCAF). ~7,459 decisions
+    from various years to present. Full text in French. All chambers:
+    Administrative, Criminal, Civil/Commercial, Labour, Plenary.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+  max_workers: 1
+
+api:
+  type: "rest"
+  base_url: "https://juricaf.org"
+  endpoints:
+    list: "/recherche/+/facet_pays:S%C3%A9n%C3%A9gal,facet_pays_juridiction:S%C3%A9n%C3%A9gal_%7C_Cour_supr%C3%AAme?format=json&page={page}"
+    detail: "/arret/{id}"
+
+data_model:
+  type: "case_law"
+  source_nature: "consolidated"
+  primary_key: "decision_id"
+  update_strategy: "append_only"
+  versioning: "none"
+  dedup_key:
+    - "decision_id"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "_id"
+      description: "Juricaf decision ID (e.g., SENEGAL-COURSUPREME-20241127-40)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Decision title from Dublin Core metadata"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the decision from div#textArret"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision date in ISO 8601 format"
+      type: "date"
+      role: "temporal_key"
+      required: true
+  secondary_fields:
+    - name: "court"
+      description: "Court and chamber name"
+    - name: "docket_number"
+      description: "Case/docket number"
+  probably_ignorable: []
+
+license:
+  name: "ODbL 1.0"
+  url: "https://opendatacommons.org/licenses/odbl/1-0/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: true
+  no_derivatives: false
+  notes: "Juricaf data (non-French decisions) licensed under ODbL 1.0."
+
+notes: |
+  - ~7,459 decisions from Senegal Supreme Court
+  - French language
+  - Full text from Juricaf HTML pages (div#textArret)
+  - JSON API for paginated search, HTML for full text extraction
+  - Covers all Supreme Court chambers (Administrative, Criminal, Civil, Labour, Plenary)

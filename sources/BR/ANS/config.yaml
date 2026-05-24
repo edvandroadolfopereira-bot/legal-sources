@@ -1,0 +1,85 @@
+# ===================================================================
+# BR/ANS -- Agência Nacional de Saúde Suplementar
+# ===================================================================
+# Sequential ID enumeration of full text HTML pages. No auth required.
+# ~4800 legislative acts (RNs, ROs, INs, Portarias) from 1998 to present.
+# ===================================================================
+
+source:
+  id: "BR/ANS"
+  country: "BR"
+  name: "ANS - Agência Nacional de Saúde Suplementar"
+  url: "https://www.ans.gov.br/legislacao/busca-de-legislacao"
+  description: |
+    Normative resolutions (RNs), operational resolutions (ROs), instructions
+    (INs), portarias and other regulatory acts from Brazil's National
+    Supplementary Health Agency. Full text available via HTML pages indexed
+    by sequential numeric IDs (base64-encoded in URL parameter).
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "scraper"
+  base_url: "https://www.ans.gov.br"
+  endpoints:
+    full_text: "/component/legislacao/?view=legislacao&task=textoLei&format=raw&id={base64_id}"
+  pagination:
+    type: "sequential_id"
+    min_id: 1
+    max_id: 4839
+
+data_model:
+  type: "legislation"
+  primary_key: "_id"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 11
+  key_fields:
+    - name: "_id"
+      description: "Composite ID: ANS-{type}-{number}"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Full title including norm type, number, and date"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the legislative act"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "ementa"
+      description: "Summary/ementa of the norm"
+      type: "string"
+      role: "content"
+      required: false
+    - name: "date"
+      description: "Publication date in ISO 8601"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "norm_type"
+      description: "Type: RN, RO, IN, Portaria, etc."
+      type: "string"
+      role: "classification"
+      required: false
+
+license:
+  name: "Public Domain (Brazilian Government)"
+  url: "https://www.ans.gov.br/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government regulatory acts, publicly accessible"

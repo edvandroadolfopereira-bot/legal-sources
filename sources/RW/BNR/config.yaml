@@ -1,0 +1,50 @@
+fetcher:
+  base_url: https://www.bnr.rw
+  rate_limit: 2.0
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: category
+    required: false
+    type: string
+  - name: doc_type
+    required: false
+    type: string
+  - name: url
+    required: true
+    type: string
+source:
+  auth: none
+  country: RW
+  data_types:
+  - legislation
+  description: >
+    Financial sector regulations from the National Bank of Rwanda (BNR).
+    Covers Banking, Insurance, Pension, Microfinance, Payment Systems,
+    AML/CFT, Financial Markets, Foreign Exchange, Credit Reporting,
+    Consumer Protection, and more. ~206 PDF documents fetched via
+    JSON API endpoints and text extracted from PDFs.
+  format: json+pdf
+  id: RW/BNR
+  language: en
+  name: National Bank of Rwanda (BNR) — Financial Regulations
+  url: https://www.bnr.rw/lawsandregulations
+license:
+  name: "Government open access"
+  url: "https://www.bnr.rw/disclaimer"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official financial regulations published by the National Bank of Rwanda for public access."

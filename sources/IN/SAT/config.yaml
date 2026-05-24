@@ -1,0 +1,45 @@
+fetch:
+  max_retries: 3
+  rate_limit: 1.5
+  timeout: 60
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: appeal_no
+    required: false
+    type: string
+  - name: appeal_type
+    required: false
+    type: string
+source:
+  auth: none
+  country: IN
+  data_types:
+  - case_law
+  description: >
+    Orders from the Securities Appellate Tribunal (SAT), Mumbai. SAT hears
+    appeals against orders of SEBI, IRDAI, and PFRDA. Uses AJAX date-range
+    search endpoint with CSRF token, then downloads PDFs and extracts full
+    text via pdfplumber. ~500+ orders per year from 2003-present.
+  id: IN/SAT
+  name: Securities Appellate Tribunal
+  url: https://satweb.sat.gov.in/orders
+license:
+  name: "Government Open Data License — India"
+  url: "https://data.gov.in/government-open-data-license-india"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Government tribunal orders — public record"

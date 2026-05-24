@@ -1,0 +1,86 @@
+# ===================================================================
+# INTL/ESM-Legal -- European Stability Mechanism Governance Documents
+# ===================================================================
+# ~105 documents across 3 transparency sections. Full text from PDFs.
+# ===================================================================
+
+source:
+  id: "INTL/ESM-Legal"
+  country: "INTL"
+  name: "European Stability Mechanism — Governance Decisions & Policies"
+  url: "https://www.esm.europa.eu/about-us/transparency/esm-policies-documents"
+  description: |
+    Governance documents published by the European Stability Mechanism (ESM)
+    under its transparency framework: ESM Treaty, By-Laws, rules of procedure,
+    financial assistance guidelines, BoG/BoD meeting decisions, and Board of
+    Auditors reports. ~105 PDFs from three transparency sections.
+  data_types:
+    - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+api:
+  type: "html_scrape_pdf"
+  base_url: "https://www.esm.europa.eu"
+  sections:
+    - url: "/about-us/transparency/esm-policies-documents"
+      label: "ESM Policies & Legal Documents"
+    - url: "/about-us/transparency/programme-bog-bod-decisions"
+      label: "Programme BoG/BoD Decisions"
+    - url: "/about-us/transparency/boa-key-documents"
+      label: "Board of Auditors Key Documents"
+
+data_model:
+  type: "doctrine"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "title"
+      description: "Document title (e.g., 'ESM By-Laws', 'Summary of decisions, 19 June 2025')"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF via pdfplumber"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication or decision date (ISO 8601)"
+      type: "string"
+      role: "temporal_key"
+      required: false
+    - name: "category"
+      description: "Document category (e.g., 'Governance rules', 'Guidelines')"
+      type: "string"
+      role: "classifier"
+      required: false
+    - name: "section"
+      description: "Transparency section the document belongs to"
+      type: "string"
+      role: "classifier"
+      required: false
+
+license:
+  name: "Custom — ESM public transparency documents"
+  url: "https://www.esm.europa.eu/terms-and-conditions-and-privacy-statement"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Documents published under ESM transparency framework for public access."
+
+notes: |
+  - Three transparency sections scraped for PDF links
+  - PDFs downloaded from esm.europa.eu/system/files
+  - Text extracted using pdfplumber
+  - 2-second delays between PDF downloads
+  - ~105 documents covering ESM governance since 2012

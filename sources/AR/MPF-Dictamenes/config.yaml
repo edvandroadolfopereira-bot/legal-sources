@@ -1,0 +1,99 @@
+# ===================================================================
+# AR/MPF-Dictamenes -- Ministerio Público Fiscal (Attorney General)
+# ===================================================================
+# HTML scraping + PDF extraction. No authentication required.
+# 55,000+ dictamenes (opinions) from 1919 to present.
+# Procurador General opinions before the Supreme Court.
+# ===================================================================
+
+source:
+  id: "AR/MPF-Dictamenes"
+  country: "AR"
+  name: "MPF - Ministerio Público Fiscal Dictámenes"
+  url: "https://www.mpf.gob.ar/buscador-dictamenes/"
+  description: |
+    Official collection of dictámenes (legal opinions) from Argentina's
+    Procurador General de la Nación and fiscal prosecutors before the
+    Supreme Court. Covers opinions from 1919 to present. Full text
+    available as downloadable PDFs, with summaries inline in HTML.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "scraper"
+  base_url: "https://www.mpf.gob.ar"
+  endpoints:
+    search: "/buscador-dictamenes/"
+  pagination:
+    type: "page_number"
+    param: "pag"
+    page_size: 10
+
+data_model:
+  type: "doctrine"
+  primary_key: "pdf_filename"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "pdf_filename"
+      description: "PDF filename as unique identifier"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Subject matter keywords"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the dictamen extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "sumario"
+      description: "Summary text from the search page"
+      type: "string"
+      role: "content"
+      required: false
+    - name: "date"
+      description: "Approximate date (from year/month in PDF path)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "prosecutor"
+      description: "Name of the signing prosecutor"
+      type: "string"
+      role: "classification"
+      required: false
+    - name: "url"
+      description: "Direct URL to the PDF"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "Public Domain (Argentine Government)"
+  url: "https://www.mpf.gob.ar/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government legal opinions, publicly accessible"
+
+notes: |
+  - HTML scraping of search results + PDF download and extraction
+  - Pagination via ?pag=N&cant=10 URL parameters
+  - PDFs at /dictamenes/YEAR/AUTHOR/MONTH/FILENAME.pdf
+  - Full text extracted via pdfplumber with pypdf fallback
+  - 55,000+ dictamenes from 1919 to present
+  - Language: Spanish

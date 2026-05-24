@@ -1,0 +1,50 @@
+source:
+  id: CG/AssembleeNationale
+  name: Congo-Brazzaville Official Journal (SGG)
+  country: CG
+  url: https://www.sgg.cg/fr/journal-officiel/le-journal-officiel.html
+  data_types:
+    - legislation
+  description: >
+    Official Journal (Journal Officiel) of the Republic of Congo published by
+    the Secrétariat Général du Gouvernement (SGG). Contains laws, ordinances,
+    decrees, and orders. 1,833 issues from 1946-2026. PDFs with extractable
+    text available from approximately 2010 onwards.
+
+fetch:
+  method: html_listing_pdf
+  base_url: https://www.sgg.cg
+  listing_url: https://www.sgg.cg/fr/journal-officiel/le-journal-officiel.html
+  pagination:
+    type: page_param
+    param: page
+    start: 0
+    items_per_page: 20
+  rate_limit:
+    requests_per_second: 0.5
+    delay_between_pdfs: 3
+
+schema:
+  key_fields:
+    - issue_number
+    - date
+  fields:
+    - _id
+    - _source
+    - _type
+    - _fetched_at
+    - title
+    - text
+    - date
+    - url
+    - issue_number
+    - year
+
+license:
+  name: Public Domain (Government)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official government gazette of the Republic of Congo. Legal texts are public domain under Congolese law.

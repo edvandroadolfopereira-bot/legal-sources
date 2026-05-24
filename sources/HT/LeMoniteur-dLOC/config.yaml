@@ -1,0 +1,85 @@
+source:
+  id: "HT/LeMoniteur-dLOC"
+  country: "HT"
+  name: "Le Moniteur (Digital Library of the Caribbean)"
+  url: "https://ufdc.ufl.edu/AA00098215"
+  description: |
+    Haiti's Official Gazette (Le Moniteur: journal officiel de la République d'Haïti)
+    digitized by the University of Florida as part of the Digital Library of the Caribbean.
+    3,400+ issues from 1867 onwards with OCR full text. French language.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 2
+  burst: 5
+
+api:
+  type: "rest"
+  base_url: "https://api.patron.uflib.ufl.edu"
+  endpoints:
+    hierarchy: "/serialhierarchy?bibid={bibid}"
+    citation: "/{bibid}/{vid}/citation"
+    pagetext: "/pagetext?bibid={bibid}&vid={vid}"
+
+data_model:
+  type: "legislation"
+  source_nature: "gazette"
+  primary_key: "issue_id"
+  update_strategy: "append_only"
+  versioning: "none"
+  dedup_key:
+    - "issue_id"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "id"
+      description: "Unique issue identifier (bibid_vid)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Issue title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full OCR text of all pages"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date"
+      type: "date"
+      role: "temporal_key"
+      required: true
+  secondary_fields:
+    - name: "publisher"
+      description: "Publishing entity"
+    - name: "page_count"
+      description: "Number of pages in issue"
+    - name: "language"
+      description: "Document language"
+  probably_ignorable: []
+
+license:
+  id: "pd-gov"
+  name: "Public domain (government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Haitian government gazette — public domain as official government publication"
+
+notes: |
+  - Uses UFDC Patron API (api.patron.uflib.ufl.edu) for structured access
+  - Collection BibID: AA00098215 (3,421 issues with OCR text)
+  - OCR quality varies (19th century documents) but text is substantial
+  - Language: French
+  - Coverage: 1867 onwards (weekly/semiweekly publication)

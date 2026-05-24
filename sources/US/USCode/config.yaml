@@ -1,0 +1,47 @@
+source:
+  id: US/USCode
+  country: US
+  name: "US Code (Codified Federal Statutes)"
+  url: https://uscode.house.gov
+
+data:
+  types:
+    - legislation
+  coverage:
+    temporal: "Current edition (2024), all 54 titles"
+    estimated_size: "~60,000 sections across 54 titles"
+
+fetch:
+  method: GovInfo Content URLs
+  base_url: https://www.govinfo.gov/content/pkg
+  auth:
+    type: none
+    note: "No API key required — uses public content URLs"
+  full_text_format: HTML
+  response_format: HTML
+
+schema:
+  key_fields:
+    - name: usc_title
+      type: integer
+      required: true
+    - name: usc_section
+      type: string
+      required: true
+    - name: edition_year
+      type: integer
+      required: true
+  metadata:
+    - title
+    - date
+    - citation_path
+    - item_path
+
+license:
+  name: "Public Domain — 17 U.S.C. § 105"
+  url: "https://www.law.cornell.edu/uscode/text/17/105"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "US federal government works are not subject to copyright"

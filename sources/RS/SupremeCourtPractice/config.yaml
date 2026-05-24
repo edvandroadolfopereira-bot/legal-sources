@@ -1,0 +1,130 @@
+# ═══════════════════════════════════════════════════════════════════
+# Legal Data Hunter — Serbian Supreme Court of Cassation (VKS) Configuration
+# ═══════════════════════════════════════════════════════════════════
+
+# ── Source Identity ───────────────────────────────────────────────
+source:
+  id: "RS/SupremeCourtPractice"
+  country: "RS"
+  name: "Serbia Supreme Court Practice Database (VKS)"
+  url: "https://www.vrh.sud.rs/en/court-practice-database"
+  description: |
+    Court practice database of the former Supreme Court of Cassation
+    (Vrhovni kasacioni sud, VKS) of Serbia. Contains ~29,500+ decisions
+    from the pre-2022 era when the court was named VKS. Complements
+    RS/SupremeCourt which covers post-2022 decisions under court_type=sc.
+    Uses the same SOLR search engine on vrh.sud.rs with court_type=vks.
+
+# ── Data Types ────────────────────────────────────────────────────
+data_types:
+  - caselaw
+
+# ── Authentication ────────────────────────────────────────────────
+auth:
+  type: "none"
+
+# ── Rate Limiting ─────────────────────────────────────────────────
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+# ── API / Scraping Configuration ──────────────────────────────────
+api:
+  type: "html"
+  base_url: "https://vrh.sud.rs"
+  endpoints:
+    search: "/sr-lat/solr-search-page/results"
+    search_params:
+      court_type: "vks"  # Supreme Court of Cassation (pre-2022)
+      matter: "_none"
+      registrant: "_none"
+      sorting: "by_date_down"
+      results: "50"
+      page: "{page}"
+    detail: "/sr-lat/{slug}"
+  content_type: "drupal_7"
+  node_type: "court-practice"
+
+# ── Data Model ────────────────────────────────────────────────────
+data_model:
+  type: "caselaw"
+  primary_key: "node_id"
+  update_strategy: "append_only"
+  versioning: "none"
+  dedup_key:
+    - "node_id"
+
+# ── Schema ────────────────────────────────────────────────────────
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "node_id"
+      description: "Drupal node ID"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "case_reference"
+      description: "Case reference number (e.g., Rev2 1017/2025)"
+      type: "string"
+      role: "identifier"
+      required: false
+    - name: "title"
+      description: "Decision title from og:title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text content of the decision"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision date in ISO 8601 format"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "Direct URL to view the document"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "matter"
+      description: "Legal matter (criminal, civil, administrative, etc.)"
+      type: "string"
+      role: "classification"
+      required: false
+    - name: "case_type"
+      description: "Type of case (Kzz, Rev, Rev2, Prev, Gzz, Uzp, etc.)"
+      type: "string"
+      role: "classification"
+      required: false
+    - name: "published_at"
+      description: "Publication date on website"
+      type: "datetime"
+      role: "temporal_key"
+      required: false
+  secondary_fields:
+    - name: "_raw"
+      description: "Complete raw data from source (for debugging)"
+
+# ── License ───────────────────────────────────────────────────────
+license:
+  name: "Open government data"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Publicly accessible court decisions from the Serbian judiciary"
+
+# ── Notes ─────────────────────────────────────────────────────────
+notes: |
+  - Language: Serbian (Latin script, UTF-8)
+  - Platform: Drupal 7 with Apache SOLR search
+  - Coverage: ~29,500+ Supreme Court of Cassation decisions (pre-2022)
+  - Complements RS/SupremeCourt which covers court_type=sc (post-2022)
+  - Same SOLR endpoint, different court_type parameter (vks vs sc)
+  - Case types: Kzz, Rev, Rev2, Prev, Gzz, Uzp, Kd, etc.
+  - Pagination: SOLR search with 0-indexed pages, 50 results per page
+  - Full HTML content available on Drupal node pages
+  - Decision text in div.field-name-body inside article.node-court-practice

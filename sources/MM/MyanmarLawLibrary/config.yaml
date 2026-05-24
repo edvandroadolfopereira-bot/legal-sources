@@ -1,0 +1,83 @@
+# ===================================================================
+# MM/MyanmarLawLibrary -- Myanmar Law Library
+# ===================================================================
+# Myanmar laws from myanmar-law-library.org. Laws are stored as PDFs
+# embedded in HTML pages via SPIP CMS. Text extracted via pypdf.
+# Coverage: 2012-2022 (multiple government eras).
+# ===================================================================
+
+source:
+  id: "MM/MyanmarLawLibrary"
+  country: "MM"
+  name: "Myanmar Law Library"
+  url: "http://www.myanmar-law-library.org/"
+  description: |
+    Free access Myanmar law collection maintained by Myanmar Law Library.
+    Covers laws from 2012-2022 across multiple government eras (NLD,
+    USDP, State Administration Council). PDFs in Burmese (Myanmar script).
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+
+api:
+  type: "html_scrape"
+  base_url: "http://www.myanmar-law-library.org/"
+
+data_model:
+  type: "legislation"
+  primary_key: "document_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "document_id"
+
+schema:
+  total_fields: 9
+  key_fields:
+    - name: "_id"
+      description: "Unique document identifier (MM-MLL-{hash})"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Law title derived from URL slug"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF (Burmese Unicode)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Year of enactment (ISO 8601, Jan 1 of year)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "URL to the law page on myanmar-law-library.org"
+      type: "string"
+      role: "reference"
+      required: true
+  secondary_fields:
+    - name: "year"
+      description: "Year of enactment"
+    - name: "law_number"
+      description: "Law number if present"
+    - name: "language"
+      description: "Language code (my for Burmese)"
+
+license:
+  name: "CC BY-SA 4.0"
+  url: "https://creativecommons.org/licenses/by-sa/4.0/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: true
+  no_derivatives: false
+  notes: "Footer states CC BY-SA 4.0 International License"

@@ -1,0 +1,47 @@
+source:
+  id: "LK/GovPrinter"
+  country: "LK"
+  name: "Sri Lanka Department of Government Printing — Acts & Gazettes"
+  url: "https://documents.gov.lk/"
+  description: |
+    Sri Lankan Acts of Parliament from the Department of Government Printing.
+    Acts from 1981-2026 with English, Sinhala, and Tamil PDF versions.
+    This scraper fetches English PDFs and extracts full text.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "html_scrape"
+  base_url: "https://documents.gov.lk/view/act"
+
+schema:
+  key_fields:
+    - name: "_id"
+      type: "string"
+      required: true
+    - name: "title"
+      type: "string"
+      required: true
+    - name: "text"
+      type: "string"
+      required: true
+    - name: "date"
+      type: "date"
+      required: true
+
+license:
+  name: "Public Domain (Government of Sri Lanka)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government publications from the Department of Government Printing"

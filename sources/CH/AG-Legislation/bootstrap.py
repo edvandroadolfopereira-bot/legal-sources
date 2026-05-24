@@ -142,7 +142,9 @@ def fetch_law_text(systematic_number):
 
     tol = data.get("text_of_law", {})
     sv = tol.get("selected_version", {})
-    jc = sv.get("json_content", {})
+    jc = sv.get("json_content")
+    if jc is None:
+        return None, ""
     doc = jc.get("document", {})
     content = doc.get("content", {})
 

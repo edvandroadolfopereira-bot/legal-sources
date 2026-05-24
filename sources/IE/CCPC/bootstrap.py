@@ -63,8 +63,10 @@ def clean_html(html_text: str) -> str:
 
 def normalize(post: Dict) -> Dict:
     """Normalize a WP post to standard schema."""
-    title = unescape(post.get('title', {}).get('rendered', ''))
-    content_html = post.get('content', {}).get('rendered', '')
+    title_raw = post.get('title', '')
+    title = unescape(title_raw.get('rendered', '') if isinstance(title_raw, dict) else str(title_raw))
+    content_raw = post.get('content', '')
+    content_html = content_raw.get('rendered', '') if isinstance(content_raw, dict) else str(content_raw)
     text = clean_html(content_html)
     date_str = post.get('date', '')
     date_iso = date_str[:10] if date_str else None

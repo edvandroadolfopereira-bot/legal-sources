@@ -1,0 +1,52 @@
+source:
+  id: "LK/CBSL"
+  country: "LK"
+  name: "Central Bank of Sri Lanka — Directions, Circulars & Guidelines"
+  url: "https://www.cbsl.gov.lk/en/laws"
+  description: |
+    Regulatory documents from the Central Bank of Sri Lanka covering banking,
+    non-banking, foreign exchange, payments, market operations, deposit insurance,
+    microfinance, macroprudential surveillance, and international operations.
+    Documents include directions, circulars, determinations, and guidelines in PDF format.
+
+data_types:
+  - legislation
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "html_scrape"
+  base_url: "https://www.cbsl.gov.lk/en/laws"
+
+schema:
+  key_fields:
+    - name: "_id"
+      type: "string"
+      required: true
+    - name: "title"
+      type: "string"
+      required: true
+    - name: "text"
+      type: "string"
+      required: true
+    - name: "date"
+      type: "date"
+      required: true
+    - name: "reference_number"
+      type: "string"
+      required: false
+
+license:
+  name: "Public Domain (Government of Sri Lanka)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulatory documents from the Central Bank of Sri Lanka"

@@ -1,0 +1,16 @@
+{
+  "_id": "HAO_helsinki_2026_1035",
+  "_source": "FI/FinlexAdminCourts",
+  "_type": "case_law",
+  "_fetched_at": "2026-05-07T22:50:15.319187+00:00",
+  "title": "Helsingin HAO 19.02.2026 1035/2026 | Helsingin hallinto-oikeus | Hallinto-oikeudet | Finlex",
+  "text": "Rehtori oli ylioppilastutkinnosta annetun lain 15 §:n 2 momentin nojalla hylännyt kaikki valittajan syksyn 2025 tutkintokerran kokeet, koska valittajan oli katsottu syyllistyneen vilppiin pitkän matematiikan kokeessa.\n                    \n\n                    Hallinto-oikeus totesi, että kokelaan koesuoritusten hylkääminen ylioppilastutkinnosta annetun lain 15 §:n 2 momentin perusteella edellyttää sen näyttämistä, että kokelas on syyllistynyt kokeessa vilpilliseen menettelyyn tai sen yritykseen. Jotta vilppi tai sen yritys havaitaan, rehtorin on kiinnitettävä vakavaa huomiota ylioppilaskokeen valvonnan järjestämiseen. Näyttötaakka vilppiin syyllistymisestä on yksin viranomaisella eli lukion rehtorilla. Pelkkä epäily tai spekulaatio vilpistä ei riitä näyttökynnyksen ylittymiseen. Säännöstä tulkittaessa on otettava huomioon myös asian merkitys kokelaalle.\n                    \n\n                    Valituksenalainen päätös ja valittajan syksyn 2025 tutkintokerran koesuoritusten hylkääminen oli perustunut ylioppilaskokeen pitkän matematiikan kokeen yhden tehtävän arviointiin. Valittajan oli katsottu syyllistyneen vilppiin, koska hän oli vastannut kysymykseen nopeasti ja luonnostelematta ja koska vastaus oli muistuttanut tekoälyn samaan tehtävään antamaa vastausta. Valittajan vastauksessa oli ollut piirteitä, jotka eivät ole olleet tyypillisiä matematiikan vastaukselle. Ylioppilaskokeessa valvojat eivät olleet havainneet valittajan toiminnassa kokeen aikana mitään poikkeavaa, eikä valittajalta ollut löydetty älypuhelinta tai muita vilpin mahdollistavia välineitä.\n                    \n\n                    Hallinto-oikeus katsoi, että rehtori ei ollut esittänyt asiassa riittävää selvitystä valittajan syyllistymisestä koesuorituksessa vilppiin. Näin ollen hallinto-oikeus kumosi valituksenalaisen päätöksen ja palautti asian rehtorille uudelleen käsiteltäväksi.\n                    \n\n                    Laki ylioppilastutkinnosta 15 § 2 mom\n                    \n\n                    Asian ovat ratkaisseet hallinto-oikeuden jäsenet Klaus Järvinen, Maarit Mallinson ja Henna Salovaara (t).\n                    \n\n                    Asian esittelijä Maarit Mallinson.\n                \nEi lainvoimainen",
+  "date": "2026-02-19",
+  "url": "https://www.finlex.fi/fi/oikeuskaytanto/hallinto-oikeudet/2026/helsinki/1035",
+  "court": "Helsingin hallinto-oikeus",
+  "court_en": "Helsinki Administrative Court",
+  "court_slug": "helsinki",
+  "case_number": "1035/2026",
+  "year": 2026,
+  "language": "fi"
+}

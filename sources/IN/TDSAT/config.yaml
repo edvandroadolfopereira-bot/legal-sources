@@ -1,0 +1,38 @@
+source:
+  id: IN/TDSAT
+  country: IN
+  name: Telecom Disputes Settlement and Appellate Tribunal
+  url: https://tdsat.gov.in/
+  description: >
+    Final judgments from TDSAT, India's specialized tribunal for telecom,
+    broadcasting, airport economic regulation (AERA), and cyber disputes.
+    ~1,500 judgments from 2001–present. PDF full text extracted via pdfplumber.
+  data_types:
+  - case_law
+  auth: none
+fetch:
+  max_retries: 3
+  rate_limit: 1.5
+  timeout: 120
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: case_no
+    required: true
+    type: string
+  - name: bench
+    required: false
+    type: string
+  - name: parties
+    required: false
+    type: string
+license:
+  name: "Indian Government - Public Court Records"
+  url: "https://tdsat.gov.in/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Public tribunal judgments published under Indian government open access."

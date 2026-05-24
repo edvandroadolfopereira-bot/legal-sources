@@ -1,0 +1,73 @@
+source:
+  id: "NO/Sivilombudet"
+  country: "NO"
+  name: "Norwegian Parliamentary Ombudsman Statements (Sivilombudet)"
+  url: "https://www.sivilombudet.no/uttalelser/"
+  description: |
+    Statements (uttalelser) from the Norwegian Parliamentary Ombudsman
+    (Sivilombudet / Stortingets ombud for kontroll med forvaltningen).
+    Covers administrative law complaints and systemic investigations.
+    ~1,935 statements from 2007 to present.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+  notes: "Behind Cloudflare/Kinsta — respect rate limits."
+
+api:
+  type: "rest"
+  base_url: "https://www.sivilombudet.no"
+  endpoints:
+    list: "/wp-json/wp/v2/uttalelser?per_page=100&page={page}&orderby=date&order=asc"
+    detail: "/uttalelser/{slug}/"
+    case_types: "/wp-json/wp/v2/case_types?per_page=100"
+  response_format: "json"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "case_number"
+      description: "Ombudsman case reference number (e.g. 2025/7808)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Statement title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the ombudsman statement"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Statement date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "URL to statement page"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "case_types"
+      description: "Administrative law categories"
+      type: "string"
+      role: "content"
+      required: false
+
+license:
+  name: "NLOD 2.0"
+  url: "https://data.norge.no/nlod/en/2.0"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Norwegian government open data."

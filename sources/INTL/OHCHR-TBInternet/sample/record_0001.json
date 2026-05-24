@@ -1,0 +1,51 @@
+{
+  "_id": "fc2988e1-2142-4e0f-bff5-f556aa68996f",
+  "_source": "INTL/OHCHR-TBInternet",
+  "_type": "doctrine",
+  "_fetched_at": "2026-05-11T04:56:14.949484+00:00",
+  "title": "CRPD/C/WSM/CO/1 — Concerns/Observations (CRPD)",
+  "text": "A.General principles and obligations (arts. 1–4) 5.The Committee notes with concern: (a)That the State Party’s Constitution and other relevant laws retain derogatory terminology such as “socially or educationally retarded class of persons” when referring to persons with disabilitiesand wording that equates disability with a disadvantage or restriction, thereby reinforcing negative and stigmatizing understanding; (b)The absence of a comprehensive and coherent legal and policy framework to give full effect to the Convention, including fragmented and inconsistent references to disability across legislation and the use of medicalized terminology, and the lack of ratification of the Optional Protocol to the Convention; (c)The lack of transparency on the results of the legislative compliance review that was conducted with regard to the Convention, and the lack of measures to promote the application of the Convention by the judiciary and of domestic cases in which it was invoked or applied; (d)The lack of clear, transparent and standardized procedures for disability assessment and certification, including inconsistent eligibility criteria, which creates barriers to access to benefits and services for persons with disabilities, and the failure to ensure that, as planned, 20 per cent of the budget of the District Development Programme is allocated to gender equality, disability and social inclusion; (e)The limited and inconsistent mainstreaming of disability rights into ministerial policies, sectoral strategies and national development frameworks, resulting in fragmented implementation of the Convention; (f)The absence of systematic capacity-building on the Convention in communal governance institutions, weakening its implementation at the community level.",
+  "date": "2026-04-08",
+  "url": "https://uhri.ohchr.org/en/search-human-rights-recommendations",
+  "symbol": "CRPD/C/WSM/CO/1",
+  "document_id": "74b4bb5f-8c22-4c05-af4c-bc430015734e",
+  "annotation_type": "Concerns/Observations",
+  "treaty_body": "CRPD",
+  "countries": [
+    "Samoa"
+  ],
+  "regions": [
+    "Asia-Pacific"
+  ],
+  "themes": [
+    "Equality & non-discrimination",
+    "Legal & institutional reform",
+    "Human rights education, trainings & awareness raising",
+    "National Human Rights Action Plans (or specific areas) / implementation plans",
+    "Constitutional & legislative framework",
+    "Ratification of & accession to international instruments",
+    "Persons with disabilities: independence, inclusion",
+    "Data collection & research",
+    "Derogation & state of emergency",
+    "Discrimination against women",
+    "Budget & resources (for human rights implementation)"
+  ],
+  "sdgs": [
+    "10.2 - Promote universal social, economical and political inclusion",
+    "17 - PARTNERSHIPS FOR THE GOALS",
+    "5.c - Adopt policies and enforce legislation for gender equality",
+    "4 - QUALITY EDUCATION",
+    "4.5 - No discrimination in education",
+    "4.a - Build and upgrade inclusive and safe schools",
+    "17.18 - Enhance availability of reliable data",
+    "16.3 - Promote the rule of law and access to justice for all"
+  ],
+  "affected_persons": [
+    "Women & girls",
+    "Judges, lawyers and prosecutors",
+    "Persons with disabilities"
+  ],
+  "upr_cycle": null,
+  "upr_positions": [],
+  "upr_recommending_countries": []
+}

@@ -1,0 +1,59 @@
+source_id: MK/KZK
+country: MK
+name: North Macedonia Commission for Protection of Competition — Decisions
+description: |
+  Decisions of the Commission for Protection of Competition
+  (Комисија за заштита на конкуренцијата). Covers competition
+  (mergers, prohibited agreements, abuse of dominance), state aid,
+  and unfair commercial practices. Published as PDFs in Macedonian.
+
+data_types:
+  - case_law
+
+url: https://kzk.gov.mk/
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: html_scrape
+  base_url: https://kzk.gov.mk
+
+data_model:
+  type: case_law
+  source_nature: gazette
+  primary_key: slug
+  update_strategy: append_only
+  dedup_key:
+    - slug
+
+schema:
+  key_fields:
+    - name: slug
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: date
+      required: false
+    - name: category
+      type: string
+      required: true
+
+license:
+  id: pd-gov
+  name: Public Domain (Government decisions)
+  url: https://kzk.gov.mk/
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government competition authority decisions published in the public interest."

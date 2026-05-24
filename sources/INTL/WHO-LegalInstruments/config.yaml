@@ -1,0 +1,47 @@
+fetch:
+  base_url: https://iris.who.int/server/api
+  scope: 347f287d-d8af-4e21-85cc-0fba3730380c
+  method: dspace7_api
+  rate_limit_seconds: 1.5
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: identifier
+    required: false
+    type: string
+  - name: doc_type
+    required: false
+    type: string
+source:
+  auth: none
+  country: INTL
+  data_types:
+  - legislation
+  description: >
+    WHO Governing Bodies legal instruments — World Health Assembly and Executive
+    Board resolutions, decisions, and annexes. ~6,800 English-language documents
+    from 1948 to present, fetched via the WHO IRIS DSpace 7 REST API with
+    extracted full text from TEXT bundles.
+  id: INTL/WHO-LegalInstruments
+  language: en
+  name: WHO International Health Regulations and Legal Instruments
+  url: https://iris.who.int/
+license:
+  name: "CC BY-NC-SA 3.0 IGO"
+  url: "https://creativecommons.org/licenses/by-nc-sa/3.0/igo/"
+  commercial_use: false
+  attribution_required: true
+  share_alike: true
+  no_derivatives: false
+  notes: "WHO IRIS content is licensed under CC BY-NC-SA 3.0 IGO"

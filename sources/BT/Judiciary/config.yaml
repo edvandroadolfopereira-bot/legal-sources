@@ -1,0 +1,58 @@
+source:
+  id: "BT/Judiciary"
+  country: "BT"
+  name: "Bhutan Judiciary — Acts, Rules & Judgments"
+  url: "https://www.judiciary.gov.bt"
+  description: |
+    Acts, rules, and landmark judgments published by the Judiciary of Bhutan.
+    ~130 acts (legislation), ~17 rules (legislation), ~10 Supreme Court judgments (case_law).
+    All documents in PDF format, extracted via pdfplumber. English and Dzongkha.
+
+data_types:
+  - legislation
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 1
+
+api:
+  type: "html_scrape"
+  base_url: "https://www.judiciary.gov.bt"
+
+schema:
+  total_fields: 11
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Year of enactment or decision"
+      type: "string"
+      role: "temporal_key"
+      required: false
+
+license:
+  id: "ogd"
+  name: "Government open access — Bhutan judiciary published documents"
+  url: "https://www.judiciary.gov.bt"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government publications from the Judiciary of Bhutan"

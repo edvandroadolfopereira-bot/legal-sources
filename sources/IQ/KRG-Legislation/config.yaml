@@ -1,0 +1,84 @@
+source:
+  id: "IQ/KRG-Legislation"
+  country: "IQ"
+  name: "Kurdistan Region Parliament Legislation"
+  url: "https://legislation.krd/"
+  description: |
+    Kurdistan Region of Iraq legislation database. Contains 400+ laws and 150+
+    legal orders (1992-2022) in Unicode Kurdish (Sorani). Full text available
+    as HTML on individual law detail pages.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "html_scrape"
+  base_url: "https://legislation.krd"
+
+data_model:
+  type: "legislation"
+  source_nature: "consolidated"
+  primary_key: "law_id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "law_id"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier (KRG-law-NNNN)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Title of the law in Kurdish"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text content in Kurdish"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Date of enactment"
+      type: "date"
+      role: "temporal_key"
+      required: false
+  secondary_fields:
+    - name: "law_number"
+      description: "Law number"
+    - name: "year"
+      description: "Year of enactment"
+    - name: "status"
+      description: "Active/Terminated status"
+    - name: "doc_type"
+      description: "law or order"
+  probably_ignorable: []
+
+license:
+  id: "ogd"
+  name: "Open government data"
+  url: "https://legislation.krd/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Kurdistan Region Parliament legislation database, freely accessible"
+
+notes: |
+  - Language: Kurdish (Sorani dialect) with some Arabic
+  - Coverage: 1992-2022 (400+ laws, 150+ orders)
+  - Full text in Unicode HTML on detail pages
+  - Year-based browsing at /years/?year=YYYY
+  - Individual laws at /law-detail/?id=NNNN
+  - Sub-jurisdiction: IQ-AR (Erbil/Kurdistan Region)

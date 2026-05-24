@@ -1,0 +1,81 @@
+# ===================================================================
+# SE/Finansinspektionen — Swedish Financial Supervisory Authority
+# ===================================================================
+# Sanctions and enforcement decisions. ~1,370 decisions from 2002-2026
+# across 5 categories. Full text via PDF extraction + HTML summaries.
+# Swedish language. PSI Directive / Swedish open government data.
+# ===================================================================
+
+source:
+  id: "SE/Finansinspektionen"
+  country: "SE"
+  name: "Swedish Financial Supervisory Authority (Finansinspektionen) Sanctions"
+  url: "https://www.fi.se/sv/publicerat/sanktioner/"
+  description: |
+    Finansinspektionen (FI) is Sweden's financial supervisory authority.
+    This source collects sanctions decisions across 5 categories:
+    financial firms, market abuse, market information/insider reporting,
+    unlicensed firms, and financial reporting supervision. ~1,370 decisions.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.67
+  burst: 1
+  notes: "1.5-second delay between requests. Individual page + PDF fetches."
+
+api:
+  type: "html-scraping"
+  base_url: "https://www.fi.se"
+  endpoints:
+    listing: "/sv/publicerat/sanktioner/{category}/?page=2000"
+    detail: "/sv/publicerat/sanktioner/{category}/{year}/{slug}/"
+  response_format: "html"
+  pagination: "cumulative"
+
+schema:
+  total_fields: 8
+  key_fields:
+    - name: "_id"
+      description: "Unique ID from date + slug"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Decision title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the decision (PDF) or summary (HTML)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "url"
+      description: "URL to decision page"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "category"
+      description: "Sanctions category"
+      type: "string"
+      role: "classifier"
+      required: false
+
+license:
+  name: "PSI Directive / Swedish Open Government Data"
+  url: "https://www.fi.se/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Swedish government open data under PSI Directive."

@@ -1,0 +1,80 @@
+source:
+  id: "LA/NationalAssembly"
+  country: "LA"
+  name: "Lao National Assembly Legislation Portal"
+  url: "https://na.gov.la"
+  description: |
+    Laws and resolutions from the Lao National Assembly.
+    ~216 documents: 176 laws + 40 resolutions.
+    Full text extracted from PDF attachments via WordPress REST API.
+    Categories: governance, defense, economic, culture, foreign affairs.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+  max_workers: 1
+
+api:
+  type: "wordpress_rest_api"
+  base_url: "https://na.gov.la"
+  endpoints:
+    legals: "/wp-json/wp/v2/legals"
+
+data_model:
+  type: "legislation"
+  source_nature: "official_gazette"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "doc_id"
+      description: "Unique document identifier (post_id + index)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title (Lao)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date"
+      type: "date"
+      role: "temporal_key"
+      required: false
+  secondary_fields:
+    - name: "english_name"
+      description: "English title if available"
+    - name: "category"
+      description: "Category: govern, defense, economic, culture, foreign"
+    - name: "pdf_url"
+      description: "URL to the original PDF"
+    - name: "url"
+      description: "URL to the legislation page"
+    - name: "post_type"
+      description: "Type: laws or resolutions"
+
+license:
+  name: "Government open access"
+  url: "https://na.gov.la/legislation/?lang=en"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Lao National Assembly public legislation portal"

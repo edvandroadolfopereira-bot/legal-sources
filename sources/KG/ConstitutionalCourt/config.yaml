@@ -1,0 +1,43 @@
+source:
+  id: KG/ConstitutionalCourt
+  country: KG
+  name: "Kyrgyzstan Constitutional Court Decisions"
+  url: https://constsot.kg
+  api_url: https://constsot.kg/kg/wp-json/wp/v2/posts
+  data_types:
+    - case_law
+  language: ru
+license:
+  name: "Public Domain"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Government constitutional court decisions — public domain under Kyrgyz law"
+fetcher:
+  type: rest_api
+  pagination: page_based
+  rate_limit: 1.5
+  requires_pdf_extraction: true
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: decision_type
+      required: false
+      type: string
+  date_fields:
+    - date
+    - _fetched_at
+  text_fields:
+    - text
+    - title
+notes: >
+  WordPress REST API at constsot.kg/kg/wp-json/wp/v2/posts.
+  958 decisions in category 4 (akty). Content is in PDF attachments
+  linked from title.rendered field. Requires PDF text extraction.
+  Sub-categories: resheniya (decisions), postanovleniya (resolutions),
+  opredeleniya (determinations), zaklucheniya (conclusions),
+  opred-kollegiy (collegial determinations).

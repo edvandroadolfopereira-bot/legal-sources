@@ -1,0 +1,90 @@
+source:
+  id: "TJ/ConstitutionalCourt"
+  country: "TJ"
+  name: "Tajikistan Constitutional Court Decisions"
+  url: "https://constcourt.tj"
+  description: |
+    Decisions, determinations, and legal documents from the Constitutional
+    Court of the Republic of Tajikistan. Accessed via WordPress REST API.
+    Content in Tajik and Russian. ~107 documents across 3 post types.
+
+data_types:
+  - case_law
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 2
+  burst: 5
+
+api:
+  type: "rest"
+  base_url: "https://constcourt.tj"
+  endpoints:
+    decisions: "/wp-json/wp/v2/qarorho?per_page=100&page={N}"
+    determinations: "/wp-json/wp/v2/tainotho?per_page=100&page={N}"
+    documents: "/wp-json/wp/v2/hujatho?per_page=100&page={N}"
+
+data_model:
+  type: "case_law"
+  source_nature: "consolidated"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "doc_id"
+    - "post_type"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier (TJ/ConstitutionalCourt/{type}/{wp_id})"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Decision title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the decision"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "post_type"
+      description: "WP post type (qarorho, tainotho, hujatho)"
+      type: "string"
+      role: "reference"
+      required: true
+  secondary_fields:
+    - name: "url"
+      description: "Link to original document"
+    - name: "court"
+      description: "Court name"
+  probably_ignorable: []
+
+license:
+  id: "pd-gov"
+  name: "Public domain (government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government court decisions are public domain under Tajik law"
+
+notes: |
+  - WordPress site with custom post types for court content
+  - 3 post types: qarorho (decisions ~29), tainotho (determinations ~63), hujatho (documents ~15)
+  - Full text available via WP REST API content.rendered field
+  - Content in Tajik and Russian languages
+  - No authentication required

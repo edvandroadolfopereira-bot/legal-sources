@@ -1,0 +1,52 @@
+source:
+  id: HT/BRH-Regulations
+  name: Banque de la République d'Haïti — Circulaires & Lois
+  country: HT
+  url: https://www.brh.ht/
+  data_types:
+    - legislation
+    - doctrine
+  description: |
+    Circulars, banking laws, prudential standards, guidelines, and
+    lettre-circulaires from the Central Bank of Haiti. ~66 documents
+    covering banking supervision, AML/CFT, credit, payments, insurance,
+    microfinance, and monetary policy. Full text via PDF extraction
+    (some scanned PDFs skipped). French language. Free access.
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: html_pdf
+  base_url: https://www.brh.ht
+  format: pdf
+  endpoints:
+    normes_prudentielles: /supervision-bancaire/normes-prudentielles/
+
+schema:
+  key_fields:
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: document_type
+      type: string
+      required: true
+
+license:
+  name: Open Government Data (Haiti)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official central bank regulatory documents published for public access.

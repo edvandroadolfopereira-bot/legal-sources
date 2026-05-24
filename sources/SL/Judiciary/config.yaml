@@ -1,0 +1,72 @@
+source:
+  id: "SL/Judiciary"
+  country: "SL"
+  name: "Sierra Leone Judiciary Judgments"
+  url: "https://www.judiciary.gov.sl"
+  description: |
+    Court judgments from Sierra Leone's Judiciary website.
+    Covers Supreme Court, Court of Appeal, High Court, and specialized courts.
+    PDFs scraped from the judgments page and text extracted.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "html_scrape"
+  base_url: "https://www.judiciary.gov.sl"
+
+data_model:
+  type: "case_law"
+  source_nature: "gazette"
+  primary_key: "id"
+  update_strategy: "append_only"
+  dedup_key:
+    - "id"
+
+schema:
+  total_fields: null
+  key_fields:
+    - name: "id"
+      description: "Unique identifier derived from PDF filename"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Case title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Upload date"
+      type: "date"
+      role: "temporal_key"
+      required: false
+  secondary_fields: []
+  probably_ignorable: []
+
+license:
+  id: "pd-gov"
+  name: "Public domain (government)"
+  url: "https://www.judiciary.gov.sl"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government court judgments"
+
+notes: |
+  ~80 judgments as PDFs on a single page.
+  Text extraction via pdfplumber with PyPDF2 fallback.
+  English language.

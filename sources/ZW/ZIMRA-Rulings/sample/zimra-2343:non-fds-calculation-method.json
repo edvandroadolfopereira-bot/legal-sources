@@ -1,0 +1,13 @@
+{
+  "_id": "zimra-2343:non-fds-calculation-method",
+  "_source": "ZW/ZIMRA-Rulings",
+  "_type": "doctrine",
+  "_fetched_at": "2026-05-11T23:58:16.313859+00:00",
+  "title": "Non-FDS Calculation Method",
+  "text": "The Non-FDS Calculation Method was deployed in TaRMS on the 1\nst\nof November 2025. The Non-FDS Calculation Method also known as the P.A.Y.E system is a non-cumulative method of computation of tax on employment income.\nThe Non-FDS Calculation Method is applied on the following employees:\nEmployees who:\nTerminate employment during the year of assessment.\nChange employment during the year of assessment\nWork part time at the same time being fully employed by another employer.\nStart employment during the course of the year.\nReceive pensions.\nWork for more than one employer in one year of assessment.\nCalculation of PAYE for Non-FDS employees\nThe FDS guide provides that under the Non-FDS system, the employer is required only to deduct P.A.Y.E according to the P.A.Y.E Tables.\nThe employer is not authorized to take into account credits in calculating P.A.Y.E for Non-FDS\nemployees.\nReturn Submission\nThe employer should upload two separate templates, one for FDS and the other for Non FDS employees under the Employee Management Module. Though there are separate templates for FDS and Non-FDS employees, the Taxpayers will only submit one P.A.Y.E return per tax period with a consolidated position for both calculation methods.\nTaxpayers with employees that fall under this calculation method should amend the already submitted returns and separate FDS and Non-FDS employees.\nThe employees under Non-FDS are obliged by law to submit tax returns (Individual in Employment (ITF1)) after the end of the year.\nMy Taxes, My Duties: Building my Zimbabwe\nNon-FDS Calculation Method  published on 25/112025.\nDisclaimer\nThis article was compiled by the Zimbabwe Revenue Authority for information purposes only. ZIMRA shall not\naccept responsibility for loss or damage arising from use of material in this article and no liability will attach\nto the Zimbabwe Revenue Authority.",
+  "date": null,
+  "url": "https://www.zimra.co.zw/news/2343:non-fds-calculation-method",
+  "category": "Taxman's Corner",
+  "jurisdiction": "ZW",
+  "authority": "Zimbabwe Revenue Authority"
+}

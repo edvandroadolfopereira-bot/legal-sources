@@ -1,0 +1,83 @@
+source:
+  id: "NE/CourDeCassation"
+  country: "NE"
+  name: "Niger Court of Cassation (Cour de cassation)"
+  url: "https://juricaf.org/recherche/+/facet_pays:Niger,facet_juridiction:Cour_de_cassation"
+  description: |
+    Niger Court of Cassation decisions via Juricaf (AHJUCAF). ~275 decisions
+    from 2003 to present. Full text in French. Covers civil, criminal, and
+    commercial chambers.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+  max_workers: 1
+
+api:
+  type: "rest"
+  base_url: "https://juricaf.org"
+  endpoints:
+    list: "/recherche/+/facet_pays:Niger,facet_juridiction:Cour_de_cassation?format=json&page={page}"
+    detail: "/arret/{id}"
+
+data_model:
+  type: "case_law"
+  source_nature: "consolidated"
+  primary_key: "decision_id"
+  update_strategy: "append_only"
+  versioning: "none"
+  dedup_key:
+    - "decision_id"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "_id"
+      description: "Juricaf decision ID (e.g., NIGER-COURDECASSATION-20250402-25093P)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Decision title from Dublin Core metadata"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the decision from div#textArret"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision date in ISO 8601 format"
+      type: "date"
+      role: "temporal_key"
+      required: true
+  secondary_fields:
+    - name: "court"
+      description: "Court name"
+    - name: "docket_number"
+      description: "Case/docket number"
+  probably_ignorable: []
+
+license:
+  id: "odbl-1.0"
+  name: "ODbL 1.0"
+  url: "https://juricaf.org"
+  commercial_use: true
+  attribution_required: true
+  share_alike: true
+  no_derivatives: false
+  notes: "Juricaf data (non-French decisions) licensed under ODbL 1.0."
+
+notes: |
+  - ~275 decisions from 2003 to 2025
+  - French language
+  - Full text from Juricaf HTML pages (div#textArret)
+  - JSON API for paginated search, HTML for full text extraction
+  - Covers civil, criminal, and commercial chambers

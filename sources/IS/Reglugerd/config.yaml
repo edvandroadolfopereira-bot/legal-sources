@@ -1,0 +1,47 @@
+api:
+  auth: none
+  base_url: https://island.is/api/graphql
+  endpoints:
+    listing: GraphQL getRegulations (type: newest, paginated)
+    detail: https://www.reglugerd.is/reglugerdir/allar/nr/{name}
+  rate_limit:
+    delay_seconds: 1.5
+    requests_per_minute: 30
+  type: graphql+html
+data:
+  encoding: utf-8
+  format: html
+  language: isl
+  total_items: 14467
+schema:
+  key_fields:
+  - name: regulation_number
+    required: true
+    type: string
+  - name: year
+    required: true
+    type: string
+  - name: ministry
+    required: false
+    type: string
+  - name: regulation_type
+    required: false
+    type: string
+  required_fields:
+  - title
+  - text
+  - date
+  - url
+source:
+  country: IS
+  id: IS/Reglugerd
+  name: Iceland Regulations Collection (Reglugerd)
+  url: https://www.reglugerd.is/
+license:
+  name: Public Domain (Government)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official Icelandic government regulations — public domain under Icelandic law

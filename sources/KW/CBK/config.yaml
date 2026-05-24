@@ -1,0 +1,79 @@
+source:
+  id: "KW/CBK"
+  country: "KW"
+  name: "Central Bank of Kuwait Regulations"
+  url: "https://www.cbk.gov.kw"
+  description: |
+    Banking regulations, instructions, and circulars issued by the Central
+    Bank of Kuwait (CBK) to conventional banks, Islamic banks, finance
+    companies, exchange companies, credit information companies, and
+    e-payment service providers. English translations of Arabic originals.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "html_scrape"
+  base_url: "https://www.cbk.gov.kw"
+
+data_model:
+  type: "legislation"
+  source_nature: "consolidated"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "_id"
+      description: "Unique document identifier"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text content extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "url"
+      description: "URL to the original PDF"
+      type: "string"
+      role: "reference"
+      required: true
+  secondary_fields:
+    - name: "section"
+      description: "Category (conventional_banks, islamic_banks, etc.)"
+    - name: "chapter"
+      description: "Chapter number within the section"
+  probably_ignorable: []
+
+license:
+  id: "custom-terms"
+  name: "CBK Terms of Use"
+  url: "https://www.cbk.gov.kw/en/about-cbk/terms-and-conditions"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "English translations for information only; Arabic text is the only legal version."
+
+notes: |
+  ~80+ PDF documents across 6 categories.
+  All documents available in English.
+  No API — PDFs scraped from category index pages.
+  No date metadata available (only version numbers in filenames).

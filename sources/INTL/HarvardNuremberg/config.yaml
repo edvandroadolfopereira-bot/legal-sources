@@ -1,0 +1,71 @@
+# ===================================================================
+# INTL/HarvardNuremberg -- Harvard Nuremberg Trials Project
+# ===================================================================
+# Digitized full-text transcripts of all 13 Nuremberg trials (1945-1949).
+# Verbatim courtroom records: witness testimony, oral arguments, rulings.
+# ===================================================================
+
+source:
+  id: "INTL/HarvardNuremberg"
+  country: "INTL"
+  name: "Harvard Nuremberg Trials Project"
+  url: "https://nuremberg.law.harvard.edu/"
+  description: |
+    Full-text transcripts from all 13 Nuremberg trials (1945-1949),
+    digitized by Harvard Law School Library. Includes the International
+    Military Tribunal (IMT) and 12 subsequent Nuremberg Military Tribunals
+    (NMT 1-12). Over 150,000 pages of verbatim courtroom records covering
+    witness testimony, oral arguments, court rulings and judgments.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "html_scraper"
+  base_url: "https://nuremberg.law.harvard.edu"
+  transcript_endpoint: "/transcripts/{id}?seq={seq}&partial=1"
+
+data_model:
+  type: "case_law"
+  primary_key: "transcript_date"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "title"
+      description: "Transcript session title (trial name + date)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full verbatim transcript text for the session"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Session date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "trial_name"
+      description: "Name of the Nuremberg trial"
+      type: "string"
+      role: "content"
+      required: true
+
+license:
+  name: "Custom — Harvard Library Open Access"
+  url: "https://nuremberg.law.harvard.edu/about"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Open access educational resource. Full-text versions may deviate slightly from originals."

@@ -202,24 +202,42 @@ def _query_neon_live(database_url):
     lookup = {}
     try:
         with conn.cursor() as cur:
-            # ── Per-source row counts for all tables ──
-            # Store per-table counts separately to avoid overwriting
-            for table in ("legislation", "case_law", "doctrine"):
-                cur.execute(f"""
-                    SELECT source, COUNT(*) FROM {table} GROUP BY source
-                """)
-                for source, count in cur.fetchall():
-                    if source not in lookup:
-                        lookup[source] = {
-                            "legislation_rows": 0,
-                            "case_law_rows": 0,
-                            "doctrine_rows": 0,
-                            "neon_rows": 0,
-                            "status": "pending",
+            # Per-source per-table counts and date ranges come from the
+            # `mv_discover_country_source` materialized view that the pipeline
+            # maintains (refreshed every 15 min by a Fly cron). Reading the MV
+            # is index-bound — querying the live tables directly with
+            # COUNT(*) GROUP BY exceeded Neon's statement_timeout once
+            # case_law crossed ~25M rows, which silently zeroed this script.
+            cur.execute("""
+                SELECT table_name, source, doc_count, min_year, max_year
+                FROM mv_discover_country_source
+            """)
+            for table, source, doc_count, min_yr, max_yr in cur.fetchall():
+                if source not in lookup:
+                    lookup[source] = {
+                        "legislation_rows": 0,
+                        "case_law_rows": 0,
+                        "doctrine_rows": 0,
+                        "neon_rows": 0,
+                        "status": "pending",
+                    }
+                lookup[source][f"{table}_rows"] = doc_count
+                if min_yr is not None or max_yr is not None:
+                    existing = lookup[source].get("date_range")
+                    if existing:
+                        lookup[source]["date_range"] = {
+                            "min_year": min(existing["min_year"], min_yr) if existing["min_year"] and min_yr else (existing["min_year"] or min_yr),
+                            "max_year": max(existing["max_year"], max_yr) if existing["max_year"] and max_yr else (existing["max_year"] or max_yr),
+                            "total_with_date": existing["total_with_date"] + doc_count,
                         }
-                    lookup[source][f"{table}_rows"] = count
+                    else:
+                        lookup[source]["date_range"] = {
+                            "min_year": min_yr,
+                            "max_year": max_yr,
+                            "total_with_date": doc_count,
+                        }
 
-            # ── Compute totals and determine primary data_type ──
+            # Compute totals and determine primary data_type
             for source, data in lookup.items():
                 leg = data.get("legislation_rows", 0)
                 case = data.get("case_law_rows", 0)
@@ -227,7 +245,6 @@ def _query_neon_live(database_url):
                 total = leg + case + doc
                 data["neon_rows"] = total
                 data["status"] = "ok" if total > 0 else "pending"
-                # Set data_type to the table with most rows (for backwards compatibility)
                 if leg >= case and leg >= doc:
                     data["data_type"] = "legislation"
                 elif case >= leg and case >= doc:
@@ -235,48 +252,27 @@ def _query_neon_live(database_url):
                 else:
                     data["data_type"] = "doctrine"
 
-            # ── Date ranges per source (all tables) ──
-            for table in ("legislation", "case_law", "doctrine"):
-                cur.execute(f"""
-                    SELECT source,
-                           EXTRACT(YEAR FROM MIN(date))::int,
-                           EXTRACT(YEAR FROM MAX(date))::int,
-                           COUNT(*)
-                    FROM {table}
-                    WHERE date IS NOT NULL
-                    GROUP BY source
-                """)
-                for source, min_yr, max_yr, cnt in cur.fetchall():
-                    if source in lookup:
-                        # Merge date ranges across tables
-                        existing = lookup[source].get("date_range")
-                        if existing:
-                            lookup[source]["date_range"] = {
-                                "min_year": min(existing["min_year"], min_yr) if existing["min_year"] and min_yr else (existing["min_year"] or min_yr),
-                                "max_year": max(existing["max_year"], max_yr) if existing["max_year"] and max_yr else (existing["max_year"] or max_yr),
-                                "total_with_date": existing["total_with_date"] + cnt,
-                            }
-                        else:
-                            lookup[source]["date_range"] = {
-                                "min_year": min_yr,
-                                "max_year": max_yr,
-                                "total_with_date": cnt,
-                            }
-
-            # ── Last ingested timestamp per source (all tables) ──
-            for table in ("legislation", "case_law", "doctrine"):
-                cur.execute(f"""
-                    SELECT source, MAX(ingested_at) FROM {table} GROUP BY source
-                """)
-                for source, ts in cur.fetchall():
-                    if source in lookup and ts:
-                        existing = lookup[source].get("last_ingested")
-                        if existing:
-                            # Keep the most recent timestamp
-                            if ts.isoformat() > existing:
+            # `last_ingested` requires MAX(ingested_at) GROUP BY source on the
+            # live tables — no MV. It's best-effort: if it times out, leave
+            # the field unset rather than zero out the per-source counts that
+            # the MV already gave us.
+            try:
+                cur.execute("SET LOCAL statement_timeout = '60s'")
+                for table in ("legislation", "case_law", "doctrine"):
+                    cur.execute(f"""
+                        SELECT source, MAX(ingested_at) FROM {table} GROUP BY source
+                    """)
+                    for source, ts in cur.fetchall():
+                        if source in lookup and ts:
+                            existing = lookup[source].get("last_ingested")
+                            if existing:
+                                if ts.isoformat() > existing:
+                                    lookup[source]["last_ingested"] = ts.isoformat()
+                            else:
                                 lookup[source]["last_ingested"] = ts.isoformat()
-                        else:
-                            lookup[source]["last_ingested"] = ts.isoformat()
+            except Exception as e:
+                print(f"  last_ingested query skipped: {e}", file=sys.stderr)
+                conn.rollback()
 
     except Exception as e:
         print(f"  Neon query error: {e}", file=sys.stderr)
@@ -329,7 +325,21 @@ def load_pipeline_index():
             source_count = len({k for k in result if "/" in k and k == k})  # rough unique
             print(f"  Live data loaded: {len(result)} entries from Neon")
             return result
+        # Neon was configured but the query failed. The INDEX.yaml fallback
+        # below only ever resolves on a workstation that has the pipeline repo
+        # cloned next to this one — on a GitHub Actions runner it returns {},
+        # which silently writes a status.json with `legislation_rows: 0` etc.
+        # That zero-out shipped to prod once; refuse to do it again.
+        fallback = _load_pipeline_index_yaml()
+        if not fallback:
+            print(
+                "  ERROR: Neon query failed and no INDEX.yaml fallback available. "
+                "Refusing to publish an all-zero indexing_summary.",
+                file=sys.stderr,
+            )
+            sys.exit(1)
         print("  Falling back to INDEX.yaml...")
+        return fallback
 
     print("Loading indexing data from INDEX.yaml...")
     return _load_pipeline_index_yaml()

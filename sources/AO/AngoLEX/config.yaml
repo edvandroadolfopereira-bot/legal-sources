@@ -1,0 +1,45 @@
+source_id: AO/AngoLEX
+name: AngoLEX — Angolan Legislation Portal
+country: AO
+url: https://angolex.com/
+description: |
+  Comprehensive Angolan legislation portal: Constitution, codes, laws,
+  presidential decrees, executive decrees, dispatches, regulations,
+  resolutions, notices, international agreements. Full text in Portuguese.
+  ~2,378 entries from the "todos" index page.
+
+data_types:
+  - legislation
+
+license:
+  name: "Angolan Government Legislation (Public Domain)"
+  url: "https://angolex.com/paginas/cabecalho-rodape/menu-cabecalho-e-rodape-politica-de-uso.html"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Angolan government legislation published on angolex.com. Government legal texts are public domain."
+
+language: pt
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+update_frequency: monthly
+
+schema:
+  key_fields:
+    - name: title
+      required: true
+      type: string
+    - name: reference
+      required: true
+      type: string
+  date_field: date
+  text_field: text
+  title_field: title
+  url_field: url

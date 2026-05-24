@@ -1,0 +1,81 @@
+source:
+  id: "TG/CourConstitutionnelle"
+  country: "TG"
+  name: "Togo Constitutional Court Decisions"
+  url: "https://courconstitutionnelle.tg"
+  description: |
+    Decisions of the Togo Constitutional Court (Cour Constitutionnelle du Togo).
+    ~157 decisions from 2005 to 2025 covering constitutionality reviews,
+    electoral disputes, and constitutional complaints. French language.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.67
+  burst: 1
+  max_workers: 1
+
+api:
+  type: "scrape"
+  base_url: "https://courconstitutionnelle.tg"
+  endpoints:
+    decisions_category: "/download-category/decisions/"
+
+data_model:
+  type: "case_law"
+  source_nature: "official"
+  primary_key: "decision_id"
+  update_strategy: "append_only"
+  versioning: "none"
+  dedup_key:
+    - "decision_id"
+
+schema:
+  total_fields: 8
+  key_fields:
+    - name: "_id"
+      description: "Decision ID derived from URL slug"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Decision title in French"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+  secondary_fields:
+    - name: "pdf_url"
+      description: "Direct URL to PDF file"
+    - name: "url"
+      description: "Decision page URL on court website"
+  probably_ignorable: []
+
+license:
+  name: "Public Domain (Government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Togo government court decisions are public domain."
+
+notes: |
+  - ~157 decisions from 2005-2025
+  - WordPress Download Manager plugin hosts PDFs
+  - PDF download + pypdf text extraction
+  - French language
+  - Covers constitutionality reviews, electoral disputes, constitutional complaints

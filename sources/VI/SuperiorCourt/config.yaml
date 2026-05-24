@@ -1,0 +1,47 @@
+auth:
+  type: none
+country: VI
+data_types:
+- case_law
+fetch:
+  base_url: https://superior.vicourts.org
+  published_path: /court_opinions/published_opinions
+  unpublished_path: /court_opinions/unpublished_opinions
+  delay: 2.0
+license:
+  name: "Public Domain (US Gov)"
+  url: "https://www.law.cornell.edu/uscode/text/17/105"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "US territorial court opinions are public domain"
+name: USVI Superior Court Published Opinions
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: text
+    required: true
+    type: string
+  - name: case_number
+    required: false
+    type: string
+  - name: citation
+    required: false
+    type: string
+  - name: judge
+    required: false
+    type: string
+  - name: opinion_type
+    required: false
+    type: string
+source_id: VI/SuperiorCourt
+url: https://superior.vicourts.org/court_opinions/published_opinions

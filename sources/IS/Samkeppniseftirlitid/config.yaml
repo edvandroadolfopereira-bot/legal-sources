@@ -1,0 +1,45 @@
+auth: none
+country: IS
+data_types:
+- doctrine
+fetch_method: api_algolia_pdf
+id: IS/Samkeppniseftirlitid
+language: isl
+license:
+  name: "Public Domain (official government decisions)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official competition authority decisions published on samkeppni.is"
+name: Samkeppniseftirlitið (Icelandic Competition Authority)
+notes: >
+  1925 decisions (ákvarðanir, úrskurðir, álit, umsagnir, skýrslur) from 1994-2026.
+  Metadata from Algolia search index (public search-only key), full text from PDFs.
+rate_limit: 1s
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  optional_fields:
+  - case_number
+  - case_type
+  - language
+  - companies
+  - policy_area
+  - sector
+  required_fields:
+  - _id
+  - _source
+  - _type
+  - _fetched_at
+  - title
+  - text
+  - date
+  - url
+url: https://www.samkeppni.is/urlausnir/

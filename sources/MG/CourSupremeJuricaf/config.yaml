@@ -1,0 +1,37 @@
+source:
+  id: MG/CourSupremeJuricaf
+  country: MG
+  name: "Madagascar Supreme Court Decisions (Juricaf)"
+  url: https://juricaf.org/recherche/+/facet_pays:Madagascar,facet_pays_juridiction:Madagascar_%7C_Cour_supr%C3%AAme
+  data_types:
+    - case_law
+  language: fr
+license:
+  name: "ODbL 1.0 (Juricaf/AHJUCAF)"
+  url: https://juricaf.org
+  commercial_use: true
+  attribution_required: true
+  share_alike: true
+  no_derivatives: false
+  notes: "Court decisions published on Juricaf by AHJUCAF."
+fetcher:
+  type: api_json
+  pagination: page_number
+  rate_limit: 2.0
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: docket_number
+      required: false
+      type: string
+  date_fields:
+    - date
+    - _fetched_at
+  text_fields:
+    - text
+    - title
+notes: >
+  ~500+ Madagascar Cour suprême decisions via Juricaf JSON API.
+  Full text extracted from decision HTML pages (div#textArret).

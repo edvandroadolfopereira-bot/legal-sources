@@ -1,0 +1,85 @@
+source:
+  id: "CI/ConseilConstitutionnel"
+  country: "CI"
+  name: "Conseil Constitutionnel de Côte d'Ivoire"
+  url: "https://www.conseil-constitutionnel.ci"
+  description: |
+    Constitutional Council of Côte d'Ivoire. Publishes decisions on
+    constitutionality of laws, electoral disputes, and institutional matters.
+    ~570 decisions from 1995 to present, available as downloadable PDFs.
+    Language: French.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+
+api:
+  type: "html_scrape"
+  base_url: "https://www.conseil-constitutionnel.ci"
+
+data_model:
+  type: "case_law"
+  source_nature: "gazette"
+  primary_key: "decision_number"
+  update_strategy: "append_only"
+  versioning: "none"
+  dedup_key:
+    - "decision_number"
+
+schema:
+  total_fields: 9
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier (decision number)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Full title of the decision"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision date in ISO 8601"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "decision_number"
+      description: "Official decision reference number"
+      type: "string"
+      role: "reference"
+      required: true
+  secondary_fields:
+    - name: "url"
+      description: "URL to decision detail page"
+    - name: "pdf_url"
+      description: "Direct URL to PDF file"
+  probably_ignorable: []
+
+license:
+  id: "pd-gov"
+  name: "Public Domain (Government Work)"
+  url: "https://www.conseil-constitutionnel.ci"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government constitutional decisions — public domain under Ivorian law"
+
+notes: |
+  - Drupal CMS site with paginated decisions listing
+  - PDFs contain text-extractable full decisions (pdfplumber)
+  - ~114 pages × 5 decisions = ~570 decisions total
+  - Covers 1995 to present
+  - French language only

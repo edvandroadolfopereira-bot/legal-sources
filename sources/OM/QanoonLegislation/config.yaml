@@ -1,0 +1,67 @@
+source:
+  id: "OM/QanoonLegislation"
+  country: "OM"
+  name: "Oman Royal Decrees and Legislation (Qanoon)"
+  url: "https://qanoon.om"
+  description: |
+    Omani legislation from qanoon.om including Royal Decrees (مرسوم سلطاني),
+    Ministerial Decisions (قرار وزاري), and Legal Opinions/Fatwas (فتاوى قانونية).
+    ~10,000+ documents. Arabic full text via WordPress REST API.
+    Legal texts are public domain under Omani Copyright Law.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+  notes: "WordPress site, respect rate limits."
+
+api:
+  type: "rest"
+  base_url: "https://qanoon.om"
+  endpoints:
+    posts: "/wp-json/wp/v2/posts?per_page=100&page={page}&categories={category_id}&orderby=date&order=asc"
+    categories: "/wp-json/wp/v2/categories?per_page=100"
+  response_format: "json"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "title"
+      description: "Document title (Arabic)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the legislation (Arabic)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "doc_type"
+      description: "Document type (royal_decree, ministerial_decision, legal_opinion)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "url"
+      description: "URL to document page"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "Public Domain (Omani Copyright Law)"
+  url: "https://qanoon.om/aboutqanoon/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Legal texts are public property under Omani copyright law per site's about page."

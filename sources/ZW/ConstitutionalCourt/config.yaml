@@ -1,0 +1,85 @@
+# ===================================================================
+# ZW/ConstitutionalCourt -- Zimbabwe Court Decisions via Veritas
+# ===================================================================
+# Court judgments from veritaszim.net (Veritas Zimbabwe / Firinne Trust).
+# High Court, Supreme Court, Constitutional Court, Electoral Court,
+# Labour Court decisions. PDFs with text extraction via PyMuPDF.
+# CC BY-NC-SA 4.0 license. ~610+ judgments.
+# ===================================================================
+
+source:
+  id: "ZW/ConstitutionalCourt"
+  country: "ZW"
+  name: "Zimbabwe Court Decisions (Veritas)"
+  url: "https://www.veritaszim.net"
+  description: |
+    Zimbabwean court decisions published by Veritas Zimbabwe (Firinne Trust).
+    Covers High Court, Supreme Court, Constitutional Court, Electoral Court,
+    and Labour Court decisions. Each case page links to a PDF judgment.
+    Full text extracted via PyMuPDF. CC BY-NC-SA 4.0 license.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+data_model:
+  type: "case_law"
+  primary_key: "node_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "node_id"
+
+schema:
+  total_fields: 9
+  key_fields:
+    - name: "_id"
+      description: "Unique ID from Drupal node ID"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Case title and citation"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the judgment extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date on Veritas"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "court"
+      description: "Court name (High Court, Supreme Court, etc.)"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "url"
+      description: "URL on veritaszim.net"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "CC BY-NC-SA 4.0"
+  url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+  commercial_use: false
+  attribution_required: true
+  share_alike: true
+  no_derivatives: false
+  notes: "Veritas Zimbabwe publishes under CC BY-NC-SA 4.0"
+
+notes: |
+  - ~610+ judgments across 5 courts from veritaszim.net
+  - PDF judgments with extractable text (PyMuPDF)
+  - Drupal 7 CMS, scrape listing pages + node pages
+  - 2-second delay between requests

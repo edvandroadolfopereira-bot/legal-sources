@@ -1,0 +1,86 @@
+source:
+  id: "YE/MOJ"
+  country: "YE"
+  name: "Yemen Ministry of Justice Legislation Database"
+  url: "https://www.moj.gov.ye"
+  description: |
+    Laws and regulations from the Yemen Ministry of Justice website.
+    38 legislative documents as PDFs with text extraction.
+    Arabic language. Covers presidential decrees, laws, and regulations.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "html_scrape"
+  base_url: "https://www.moj.gov.ye"
+  selectors:
+    list_page: "/LawsM"
+    pagination: "/Home/LawsM?page={N}"
+    item_selector: "table#table_id tbody tr"
+    download: "/LawsMD/{id}"
+
+data_model:
+  type: "legislation"
+  source_nature: "gazette"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: 11
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier (YE/MOJ/{id})"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Law title in Arabic"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Approximate date (year extracted from title)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+  secondary_fields:
+    - name: "url"
+      description: "Link to PDF download"
+    - name: "year"
+      description: "Year of law"
+    - name: "downloads"
+      description: "Download count from website"
+  probably_ignorable: []
+
+license:
+  id: "pd-gov"
+  name: "Public domain (government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government legislation published by the Ministry of Justice"
+
+notes: |
+  - HTML scraping of list pages + PDF download and text extraction
+  - Requires pdfplumber, PyPDF2, or PyMuPDF for PDF text extraction
+  - 38 laws across 5 paginated list pages
+  - Arabic language content
+  - VPS may need PDF library installation

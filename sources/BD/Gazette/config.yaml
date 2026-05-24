@@ -1,0 +1,88 @@
+source:
+  id: "BD/Gazette"
+  country: "BD"
+  name: "Bangladesh Government Press Gazette Archive"
+  url: "https://www.dpp.gov.bd/bgpress/index.php/document/gazettes/140"
+  description: |
+    Official gazette archive from the Bangladesh Government Press (BG Press).
+    Contains weekly and extraordinary gazettes with statutory notifications,
+    rules, orders, appointments, and court notices. 50,713+ records.
+    Language: Bengali (bn). PDFs are text-based.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+  max_workers: 3
+
+api:
+  type: "html_scrape"
+  base_url: "https://www.dpp.gov.bd/bgpress/index.php"
+  selectors:
+    list_page: "/document/gazettes/140"
+    pagination: "/document/gazettes/140/publication_date/{page}"
+    extraordinary: "/document/get_extraordinary/{id}"
+    weekly: "/document/get_gazette_part/{volume}/{date}"
+
+data_model:
+  type: "legislation"
+  source_nature: "gazette"
+  primary_key: "gazette_id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "gazette_id"
+
+schema:
+  total_fields: null
+  key_fields:
+    - name: "id"
+      description: "Unique gazette identifier"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Gazette title/description"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text content extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date"
+      type: "date"
+      role: "temporal_key"
+      required: true
+  secondary_fields:
+    - name: "gazette_type"
+      description: "weekly or extraordinary"
+    - name: "ministry"
+      description: "Issuing ministry (when available)"
+    - name: "pdf_url"
+      description: "URL to the original PDF"
+  probably_ignorable: []
+
+license:
+  id: "pd-gov"
+  name: "Public domain (government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government gazette — public domain under Bangladeshi law"
+
+notes: |
+  - Gazettes are published as PDF documents in Bengali
+  - Two types: weekly (multi-part) and extraordinary (individual)
+  - PDF URL pattern: http://www.dpp.gov.bd/upload_file/gazettes/{id}_{hash}.pdf
+  - Fonts: SutonnyMJ, NikoshBAN (Bengali TrueType)
+  - ~50,713 total gazette records

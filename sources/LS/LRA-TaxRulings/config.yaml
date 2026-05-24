@@ -1,0 +1,37 @@
+source:
+  id: LS/LRA-TaxRulings
+  country: LS
+  name: "Lesotho Revenue Authority — Public Rulings & Tax Legislation"
+  url: https://www.rsl.org.ls/
+  data_types:
+    - legislation
+    - doctrine
+  language: en
+license:
+  name: "Public domain (government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Lesotho tax legislation, rulings, and legal notices published by Revenue Services Lesotho (formerly LRA)."
+fetcher:
+  type: pdf_download
+  rate_limit: 2.0
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: title
+      required: true
+      type: string
+  date_fields:
+    - _fetched_at
+  text_fields:
+    - text
+    - title
+notes: >
+  Tax legislation, public rulings, legal notices, customs & excise laws, VAT laws,
+  tax treaties from Revenue Services Lesotho. PDFs from rsl.org.ls Drupal site.
+  Site rebranded from lra.org.ls to rsl.org.ls.

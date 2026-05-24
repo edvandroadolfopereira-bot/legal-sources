@@ -1,0 +1,65 @@
+source:
+  id: VN/CongBao
+  country: VN
+  name: Vietnam Official Gazette (Công Báo)
+  url: https://congbao.chinhphu.vn/
+  description: |
+    ~25,000 Vietnamese legal documents from the Official Gazette (Công Báo),
+    published by the Office of the Government. Includes laws, decrees,
+    decisions, circulars, ordinances, resolutions, and consolidated texts.
+    Full text extracted from DOCX downloads. Vietnamese language.
+  language: vi
+  format: docx
+  auth: none
+  data_types:
+    - legislation
+
+fetcher:
+  base_url: https://congbao.chinhphu.vn
+  listing_pattern: /van-ban-dang-cong-bao/trang-{page}.htm
+  download_cdn: https://g7.cdnchinhphu.vn/api/download/stream
+  rate_limit: 1.5
+  items_per_page: 10
+
+rate_limit:
+  requests_per_second: 2
+  burst: 5
+
+schema:
+  key_fields:
+    - name: _id
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: date
+      required: false
+    - name: document_number
+      type: string
+      required: false
+    - name: document_type
+      type: string
+      required: false
+    - name: effective_date
+      type: date
+      required: false
+    - name: gazette_number
+      type: string
+      required: false
+    - name: url
+      type: string
+      required: true
+
+license:
+  name: "Government Copyright (free for non-commercial use)"
+  url: "https://congbao.chinhphu.vn/"
+  commercial_use: false
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "RSS feeds stated as free for individuals and non-profit organizations with attribution."

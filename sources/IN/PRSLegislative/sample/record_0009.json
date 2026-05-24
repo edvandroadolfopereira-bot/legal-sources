@@ -1,0 +1,41 @@
+{
+  "_id": "IN/PRSLegislative/the-industrial-relations-code-amendment-bill-2026",
+  "_source": "IN/PRSLegislative",
+  "_type": "legislation",
+  "_fetched_at": "2026-05-09T19:22:09.206359+00:00",
+  "bill_slug": "the-industrial-relations-code-amendment-bill-2026",
+  "title": "The Industrial Relations Code (Amendment) Bill, 2026",
+  "text": "The Industrial Relations Code (Amendment) Bill, 2026 was introduced in Lok Sabha on February 11, 2026.  The Bill seeks to amend the Industrial Relations Code, 2020.  The Code provides for matters such as recognition of trade unions, notice periods for strikes and lock-outs, and resolution of industrial disputes.\nRepeal of Acts:\nThe 2020 Code replaces three Acts, namely: (i) the Trade Unions Act, 1926, (ii) the Industrial Employment (Standing Orders) Act, 1946, and (iii) the Industrial Disputes Act, 1947.  The Bill clarifies that these three Acts stand repealed from November 21, 2025.\nDISCLAIMER: This document is being furnished to you for your information.  You may choose to reproduce or redistribute this report for non-commercial purposes in part or in full to any other person with due acknowledgement of PRS Legislative Research (“PRS”).  The opinions expressed herein are entirely those of the author(s).  PRS makes every effort to use reliable and comprehensive information, but PRS does not represent that the contents of the report are accurate or complete.  PRS is an independent, not-for-profit group.",
+  "date": "2026-02-11",
+  "url": "https://prsindia.org/billtrack/the-industrial-relations-code-amendment-bill-2026",
+  "ministry": "Labour and Employment",
+  "house": "Lok Sabha",
+  "status": "Passed",
+  "status_timeline": [
+    {
+      "house": "Lok Sabha",
+      "date": "Feb 11, 2026",
+      "action": "Introduced"
+    },
+    {
+      "house": "Lok Sabha",
+      "date": "Feb 12, 2026",
+      "action": "Passed"
+    },
+    {
+      "house": "Rajya Sabha",
+      "date": "Feb 12, 2026",
+      "action": "Passed"
+    }
+  ],
+  "pdf_urls": [
+    {
+      "url": "https://prsindia.org/files/bills_acts/bills_parliament/2026/Industrial_Relations_Code_Bill_2026_text.pdf",
+      "label": "Bill Text"
+    },
+    {
+      "url": "https://prsindia.org/files/bills_acts/bills_parliament/2026/Industrial_Relations_Code_(A)_Act_2026.pdf",
+      "label": "The Industrial Relations Code (Amendment) Act, 2026"
+    }
+  ]
+}

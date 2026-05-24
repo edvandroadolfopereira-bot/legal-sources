@@ -47,8 +47,9 @@ from common.http_client import HttpClient
 
 from common.pdf_extract import extract_pdf_markdown
 
+PDF_SUPPORT = True  # handled by common.pdf_extract
 
-# PDF extraction
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
@@ -94,11 +95,12 @@ class AADEScraper(BaseScraper):
         )
 
     def _download_and_extract_pdf(self, ada: str, max_pdf_size_mb: int = 10) -> str:
-        """Extract text from PDF using centralized extractor."""
+        """Download PDF from Diavgeia and extract text."""
+        pdf_url = f"{BASE_URL}/doc/{ada}"
         return extract_pdf_markdown(
             source="GR/AADE",
-            source_id="",
-            pdf_bytes=ada,
+            source_id=ada,
+            pdf_url=pdf_url,
             table="doctrine",
         ) or ""
 

@@ -1,0 +1,78 @@
+# ===================================================================
+# INTL/UNCC -- UN Compensation Commission Governing Council Decisions
+# ===================================================================
+# ~279 decisions (1991–2022). Full text extracted from PDFs.
+# Static archive — mandate concluded February 2022.
+# ===================================================================
+
+source:
+  id: "INTL/UNCC"
+  country: "INTL"
+  name: "UN Compensation Commission — Governing Council Decisions"
+  url: "https://uncc.un.org/en/documents/decisions-governing-council"
+  description: |
+    Decisions of the Governing Council of the United Nations Compensation
+    Commission (UNCC), established by Security Council Resolution 687 (1991)
+    to process claims for losses resulting from Iraq's invasion of Kuwait.
+    279 decisions spanning 1991–2022. The Commission's mandate concluded
+    in February 2022 after processing 2.69 million claims totaling
+    US$52.4 billion in awards.
+  data_types:
+    - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+api:
+  type: "html_scrape_pdf"
+  base_url: "https://uncc.un.org"
+  decisions_page: "https://uncc.un.org/en/documents/decisions-governing-council"
+
+data_model:
+  type: "case_law"
+  primary_key: "decision_number"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 9
+  key_fields:
+    - name: "title"
+      description: "Decision title (e.g., 'Decision 277 (2022)')"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Year of decision (ISO 8601)"
+      type: "string"
+      role: "temporal_key"
+      required: true
+    - name: "decision_number"
+      description: "Decision number (1–277)"
+      type: "integer"
+      role: "identifier"
+      required: true
+
+license:
+  name: "UN Terms of Use"
+  url: "https://www.un.org/en/about-us/terms-of-use"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "UN documents are generally available for public use with attribution."
+
+notes: |
+  - 279 decision PDFs on a single listing page
+  - Static archive (mandate concluded February 2022)
+  - PDFs range from 1–50 pages
+  - Browser-like User-Agent required (site returns 403 otherwise)
+  - 2-second delays between requests

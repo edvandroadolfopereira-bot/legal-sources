@@ -1,0 +1,59 @@
+source_id: LT/LITEKO
+country: LT
+name: Lithuania Court Information System (LITEKO) Public Decisions
+description: |
+  All public court decisions from Lithuania's Court Information System (LITEKO).
+  Covers all Lithuanian courts: Supreme Court of Cassation, Court of Appeal,
+  5 regional courts, and 12 district courts. Anonymized decisions from 2010 onwards.
+
+data_types:
+  - case_law
+
+url: https://liteko.teismai.lt/viesasprendimupaieska/detalipaieska.aspx
+dataset_url: https://data.gov.lt/datasets/1938/
+csv_endpoint: https://liteko.teismai.lt/csv/
+text_endpoint: https://liteko.teismai.lt/viesasprendimupaieska/tekstas.aspx
+
+auth:
+  type: none
+
+license:
+  name: "CC BY 4.0"
+  url: "https://creativecommons.org/licenses/by/4.0/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Dataset published on data.gov.lt under CC BY 4.0"
+
+rate_limit:
+  requests_per_minute: 30
+  delay_seconds: 2
+
+schema:
+  key_fields:
+    - name: case_number
+      type: string
+      required: true
+    - name: doc_id
+      type: string
+      required: false
+    - name: text
+      type: string
+      required: true
+  date_fields:
+    - name: date
+      type: date
+      required: false
+    - name: received_date
+      type: date
+      required: false
+    - name: completed_date
+      type: date
+      required: false
+
+data_model:
+  update_strategy: append_only
+  dedup_key:
+    - case_number
+    - doc_id

@@ -1,0 +1,85 @@
+source:
+  id: "PG/NationalGazette"
+  country: "PG"
+  name: "Papua New Guinea National Gazette"
+  url: "https://pngiportal.org/"
+  description: |
+    Papua New Guinea National Gazette compilations via PNGi Portal S3 bucket.
+    ~154 gazette compilations from 1975 to 2024. Contains assented Acts,
+    statutory rules, and government notices. Full OCR text from pre-extracted
+    pages.json files.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.7
+  burst: 1
+  max_workers: 1
+
+api:
+  type: "s3"
+  base_url: "http://downloads.pngiportal.org.s3.amazonaws.com"
+  endpoints:
+    list: "/?list-type=2&prefix=NG&delimiter=/&max-keys=1000"
+    detail: "/{dir}/pages.json"
+
+data_model:
+  type: "legislation"
+  source_nature: "primary"
+  primary_key: "gazette_id"
+  update_strategy: "append_only"
+  versioning: "none"
+  dedup_key:
+    - "gazette_id"
+
+schema:
+  total_fields: 11
+  key_fields:
+    - name: "_id"
+      description: "Gazette directory name (e.g., NG2023_400_429)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Gazette title with range and year"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full OCR text from all pages combined"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date in ISO 8601 format"
+      type: "date"
+      role: "temporal_key"
+      required: true
+  secondary_fields:
+    - name: "year"
+      description: "Publication year"
+    - name: "gazette_range"
+      description: "Gazette issue range (e.g., G400-G429)"
+    - name: "pages"
+      description: "Number of pages in the compilation"
+  probably_ignorable: []
+
+license:
+  name: "Public Domain (Government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Papua New Guinea government gazette, published by authority."
+
+notes: |
+  - ~154 gazette compilations from 1975 to 2024
+  - English language
+  - Full OCR text from pre-extracted pages.json in S3 bucket
+  - Contains Acts, statutory rules, government notices
+  - Published weekly on Thursdays

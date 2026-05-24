@@ -1,0 +1,80 @@
+source:
+  id: "LR/SupremeCourt"
+  country: "LR"
+  name: "Liberia Supreme Court Opinions"
+  url: "https://judiciary.gov.lr"
+  description: |
+    Supreme Court opinions, decisions, orders, and special master reports from
+    the Judiciary of the Republic of Liberia. ~400+ PDF documents fetched via
+    the WordPress REST API and text-extracted with pdfminer. English language.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+data_model:
+  type: "case_law"
+  primary_key: "post_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "post_id"
+
+schema:
+  total_fields: 9
+  key_fields:
+    - name: "post_id"
+      description: "WordPress post ID"
+      type: "integer"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Case title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "url"
+      description: "URL to original post"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "pdf_url"
+      description: "Direct URL to PDF document"
+      type: "string"
+      role: "reference"
+      required: false
+    - name: "categories"
+      description: "WordPress category names"
+      type: "array"
+      role: "category"
+      required: false
+
+license:
+  name: "Public Domain (Government)"
+  url: "https://judiciary.gov.lr"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Supreme Court opinions published for public access"
+
+notes: |
+  - ~400+ decisions as PDFs via WP REST API
+  - Full text extracted via pdfminer
+  - English language
+  - Covers 2014-2026

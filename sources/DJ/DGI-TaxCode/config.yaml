@@ -1,0 +1,35 @@
+source:
+  id: DJ/DGI-TaxCode
+  country: DJ
+  name: "Djibouti Direction Générale des Impôts — Code Général des Impôts"
+  url: https://budget.gouv.dj/dgi/
+  data_types:
+    - legislation
+  language: fr
+license:
+  name: "Public domain (government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Djiboutian government tax legislation and finance laws published by the Ministry of Budget."
+fetcher:
+  type: pdf_download
+  rate_limit: 2.0
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: title
+      required: true
+      type: string
+  date_fields:
+    - _fetched_at
+  text_fields:
+    - text
+    - title
+notes: >
+  Tax code, customs code, finance laws, legal codes, and tax guides from the
+  Djibouti Ministry of Budget. PDFs downloaded and text extracted. French.

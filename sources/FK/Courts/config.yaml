@@ -1,0 +1,26 @@
+source_id: FK/Courts
+name: Falkland Islands Court Decisions
+country: FK
+url: https://www.gov.fk/courts/judgments/
+data_types:
+  - case_law
+
+schedule:
+  frequency: weekly
+  mode: full
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - category
+    - year
+
+license:
+  name: "Open Government Licence (UK-style)"
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official court judgments published by the Falkland Islands Courts & Tribunals Service."

@@ -1,0 +1,89 @@
+# ===================================================================
+# SN/SenegalLII -- Senegal Legislation via SenegalLII (Laws.Africa)
+# ===================================================================
+# Senegalese legislation (acts, decrees, codes) from senlii.org.
+# Full text in Akoma Ntoso HTML format. No auth required.
+# ~75 legislation documents. French language.
+# 5-second crawl delay per robots.txt.
+# Judgments disallowed by robots.txt — legislation only.
+# ===================================================================
+
+source:
+  id: "SN/SenegalLII"
+  country: "SN"
+  name: "Senegal Legal Information Institute"
+  url: "https://senlii.org/en/"
+  description: |
+    Senegalese legislation from the Senegal Legal Information Institute
+    (SenegalLII), powered by Laws.Africa. Includes acts, decrees, codes,
+    and ministerial orders. Full text in Akoma Ntoso HTML format.
+    French language. No authentication required.
+    Judgments are disallowed by robots.txt and excluded.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.2
+  burst: 1
+
+data_model:
+  type: "legislation"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: 7
+  key_fields:
+    - name: "_id"
+      description: "Document ID derived from AKN path"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the legislation"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Assent or publication date"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "URL on senlii.org"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "_type"
+      description: "Always legislation"
+      type: "string"
+      role: "category"
+      required: true
+
+license:
+  name: "CC BY 4.0"
+  url: "https://creativecommons.org/licenses/by/4.0/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Laws.Africa / AfricanLII content licensed under CC BY 4.0"
+
+notes: |
+  - ~75 legislation documents via senlii.org
+  - Full text in Akoma Ntoso HTML (la-akoma-ntoso element)
+  - 5-second crawl delay required per robots.txt
+  - French language
+  - No API key needed
+  - Judgments disallowed by robots.txt, excluded

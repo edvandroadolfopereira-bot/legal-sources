@@ -1,0 +1,74 @@
+source:
+  id: "CG/CourConstitutionnelle"
+  country: "CG"
+  name: "Cour Constitutionnelle du Congo-Brazzaville"
+  url: "https://cour-constitutionnelle.cg"
+  description: |
+    Constitutional Court of the Republic of Congo (Congo-Brazzaville).
+    Publishes decisions on constitutional review, electoral disputes,
+    and advisory opinions. ~54 documents since 2003, available as PDFs
+    via JSON API. Language: French.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "rest"
+  base_url: "https://cour-constitutionnelle.cg/api"
+  endpoints:
+    list: "/documents?type={type}&page={page}&limit={limit}"
+
+data_model:
+  type: "case_law"
+  source_nature: "gazette"
+  primary_key: "decision_number"
+  update_strategy: "append_only"
+  versioning: "none"
+  dedup_key:
+    - "decision_number"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier (decision number or UUID)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Full title of the decision"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision date in ISO 8601"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "decision_number"
+      description: "Official decision reference number"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  id: "pd-gov"
+  name: "Public Domain (Government Work)"
+  url: "https://cour-constitutionnelle.cg"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government constitutional decisions — public domain under Congolese law"

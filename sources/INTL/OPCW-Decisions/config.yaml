@@ -1,0 +1,79 @@
+# ===================================================================
+# INTL/OPCW-Decisions -- OPCW Conference & Executive Council Decisions
+# ===================================================================
+# ~500+ decisions from CSP and EC sessions (1997–present).
+# Full text extracted from PDF documents.
+# ===================================================================
+
+source:
+  id: "INTL/OPCW-Decisions"
+  country: "INTL"
+  name: "OPCW — Conference & Executive Council Decisions"
+  url: "https://www.opcw.org/resources/documents/"
+  description: |
+    Decisions of the OPCW Conference of the States Parties (CSP) and
+    Executive Council (EC) relating to Chemical Weapons Convention
+    implementation. Includes programme/budget decisions, verification
+    measures, country-specific decisions, and procedural matters.
+    PDFs downloaded from session pages and text extracted.
+  data_types:
+    - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+api:
+  type: "html_scrape_pdf"
+  base_url: "https://www.opcw.org"
+  csp_listing: "https://www.opcw.org/resourcesdocumentsconference-states-parties/conference-states-parties-documents"
+  ec_listing: "https://www.opcw.org/resources/documents/executive-council/executive-council-documents"
+
+data_model:
+  type: "doctrine"
+  primary_key: "doc_symbol"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 11
+  key_fields:
+    - name: "title"
+      description: "Decision title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Document date (ISO 8601)"
+      type: "string"
+      role: "temporal_key"
+      required: true
+    - name: "doc_symbol"
+      description: "Official document symbol (e.g., C-30/DEC.6)"
+      type: "string"
+      role: "identifier"
+      required: true
+
+license:
+  name: "Custom — OPCW Terms of Use"
+  url: "https://www.opcw.org/legal"
+  commercial_use: false
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "OPCW states documents shall not be reproduced for commercial purposes. Non-commercial research use."
+
+notes: |
+  - CSP sessions 1-30 (1997-2025), plus review conferences and special sessions
+  - EC sessions 1-112+ (three per year since 1997)
+  - Documents organized in HTML tables on session pages
+  - Focus on decision documents (DEC symbol prefix)
+  - Full text extracted from PDFs using PyMuPDF
+  - 2-second delays between requests

@@ -1,0 +1,83 @@
+source:
+  id: "INTL/GATT-Disputes"
+  country: "INTL"
+  name: "GATT 1947 Dispute Settlement Database (WTO Archive)"
+  url: "https://gatt-disputes.wto.org/"
+  description: |
+    WTO interactive database of all 317 GATT dispute settlement cases from
+    1948-1995. Includes panel reports, working party reports, and procedural
+    documents. Full text available via PDF downloads.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+  max_workers: 1
+
+api:
+  type: "html_scrape"
+  base_url: "https://gatt-disputes.wto.org"
+
+data_model:
+  type: "case_law"
+  source_nature: "consolidated"
+  primary_key: "dispute_id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "dispute_id"
+
+schema:
+  total_fields: 14
+  key_fields:
+    - name: "_id"
+      description: "Unique dispute identifier (e.g. GD-100)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Dispute title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text from dispute summary + panel report PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Report adoption or issue date"
+      type: "date"
+      role: "temporal_key"
+      required: false
+  secondary_fields:
+    - name: "complainant"
+      description: "Complaining party"
+    - name: "respondent"
+      description: "Responding party"
+    - name: "outcome"
+      description: "Dispute outcome"
+    - name: "claims"
+      description: "Legal claims raised"
+
+license:
+  id: "eur-lex"
+  name: "WTO Open Access"
+  url: "https://www.wto.org/english/res_e/booksp_e/terms_of_use_e.htm"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "WTO documents are generally freely available for non-commercial educational and research purposes with attribution."
+
+notes: |
+  - 317 disputes (GD/1 through GD/317) from GATT era 1948-1995
+  - Dispute pages at /index.php/dispute/gd-{n}
+  - Panel report PDFs at /sites/default/files/documents/Additional/
+  - Not all disputes have panel reports (some were consultations only)
+  - English language

@@ -1,0 +1,39 @@
+source:
+  id: SS/MoJCA
+  country: SS
+  name: "South Sudan Ministry of Justice Laws"
+  url: https://mojca.gov.ss
+  data_types:
+    - legislation
+  language: en
+license:
+  name: "Public Domain (Government Legislation)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government legislation of South Sudan, published by Ministry of Justice and Constitutional Affairs."
+fetcher:
+  type: html_scrape
+  pagination: none
+  rate_limit: 1.0
+  requires_pdf_extraction: true
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: act_number
+      required: false
+      type: string
+  date_fields:
+    - date
+    - _fetched_at
+  text_fields:
+    - text
+    - title
+notes: >
+  ~77 Acts of South Sudan (2005-2017) as PDFs on WordPress site.
+  Covers Penal Code, Labour Act, Banking Act, Land Act, Constitution, etc.
+  First viable SS source (all 3 existing are blocked).

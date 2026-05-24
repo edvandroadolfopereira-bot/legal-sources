@@ -1,0 +1,66 @@
+source:
+  id: "DK/Domsdatabasen"
+  country: "DK"
+  name: "Denmark Domsdatabasen — Court Decisions (HuggingFace)"
+  url: "https://huggingface.co/datasets/alexandrainst/domsdatabasen"
+  description: |
+    Danish court decisions from domsdatabasen.dk via the HuggingFace
+    alexandrainst/domsdatabasen dataset. ~3,900 pseudonymized decisions
+    from all Danish courts since Jan 2022: Supreme Court (Højesteret),
+    High Courts (Landsretterne), Maritime & Commercial Court, district
+    courts, and Greenlandic courts. Full text extracted from PDF via
+    EasyOCR and Tika.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 2
+  burst: 2
+  notes: "HuggingFace datasets API, no strict rate limit."
+
+api:
+  type: "huggingface-datasets"
+  dataset_id: "alexandrainst/domsdatabasen"
+  response_format: "parquet"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "_id"
+      description: "case_id from dataset"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Overskrift (case heading)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of decision (text_anon)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision date"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "url"
+      description: "Link to domsdatabasen.dk"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "Open Data"
+  url: "https://domsdatabasen.dk/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Public domain court decisions published by Domstolsstyrelsen."

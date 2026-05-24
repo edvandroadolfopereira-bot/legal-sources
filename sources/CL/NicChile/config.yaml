@@ -1,0 +1,63 @@
+source:
+  id: "CL/NicChile"
+  country: "CL"
+  name: "NIC Chile — Domain Dispute Rulings"
+  url: "https://www.nic.cl/rcal/fallos.do"
+  description: |
+    Arbitration rulings from NIC Chile's online dispute resolution system
+    for .cl domain names. ~15,000+ rulings available via JSON API with
+    PDF full text. Spanish language.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+data_model:
+  type: "case_law"
+  primary_key: "_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "_id"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "_id"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "domain_name"
+      type: "string"
+      role: "identifier"
+      required: true
+
+license:
+  name: "Public Domain (Government of Chile)"
+  url: "https://www.nic.cl/rcal/fallos.do"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Public arbitration rulings from NIC Chile domain dispute system"

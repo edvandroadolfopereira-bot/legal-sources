@@ -1,0 +1,57 @@
+source:
+  id: "NU/GovLegislation"
+  country: "NU"
+  name: "Niue Government Official Legislation"
+  url: "https://www.gov.nu/information/"
+  description: |
+    Consolidated laws of Niue (4 volumes as at Dec 2019), Constitution,
+    legislation supplements, and individual acts/regulations published by
+    the Government of Niue. All documents in PDF format, extracted via pdfplumber.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 1
+
+api:
+  type: "html_scrape"
+  base_url: "https://www.gov.nu"
+
+schema:
+  total_fields: 11
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier based on PDF filename"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Consolidation or enactment date"
+      type: "string"
+      role: "temporal_key"
+      required: false
+
+license:
+  id: "ogd"
+  name: "Government open access — Niue official legislation"
+  url: "https://www.gov.nu/information/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government publications from the Government of Niue"

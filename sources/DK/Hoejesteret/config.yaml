@@ -1,0 +1,69 @@
+source:
+  id: "DK/Hoejesteret"
+  country: "DK"
+  name: "Denmark Supreme Court Decisions (Højesteret)"
+  url: "https://domstol.fe1.tangora.com/Domsoversigt-(Højesteret).31478.aspx"
+  description: |
+    Danish Supreme Court (Højesteret) decisions since September 2009.
+    ~2,850 selected judgments and orders with full text extracted from PDF.
+    Accessed via Tangora CMS platform hosting the court's decision database.
+    Separate from the broader Domsdatabasen which covers all Danish courts
+    from 2022 onwards.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 1
+  notes: "Tangora CMS platform; be respectful with rate limiting."
+
+api:
+  type: "html-scraping"
+  base_url: "https://domstol.fe1.tangora.com"
+  listing_page: "/Domsoversigt-(Højesteret).31478.aspx"
+  ajax_endpoint: "/listediting.ashx"
+  record_page: "/Domsoversigt-(Højesteret).31478.aspx?recordid31478={id}"
+  pdf_endpoint: "/ref.aspx?s=-300016&id={file_id}&pageid=31478"
+  response_format: "html"
+
+schema:
+  total_fields: 9
+  key_fields:
+    - name: "_id"
+      description: "Tangora record ID"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Case number (sagsnummer)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of decision extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision date (afgørelsesdato)"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "url"
+      description: "Link to decision page on Tangora"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "Public Domain (Danish court decisions)"
+  url: "https://www.domstol.dk/hoejesteret/afgoerelsesdatabase/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Danish court decisions are public domain. Published by Domstolsstyrelsen."

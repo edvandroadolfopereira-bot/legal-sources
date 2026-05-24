@@ -1,0 +1,49 @@
+fetch:
+  max_retries: 3
+  rate_limit: 1.5
+  timeout: 60
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: case_no
+    required: false
+    type: string
+  - name: bench
+    required: false
+    type: string
+  - name: department
+    required: false
+    type: string
+source:
+  auth: none
+  country: IN
+  data_types:
+  - case_law
+  description: >
+    Judgments and orders from the Armed Forces Tribunal (AFT), India.
+    Principal Bench (New Delhi) plus 6 regional benches (Chennai, Chandigarh,
+    Kochi, Mumbai, Srinagar, Jabalpur). Covers military service disputes —
+    discharge, pension, court-martial appeals. ~56K judgments from 2009-present.
+    Metadata via aftpb.org PHP app; full text PDFs from aftdelhi.nic.in.
+  id: IN/AFT
+  name: Armed Forces Tribunal
+  url: http://aftpb.org/aft/
+license:
+  name: "Government Open Data License — India"
+  url: "https://data.gov.in/government-open-data-license-india"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Government tribunal orders — public record"

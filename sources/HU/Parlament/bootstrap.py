@@ -371,10 +371,6 @@ class ParlamentScraper(BaseScraper):
         """Quick connectivity test."""
         print("Testing Hungarian Parliament PDF access...")
 
-        if not PDF_AVAILABLE:
-            print("ERROR: pdfplumber is not installed. Run: pip install pdfplumber")
-            return
-
         # Test current cycle
         cycle = DEFAULT_CYCLE
         print(f"\n1. Testing cycle {cycle} (current)...")

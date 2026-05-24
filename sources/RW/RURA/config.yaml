@@ -1,0 +1,45 @@
+fetcher:
+  base_url: https://rura.rw
+  rate_limit: 2.0
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: sector
+    required: false
+    type: string
+  - name: url
+    required: true
+    type: string
+source:
+  auth: none
+  country: RW
+  data_types:
+  - legislation
+  description: >
+    Financial sector regulations from the Rwanda Utilities Regulatory Authority (RURA).
+    Covers ICT, Transport, Water & Sanitation, Energy, and Nuclear & Radiation sectors.
+    ~50 PDF regulatory documents downloaded from TYPO3-based file listings.
+  format: html+pdf
+  id: RW/RURA
+  language: en
+  name: Rwanda Utilities Regulatory Authority (RURA) — Regulations
+  url: https://rura.rw/publications/regulations-guidelines
+license:
+  name: "Government open access"
+  url: "https://rura.rw"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulations published by RURA for public access."

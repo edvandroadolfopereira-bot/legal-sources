@@ -1,0 +1,38 @@
+source:
+  id: GD/ParliamentGazette
+  country: GD
+  name: "Grenada Government Gazette (Parliament)"
+  url: https://grenadaparliament.gd/cat_doc/the-grenadian-government-gazette/
+  data_types:
+    - legislation
+  language: en
+license:
+  name: "Government of Grenada (Open Access)"
+  url: https://grenadaparliament.gd
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government gazette published by the Grenada Parliament. Government documents are public records."
+fetcher:
+  type: html_scraper
+  pagination: rss_feed
+  rate_limit: 2.0
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: pdf_url
+      required: false
+      type: string
+  date_fields:
+    - date
+    - _fetched_at
+  text_fields:
+    - text
+    - title
+notes: >
+  ~157 gazette documents (acts, SROs, gazette issues) 2023-2026.
+  Full text extracted from PDFs via pdfplumber.
+  Discovered via WordPress RSS feed pagination.

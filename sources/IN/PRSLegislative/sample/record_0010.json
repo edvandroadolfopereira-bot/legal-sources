@@ -1,0 +1,32 @@
+{
+  "_id": "IN/PRSLegislative/the-securities-markets-code-2025",
+  "_source": "IN/PRSLegislative",
+  "_type": "legislation",
+  "_fetched_at": "2026-05-09T19:22:11.404128+00:00",
+  "bill_slug": "the-securities-markets-code-2025",
+  "title": "The Securities Markets Code, 2025",
+  "text": "The Securities Markets Code, 2025, was introduced in Lok Sabha on December 18, 2025.  It seeks to repeal and replace the: (i) Securities Contracts (Regulations) Act, 1956, (ii) the Securities and Exchange Board of India (SEBI) Act, 1992, and (iii) the Depositories Act, 1996.  The 1956 Act regulates dealings of securities and operation of stock exchanges.  The 1996 Act regulates depositories that hold securities in dematerialised or electronic form and facilitate their transfers.  The 1992 Act establishes: (i) SEBI as the regulator to protect interests of investors in securities and promote and regulate the securities market, and (ii) the Securities Appellate Tribunal to hear appeals against SEBI.  The Bill seeks to consolidate the provisions of these Acts into single Code.  It retains most of the provisions.  Key changes include:\nComposition of SEBI:\nCurrently, SEBI consists of nine members: (i) the Chairperson, (ii) two officials from the Ministry of Finance and Corporate Affairs, (iii) one official of RBI, and (iv) five other members appointed by the central government of whom at least three must be whole-time members.\nThe Bill increases the number of other members appointed by the central government to 11, of whom at least five must be whole-time members.\nConflict of interest of a Board Member:\nUnder the SEBI Act, a member of SEBI, who is a director of a company, must disclose any direct or indirect pecuniary interest in a matter.  He must not take part in deliberations or decisions on such matters.  The Bill expands this restriction to include all members with any direct or indirect interest as may be specified by regulations, including interests of any family member.  It also adds that the central government may remove a member who has acquired any financial or other interests that is likely to prejudice his functions.\nInvestigation and adjudication:\nCurrently, SEBI may empower any person as investigating or adjudicating officers.  The Bill instead empowers SEBI to appoint investigating officers or adjudicating officers from among its Chairperson, whole-time members, and officers.  The Bill adds that an adjudicating officer must not have: (i) authorised or participated in the inspection or investigation of the case, and (ii) considered any settlement application by the entity under investigation.\nLimitation period for initiating inspection or investigation:\nThe Bill bars SEBI from ordering any inspection or investigation after eight years from the date of contravention.  Currently, there is no such limit.  The Bill provides that the time limit will not apply in cases with a systemic impact on the securities market or cases referred by investigating agencies.\nRequirement to register\n:  The Bill retains registration requirement for various entities.  Intermediaries such as stock brokers, asset management companies, and investment advisors must register with SEBI for carrying on investment activity or business.  It also mandates registration of Market Infrastructure Institutions (MIIs) with SEBI which include stock exchanges, depositories, and clearing corporations.  The Bill empowers SEBI to require registration of specified classes of investors.  It also empowers SEBI to delegate its powers of registration of intermediaries or investors to MIIs.  MIIs may also make bye-laws to minimise market abuse and foster transparency.\nGrievance redressal and Ombudsperson:\nThe Bill specifically empowers SEBI to establish an investor grievance redressal mechanism and direct service providers to also constitute grievance redressal mechanisms.  It also empowers SEBI to appoint an Ombudsperson to redress grievances.\nOffences and penalties:\nCurrently, under the three Acts, contravention of the Act, rules, or regulations are punishable with imprisonment, fine, or both, in addition to penalty.  The Bill removes these provisions and instead provides for only monetary penalty for specified violations.  These include: (i) failure to obtain registration, (ii) furnishing false statements, (iii) failure to maintain records, and (iv) certain defaults by service providers.  It retains imprisonment for certain offences such as: (i) non-compliance with specified orders of adjudicating officers or directions of investigating officers and (ii) market abuse.  The Bill defines market abuse as activities involving insider trading, defrauding the investors, dealing in securities while possessing non-public information, or using power to manipulate market prices of securities.",
+  "date": "2025-12-18",
+  "url": "https://prsindia.org/billtrack/the-securities-markets-code-2025",
+  "ministry": "Finance",
+  "house": "Lok Sabha",
+  "status": "In Committee",
+  "status_timeline": [
+    {
+      "house": "Lok Sabha",
+      "date": "Dec 18, 2025",
+      "action": "Introduced"
+    },
+    {
+      "house": "Standing Committee",
+      "date": "Dec 18, 2025",
+      "action": "In Committee"
+    }
+  ],
+  "pdf_urls": [
+    {
+      "url": "https://prsindia.org/files/bills_acts/bills_parliament/2025/Securities_Markets_Code,2025.pdf",
+      "label": "Bill Text"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+source:
+  id: AL/EURALIUS
+  name: "EURALIUS Albanian Legislation (English Translations)"
+  country: AL
+  url: https://euralius.eu/index.php/en/library/albanian-legislation
+  data_types:
+    - legislation
+  language: en
+  auth: none
+
+discovery:
+  method: html_scraping
+  notes: >
+    jDownloads categories at /category/360-laws (54 categories).
+    Each category lists PDFs via task=download.send&id=X&catid=Y.
+
+fetch:
+  rate_limit: 2.0
+  timeout: 60
+
+schema:
+  required_fields:
+    - _id
+    - _source
+    - _type
+    - _fetched_at
+    - title
+    - text
+    - url
+  key_fields:
+    - name: category
+      type: string
+      required: true
+  optional_fields:
+    - language
+    - file_size
+
+license:
+  name: "Public domain (EU-funded)"
+  url: "https://euralius.eu"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "EU-funded project under the Albanian Ministry of Justice. Translations published for public use."

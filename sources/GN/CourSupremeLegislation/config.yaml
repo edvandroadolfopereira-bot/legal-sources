@@ -1,0 +1,86 @@
+# ===================================================================
+# GN/CourSupremeLegislation -- Guinea Supreme Court Legislative Texts
+# ===================================================================
+# Published by the Cour Suprême de la République de Guinée.
+# Codes, laws, decrees, constitutions hosted on WordPress site.
+# ===================================================================
+
+source:
+  id: "GN/CourSupremeLegislation"
+  country: "GN"
+  name: "Guinea Supreme Court — Legislative Texts Archive"
+  url: "https://www.coursupreme.org.gn/"
+  description: |
+    Legislative texts from Guinea's Supreme Court website. Covers
+    codes in force, older codes, constitutions, laws, decrees, and
+    arrêtés. PDFs embedded in WordPress posts, fetched via WP REST API.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+api:
+  type: "wp_rest_api"
+  base_url: "https://www.coursupreme.org.gn"
+  endpoints:
+    posts: "/wp-json/wp/v2/posts"
+    categories: "/wp-json/wp/v2/categories"
+  response_format: "json+pdf"
+
+data_model:
+  type: "legislation"
+  primary_key: "document_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "document_id"
+
+schema:
+  total_fields: 8
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier (GN-CSL-{post_id})"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "URL of the post on coursupreme.org.gn"
+      type: "string"
+      role: "reference"
+      required: true
+  secondary_fields:
+    - name: "pdf_url"
+      description: "Direct URL to the source PDF"
+    - name: "category"
+      description: "Category from WordPress (codes, lois, decrets, etc.)"
+    - name: "wp_post_id"
+      description: "WordPress post ID"
+
+license:
+  name: "Public Domain (Government of Guinea)"
+  url: "https://www.coursupreme.org.gn/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government legislative texts. No explicit license; government publications."

@@ -1,0 +1,37 @@
+source:
+  id: TM/CBT-BankingLaws
+  country: TM
+  name: "Central Bank of Turkmenistan — Banking Laws"
+  url: https://www.cbt.tm/
+  data_types:
+    - legislation
+  language: tk
+license:
+  name: "Public domain (government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official banking laws and regulations published by the Central Bank of Turkmenistan."
+fetcher:
+  type: html_scraper
+  rate_limit: 2.0
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: title
+      required: true
+      type: string
+  date_fields:
+    - _fetched_at
+  text_fields:
+    - text
+    - title
+notes: >
+  Banking laws and regulations from cbt.tm. Full text scraped from HTML pages
+  in English and Turkmen. Covers Central Bank law, lending institutions, foreign
+  exchange regulation, microfinance, credit unions, bank accounts, non-cash
+  settlements, mortgage procedures, and cash operations.

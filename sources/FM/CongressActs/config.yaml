@@ -1,0 +1,52 @@
+source_id: FM/CongressActs
+name: FSM Congress Acts & Resolutions
+country: FM
+url: https://www.cfsm.gov.fm/
+description: |
+  Public Laws and Congressional Resolutions of the Federated States of Micronesia,
+  from the 10th through 24th Congress. Covers enacted legislation (Public Laws)
+  and formal resolutions (CR). Documents are PDFs hosted on the CFSM WordPress site.
+
+data_types:
+  - legislation
+
+license:
+  name: "Open government data"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official FSM government legislative documents"
+
+language: en
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+update_frequency: quarterly
+
+schema:
+  key_fields:
+    - name: title
+      required: true
+      type: string
+    - name: doc_type
+      required: true
+      type: string
+    - name: congress_number
+      required: true
+      type: integer
+  date_field: date
+  text_field: text
+  title_field: title
+  url_field: url
+
+notes: |
+  WordPress site with PDF documents. Scrapes index pages for each congress
+  to discover PDF links, downloads PDFs and extracts text via pdfplumber.
+  Public Laws: 10th-24th Congress. Resolutions: 14th-24th Congress.

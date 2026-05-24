@@ -1,0 +1,99 @@
+source:
+  id: "INTL/ColumbiaGFE"
+  country: "INTL"
+  name: "Columbia University Global Freedom of Expression Case Law Database"
+  url: "https://globalfreedomofexpression.columbia.edu/"
+  description: |
+    Columbia University's Global Freedom of Expression initiative maintains
+    a database of 3,400+ case analyses from 130+ countries on freedom of
+    expression, updated weekly. Each case includes structured metadata
+    (court, date, outcome, themes) and extensive analysis (summary, facts,
+    decision overview, significance). Covers 1918–present.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "html_scrape"
+  base_url: "https://globalfreedomofexpression.columbia.edu"
+  selectors:
+    sitemap_index: "/sitemap_index.xml"
+    case_sitemaps:
+      - "/case-sitemap.xml"
+      - "/case-sitemap2.xml"
+      - "/case-sitemap3.xml"
+      - "/case-sitemap4.xml"
+
+data_model:
+  type: "case_law"
+  source_nature: "bulk_archive"
+  primary_key: "case_slug"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "case_slug"
+
+schema:
+  total_fields: 15
+  key_fields:
+    - name: "id"
+      description: "Unique case identifier (slug)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Case title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full case analysis text (summary, facts, decision, significance)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Date of decision"
+      type: "date"
+      role: "temporal_key"
+      required: false
+  secondary_fields:
+    - name: "outcome"
+      description: "Case outcome"
+    - name: "case_number"
+      description: "Official case number"
+    - name: "country"
+      description: "Country/region"
+    - name: "judicial_body"
+      description: "Type of court"
+    - name: "law_type"
+      description: "Type of law"
+    - name: "themes"
+      description: "Subject matter themes"
+    - name: "expression_type"
+      description: "Mode of expression"
+  probably_ignorable: []
+
+license:
+  id: "custom-nc"
+  name: "Columbia GFE Content Attribution Policy (non-commercial)"
+  url: "https://globalfreedomofexpression.columbia.edu/about/"
+  commercial_use: false
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Excerpts may be shared for non-commercial purposes with attribution and link to original."
+
+notes: |
+  - Cases accessed via WordPress sitemap XMLs (custom post type 'case')
+  - WP REST API does not expose the case post type
+  - Each case page contains structured metadata and extensive analysis
+  - ~3,483 cases as of May 2026
+  - Multi-language: English primary, also Spanish/Arabic versions
+  - Non-commercial use only per content attribution policy
