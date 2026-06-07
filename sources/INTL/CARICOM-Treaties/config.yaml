@@ -1,0 +1,54 @@
+# INTL/CARICOM-Treaties - Caribbean Community Treaty Collection
+name: "CARICOM Treaty Collection"
+country: INTL
+source_id: "INTL/CARICOM-Treaties"
+source_type: legislation
+
+base_url: "https://caricom.org"
+official_url: "https://caricom.org/treaties/"
+
+data_types:
+  - legislation
+
+languages:
+  - en
+
+coverage:
+  start_year: 1973
+  end_year: 2026
+  notes: "CARICOM treaties, protocols, and agreements — Revised Treaty of Chaguaramas, CSME protocols, CCJ, CARIPASS, etc."
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+data_model:
+  update_strategy: upsert
+  dedup_key:
+    - _id
+
+schema:
+  key_fields:
+    - name: "text"
+      type: "string"
+      required: true
+  required_fields:
+    - _id
+    - _source
+    - _type
+    - _fetched_at
+    - title
+    - text
+    - url
+
+license:
+  name: "Open Government Data"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official treaty texts published by CARICOM Secretariat for public access"

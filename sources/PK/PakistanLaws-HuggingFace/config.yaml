@@ -1,0 +1,75 @@
+# PK/PakistanLaws-HuggingFace - Pakistan Laws Dataset (federal legislation)
+# https://huggingface.co/datasets/AyeshaJadoon/Pakistan_Laws_Dataset
+#
+# 967 federal laws and acts of Pakistan, collected from the Ministry of Law
+# and Justice website (pakistancode.gov.pk) as PDFs and converted to a single
+# JSON array of {file_name, text} objects with full statute text.
+#
+# Data access strategy:
+#   1. Download pdf_data.json via the HuggingFace resolve/main/ URL
+#      (the auto-converted parquet split is empty; rows API does not work).
+#   2. Parse the JSON array; each record has the full document text.
+#   3. Derive title + enactment year from the text (PDF names are hashes).
+#   4. Canonical origin: pakistancode.gov.pk/pdffiles/{file_name}.
+#
+# Languages: English
+# License: ODC-BY 1.0 (dataset card); underlying texts are Government of
+#          Pakistan public legal documents.
+
+source_id: PK/PakistanLaws-HuggingFace
+name: Pakistan Laws Dataset (HuggingFace)
+country: PK
+url: https://huggingface.co/datasets/AyeshaJadoon/Pakistan_Laws_Dataset
+data_types:
+  - legislation
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+  max_workers: 1
+
+data_model:
+  type: legislation
+  update_strategy: upsert
+  versioning: consolidated
+  dedup_key:
+    - file_name
+
+schema:
+  key_fields:
+    - name: _id
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: year
+      type: string
+      required: false
+    - name: url
+      type: string
+      required: false
+    - name: file_name
+      type: string
+      required: false
+
+license:
+  name: "ODC-BY 1.0"
+  url: "https://opendatacommons.org/licenses/by/1-0/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: >
+    Dataset published under ODC-BY 1.0 on HuggingFace. Underlying documents are
+    Government of Pakistan federal legislation from the Ministry of Law and
+    Justice (pakistancode.gov.pk), which are public legal texts.

@@ -1,0 +1,19 @@
+{
+  "_id": "sv-sc-83",
+  "_source": "SV/SC-Decisions",
+  "_type": "case_law",
+  "_fetched_at": "2026-05-28T06:05:36.060280+00:00",
+  "title": "Caso TELEFÓNICA",
+  "text": "# Caso TELEFÓNICA\n\nLas cuatro empresas de telefoní­a TELEMOVIL, TELFONICA, DIGICEL e INTELFON fijaron la tarifa de US$0.21 más IVA por minuto para una llamada originada en la red fija y terminada en sus redes móviles.\n\n## Datos del caso\n- Agente económico: TELEFÓNICA\n- Práctica: Acuerdo anticompetitivo entre competidores\n- Mercado: Telecomunicaciones - Telefoní­a móvil\n- Sanción: $241,282.80\n- Fecha de apertura: 19 Dec 2011\n\n## Cronología de actuaciones\n- 2011-12-19 (SC): SC sanciona a Telefónica y tres empresas telefónicas más por acuerdos anticompetitivos entre competidores. [Resolución PDF: https://uploads.sc.gob.sv/C-017-O-PS-R-2010_191211_1055.pdf]\n- 2012-04-16 (TELEF): TELEFÓNICA presenta demanda contra el CD de la SC ante la Sala de lo Contencioso Administrativo de la CSJ (SCA)\n- 2012-09-03 (SC): SCA notifica a SC admisión de la demanda y suspende el pago de la multa impuesta por la SC [Resolución PDF: https://uploads.sc.gob.sv/EF131-2012_1502_250612.pdf]\n- 2012-09-04 (SC): CD de la SC presenta primer informe requerido por SCA [Resolución PDF: https://uploads.sc.gob.sv/EF131-2012_040912.pdf]\n- 2012-09-04 (SC): CD de la SC presenta primer informe requerido por SCA [Resolución PDF: https://uploads.sc.gob.sv/EF131-2012_040912.pdf]\n- 2013-01-24 (SC): El CD de la SC presenta a la SCA de la CSJ escrito informando rectificación de multa contra TELEFÓNICA por error en el cálculo [Resolución PDF: https://uploads.sc.gob.sv/EF131-2012_230113_1530.pdf]\n- 2013-08-21 (CSJ): SCA notifica a SC sobre audiencia a TELEFÓNICA para que se pronuncie sobre corrección de multa hecha por la SC [Resolución PDF: https://uploads.sc.gob.sv/EF131-2012_190213_1408.pdf]\n- 2014-03-20 (SC): CD presenta informe justificativo [Resolución PDF: http://uploads.sc.gob.sv/appsc/casos/131-2012_TELEFONICA_200314.pdf]\n- 2014-11-03 (CSJ): La SCA notifica la apertura a pruebas del proceso contencioso [Resolución PDF: https://uploads.sc.gob.sv/EF131-2012_310314_1402.pdf]\n- 2014-11-20 (SC): CD presenta pruebas para el proceso contencioso [Resolución PDF: https://uploads.sc.gob.sv/EF131-2012_191114.pdf]\n- 2015-09-30 (CSJ): Sala notifica declaratoria sin lugar respecto de audiencia de declaracion de parte de Telefonica. [Resolución PDF: https://uploads.sc.gob.sv/EF131-2012_220615_1512.pdf]\n- 2015-09-30 (CSJ): Sala notifica al CD traslado final (art.23 LJCA) [Resolución PDF: https://uploads.sc.gob.sv/EF131-2012_220615_1514.pdf]\n- 2015-10-08 (SC): Consejo Directivo evacuó traslado final. Art. 28 LJCA [Resolución PDF: https://uploads.sc.gob.sv/EF131-2012_071015.pdf]\n- 2016-11-11 (SCA): Sala de lo Contencioso Administrativa notifica Sentencia confirmando la legalidad del acto emitido por la SC [Resolución PDF: https://uploads.sc.gob.sv/EF131-2012_280616_1513.pdf]\n- 2018-05-17 (FGR): FGR ejecuta el pago forzoso de la multa a Movistar",
+  "date": "2018-05-17",
+  "url": "https://app.sc.gob.sv/caso.php?id=83",
+  "case_id": 83,
+  "economic_agent": "TELEFÓNICA",
+  "practice": "Acuerdo anticompetitivo entre competidores",
+  "market": "Telecomunicaciones - Telefoní­a móvil",
+  "sanction": "$241,282.80",
+  "opened_date": "2011-12-19",
+  "event_count": 15,
+  "language": "es",
+  "country": "SV"
+}

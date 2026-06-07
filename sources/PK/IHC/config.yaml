@@ -1,0 +1,78 @@
+# PK/IHC - Islamabad High Court Judgments
+# https://mis.ihc.gov.pk/frmSrchOrdr
+#
+# Official MIS portal for the Islamabad High Court of Pakistan.
+# Structured ASMX web service returning JSON with full metadata.
+# PDF judgments attached to each record.
+#
+# Data access strategy:
+#   1. ASMX endpoint ihc.asmx/srchDecision1 for keyword/year search
+#   2. ihc.asmx/srchDecision with date parameter for date-based iteration
+#   3. PDF download from /attachments/judgements/{id}/{num}/{filename}.pdf
+#   4. Text extraction from PDF using PyMuPDF (fitz)
+#
+# Coverage: 2010-present
+# Languages: English
+# License: Public court records
+
+source_id: PK/IHC
+name: Islamabad High Court Judgments
+country: PK
+url: https://mis.ihc.gov.pk/frmSrchOrdr
+data_types:
+  - case_law
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+  max_workers: 1
+
+data_model:
+  update_strategy: append_only
+  dedup_key:
+    - case_id
+
+schema:
+  key_fields:
+    - name: case_id
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: date
+      required: false
+    - name: case_number
+      type: string
+      required: false
+    - name: parties
+      type: string
+      required: false
+    - name: bench
+      type: string
+      required: false
+    - name: author_judge
+      type: string
+      required: false
+    - name: subject
+      type: string
+      required: false
+    - name: headnote
+      type: string
+      required: false
+
+license:
+  name: "Public Domain (court records)"
+  url: "https://mis.ihc.gov.pk"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official public court records from the Islamabad High Court of Pakistan"

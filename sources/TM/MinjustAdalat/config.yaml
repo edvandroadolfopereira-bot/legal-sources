@@ -1,0 +1,86 @@
+# ===================================================================
+# TM/MinjustAdalat -- Turkmenistan Ministry of Justice Legal Database
+# ===================================================================
+# State-registered normative legal acts from the Hukuk Maglumatlar
+# Merkezi (Legal Information Center) of the Ministry of Justice.
+# Includes Constitution, constitutional laws, codes, laws, and
+# state-registered normative acts. Full text extracted from PDFs.
+#
+# Discovery: REST API at /api/front/laws/search (JSON)
+# Full text: PDF download + pdfplumber extraction
+# License: Public domain (government legislation)
+# ===================================================================
+
+source:
+  id: "TM/MinjustAdalat"
+  country: "TM"
+  name: "Turkmenistan Ministry of Justice — Adalat Legal Information Center"
+  url: "https://minjust.gov.tm/hukuk/merkezi"
+  description: |
+    State-registered normative legal acts from the Legal Information Center
+    (Hukuk Maglumatlar Merkezi) of the Ministry of Justice of Turkmenistan.
+    Covers Constitution, constitutional laws, codes, laws, and registered
+    normative acts. Multilingual titles (Turkmen, Russian, English).
+    Full text from PDFs in Turkmen and Russian.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+
+fetch:
+  delay: 2.0
+  page_size: 356
+  sample_count: 15
+
+api:
+  type: "rest_json"
+  base_url: "https://minjust.gov.tm/api"
+  endpoints:
+    search: "/front/laws/search"
+    filters: "/front/laws/search/filters"
+    categories: "/front/laws"
+
+data_model:
+  type: "legislation"
+  primary_key: "legislation_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "legislation_id"
+
+schema:
+  key_fields:
+    - name: "legislation_id"
+      type: "string"
+      required: true
+    - name: "title"
+      type: "string"
+      required: true
+    - name: "text"
+      type: "string"
+      required: true
+    - name: "date"
+      type: "string"
+      required: false
+    - name: "url"
+      type: "string"
+      required: true
+  text_fields:
+    - text
+  date_fields:
+    - date
+    - _fetched_at
+
+license:
+  name: "Public Domain (Government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government legislation of Turkmenistan"

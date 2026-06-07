@@ -1,0 +1,39 @@
+source:
+  id: AG/ONDCP
+  country: AG
+  name: "Antigua & Barbuda ONDCP AML/CFT Regulatory Library"
+  url: https://ondcp.gov.ag/laws/
+  data_types:
+    - legislation
+  language: en
+license:
+  name: "Government of Antigua and Barbuda (Open Access)"
+  url: https://ondcp.gov.ag/
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official AML/CFT legislation, regulations, guidelines and directives published by the Office of National Drug and Money Laundering Control Policy. Government documents are public records."
+fetcher:
+  type: html_scraper
+  pagination: section_pages
+  rate_limit: 2.0
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: category
+      required: true
+      type: string
+  date_fields:
+    - date
+    - _fetched_at
+  text_fields:
+    - text
+    - title
+notes: >
+  AML/CFT statutes, regulations, guidelines, directives and conventions
+  published by Antigua & Barbuda's ONDCP. PDFs downloaded and full text
+  extracted via pdfplumber. Older scanned image PDFs without a text layer
+  are skipped.

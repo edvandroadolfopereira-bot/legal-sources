@@ -1,0 +1,62 @@
+source:
+  id: "MH/RMICourts-Regulations"
+  country: "MH"
+  name: "Marshall Islands — Administrative Regulations"
+  url: "https://rmicourts.org/selected-regulations/"
+  description: |
+    Administrative regulations, court rules, standing orders, general orders,
+    and procedural guidance published by the Republic of the Marshall Islands
+    Judiciary. Covers admission to practice, judicial conduct, financial/AML
+    sanctions guidance, immigration/work permits, prisoner release, and more.
+    ~80 PDF documents on the "Selected Regulations" page. Complements
+    MH/RMICourts (case law) and MH/Nitijela (parliamentary acts).
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+endpoints:
+  listing: "https://rmicourts.org/selected-regulations/"
+  pdf_base: "https://rmicourts.org/wp-content/uploads/"
+
+data_model:
+  update_strategy: "upsert"
+  table: "legislation"
+
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: title
+      required: true
+      type: string
+    - name: text
+      required: true
+      type: string
+    - name: url
+      required: true
+      type: string
+    - name: date
+      required: false
+      type: string
+  date_fields:
+    - _fetched_at
+  text_fields:
+    - text
+    - title
+
+license:
+  name: "Public Domain (Government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government regulatory and court-rule documents published for public access."

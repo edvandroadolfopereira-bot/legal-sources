@@ -1,0 +1,54 @@
+# INTL/WCO-Conventions - World Customs Organization Legal Instruments
+name: "WCO Conventions & Legal Instruments"
+country: INTL
+source_id: "INTL/WCO-Conventions"
+source_type: legislation
+
+base_url: "https://www.wcoomd.org"
+official_url: "https://www.wcoomd.org/en/about-us/legal-instruments.aspx"
+
+data_types:
+  - legislation
+
+languages:
+  - en
+
+coverage:
+  start_year: 1950
+  end_year: 2026
+  notes: "WCO conventions, declarations, resolutions, and recommendations — Kyoto, Istanbul, HS Convention, Nairobi, ATA, plus enforcement/IT/facilitation recommendations. ~130 instruments total."
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+data_model:
+  update_strategy: upsert
+  dedup_key:
+    - _id
+
+schema:
+  key_fields:
+    - name: "text"
+      type: "string"
+      required: true
+  required_fields:
+    - _id
+    - _source
+    - _type
+    - _fetched_at
+    - title
+    - text
+    - url
+
+license:
+  name: "Open Government Data"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "International organization public legal instruments — treaties and conventions are public international law."

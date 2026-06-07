@@ -1,0 +1,19 @@
+{
+  "_id": "sv-sc-81",
+  "_source": "SV/SC-Decisions",
+  "_type": "case_law",
+  "_fetched_at": "2026-05-28T06:05:32.734260+00:00",
+  "title": "Caso Agencia de Viajes Escamilla",
+  "text": "# Caso Agencia de Viajes Escamilla\n\nLas cuatro agencias de viajes U-Travel, Agencias de Viajes Escamilla, Amate Travel e Inter-Tours acordaron ofertar precios idénticos respecto de las comisiones por servicio ofertadas en licitaciones públicas promovidas por el MINEC y CORSATUR.\n\n## Datos del caso\n- Agente económico: Agencia de Viajes Escamilla\n- Práctica: Acuerdo anticompetitivo en licitaciones públicas, tipificado en la letra c) del artículo 25 de la Ley de Competencia.\n- Mercado: Suministro de boletos aéreos a instituciones públicas\n- Sanción: $3,046.50\n- Fecha de apertura: 07 Jul 2009\n\n## Cronología de actuaciones\n- 2009-07-07 (SC): El Consejo Directivo de la SC presenta la resolución final en la que sancionó a cuatro agencias de viajes por acuerdos anticompetitivos en licitaciones. [Resolución PDF: https://uploads.sc.gob.sv/C-001-O-PA-NR-2009_070709_0900.pdf]\n- 2009-09-28 (SC): La SC solicita a la FGR el cobro de las multas.\n- 2011-03-09 (SC): Reunión de personal técnico de la SC y la FGR para actualizar el proceso de pago de multas.\n- 2011-03-10 (SC): SC remite a FGR información sobre procesos contenciosos administrativos iniciados por Amate Travel y U Travel.\n- 2011-03-30 (SC): SC solicita nuevamente a la FGR el cobro de las multas\n- 2012-08-24 (SC): SC solicita nuevamente a FGR el cobro de las multas\n- 2013-01-30 (SC): FGR informa a la SC sobre el incumplimiento de pago de las multas por inicio de contenciosos administrativos.\n- 2013-02-25 (SC): SC informa a la FGR que Inter Tours y Agencia de Viajes Escamilla no iniciaron procesos contenciosos administrativos, y a U Travel y Amate Travel no les suspendieron el pago de la multa, por lo que procede que las cuatro paguen la multa.",
+  "date": "2013-02-25",
+  "url": "https://app.sc.gob.sv/caso.php?id=81",
+  "case_id": 81,
+  "economic_agent": "Agencia de Viajes Escamilla",
+  "practice": "Acuerdo anticompetitivo en licitaciones públicas, tipificado en la letra c) del artículo 25 de la Ley de Competencia.",
+  "market": "Suministro de boletos aéreos a instituciones públicas",
+  "sanction": "$3,046.50",
+  "opened_date": "2009-07-07",
+  "event_count": 8,
+  "language": "es",
+  "country": "SV"
+}

@@ -1,0 +1,71 @@
+source:
+  id: JO/JSC-Regulations
+  name: Jordan Securities Commission — Regulations & Instructions
+  country: JO
+  url: https://www.jsc.gov.jo/
+  data_types:
+    - legislation
+    - doctrine
+  description: |
+    English-language legal corpus of the Jordan Securities Commission (JSC),
+    the capital-market regulator: the Securities Law and related laws,
+    capital-market regulations, instructions to issuers and financial-services
+    companies, bases, Islamic-sukuk regulating legislation, regulatory
+    decisions, and related legislation. Parsed from the JSC English legislation
+    listing tables (/Links2/en/<category>); full text extracted from linked
+    PDFs. Scanned image-only PDFs are skipped. English language.
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: html_listing
+  base_url: https://www.jsc.gov.jo
+  format: html+pdf
+  notes: >
+    Site requires a `lang` session cookie obtained by first visiting "/";
+    without it the site redirect-loops and PDF downloads return HTTP 451.
+  endpoints:
+    listing: /Links2/en/{category}
+  categories:
+    - laws
+    - Regulations
+    - islamic_sukuk_regulating_legislations
+    - related_legislations
+    - instructions
+    - bases
+    - regulatory_decisions
+
+schema:
+  key_fields:
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: document_type
+      type: string
+      required: false
+    - name: category
+      type: string
+      required: false
+    - name: language
+      type: string
+      required: false
+
+license:
+  name: Open Government Data (Jordan)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official securities-regulator laws, regulations, instructions, and decisions published for public access on the Jordan Securities Commission government website.

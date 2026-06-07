@@ -2,12 +2,9 @@ country: CZ
 data_types:
 - legislation
 endpoints:
-  acts_metadata: https://opendata.eselpoint.cz/datove-sady-esbirka/002PravniAkt.json.gz
-  fragments: https://opendata.eselpoint.cz/datove-sady-esbirka/004PravniAktFragment.json.gz
-  info_portal: https://zakony.gov.cz
+  sparql: https://opendata.eselpoint.gov.cz/sparql
   portal: https://www.e-sbirka.cz
-  sparql: https://opendata.eselpoint.cz/sparql
-  version_fragments: https://opendata.eselpoint.cz/datove-sady-esbirka/003PravniAktZneniFragment.json.gz
+  info_portal: https://zakony.gov.cz
 fetcher:
   max_retries: 3
   rate_limit_ms: 1000
@@ -17,35 +14,28 @@ language: cs
 license:
   name: CC BY 4.0
   url: https://creativecommons.org/licenses/by/4.0/
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: ''
 name: e-Sbírka - Czech Collection of Laws
-notes: 'e-Sbírka is the official Czech electronic collection of laws, launched in January 2024.
+notes: 'e-Sbírka is the official Czech electronic collection of laws, launched in January
+  2024.
 
-  The open data contains 43,000+ legal acts with full text. Data is updated daily.
+  The open data SPARQL endpoint provides access to 92,000+ legal acts with full text.
 
-
-  Data structure:
-
-  - 002PravniAkt.json.gz: Legal act metadata (5.1MB)
-
-  - 004PravniAktFragment.json.gz: Text fragments with content (503MB)
-
-  - 003PravniAktZneniFragment.json.gz: Links versions to fragments (1.1GB)
+  Data is updated daily.
 
 
-  The fragments need to be reassembled to get complete document text.
+  The SPARQL approach fetches acts fragment-by-fragment with zero bulk downloads,
 
-  Each act consists of multiple fragments (Paragraf, Odstavec, Clanek, etc.)
-
-  ordered by their hierarchical position.
+  avoiding the OOM issues of the old bulk JSON approach.
 
 
-  TECHNICAL REQUIREMENTS:
+  RDF vocabulary uses the https://slovník.gov.cz/datový/sbírka/pojem/ prefix.
 
-  - Initial download: ~500MB (cached after first run)
-
-  - Memory: ~4GB RAM recommended for processing
-
-  - First run takes 10-15 minutes for download
+  Acts -> versions (má-poslední-znění) -> ordered fragments -> text.
 
   '
 schema:

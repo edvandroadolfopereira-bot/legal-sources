@@ -1,0 +1,79 @@
+# ===================================================================
+# GH/NIC -- Ghana National Insurance Commission — Directives
+# ===================================================================
+# Regulatory directives, guidelines, and news from Ghana's National
+# Insurance Commission (NIC).
+# ===================================================================
+
+source:
+  id: "GH/NIC"
+  country: "GH"
+  name: "Ghana National Insurance Commission — Directives"
+  url: "https://nicgh.org/"
+  description: |
+    Regulatory directives, guidelines, and news from Ghana's National
+    Insurance Commission. Guideline/directive pages fetched via WordPress
+    REST API with full text extracted from linked PDFs (pdfplumber).
+    News posts fetched via WP REST API custom post type "news".
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "wordpress_rest"
+  base_url: "https://nicgh.org/wp-json/wp/v2"
+  endpoints:
+    - "/pages?parent=27&per_page=100"
+    - "/pages?parent=9&per_page=100"
+    - "/news?per_page=100"
+  notes: "22 guideline/directive pages (PDF text), 1 Insurance Act (PDF), 108 news posts (inline text)"
+
+data_model:
+  type: "doctrine"
+  primary_key: "_id"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "text"
+      description: "Full text from PDF extraction or WordPress content"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "document_type"
+      description: "Type: guideline or news"
+      type: "string"
+      role: "status"
+      required: true
+    - name: "pdf_url"
+      description: "URL to source PDF (guidelines only)"
+      type: "string"
+      role: "reference"
+      required: false
+
+license:
+  name: "Public Government Documents (Ghana)"
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulatory publications from Ghana NIC"

@@ -1,0 +1,59 @@
+source:
+  id: AG/Gazette
+  name: Antigua and Barbuda Official Gazette
+  country: AG
+  url: http://gazette.laws.gov.ag/
+  description: >
+    Official Gazette of Antigua and Barbuda, published weekly. PDFs are
+    served via the site's WordPress REST API as media attachments. Each
+    issue is an official gazette PDF with extractable text containing
+    statutory instruments, parliamentary notices, appointments, and
+    public-sector announcements.
+
+data_model:
+  types:
+    - legislation
+  update_strategy: upsert
+  dedup_key:
+    - gazette_id
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+schema:
+  required_fields:
+    - _id
+    - _source
+    - _type
+    - _fetched_at
+    - title
+    - text
+    - date
+    - url
+  key_fields:
+    - name: gazette_id
+      type: string
+      required: true
+    - name: media_id
+      type: integer
+      required: true
+    - name: page_count
+      type: integer
+      required: false
+
+license:
+  name: Public domain (government)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official Government Gazette of Antigua and Barbuda.
+
+schedule:
+  full_refresh: yearly
+  update_check: weekly

@@ -1,0 +1,48 @@
+source:
+  id: "AW/DWJZ-Archive"
+  country: "AW"
+  name: "Aruba DWJZ Legislation Archive (Internet Archive)"
+  url: "https://archive.org/search?query=creator%3A%22DWJZ+-+Directie+Wetgeving+en+Juridische+Zaken%22"
+  description: |
+    5,627 Aruba legal documents from the Directie Wetgeving en Juridische
+    Zaken (DWJZ — Legislation and Legal Affairs Directorate). Includes
+    Afkondigingsbladen (official gazette), Landscouranten (national gazette),
+    Landsverordeningen (national ordinances), and consolidated law texts.
+    Dutch language. Hosted on Internet Archive with pre-extracted OCR text.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 1
+  max_workers: 1
+
+api:
+  type: "rest"
+  base_url: "https://archive.org"
+  endpoints:
+    search: "/advancedsearch.php"
+    metadata: "/metadata/{identifier}"
+    download: "/download/{identifier}"
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - date
+    - text
+    - url
+    - identifier
+
+license:
+  name: "Public Domain (Government)"
+  url: "https://archive.org/details/DWJZ-01.01GT87.001"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Aruba government legislation published by DWJZ. Government legal texts are public domain."

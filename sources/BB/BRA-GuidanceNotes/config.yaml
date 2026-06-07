@@ -1,0 +1,52 @@
+source:
+  id: BB/BRA-GuidanceNotes
+  name: Barbados Revenue Authority — Guidance Notes
+  country: BB
+  url: https://bra.gov.bb/News/Guidance-Notes/
+  description: >
+    Tax guidance notes from the Barbados Revenue Authority covering VAT,
+    corporation tax, FATCA/CRS compliance, economic substance, and import
+    duties. Full text extracted from attached PDFs via pdfplumber, with
+    HTML page text as fallback.
+
+data_model:
+  types:
+    - doctrine
+  update_strategy: upsert
+  dedup_key:
+    - slug
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+schema:
+  required_fields:
+    - _id
+    - _source
+    - _type
+    - _fetched_at
+    - title
+    - text
+    - date
+    - url
+  key_fields:
+    - name: slug
+      type: string
+      required: true
+
+license:
+  name: Public domain (government)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official government guidance notes from Barbados Revenue Authority.
+
+schedule:
+  full_refresh: monthly
+  update_check: weekly

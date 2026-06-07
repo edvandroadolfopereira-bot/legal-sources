@@ -11,7 +11,14 @@ endpoints:
   content_iframe: /anasayfa/MevzuatFihristDetayIframe
   datatable: /Anasayfa/MevzuatDatatable
 language: tr
-license: Open Government Data
+license:
+  name: Public Domain (Government)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official Turkish government legislation — public domain under Turkish law
 name: Turkish Legislation (Mevzuat Bilgi Sistemi)
 rate_limit:
   delay_between_requests: 1.5

@@ -1,0 +1,32 @@
+source_id: SN/ARTP
+name: Senegal ARTP — Telecom Regulatory Documents
+country: SN
+url: https://artp.sn/documentation
+data_types:
+  - doctrine
+  - legislation
+auth:
+  type: none
+schedule: monthly
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - date
+    - text
+    - document_type
+  secondary_fields:
+    - _type
+    - _source
+    - _fetched_at
+    - url
+
+license:
+  name: "Custom Terms (Government)"
+  url: "https://artp.sn/mentions-legales"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Senegalese telecom regulatory documents published by ARTP (Autorité de Régulation des Télécommunications et des Postes) for public compliance."

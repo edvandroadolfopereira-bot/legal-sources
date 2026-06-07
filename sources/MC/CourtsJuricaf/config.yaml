@@ -1,0 +1,35 @@
+source:
+  id: MC/CourtsJuricaf
+  country: MC
+  name: "Monaco Courts (Juricaf)"
+  url: https://juricaf.org/recherche/+/facet_pays:Monaco
+  data_types:
+    - case_law
+  language: fr
+license:
+  name: "ODbL 1.0 (Juricaf/AHJUCAF)"
+  url: https://juricaf.org
+  commercial_use: true
+  attribution_required: true
+  share_alike: true
+  no_derivatives: false
+  notes: "Court decisions published on Juricaf by AHJUCAF."
+fetcher:
+  type: api_json
+  pagination: page_number
+  rate_limit: 2.0
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+  date_fields:
+    - date
+    - _fetched_at
+  text_fields:
+    - text
+    - title
+notes: >
+  ~4,800+ Monaco court decisions via Juricaf JSON API + HTML text extraction.
+  Covers Tribunal suprême, Cour de cassation, Cour d'appel, Tribunal de première instance.
+  French. ODbL 1.0.

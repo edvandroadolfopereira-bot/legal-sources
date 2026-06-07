@@ -1,0 +1,55 @@
+# INTL/UPU-Acts - Universal Postal Union Acts and Convention Texts
+name: "Universal Postal Union — Acts and Convention Texts"
+country: INTL
+source_id: "INTL/UPU-Acts"
+source_type: legislation
+
+base_url: "https://www.upu.int"
+official_url: "https://www.upu.int/en/universal-postal-union/about-upu/acts"
+
+data_types:
+  - legislation
+
+languages:
+  - en
+  - fr
+
+coverage:
+  start_year: 1964
+  end_year: 2026
+  notes: "UPU Constitution (1964) + 11 Additional Protocols, General Regulations, Universal Postal Convention, Postal Payment Services Agreement, Congress Acts (1999-2025), Convention Manuals. ~70 documents."
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+data_model:
+  update_strategy: upsert
+  dedup_key:
+    - _id
+
+schema:
+  key_fields:
+    - name: "text"
+      type: "string"
+      required: true
+  required_fields:
+    - _id
+    - _source
+    - _type
+    - _fetched_at
+    - title
+    - text
+    - url
+
+license:
+  name: "Open Government Data"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official intergovernmental instruments of the Universal Postal Union. Published for public reference on the UPU website."

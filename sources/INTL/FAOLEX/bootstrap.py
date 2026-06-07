@@ -107,7 +107,7 @@ def normalize(row: dict, full_text: str) -> dict:
         "original_title": row.get("Original title", "").strip(),
         "text": full_text,
         "abstract": row.get("Abstract", "").strip(),
-        "date": normalize_date(row.get("Date of original text", "")),
+        "date": normalize_date(row.get("Date of text", "")),
         "last_amended_date": normalize_date(row.get("Last amended date", "")),
         "url": row.get("Record URL", "").strip(),
         "document_url": row.get("Document URL", "").strip(),
@@ -171,7 +171,8 @@ def test_connectivity():
 
 def main():
     parser = argparse.ArgumentParser(description="INTL/FAOLEX bootstrap")
-    parser.add_argument("command", choices=["bootstrap", "test"])
+    parser.add_argument("command",
+                        choices=["bootstrap", "bootstrap-fast", "update", "test"])
     parser.add_argument("--sample", action="store_true",
                         help="Fetch only sample records")
     parser.add_argument("--full", action="store_true", help="Fetch all records")

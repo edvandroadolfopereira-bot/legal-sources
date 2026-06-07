@@ -1,0 +1,58 @@
+# DZ/BankOfAlgeria - Bank of Algeria Regulations & Instructions
+name: "Bank of Algeria Regulations & Instructions"
+country: DZ
+source_id: "DZ/BankOfAlgeria"
+source_type: legislation
+
+base_url: "https://www.bank-of-algeria.dz"
+official_url: "https://www.bank-of-algeria.dz/cadre-legislatif-et-reglementaire/"
+
+data_types:
+  - legislation
+  - doctrine
+
+languages:
+  - fr
+
+coverage:
+  start_year: 1990
+  end_year: 2026
+  notes: "Banking regulations, instructions, prudential norms, AML rules, forex regulations from Bank of Algeria"
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+data_model:
+  update_strategy: upsert
+  dedup_key:
+    - _id
+
+schema:
+  key_fields:
+    - name: "category"
+      type: "string"
+      required: true
+    - name: "text"
+      type: "string"
+      required: true
+  required_fields:
+    - _id
+    - _source
+    - _type
+    - _fetched_at
+    - title
+    - text
+    - url
+
+license:
+  name: "Open Government Data"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulatory documents published by central bank"

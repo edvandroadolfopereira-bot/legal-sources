@@ -1,0 +1,28 @@
+source_id: NG/NAFDAC
+name: Nigeria National Agency for Food and Drug Administration — Regulations
+country: NG
+url: https://nafdac.gov.ng/regulatory-resources/nafdac-regulations/
+data_types:
+  - legislation
+  - doctrine
+auth:
+  type: none
+schedule: monthly
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - date
+    - text
+    - document_type
+    - category
+
+license:
+  name: "Custom Terms (Government)"
+  url: "https://nafdac.gov.ng/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Nigerian government regulatory documents published for public compliance. NAFDAC regulations are gazetted by the Federal Republic of Nigeria."

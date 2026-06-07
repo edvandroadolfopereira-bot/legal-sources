@@ -1,0 +1,35 @@
+source:
+  id: QA/FreeZonesLaws
+  country: QA
+  name: "Qatar Free Zones Authority — Laws & Regulations"
+  url: https://qfz.gov.qa/
+  data_types:
+    - legislation
+  language: en
+license:
+  name: "Public domain (government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Qatar Free Zones Authority legislation and regulations published on qfz.gov.qa."
+fetcher:
+  type: html_pdf_scrape
+  rate_limit: 2.0
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: title
+      required: true
+      type: string
+  date_fields:
+    - _fetched_at
+  text_fields:
+    - text
+    - title
+notes: >
+  Laws and regulations governing Qatar Free Zones. PDF documents from
+  qfz.gov.qa/resource/laws/ and qfz.gov.qa/authority/regulations/.

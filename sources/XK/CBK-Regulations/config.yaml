@@ -1,0 +1,46 @@
+fetcher:
+  base_url: https://bqk-kos.org
+  rate_limit: 2.0
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: doc_type
+    required: false
+    type: string
+  - name: url
+    required: true
+    type: string
+source:
+  auth: none
+  country: XK
+  data_types:
+  - legislation
+  description: >
+    Banking regulations, laws, and instructions issued by the Central Bank
+    of the Republic of Kosovo (CBK/BQK). Covers banking supervision, payment
+    systems, insurance, pensions, AML/CFT, and financial stability.
+    English-language PDFs from bqk-kos.org. ~100+ regulatory instruments.
+  format: pdf
+  id: XK/CBK-Regulations
+  language: en
+  name: Kosovo Central Bank — Banking Regulations
+  url: https://bqk-kos.org/?lang=en
+license:
+  name: "Government open access"
+  url: "https://bqk-kos.org/?lang=en"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official banking regulations and laws published by the Central Bank of the Republic of Kosovo for public access."

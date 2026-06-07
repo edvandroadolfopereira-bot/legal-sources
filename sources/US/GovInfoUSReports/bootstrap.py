@@ -414,6 +414,9 @@ def main():
     bp.add_argument("--full", action="store_true")
     up = sub.add_parser("updates")
     up.add_argument("--since", required=True)
+    bf = sub.add_parser("bootstrap-fast")
+    bf.add_argument("--sample", action="store_true")
+    bf.add_argument("--full", action="store_true")
     sub.add_parser("validate")
     args = parser.parse_args()
 
@@ -424,7 +427,7 @@ def main():
     if args.command == "validate":
         sys.exit(0 if validate_samples() else 1)
 
-    if args.command == "bootstrap":
+    if args.command in ("bootstrap", "bootstrap-fast"):
         if args.sample:
             print("Fetching sample Supreme Court opinions from GovInfo USREPORTS...")
             records = fetch_sample()

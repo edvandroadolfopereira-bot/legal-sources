@@ -1,0 +1,64 @@
+source:
+  id: JM/FSC-Guidelines
+  name: Jamaica FSC — Financial Services Commission Guidelines
+  country: JM
+  url: https://www.fscjamaica.org/
+  data_types:
+    - doctrine
+    - legislation
+  description: |
+    Guidelines, bulletins, and notices from the Financial Services
+    Commission of Jamaica, the regulator of the securities, insurance,
+    and private-pension industries. ~200 documents covering prudential
+    and capital standards, market conduct, collective investment schemes,
+    AML/CFT/CPF, cyber risk, issuer disclosure, and licensing. Enumerated
+    via the WordPress REST API; full text extracted from linked PDFs
+    (pdfminer), with inline HTML content as fallback. English language.
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: wordpress_rest
+  base_url: https://www.fscjamaica.org
+  format: json+pdf
+  endpoints:
+    posts: /wp-json/wp/v2/posts
+  categories:
+    guidelines: 78
+    bulletins: 10
+    notices: 11
+
+schema:
+  key_fields:
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: document_type
+      type: string
+      required: true
+    - name: category
+      type: string
+      required: false
+    - name: language
+      type: string
+      required: false
+
+license:
+  name: Open Government Data (Jamaica)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official regulator guidance documents published for public access on the FSC Jamaica government-agency website.

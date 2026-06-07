@@ -1,0 +1,74 @@
+# ===================================================================
+# CK/CookIslandsLaws -- Cook Islands Consolidated Legislation Portal
+# ===================================================================
+# Official REST API at cookislandslaws.gov.ck (LexisNexis-powered).
+# Full text returned as structured HTML per section, concatenated.
+# ===================================================================
+
+source:
+  id: "CK/CookIslandsLaws"
+  country: "CK"
+  name: "Cook Islands Consolidated Legislation Portal"
+  url: "https://cookislandslaws.gov.ck/"
+  description: |
+    Official Cook Islands legislation portal powered by LexisNexis.
+    ~271 consolidated acts with full text in HTML. REST API returns
+    act listings, table of contents, and per-section HTML content.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 1
+  notes: "1-second delay between requests to be respectful to government server."
+
+api:
+  type: "rest"
+  base_url: "https://cookislandslaws.gov.ck/api"
+  endpoints:
+    all_acts: "/retrieve_all_act"
+    toc: "/retrieve_toc/{act_name}"
+    section_content: "/display_pages/{section_id}"
+  response_format: "json/html"
+
+schema:
+  total_fields: 9
+  key_fields:
+    - name: "_id"
+      description: "Unique act ID from LegalId"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Act title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the act (all sections concatenated)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Year of enactment"
+      type: "string"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "URL to act on cookislandslaws.gov.ck"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "Cook Islands Government Open Data"
+  url: "https://cookislandslaws.gov.ck/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government legislation; public law is not copyrightable."

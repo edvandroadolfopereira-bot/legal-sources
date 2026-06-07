@@ -1,0 +1,53 @@
+source:
+  id: BN/AITI-Legislation
+  name: Brunei AITI — Info-communications Technology Legislation
+  country: BN
+  url: https://aiti.gov.bn/reference-documents/list-of-legislations/
+  language: en
+  data_types:
+    - legislation
+
+endpoints:
+  listing_page: https://aiti.gov.bn/reference-documents/list-of-legislations/
+
+rate_limit:
+  requests_per_second: 0.5
+  delay_seconds: 2.0
+
+schema:
+  key_fields:
+    - name: _id
+      type: string
+      required: true
+    - name: _source
+      type: string
+      required: true
+    - name: _type
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: date
+      required: false
+    - name: url
+      type: string
+      required: true
+
+data_model:
+  update_strategy: upsert
+  dedup_key:
+    - _id
+
+license:
+  name: "Brunei Attorney General's Chambers — Public Law Access"
+  url: "https://www.agc.gov.bn/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Brunei legislation published via AGC gazette PDFs, linked from AITI website"

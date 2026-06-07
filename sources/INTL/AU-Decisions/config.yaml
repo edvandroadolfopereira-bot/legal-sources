@@ -1,0 +1,43 @@
+fetch:
+  max_retries: 3
+  rate_limit: 1.0
+  timeout: 60
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: doc_type
+    required: false
+    type: string
+  - name: reference
+    required: false
+    type: string
+source:
+  auth: none
+  country: INTL
+  data_types:
+  - legislation
+  - doctrine
+  description: >
+    African Union Assembly Decisions & Resolutions from the AU Digital Archives
+    (DSpace). ~1,689 items in the Assembly Collection including decisions,
+    declarations, and resolutions from 1964-2026. DSpace REST API with
+    pre-extracted text from PDFs.
+  id: INTL/AU-Decisions
+  name: African Union Assembly Decisions & Resolutions (DSpace Archive)
+  url: https://archives.au.int/
+license:
+  name: African Union open access
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "AU archives are publicly accessible government documents"

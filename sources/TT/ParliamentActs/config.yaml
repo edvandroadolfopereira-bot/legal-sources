@@ -1,0 +1,32 @@
+source_id: TT/ParliamentActs
+name: "Trinidad & Tobago Parliament — Acts of Parliament"
+country: TT
+type: legislation
+url: https://www.ttparliament.org/publications/acts-of-parliament/
+description: >
+  Full text of Acts of Parliament of Trinidad and Tobago from 1999 to present,
+  published by the Parliament of the Republic of Trinidad and Tobago.
+  Each act is available as a PDF on individual publication pages.
+  URLs are discovered via WordPress sitemap; PDFs are downloaded and text extracted.
+auth: none
+schedule: monthly
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - date
+    - act_number
+    - text
+    - url
+
+license:
+  name: "Copyright Parliament of Trinidad and Tobago"
+  url: "https://www.ttparliament.org/publications/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: >
+    Parliamentary publications are public government documents.
+    No formal open licence specified; published for free public access.

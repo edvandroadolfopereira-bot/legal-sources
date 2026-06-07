@@ -1,0 +1,48 @@
+source_id: INTL/COMESA-LegalInstruments
+name: COMESA Legal Instruments (Treaty, Protocols & Regulations)
+country: INTL
+url: https://comesacourt.org/comesa-treaty/
+description: >
+  Treaty, protocols, regulations, and official gazette instruments of the
+  Common Market for Eastern and Southern Africa (COMESA). 21 member states.
+  PDFs from comesacourt.org (treaty/protocols/regulations pages) and
+  comesa.int (official gazette volumes). Text extracted via pdfplumber.
+data_types:
+  - legislation
+auth:
+  type: none
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+data_model:
+  update_strategy: append_only
+  dedup_key:
+    - _id
+schema:
+  key_fields:
+    - name: _id
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: url
+      type: string
+      required: true
+    - name: instrument_type
+      type: string
+      required: false
+license:
+  name: "COMESA official publications"
+  url: "https://www.comesa.int/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official legal instruments of an international organization, published for public access"

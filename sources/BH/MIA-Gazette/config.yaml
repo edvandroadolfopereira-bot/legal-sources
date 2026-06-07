@@ -1,0 +1,84 @@
+# ===================================================================
+# BH/MIA-Gazette -- Bahrain Official Gazette
+# ===================================================================
+# Official Gazette of the Kingdom of Bahrain, published by the
+# Ministry of Information Affairs (MIA) and hosted on the LLOC portal.
+# PDFs available at lloc.gov.bh/OG/{issue_number}.pdf
+# Issues 2917–3884+ available. Text extracted via PyMuPDF.
+# ===================================================================
+
+source:
+  id: "BH/MIA-Gazette"
+  country: "BH"
+  name: "Bahrain Ministry of Information Official Gazette"
+  url: "https://www.lloc.gov.bh/en/OfficialGazette"
+  description: |
+    Official Gazette of the Kingdom of Bahrain. Contains laws, decrees,
+    royal orders, ministerial decisions, and official announcements as
+    published. PDF issues available from #2917 onwards. Text extracted
+    with PyMuPDF. ~968 issues, Arabic + some English content.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+api:
+  type: "pdf_download"
+  base_url: "https://www.lloc.gov.bh"
+  endpoints:
+    gazette_pdf: "/OG/{issue_number}.pdf"
+  pagination:
+    type: "sequential_id"
+    start: 2917
+    note: "Issues numbered sequentially; check HEAD for 200 to find latest"
+
+data_model:
+  type: "legislation"
+  primary_key: "issue_number"
+  update_strategy: "upsert"
+  dedup_key:
+    - "issue_number"
+
+schema:
+  total_fields: 8
+  key_fields:
+    - name: "issue_number"
+      description: "Gazette issue number"
+      type: "integer"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Gazette issue title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full extracted text of the gazette issue"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date (extracted from PDF content)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "URL to the gazette PDF"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "Bahrain Government Open Data"
+  url: "https://www.data.gov.bh/en/ODPolicy"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Government official gazette, open access"

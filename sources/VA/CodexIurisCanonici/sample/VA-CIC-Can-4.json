@@ -1,0 +1,16 @@
+{
+  "_id": "VA-CIC-Can-4",
+  "_source": "VA/CodexIurisCanonici",
+  "_type": "legislation",
+  "_fetched_at": "2026-05-30T22:16:21.532066+00:00",
+  "title": "Canon 4",
+  "text": "Iura quaesita, itemque privilegia quae, ab Apostolica Sede ad haec usque tempora personis sive physicis sive iuridicis concessa, in usu sunt nec revocata, integra manent, nisi huius Codicis canonibus expresse revocentur.",
+  "text_en": "Acquired rights and privileges granted to physical or juridic persons up to this time by the Apostolic See remain intact if they are in use and have not been revoked, unless the canons of this Code expressly revoke them.",
+  "canon_number": 4,
+  "book": "Liber I",
+  "book_title_la": "De Normis Generalibus",
+  "book_title_en": "General Norms",
+  "date": "1983-01-25",
+  "url": "https://www.vatican.va/archive/cod-iuris-canonici/cic_index_la.html",
+  "language": "la"
+}

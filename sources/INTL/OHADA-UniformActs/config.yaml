@@ -1,0 +1,41 @@
+source:
+  id: INTL/OHADA-UniformActs
+  name: "OHADA Uniform Acts"
+  country: INTL
+  url: https://www.ohada.org/en/uniform-acts/
+  auth: none
+  data_types:
+    - legislation
+  description: >
+    10 Uniform Acts + Revised Treaty + CCJA Arbitration Rules from the Organisation
+    for the Harmonization of Business Law in Africa (OHADA). Covers commercial law,
+    companies, securities, insolvency, arbitration, mediation, cooperatives, and
+    accounting across 17 member states.
+  license:
+    name: "Public Domain (International Treaty Law)"
+    url: "https://www.ohada.org/en/general-overview/"
+    commercial_use: true
+    attribution_required: false
+    share_alike: false
+    no_derivatives: false
+    notes: "OHADA texts are international treaty instruments published in official gazettes"
+
+fetch:
+  max_retries: 3
+  rate_limit: 1.0
+  timeout: 120
+
+schema:
+  key_fields:
+    - name: _id
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: date
+      type: date
+      required: false
+    - name: text
+      type: string
+      required: true

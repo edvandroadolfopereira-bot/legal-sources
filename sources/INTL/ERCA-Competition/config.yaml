@@ -1,0 +1,56 @@
+source:
+  id: INTL/ERCA-Competition
+  name: ECOWAS Regional Competition Authority — Decisions & Legal Instruments
+  country: INTL
+  url: https://erca-arcc.org/
+  language: en
+  data_types:
+    - case_law
+    - legislation
+    - doctrine
+
+endpoints:
+  sitemap_posts: https://erca-arcc.org/wp-sitemap-posts-post-1.xml
+  sitemap_files: https://erca-arcc.org/wp-sitemap-posts-wpfd_file-1.xml
+
+rate_limit:
+  requests_per_second: 0.5
+  delay_seconds: 2.0
+
+schema:
+  key_fields:
+    - name: _id
+      type: string
+      required: true
+    - name: _source
+      type: string
+      required: true
+    - name: _type
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: date
+      required: false
+    - name: url
+      type: string
+      required: true
+
+data_model:
+  update_strategy: upsert
+  dedup_key:
+    - _id
+
+license:
+  name: "ECOWAS Public Documents"
+  url: "https://erca-arcc.org/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official competition authority decisions, regulations and journals published for public access"

@@ -1,0 +1,55 @@
+source_id: KN/MOF
+name: St Kitts & Nevis Ministry of Finance
+country: KN
+url: https://www.mof.gov.kn/
+data_url: https://www.mof.gov.kn/wp-json/wp/v2/pages
+description: |
+  Financial legislation, exchange of information agreements, double taxation
+  conventions, budget documents, and fiscal reports from the St Kitts & Nevis
+  Ministry of Finance. Includes the Finance Administration Act, Procurement Act,
+  Common Reporting Standard Act, 23 bilateral tax information exchange orders,
+  11 double taxation relief orders, budget addresses (2009-2026), budget estimates,
+  and annual audit reports. Full text extracted from official PDFs.
+
+data_types:
+  - legislation
+  - doctrine
+
+license:
+  name: Open Government Data
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government publications from St Kitts & Nevis Ministry of Finance"
+
+language: en
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+update_frequency: quarterly
+
+schema:
+  key_fields:
+    - name: title
+      required: true
+      type: string
+    - name: url
+      required: true
+      type: string
+  date_field: date
+  text_field: text
+  title_field: title
+  url_field: url
+
+notes: |
+  WordPress site with legislation on 3 sub-pages (financial-legislation,
+  exchange-of-information-legislation, double-taxation-conventions-dtcs)
+  and publications page. PDFs on wp-content/uploads/. Some URLs use
+  mof.govt.kn (legacy) — normalized to mof.gov.kn.

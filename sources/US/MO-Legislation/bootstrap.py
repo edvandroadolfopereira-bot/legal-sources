@@ -370,16 +370,20 @@ def bootstrap_sample():
 
 def main():
     parser = argparse.ArgumentParser(description="US/MO-Legislation Data Fetcher")
-    parser.add_argument("command", choices=["bootstrap", "test-api"])
+    parser.add_argument("command", choices=["bootstrap", "bootstrap-fast", "test-api"])
     parser.add_argument("--sample", action="store_true")
     parser.add_argument("--full", action="store_true", help="Fetch all records")
+    parser.add_argument("--workers", type=int, default=1,
+                        help="Number of parallel workers (accepted for VPS wrapper compatibility)")
+    parser.add_argument("--batch-size", type=int, default=100,
+                        help="Batch size (accepted for VPS wrapper compatibility)")
 
     args = parser.parse_args()
 
     if args.command == "test-api":
         success = test_api()
         sys.exit(0 if success else 1)
-    elif args.command == "bootstrap":
+    elif args.command in ("bootstrap", "bootstrap-fast"):
         if args.sample:
             success = bootstrap_sample()
             sys.exit(0 if success else 1)

@@ -1,0 +1,75 @@
+source_id: PA/ASEP-Decisions
+name: Panama ASEP — Public Services Authority Decisions
+country: PA
+url: https://asep.gob.pa/
+data_types:
+- doctrine
+auth: none
+description: >
+  Regulatory resolutions issued by Panama's Autoridad Nacional de los Servicios
+  Públicos (ASEP), the national regulator for telecommunications, electricity,
+  water & sewage, and radio & television. Resolutions are published as WordPress
+  posts on asep.gob.pa; the full text of each resolution is in the signed PDF
+  embedded via a pdf-viewer iframe. The scraper reads the public WP REST API
+  (/wp-json/wp/v2/posts), extracts the embedded PDF URL, downloads the PDF, and
+  extracts its text layer with pdfplumber. Records are emitted only when real
+  full text is recovered; some recent sector PDFs are signed scans with no text
+  layer and are skipped.
+api:
+  type: wordpress_rest
+  base_url: https://asep.gob.pa/wp-json/wp/v2
+  categories:
+  - id: 261
+    name: Comisión Sustanciadora
+  - id: 278
+    name: Resoluciones Electricidad
+  - id: 108
+    name: Resoluciones Telecomunicaciones
+  - id: 111
+    name: Resoluciones Radio y Televisión
+  - id: 110
+    name: Resoluciones Agua y Alcantarillado
+  - id: 335
+    name: Resoluciones Atención al Usuario
+license:
+  name: Open Government Data
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: >
+    Official acts of a Panamanian government authority published for public
+    access. No explicit reuse license; treated as open government data.
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: _source
+    required: true
+    type: string
+  - name: _type
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: summary
+    required: false
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: url
+    required: true
+    type: string
+  - name: pdf_url
+    required: false
+    type: string
+  - name: category
+    required: false
+    type: string

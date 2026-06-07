@@ -1,0 +1,47 @@
+source:
+  id: "CW/PB-Archive"
+  country: "CW"
+  name: "Curaçao Publicatieblad Archive (Internet Archive)"
+  url: "https://archive.org/search?query=title%3A%22Publicatieblad%22+AND+title%3A%22Cura%C3%A7ao%22"
+  description: |
+    5,738 historical Curaçao gazette (Publicatieblad) items from the
+    Royal Dutch National Library (KB), covering 1861-1954. Includes
+    colonial-era legislation, government decrees, and regulations.
+    Dutch language. Pre-extracted DjVu OCR text available.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 1
+  max_workers: 1
+
+api:
+  type: "rest"
+  base_url: "https://archive.org"
+  endpoints:
+    search: "/advancedsearch.php"
+    metadata: "/metadata/{identifier}"
+    download: "/download/{identifier}"
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - date
+    - text
+    - url
+    - identifier
+
+license:
+  name: "Public Domain"
+  url: "https://creativecommons.org/publicdomain/zero/1.0/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Historical government gazettes from pre-1954 Curaçao. Public domain due to age and government authorship."

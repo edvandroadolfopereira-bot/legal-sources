@@ -1,0 +1,57 @@
+rate_limit:
+  burst: 2
+  requests_per_second: 1
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: url
+    required: true
+    type: string
+  - name: _type
+    required: false
+    type: string
+  - name: _source
+    required: false
+    type: string
+  - name: _fetched_at
+    required: false
+    type: string
+  - name: category
+    required: false
+    type: string
+  - name: section
+    required: false
+    type: string
+source:
+  auth: none
+  country: SA
+  data_types:
+  - legislation
+  description: >
+    SAMA Rulebook — comprehensive regulatory platform of the Saudi Central Bank.
+    Laws, implementing regulations, sector-specific rules, guidance, and circulars
+    covering banking, finance, insurance, payment systems, and AML/CFT.
+    Drupal-based site, HTML scraping of book navigation structure.
+  id: SA/SAMARulebook
+  language: en
+  name: Saudi Central Bank (SAMA) — Rulebook
+  url: https://rulebook.sama.gov.sa/
+license:
+  name: Open Government Data
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official Saudi Central Bank regulatory content published for public compliance reference.

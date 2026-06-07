@@ -1,0 +1,50 @@
+source:
+  id: IT/Marche
+  name: Legislazione Regionale Marche
+  country: IT
+  url: https://www.consiglio.marche.it/banche_dati_e_documentazione/leggi/
+  data_types:
+    - legislation
+  auth: none
+  description: >
+    Regional laws (leggi regionali) and regulations (regolamenti regionali) of the
+    Marche Region from the Consiglio Regionale delle Marche's legislative database.
+    Each act is accessible via a stable URL at dettaglio.php?arc=vig&idl=N where N is
+    an internal database ID (1 to ~2362). Full consolidated text is extracted from the
+    HTML (div#atto). For repealed laws, the historical text (arc=sto) is used.
+    Coverage: 1971-present, ~2300 laws and regulations.
+
+fetch:
+  max_retries: 3
+  rate_limit: 1.0
+  timeout: 60
+
+schema:
+  key_fields:
+    - name: _id
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: date
+      required: false
+    - name: law_number
+      type: string
+      required: false
+
+license:
+  name: "Public domain (official acts)"
+  url: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:legge:1941-04-22;633!vig="
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: >
+    Regional laws are official acts of a public administration and are not
+    protected by copyright under Art. 5 of the Italian Copyright Law
+    (Legge 22 aprile 1941, n. 633).

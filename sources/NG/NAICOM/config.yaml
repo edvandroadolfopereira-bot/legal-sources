@@ -1,0 +1,64 @@
+# ===================================================================
+# NG/NAICOM -- National Insurance Commission of Nigeria
+# ===================================================================
+
+source:
+  id: "NG/NAICOM"
+  country: "NG"
+  name: "National Insurance Commission of Nigeria"
+  url: "https://naicom.gov.ng/"
+  description: |
+    Regulatory documents from Nigeria's National Insurance Commission:
+    circulars, guidelines, laws, bulletins, and publications.
+    108 posts fetched via WordPress REST API.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "wordpress_rest"
+  base_url: "https://naicom.gov.ng/wp-json/wp/v2"
+  endpoints:
+    - "/posts?categories=157,109,158,159,111,114,106,102"
+    - "/categories"
+  notes: "108 total posts. Regulatory categories: circulars, guidelines, laws, bulletins, publications."
+
+data_model:
+  type: "doctrine"
+  primary_key: "_id"
+  update_strategy: "append_only"
+
+schema:
+  total_fields: 9
+  key_fields:
+    - name: "text"
+      description: "Full text from post content + extracted PDF text"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "document_type"
+      description: "Category: circulars, guidelines, laws, bulletin, publications, news"
+      type: "string"
+      role: "status"
+      required: false
+
+license:
+  name: "Public Government Documents (Nigeria)"
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulatory documents from NAICOM"

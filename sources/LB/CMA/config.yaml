@@ -1,0 +1,86 @@
+# ===================================================================
+# LB/CMA — Lebanon Capital Markets Authority
+# ===================================================================
+# Regulations, decisions, and announcements from the CMA.
+# ~154 documents (8 laws, 38 decisions, 8 regulation series, 100 announcements).
+# Full text via PDF extraction (Arabic/English).
+# ===================================================================
+
+source:
+  id: "LB/CMA"
+  country: "LB"
+  name: "Lebanon Capital Markets Authority — Regulations"
+  url: "https://www.cma.gov.lb/laws-and-regulations/"
+  description: |
+    The Capital Markets Authority (CMA) of Lebanon is an independent
+    regulatory body established by Law No. 161/2011. It regulates,
+    supervises, licenses, and monitors Lebanese capital markets.
+    This source collects CMA laws, decisions, implementing regulations,
+    and announcements.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+  notes: "2-second delay between PDF downloads."
+
+api:
+  type: "html-scraping"
+  base_url: "https://www.cma.gov.lb"
+  endpoints:
+    laws_page: "/laws-and-regulations/"
+  response_format: "html+pdf"
+  pagination: "none"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "_id"
+      description: "Unique ID from document category and number"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication or issue date"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "URL to PDF document"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "category"
+      description: "Document category (law, decision, regulation, announcement)"
+      type: "string"
+      role: "classifier"
+      required: true
+    - name: "document_number"
+      description: "Official document number"
+      type: "string"
+      role: "identifier"
+      required: false
+
+license:
+  name: "Lebanese Government Publication"
+  url: "https://www.cma.gov.lb/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government regulatory documents published for public compliance."

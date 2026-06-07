@@ -1,0 +1,65 @@
+source:
+  id: NA/BON-Regulations
+  name: Bank of Namibia — Regulations & Determinations
+  country: NA
+  url: https://www.bon.com.na/
+  data_types:
+    - doctrine
+  description: |
+    Legal framework of the Bank of Namibia, the country's central bank and
+    banking regulator. Covers determinations, regulations, circulars,
+    guidelines, directives and other bylaws issued under the Banking
+    Institutions Act, the Bank of Namibia Act, the Payment System Management
+    Act, the Financial Intelligence Act and related statutes. Documents are
+    official Government Gazette notices. Full text is extracted from the PDF
+    documents served by the Bank's Kentico CMS. Content in English. Free
+    access, no authentication required.
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: html_scraping
+  base_url: https://www.bon.com.na
+  format: pdf
+  notes: >
+    The /Regulations/ tree is crawled breadth-first to collect document links.
+    Each document is served via the Kentico attachment handler at
+    /getattachment/{guid}/.aspx and parsed with pdfplumber. Image-only scans are
+    dropped by a Latin-text quality filter.
+
+schema:
+  key_fields:
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: language
+      type: string
+      required: true
+    - name: url
+      type: string
+      required: true
+    - name: source_page
+      type: string
+      required: false
+
+license:
+  name: Public Domain (Government of Namibia)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: >
+    Official Government Gazette notices and regulatory acts published by the
+    Bank of Namibia for public access.

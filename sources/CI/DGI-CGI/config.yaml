@@ -1,0 +1,53 @@
+source:
+  id: "CI/DGI-CGI"
+  country: "CI"
+  name: "Côte d'Ivoire — Code Général des Impôts (Tax Code)"
+  url: "https://dgi.cgici.com/"
+  description: |
+    Official 2025 edition of the Code Général des Impôts (CGI) of Côte d'Ivoire,
+    published by the Direction Générale des Impôts. Contains ~1400 tax code articles
+    across 358 HTML pages covering direct taxes, indirect taxes, registration duties,
+    tax procedures, and fiscal annexes. Full text in French.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+api:
+  base_url: "https://dgi.cgici.com"
+  endpoints:
+    article_index: "/js/ArticleLink.js"
+    page_titles: "/js/leftJsTitle.js"
+    content_pages: "/V2025/page-{N}.html"
+  format: "html"
+  method: "GET"
+  notes: |
+    Content is served as static HTML pages in /V2025/ folder.
+    ArticleLink.js maps article numbers to page filenames.
+    leftJsTitle.js provides section/chapter titles for each page.
+    Each page contains multiple articles with full text.
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - text
+    - date
+    - url
+    - article_number
+    - section
+
+license:
+  name: "Public Domain (Government of Côte d'Ivoire)"
+  url: "https://dgi.cgici.com/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government tax legislation published for public access. Website produced by EssiC Ingénierie."

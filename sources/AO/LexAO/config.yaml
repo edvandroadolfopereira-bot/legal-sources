@@ -1,0 +1,97 @@
+# ===================================================================
+# AO/LexAO -- Lex.ao Free Angolan Legal Platform
+# ===================================================================
+# Free online platform with 1,200+ Angolan legal documents:
+# laws, decrees, regulations from the National Assembly,
+# People's Assembly, and regulatory agencies (1982-present).
+#
+# Primary: Sitemap + HTML scraping (Docusaurus static site)
+# ===================================================================
+
+source:
+  id: "AO/LexAO"
+  country: "AO"
+  name: "Lex.ao — Free Angolan Legal Platform"
+  url: "https://lex.ao"
+  description: |
+    Free Angolan legal platform with 1,200+ legal diplomas:
+    laws, decrees, regulations from Assembleia Nacional,
+    Assembleia do Povo, AARSEG, and ANPG. Docusaurus-based
+    static site with full text in Portuguese.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "sitemap_html"
+  base_url: "https://lex.ao"
+  sitemap_url: "https://lex.ao/sitemap.xml"
+
+data_model:
+  type: "legislation"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: 8
+  key_fields:
+    - name: "doc_id"
+      description: "Unique document identifier (institution_year_slug)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of legislation (HTML extracted)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication year"
+      type: "string"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "URL to document page on lex.ao"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "institution"
+      description: "Issuing institution"
+      type: "string"
+      role: "category"
+      required: false
+    - name: "doc_type"
+      description: "Document type (Lei, Decreto, Resolução, etc.)"
+      type: "string"
+      role: "category"
+      required: false
+
+license:
+  name: "Free access (Angolan legislation)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Free legal platform providing public access to Angolan legislation"
+
+notes: |
+  - Docusaurus-based static site with Algolia search
+  - 1,247 documents in sitemap (as of 2026-06)
+  - Institutions: Assembleia Nacional (1,116), Assembleia do Povo (92), AARSEG (35), ANPG (4)
+  - Full text in Portuguese, extracted from HTML article content
+  - Documents span 1982-2025

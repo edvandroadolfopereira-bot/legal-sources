@@ -1,0 +1,50 @@
+source_id: MS/FSC
+name: Montserrat Financial Services Commission Legislation
+country: MS
+url: https://www.fscmontserrat.org/legislations/
+description: |
+  Legislation from the Montserrat Financial Services Commission including
+  banking, insurance, trust, securities, AML/CFT, companies, intellectual
+  property, and virtual asset business acts and regulations. Full text
+  extracted from official PDFs.
+
+data_types:
+  - legislation
+
+license:
+  name: Open Government Data
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulatory publications from Montserrat FSC"
+
+language: en
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+update_frequency: quarterly
+
+schema:
+  key_fields:
+    - name: title
+      required: true
+      type: string
+    - name: url
+      required: true
+      type: string
+  date_field: date
+  text_field: text
+  title_field: title
+  url_field: url
+
+notes: |
+  WordPress site with all legislation PDFs linked from a single page.
+  ~54 unique PDFs across banking, insurance, AML, companies, IP, and
+  virtual assets categories.

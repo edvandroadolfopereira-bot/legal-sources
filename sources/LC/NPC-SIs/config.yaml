@@ -1,0 +1,38 @@
+source:
+  id: LC/NPC-SIs
+  country: LC
+  name: "Saint Lucia Statutory Instruments (NPC)"
+  url: https://npc.govt.lc/laws/si
+  data_types:
+    - legislation
+  language: en
+license:
+  name: "Government of Saint Lucia (Open Access)"
+  url: https://npc.govt.lc/
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official statutory instruments published by the Saint Lucia National Printing Corporation. Government documents are public records."
+fetcher:
+  type: html_scraper
+  pagination: year_pages
+  rate_limit: 2.0
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: si_number
+      required: true
+      type: integer
+  date_fields:
+    - date
+    - _fetched_at
+  text_fields:
+    - text
+    - title
+notes: >
+  2,000-3,000+ statutory instruments from 2001-2026.
+  PDFs downloaded via base64-encoded download URLs.
+  Full text extracted via pdfplumber.

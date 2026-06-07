@@ -1,0 +1,66 @@
+source:
+  id: "TN/BCT"
+  country: "TN"
+  name: "Central Bank of Tunisia — Circulars & Regulations"
+  url: "https://www.bct.gov.tn/bct/siteprod/page.jsp?id=226&la=AN"
+  description: |
+    Circulars and regulatory notes issued by the Central Bank of Tunisia (BCT)
+    covering banking regulation, exchange controls, payment systems, and
+    financial supervision. Documents scraped from the BCT circulars page;
+    PDF text extracted with pdfplumber. Covers 2016–present.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+
+api:
+  type: "html_scraping"
+  base_url: "https://www.bct.gov.tn/bct/siteprod/"
+
+data_model:
+  type: "doctrine"
+  source_nature: "gazette"
+  primary_key: "circular_ref"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "circular_ref"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier from PDF filename"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Circular/note title from link text"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date parsed from link text"
+      type: "date"
+      role: "temporal_key"
+      required: false
+
+license:
+  name: "Public Domain (Government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official central bank regulatory circulars"

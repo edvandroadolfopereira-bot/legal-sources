@@ -1,0 +1,63 @@
+source:
+  id: JO/CBJ-Regulations
+  name: Central Bank of Jordan — Regulations & Circulars
+  country: JO
+  url: https://www.cbj.gov.jo/
+  data_types:
+    - doctrine
+    - legislation
+  description: |
+    English-language legal corpus of the Central Bank of Jordan (CBJ): the
+    Banking Law and CBJ Law, regulatory instructions, circulars to licensed
+    banks, supervisory guidelines and frameworks, and payment-systems
+    legislation. ~300 documents covering prudential and capital standards,
+    AML/CFT, consumer protection, governance, and payment systems. Parsed
+    from the CBJ English document-library listing pages; full text extracted
+    from linked PDFs. Scanned image-only PDFs are skipped. English language.
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: html_listing
+  base_url: https://www.cbj.gov.jo
+  format: html+pdf
+  endpoints:
+    listing: /EN/List/{category}
+  categories:
+    - Laws
+    - Payment_Systems_Legislations
+    - Instructions_
+    - Circulars
+    - Guidelines_and_Frameworks
+
+schema:
+  key_fields:
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: document_type
+      type: string
+      required: false
+    - name: category
+      type: string
+      required: false
+    - name: language
+      type: string
+      required: false
+
+license:
+  name: Open Government Data (Jordan)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official central-bank laws, regulations, and circulars published for public access on the Central Bank of Jordan government website.

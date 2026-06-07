@@ -1,0 +1,112 @@
+# ═══════════════════════════════════════════════════════════════════
+# AZ/CBA-Regulations — Source Configuration
+# ═══════════════════════════════════════════════════════════════════
+
+source:
+  id: "AZ/CBA-Regulations"
+  country: "AZ"
+  name: "Central Bank of Azerbaijan — Regulations & Decisions"
+  url: "https://www.cbar.az/page-214/laws?language=en"
+  description: |
+    Legal framework of the Central Bank of the Republic of Azerbaijan (CBAR),
+    published in English on cbar.az. Covers binding regulations, Management
+    Board decisions, presidential decrees, cabinet decrees and codes governing
+    Credit Institutions, Payments, Capital Market, Insurance and Currency
+    regulation. Each act is published as a full-text HTML page at
+    /law-{id}/{slug}, carrying state-registration metadata (Ministry of Justice
+    registration number, approval/registration dates, approving Protocol).
+    Methodological documents are also included. Language: English.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+  max_workers: 2
+
+api:
+  type: "html_scrape"
+  base_url: "https://www.cbar.az/"
+  selectors:
+    listing_pages: "/page-{id}/x?language=en"
+    detail_page: "/law-{id}/{slug}?language=en"
+    title: "meta[property=og:title]"
+    body: "div.type_text"
+
+data_model:
+  type: "legislation"
+  source_nature: "regulation"
+  primary_key: "_id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "_id"
+
+schema:
+  total_fields: 13
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier (AZ-CBAR-law-{id})"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Title of the regulation / decision / decree"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the act, extracted from the official HTML page"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Approval date (falls back to state-registration date)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "document_number"
+      description: "Ministry of Justice state-registration number"
+      type: "string"
+      role: "reference"
+      required: false
+  secondary_fields:
+    - name: "category"
+      description: "Legal framework section (e.g. Credit Institutions / Regulations)"
+    - name: "doc_kind"
+      description: "Kind of act (regulation, presidential_decree, cabinet_decree, code, methodological)"
+    - name: "registration_date"
+      description: "Date of state registration with the Ministry of Justice"
+    - name: "url"
+      description: "URL of the official source page"
+    - name: "language"
+      description: "Document language (en)"
+    - name: "jurisdiction"
+      description: "Jurisdiction (AZ)"
+  probably_ignorable: []
+
+license:
+  id: "ogd"
+  name: "Open Government Data (CBAR official publications)"
+  url: "https://www.cbar.az/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: |
+    Regulations, decisions and decrees of the Central Bank of the Republic of
+    Azerbaijan are official government legal texts, published openly in English
+    on cbar.az without registration. No explicit machine-readable license is
+    stated; treated as open government data (public legal texts).
+
+notes: |
+  - English-language legislation (binding CBAR regulations, decisions, decrees).
+  - No public API; HTML legal-framework listing pages link to per-act HTML pages.
+  - ~98 full-text HTML acts across Credit Institutions, Payments, Capital
+    Market, Currency regulation and Other sections.
+  - Primary statutes ("Laws" pages) are mostly external/PDF; this source
+    collects the HTML /law-{id} acts (regulations/decisions/decrees/codes).

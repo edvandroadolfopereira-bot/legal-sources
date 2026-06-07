@@ -1,0 +1,48 @@
+source_id: INTL/ECOWAS-LegalDocs
+name: ECOWAS Legal Documents (Treaties, Protocols, Conventions, Supplementary Acts)
+country: INTL
+url: https://www.ecowas.int/publication_category/legal-texts/
+description: >
+  Legal instruments of the Economic Community of West African States (ECOWAS).
+  Includes treaties, protocols, supplementary protocols, conventions, supplementary acts,
+  directives, and regulations covering 15 West African member states.
+  PDFs from ecowas.int publication portal. Text extracted via pdfplumber.
+data_types:
+  - legislation
+auth:
+  type: none
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+data_model:
+  update_strategy: append_only
+  dedup_key:
+    - _id
+schema:
+  key_fields:
+    - name: _id
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: url
+      type: string
+      required: true
+    - name: instrument_type
+      type: string
+      required: false
+license:
+  name: "ECOWAS official publications"
+  url: "https://www.ecowas.int/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official legal instruments of ECOWAS, published for public access on ecowas.int"

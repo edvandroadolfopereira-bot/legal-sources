@@ -1,0 +1,34 @@
+source_id: "AR/AGN"
+name: "Argentina Auditoría General de la Nación — Informes"
+country: AR
+url: "https://www.agn.gob.ar/auditorias/buscador"
+data_types:
+  - doctrine
+auth: none
+schedule: weekly
+api_type: json_api
+api_base: "https://webagnapi.agn.gob.ar"
+
+schema:
+  key_fields:
+    - _id
+    - titulo
+    - ano
+    - resolucion
+    - fecha_acta
+    - organismo_auditado
+    - tipo_de_auditoria
+    - actuacion
+    - periodo_auditado
+    - text
+    - url
+    - pdf_url
+
+license:
+  name: "Public Domain (Argentine Government)"
+  url: "https://www.agn.gob.ar/transparencia/informacion"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government audit reports published under constitutional mandate (Art. 85, Argentine Constitution). Public information per Argentine Access to Public Information Law 27,275."

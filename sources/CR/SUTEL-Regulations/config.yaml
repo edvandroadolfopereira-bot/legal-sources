@@ -1,0 +1,92 @@
+# ===================================================================
+# CR/SUTEL-Regulations -- Superintendencia de Telecomunicaciones
+# (Costa Rica), Resoluciones del Consejo + Normativas
+# ===================================================================
+# RCS-numbered Council resolutions (since 2009) plus SUTEL's own
+# reglamentos/lineamientos. Full text via pdfplumber.
+# ===================================================================
+
+source:
+  id: "CR/SUTEL-Regulations"
+  country: "CR"
+  name: "Costa Rica SUTEL — Telecommunications Regulations"
+  url: "https://www.sutel.go.cr/"
+  description: |
+    Regulatory output of the Costa Rican telecommunications regulator
+    (SUTEL). Includes the "Principales Resoluciones y Acuerdos del Consejo"
+    (RCS-numbered resolutions issued since 2009 — covering interconnection,
+    spectrum, shared-use offers, universal-access/FONATEL funding,
+    parafiscal contributions, minimum-speed parameters, and sanctions) plus
+    SUTEL's own reglamentos and lineamientos. Laws authored by other bodies
+    (e.g. the Ley General de Telecomunicaciones) are excluded — they belong
+    to legislation sources.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "html_scrape_pdf"
+  base_url: "https://www.sutel.go.cr"
+  notes: |
+    Drupal site. The resoluciones view is paginated at
+    /sutel/resoluciones?field_tipo_documento_tid=All&page=N; each page links
+    directly to /sites/default/files/*.pdf documents. The /normativas page
+    adds SUTEL's reglamentos. PDFs are downloaded and text-extracted with
+    pdfplumber. TLS verification is disabled (incomplete certificate chain;
+    public, read-only data). External laws, forms, FAQs, and decks are
+    filtered out by filename.
+
+data_model:
+  type: "doctrine"
+  primary_key: "url"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 13
+  key_fields:
+    - name: "text"
+      description: "Full text extracted from the PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "title"
+      description: "Document title derived from the filename"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "doc_number"
+      description: "Resolution identifier, e.g. 'RCS-298-2025' (null for reglamentos)"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "category"
+      description: "resolucion | reglamento | lineamientos | acuerdo | politica | normativa"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "date"
+      description: "Best-effort issue date parsed from document text (ISO)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "Live PDF URL"
+      type: "string"
+      role: "identifier"
+      required: true
+
+license:
+  name: "Open Government Data (Costa Rica)"
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulatory resolutions and reglamentos published by a Costa Rican public institution (SUTEL) for public use."

@@ -1,0 +1,79 @@
+source:
+  id: "UZ/MinjustRegistry"
+  country: "UZ"
+  name: "Uzbekistan Ministry of Justice — Departmental Normative Legal Acts (State Register)"
+  url: "https://www.minjust.uz/en/interactive/reestrnpa/"
+  description: |
+    Departmental normative-legal acts (ведомственные нормативно-правовые акты /
+    idoraviy normativ-huquqiy hujjatlar) — agency- and ministry-level regulations
+    that must be registered in the State Register held by the Ministry of Justice
+    to take legal effect. The MoJ registry interface (minjust.uz / adliya.uz) has
+    been folded into the gov.uz portal and now lists only registration metadata,
+    but the FULL TEXT of every registered departmental act is published on the
+    official National Database of Legislation, lex.uz.
+
+    This source pulls those acts from lex.uz, filtered to the document forms
+    characteristic of departmental NPAs: Приказ/Buyruq (Order), Положение/Nizom
+    (Regulation), Правила/Qoidalar (Rules), Инструкция/Yo'riqnoma (Instruction),
+    Указания (Directives), Решение (Decision), Регламент, Порядок (Procedure).
+    Distinct from UZ/LexUz, which covers laws, codes, and presidential/cabinet acts.
+    Older acts are server-rendered HTML; recent acts are text-based PDFs (extracted
+    with PyMuPDF). Russian and Uzbek (Latin) languages.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "html_scrape"
+  base_url: "https://lex.uz"
+  notes: "lex.uz /ru/search/nat?form_id={id}; documents at /docs/{id} (HTML) or /pdffile/{id} (PDF)."
+
+data_model:
+  type: "legislation"
+  source_nature: "departmental_regulation"
+  primary_key: "_id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "_id"
+
+schema:
+  total_fields: 11
+  key_fields:
+    - name: "_id"
+      description: "lex.uz document ID"
+      type: "string"
+    - name: "title"
+      description: "Act title"
+      type: "string"
+    - name: "text"
+      description: "Full text of the departmental act (HTML- or PDF-extracted)"
+      type: "string"
+    - name: "date"
+      description: "Adoption/registration date (ISO 8601)"
+      type: "string"
+    - name: "reg_number"
+      description: "State Register registration number assigned by the MoJ"
+      type: "string"
+    - name: "doc_type"
+      description: "Document form (Приказ, Положение, Правила, Инструкция, ...)"
+      type: "string"
+    - name: "url"
+      description: "Canonical lex.uz document URL"
+      type: "string"
+
+license:
+  name: "Public domain (government)"
+  url: "https://lex.uz"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official normative-legal acts of the Republic of Uzbekistan published on the National Database of Legislation (lex.uz). Government legal texts are not subject to copyright."

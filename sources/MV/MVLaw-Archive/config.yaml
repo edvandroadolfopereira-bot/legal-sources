@@ -1,0 +1,44 @@
+source_id: MV/MVLaw-Archive
+name: Maldives Attorney General — Old MVLaw English Translations
+country: MV
+url: https://old.mvlaw.gov.mv/ActEng.php
+description: |
+  17 English translations of key Maldivian laws from the Attorney General's
+  old MVLaw archive site. Includes Penal Code (4 chapters), Consumer Protection,
+  Company Act, Family Act, Land Act, Securities Act, and more.
+
+data_types:
+  - legislation
+
+license:
+  name: "Public domain — Maldivian government publications"
+  url: https://old.mvlaw.gov.mv/
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government translations from Attorney General's Office."
+
+language: en
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+
+update_frequency: static
+
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: title
+      required: true
+      type: string
+  date_field: date
+  text_field: text
+  title_field: title
+  url_field: url

@@ -1,0 +1,38 @@
+source_id: UG/UCC
+name: Uganda Communications Commission — Decisions & Rulings
+country: UG
+url: https://www.ucc.co.ug/decisions-and-rulings/
+data_types:
+  - case_law
+  - legislation
+  - doctrine
+auth:
+  type: none
+schedule: monthly
+
+schema:
+  key_fields:
+    - name: "_id"
+      type: "string"
+      required: true
+    - name: "title"
+      type: "string"
+      required: true
+    - name: "date"
+      type: "date"
+      required: false
+    - name: "text"
+      type: "string"
+      required: true
+    - name: "document_type"
+      type: "string"
+      required: false
+
+license:
+  name: "Custom Terms (Government)"
+  url: "https://www.ucc.co.ug"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulatory documents published by Uganda's Communications Commission for public compliance."

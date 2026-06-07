@@ -1,0 +1,47 @@
+source:
+  id: BI/OfficialGazette
+  country: BI
+  name: "Burundi Official Gazette (Bulletin Officiel du Burundi)"
+  url: https://amategeko.gov.bi
+  data_types:
+    - legislation
+  language: fr
+license:
+  name: "Public domain (government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: >
+    Official legal texts published by the Government of Burundi on the
+    amategeko.gov.bi portal (Service chargé de la législation). Government
+    edicts and laws are not subject to copyright.
+fetcher:
+  type: html_pdf
+  pagination: sitemap
+  rate_limit: 2.0
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: act_number
+      required: false
+      type: string
+    - name: bob_number
+      required: false
+      type: string
+  date_fields:
+    - date
+    - _fetched_at
+  text_fields:
+    - text
+    - title
+notes: >
+  Individual laws/decrees/ordonnances (custom post type laws_and_other_acts,
+  ~2000 in sitemap). Each detail page links to the consolidated Bulletin
+  Officiel du Burundi (BOB) PDF, which has SELECTABLE text (not scanned).
+  Full text is extracted from the BOB PDF by locating the act's heading
+  (e.g. "LOI N°1/04 DU 29/01/2018") and reading to the next act heading.
+  Texts are bilingual French/Kirundi as published.

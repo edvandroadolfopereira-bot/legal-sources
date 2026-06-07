@@ -1,0 +1,70 @@
+# ===================================================================
+# JM/Gazette -- Jamaica Official Gazette
+# ===================================================================
+# ~9,200+ gazette notices (2000-2024) — proclamations, rules, regulations.
+# DataTables server-side API for listing + PDF text extraction.
+# ===================================================================
+
+source:
+  id: "JM/Gazette"
+  country: "JM"
+  name: "Jamaica Official Gazette (Ministry of Justice)"
+  url: "https://laws.moj.gov.jm/library/gazettes"
+  description: |
+    Official Gazette of Jamaica — proclamations, rules, regulations, and
+    appointed day notices. Published by the Ministry of Justice. ~9,200+
+    gazette entries from 2000-2024, each with full text PDF.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "datatables_server_side_plus_pdf"
+  listing_url: "https://laws.moj.gov.jm/library/gazettes/{year}"
+  detail_url: "https://laws.moj.gov.jm/library/gazette/{slug}"
+  pdf_base: "https://laws.moj.gov.jm"
+
+data_model:
+  type: "legislation"
+  primary_key: "reference_number"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "title"
+      description: "Gazette notice title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication year (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "reference_number"
+      description: "Gazette reference (e.g., L.N. 16/2000)"
+      type: "string"
+      role: "identifier"
+      required: true
+
+license:
+  name: "Jamaica Open Government Data"
+  url: "https://laws.moj.gov.jm/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government gazette, freely accessible. Attribution to Ministry of Justice required."

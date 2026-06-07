@@ -1,0 +1,112 @@
+# ═══════════════════════════════════════════════════════════════════
+# SV/AsambleaLegislativa — Source Configuration
+# ═══════════════════════════════════════════════════════════════════
+
+source:
+  id: "SV/AsambleaLegislativa"
+  country: "SV"
+  name: "Asamblea Legislativa de El Salvador — Leyes y Decretos"
+  url: "https://www.asamblea.gob.sv/leyes-y-decretos/busqueda-decretos"
+  description: |
+    Official database of laws and legislative decrees published by the
+    Legislative Assembly of the Republic of El Salvador. Covers decrees from
+    the 19th century to the present, organized by year. Each decree links to
+    the official PDF carrying the full text. Language: Spanish.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+  max_workers: 3
+
+api:
+  type: "html_scrape"
+  base_url: "https://www.asamblea.gob.sv"
+  selectors:
+    year_index: "/leyes-y-decretos/decretos-por-anios"
+    year_list: "/leyes-y-decretos/decretos-por-anios/{year}/0"
+    node: "/leyes-y-decretos/view/{node_id}"
+
+data_model:
+  type: "legislation"
+  source_nature: "gazette"
+  primary_key: "_id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "_id"
+
+schema:
+  total_fields: 17
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier (SV-AL-{node_id})"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Decree / law title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the decree, extracted from the official PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Date of emission (fecha de emisión)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "decree_number"
+      description: "Legislative decree number"
+      type: "string"
+      role: "reference"
+      required: false
+  secondary_fields:
+    - name: "date_publication"
+      description: "Date published in the Diario Oficial"
+    - name: "materia"
+      description: "Subject matter classification"
+    - name: "sub_materia"
+      description: "Subject sub-classification"
+    - name: "rama_derecho"
+      description: "Branch of law"
+    - name: "summary"
+      description: "Official resumen / abstract"
+    - name: "diario_oficial"
+      description: "Diario Oficial issue number"
+    - name: "tomo"
+      description: "Diario Oficial tomo number"
+    - name: "pdf_url"
+      description: "URL of the official source PDF"
+  probably_ignorable: []
+
+license:
+  id: "ogd"
+  name: "Open Government Data (El Salvador public legislation)"
+  url: "https://www.asamblea.gob.sv/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: |
+    Legislation produced by the State of El Salvador is public. The Asamblea
+    Legislativa publishes the official texts openly without registration. No
+    explicit machine-readable license is stated; treated as open government
+    data (public-domain legal texts).
+
+notes: |
+  - Spanish-language legislation.
+  - No public API; structured Drupal HTML + per-decree PDF.
+  - Coverage: 1860s–present, organized by year.
+  - Recent decrees are digital-native (extractable text). Older scanned-image
+    decrees that yield < 400 chars of extractable text are skipped (no OCR).
+  - Same publisher/URL previously tracked here as blocked; revived in place
+    after confirming PDFs contain extractable full text.

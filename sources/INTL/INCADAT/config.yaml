@@ -1,0 +1,33 @@
+auth:
+  type: none
+base_url: https://www.incadat.com/
+country: INTL
+data_types:
+- case_law
+description: >
+  INCADAT is the International Child Abduction Database maintained by the
+  Hague Conference on Private International Law. Contains leading judicial
+  decisions on the 1980 Hague Child Abduction Convention from courts worldwide.
+  ~1700 cases with summaries in English/French/Spanish.
+language: multi
+license:
+  name: HCCH Terms of Use
+  url: https://www.hcch.net/en/about/terms-of-use
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: Free academic/legal research database. Attribution to INCADAT/HCCH required.
+name: INCADAT — International Child Abduction Case Law Database
+rate_limit:
+  burst: 1
+  requests_per_second: 0.5
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: incadat_ref
+    required: false
+    type: string
+source_id: INTL/INCADAT

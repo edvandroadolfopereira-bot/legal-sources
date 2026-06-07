@@ -1,0 +1,53 @@
+source:
+  id: INTL/PIF-Treaties
+  name: Pacific Islands Forum Secretariat — Treaty Collection
+  country: INTL
+  url: https://forumsec.org/publications/treaty-collection
+  language: en
+  data_types:
+    - legislation
+
+endpoints:
+  treaty_page: https://forumsec.org/publications/treaty-collection
+
+rate_limit:
+  requests_per_second: 0.5
+  delay_seconds: 2.0
+
+schema:
+  key_fields:
+    - name: _id
+      type: string
+      required: true
+    - name: _source
+      type: string
+      required: true
+    - name: _type
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: date
+      required: false
+    - name: url
+      type: string
+      required: true
+
+data_model:
+  update_strategy: upsert
+  dedup_key:
+    - _id
+
+license:
+  name: "PIF Public Documents"
+  url: "https://forumsec.org/publications/treaty-collection"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regional treaties published by the Pacific Islands Forum Secretariat for public access"

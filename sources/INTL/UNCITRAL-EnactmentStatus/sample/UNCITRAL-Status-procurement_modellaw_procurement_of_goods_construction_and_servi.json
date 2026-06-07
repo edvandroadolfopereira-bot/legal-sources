@@ -1,0 +1,133 @@
+{
+  "_id": "UNCITRAL-Status-procurement_modellaw_procurement_of_goods_construction_and_services",
+  "_source": "INTL/UNCITRAL-EnactmentStatus",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-04T22:06:54.024819+00:00",
+  "title": "Status: UNCITRAL Model Law on Procurement of Goods, Construction and Services (1994)",
+  "text": "This page is updated whenever the UNCITRAL Secretariat is informed of changes in enactment of the Model Law.\nThe UNCITRAL Secretariat also prepares yearly a document containing the Status of Conventions and Enactments of UNCITRAL Model Laws, which is available on the web page of the corresponding\nUNCITRAL Commission Session\n.\nLegislation based on or influenced by the Model Law has been adopted in 30 States:\nState\nYear\nAfghanistan\n2005\nAlbania\n1995\nArmenia\n2004\nAzerbaijan\n2001\nBangladesh\n2006\nChina\n2002\nCroatia\n1997\nEstonia\n1995\nGambia\n2001\nGeorgia\n1998\nGhana\n2003\nGuyana\n2003\nKazakhstan\n1997\nKenya\n2001\nKyrgyzstan\n1997\nMadagascar\n2004\nMalawi\n2003\nMauritius\n1999\nMongolia\n2000\nNepal\n2007\nNigeria\n2007\nPoland\n1994\nRepublic of Moldova\n1997\nRomania\n2002\nRwanda\n2007\nSlovakia\n2003\nUganda\n2003\nUnited Republic of Tanzania\n2001\nUzbekistan\n2000\nZambia\n2008\nDisclaimer:\nA model law is created as a suggested pattern for law-makers to consider adopting as part of their domestic legislation. Since States enacting legislation based upon a model law have the flexibility to depart from the text, the above list is only indicative of the enactments that were made known to the UNCITRAL Secretariat. The legislation of each State should be considered in order to identify the exact nature of any possible deviation from the model in the legislative text that was adopted. The year of enactment indicated above is the year the legislation was passed by the relevant legislative body, as indicated to the UNCITRAL Secretariat; it does not address the date of entry into force of that piece of legislation, the procedures for which vary from State to State, and could result in entry into force some time after enactment.",
+  "date": "1994-01-01",
+  "url": "https://uncitral.un.org/en/texts/procurement/modellaw/procurement_of_goods_construction_and_services/status",
+  "num_jurisdictions": 30,
+  "entries": [
+    {
+      "state": "Afghanistan",
+      "year": "2005"
+    },
+    {
+      "state": "Albania",
+      "year": "1995"
+    },
+    {
+      "state": "Armenia",
+      "year": "2004"
+    },
+    {
+      "state": "Azerbaijan",
+      "year": "2001"
+    },
+    {
+      "state": "Bangladesh",
+      "year": "2006"
+    },
+    {
+      "state": "China",
+      "year": "2002"
+    },
+    {
+      "state": "Croatia",
+      "year": "1997"
+    },
+    {
+      "state": "Estonia",
+      "year": "1995"
+    },
+    {
+      "state": "Gambia",
+      "year": "2001"
+    },
+    {
+      "state": "Georgia",
+      "year": "1998"
+    },
+    {
+      "state": "Ghana",
+      "year": "2003"
+    },
+    {
+      "state": "Guyana",
+      "year": "2003"
+    },
+    {
+      "state": "Kazakhstan",
+      "year": "1997"
+    },
+    {
+      "state": "Kenya",
+      "year": "2001"
+    },
+    {
+      "state": "Kyrgyzstan",
+      "year": "1997"
+    },
+    {
+      "state": "Madagascar",
+      "year": "2004"
+    },
+    {
+      "state": "Malawi",
+      "year": "2003"
+    },
+    {
+      "state": "Mauritius",
+      "year": "1999"
+    },
+    {
+      "state": "Mongolia",
+      "year": "2000"
+    },
+    {
+      "state": "Nepal",
+      "year": "2007"
+    },
+    {
+      "state": "Nigeria",
+      "year": "2007"
+    },
+    {
+      "state": "Poland",
+      "year": "1994"
+    },
+    {
+      "state": "Republic of Moldova",
+      "year": "1997"
+    },
+    {
+      "state": "Romania",
+      "year": "2002"
+    },
+    {
+      "state": "Rwanda",
+      "year": "2007"
+    },
+    {
+      "state": "Slovakia",
+      "year": "2003"
+    },
+    {
+      "state": "Uganda",
+      "year": "2003"
+    },
+    {
+      "state": "United Republic of Tanzania",
+      "year": "2001"
+    },
+    {
+      "state": "Uzbekistan",
+      "year": "2000"
+    },
+    {
+      "state": "Zambia",
+      "year": "2008"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+source:
+  id: GH/NCA
+  name: Ghana National Communications Authority — Regulations & Decisions
+  country: GH
+  url: https://nca.org.gh/regulatory-framework/
+  language: en
+  data_types:
+    - doctrine
+    - legislation
+
+endpoints:
+  regulatory_framework: https://nca.org.gh/regulatory-framework/
+
+rate_limit:
+  requests_per_second: 0.5
+  delay_seconds: 2.0
+
+schema:
+  key_fields:
+    - name: _id
+      type: string
+      required: true
+    - name: _source
+      type: string
+      required: true
+    - name: _type
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: date
+      required: false
+    - name: url
+      type: string
+      required: true
+
+data_model:
+  update_strategy: upsert
+  dedup_key:
+    - _id
+
+license:
+  name: "Ghana Government Open Data"
+  url: "https://nca.org.gh/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulatory documents published by Ghana NCA for public access"

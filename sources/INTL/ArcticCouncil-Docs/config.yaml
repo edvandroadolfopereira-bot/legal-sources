@@ -1,0 +1,54 @@
+# INTL/ArcticCouncil-Docs - Arctic Council Open Access Archive
+name: "Arctic Council — Governance & Treaty Documents"
+country: INTL
+source_id: "INTL/ArcticCouncil-Docs"
+source_type: legislation
+
+base_url: "https://oaarchive.arctic-council.org"
+official_url: "https://oaarchive.arctic-council.org"
+
+data_types:
+  - legislation
+
+languages:
+  - en
+
+coverage:
+  start_year: 1996
+  end_year: 2026
+  notes: "Arctic Council governance documents from DSpace 7 OA archive. Binding agreements (SAR 2011, Marine Oil Pollution 2013, Scientific Cooperation 2017), Ministerial Declarations (1996-present), SAO reports, working group reports. ~3165 items total."
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+data_model:
+  update_strategy: upsert
+  dedup_key:
+    - _id
+
+schema:
+  key_fields:
+    - name: "text"
+      type: "string"
+      required: true
+  required_fields:
+    - _id
+    - _source
+    - _type
+    - _fetched_at
+    - title
+    - text
+    - url
+
+license:
+  name: "Open Government Data"
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Arctic Council Open Access Archive (DSpace). Treaty texts are intergovernmental instruments. Some images use CC BY-NC-ND. Document texts are publicly accessible without login."

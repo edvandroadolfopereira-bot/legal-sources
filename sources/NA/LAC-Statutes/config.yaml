@@ -1,0 +1,85 @@
+# ===================================================================
+# NA/LAC-Statutes -- Namibia Legal Assistance Centre Annotated Statutes
+# ===================================================================
+# Full-text annotated statutes from the Legal Assistance Centre (LAC).
+# ~500 statutes in Word/PDF format, covering all laws in force.
+# Updated as of January 2026.
+# ===================================================================
+
+source:
+  id: "NA/LAC-Statutes"
+  country: "NA"
+  name: "Namibia Legal Assistance Centre — Annotated Statutes"
+  url: "https://www.lac.org.na/index.php/laws/statutes/"
+  description: |
+    Annotated statutes of Namibia from the Legal Assistance Centre (LAC).
+    ~500 statutes covering all laws in force, available in Word (.docx)
+    and PDF formats. Includes keyword categorization.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+  notes: "2-second delay between requests to be respectful."
+
+api:
+  type: "scraping"
+  base_url: "https://www.lac.org.na"
+  endpoints:
+    listing: "/index.php/laws/statutes/"
+    document: "/laws/annoSTAT/{filename}.docx"
+  response_format: "html+docx"
+
+data_model:
+  type: "legislation"
+  primary_key: "filename"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 9
+  key_fields:
+    - name: "_id"
+      description: "Filename-based unique identifier"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Statute title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from Word document"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Year of enactment (extracted from title)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "URL to PDF version"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "Public domain (government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Free public access. LAC is an NGO providing public legal education."
+
+notes: |
+  - Word (.docx) format preferred for text extraction
+  - Falls back to PDF if docx unavailable
+  - Statutes categorized by keyword in the listing table
+  - SSL verification disabled (server cert issues)

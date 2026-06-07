@@ -1,0 +1,85 @@
+# ===================================================================
+# EU/FRA-CaseLaw -- EU Fundamental Rights Agency Case Law Database
+# ===================================================================
+# HTML scraping of FRA case law database with paginated listing
+# and individual case detail pages. No API available.
+# ===================================================================
+
+source:
+  id: "EU/FRA-CaseLaw"
+  country: "EU"
+  name: "EU Fundamental Rights Agency — Case Law Database"
+  url: "https://fra.europa.eu/en/case-law-database"
+  description: |
+    CJEU and ECtHR case law referencing the EU Charter of Fundamental Rights,
+    plus national court decisions. ~1,900 cases with key facts, reasoning
+    extracts, and Charter article references.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+  notes: "2-second delay between requests to be respectful."
+
+api:
+  type: "scraping"
+  base_url: "https://fra.europa.eu"
+  endpoints:
+    listing: "/en/case-law-database?page={page}"
+    detail: "/en/caselaw-reference/{slug}"
+  response_format: "html"
+
+data_model:
+  type: "case_law"
+  primary_key: "case_slug"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 14
+  key_fields:
+    - name: "_id"
+      description: "Unique case ID from URL slug"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Case title (e.g., CJEU Case C-92/23 / Judgment)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full case text: key facts, reasoning, operative part"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision date in ISO format"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "url"
+      description: "FRA case reference page URL"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "EUR-Lex Reuse Policy"
+  url: "https://eur-lex.europa.eu/content/legal-notice/legal-notice.html"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "FRA content follows EU reuse policy"
+
+notes: |
+  - 191 pages of results (10 per page, ~1,910 cases)
+  - Each case has a detail page with body text (key facts + reasoning)
+  - Charter article references and ECLI identifiers
+  - External links to EUR-Lex/HUDOC for full judgment texts
+  - Drupal 10 site, no JSON:API available

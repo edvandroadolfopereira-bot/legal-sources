@@ -1,0 +1,77 @@
+# ===================================================================
+# INTL/WADA-Code -- World Anti-Doping Agency Code and Standards
+# ===================================================================
+# WADA publishes the World Anti-Doping Code, International Standards,
+# and Prohibited Lists as PDFs. The primary site (wada-ama.org) uses
+# AWS WAF challenges; we fetch from ITA.sport mirrors instead.
+# ===================================================================
+
+source:
+  id: "INTL/WADA-Code"
+  country: "INTL"
+  name: "World Anti-Doping Agency — Code and Standards"
+  url: "https://www.wada-ama.org/en/what-we-do/world-anti-doping-code"
+  description: |
+    The World Anti-Doping Code and its eight mandatory International
+    Standards: ISCCS (Code Compliance), ISE (Education), ISL (Laboratories),
+    ISRM (Results Management), ISPPPI (Privacy), ISTI (Testing),
+    ISTUE (Therapeutic Use Exemptions), plus the annual Prohibited List.
+    Core regulatory framework for global anti-doping in sport.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "pdf_download"
+  base_url: "https://ita.sport"
+  notes: "PDFs mirrored on ITA.sport (ita.sport/uploads/...)"
+
+data_model:
+  type: "versioned_documents"
+  primary_key: "_id"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 11
+  key_fields:
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from official PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Effective date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "doc_type"
+      description: "Document category: code, international_standard, prohibited_list, guide"
+      type: "string"
+      role: "metadata"
+      required: true
+    - name: "abbreviation"
+      description: "Short abbreviation (WADC, ISL, ISTI, etc.)"
+      type: "string"
+      role: "metadata"
+      required: false
+
+license:
+  name: "Custom Terms — WADA"
+  url: "https://www.wada-ama.org/en/legal"
+  commercial_use: false
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "WADA publishes the Code and Standards for transparency and compliance. Commercial redistribution restricted by WADA terms."

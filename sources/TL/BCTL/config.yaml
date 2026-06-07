@@ -1,0 +1,84 @@
+# ===================================================================
+# TL/BCTL -- Central Bank of Timor-Leste Regulations & Circulars
+# ===================================================================
+# Regulatory instruments issued by BCTL: regulations, instructions,
+# circulars, orders, rules, and other regulatory instruments.
+# ===================================================================
+
+source:
+  id: "TL/BCTL"
+  country: "TL"
+  name: "Central Bank of Timor-Leste — Regulations & Circulars"
+  url: "https://www.bancocentral.tl/en/go/regulatory-instruments-issued-by-bctl"
+  description: |
+    Regulatory instruments issued by Banco Central de Timor-Leste (BCTL).
+    Covers regulations, instructions, circulars, orders, rules, and other
+    regulatory instruments. Documents are published as PDFs on the BCTL
+    website, with full text extracted via pdfplumber.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+api:
+  type: "html_scrape"
+  base_url: "https://www.bancocentral.tl/"
+  response_format: "html"
+
+data_model:
+  type: "legislation"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "_id"
+      description: "Unique document identifier"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from the PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication or issuance date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "URL to the original PDF"
+      type: "string"
+      role: "reference"
+      required: true
+  secondary_fields:
+    - name: "category"
+      description: "Document category (regulation, instruction, circular, order, rules, other)"
+    - name: "doc_number"
+      description: "Official document number if available"
+    - name: "language"
+      description: "Document language (en or pt)"
+
+license:
+  name: "Public Domain (Government)"
+  url: "https://www.bancocentral.tl/en"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulatory instruments published by the central bank of Timor-Leste."

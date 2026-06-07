@@ -1,0 +1,44 @@
+source_id: SA/ArabicLJP
+name: Saudi Commercial Court Judgments (HuggingFace)
+country: SA
+url: https://huggingface.co/datasets/mbayan/Arabic-LJP
+description: |
+  4,290 Saudi commercial court judgments from HuggingFace dataset mbayan/Arabic-LJP.
+  Input field contains case facts, output field contains judgment text. Arabic language.
+  Parquet streaming via HuggingFace datasets library. Sourced from sjp.moj.gov.sa.
+
+data_types:
+  - case_law
+
+license:
+  name: "Research use — arXiv paper dataset"
+  url: https://arxiv.org/abs/2501.09768
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Academic dataset for Arabic Legal Judgment Prediction. Sourced from Saudi commercial courts (sjp.moj.gov.sa)."
+
+language: ar
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 5
+  burst: 10
+
+update_frequency: static
+
+schema:
+  key_fields:
+    - name: id
+      required: true
+      type: string
+    - name: title
+      required: false
+      type: string
+  date_field: date
+  text_field: text
+  title_field: title
+  url_field: url

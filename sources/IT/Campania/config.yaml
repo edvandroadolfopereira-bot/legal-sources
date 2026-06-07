@@ -1,0 +1,47 @@
+source:
+  id: IT/Campania
+  name: Legislazione Regionale Campania
+  country: IT
+  url: https://www.regione.campania.it/normativa/items.php?pgCode=G19I231&id_doc_type=1
+  data_types:
+    - legislation
+  auth: none
+  description: >
+    Regional laws (leggi regionali) of Campania from the Normativa section
+    of the Regione Campania website. Coverage from 2001 to present.
+    Full text extracted from HTML pages.
+
+fetch:
+  max_retries: 3
+  rate_limit: 1.5
+  timeout: 30
+
+schema:
+  key_fields:
+    - name: _id
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: date
+      required: false
+    - name: law_number
+      type: string
+      required: false
+
+license:
+  name: "Public domain (official acts)"
+  url: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:legge:1941-04-22;633!vig="
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: >
+    Regional laws are official acts of a public administration and are not
+    protected by copyright under Art. 5 of the Italian Copyright Law
+    (Legge 22 aprile 1941, n. 633).

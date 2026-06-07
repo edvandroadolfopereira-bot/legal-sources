@@ -1,0 +1,14 @@
+{
+  "_id": "MT-IDPC-CDP.COMP_.16.2026",
+  "_source": "MT/IDPC",
+  "_type": "doctrine",
+  "_fetched_at": "2026-06-06T12:38:39.830492+00:00",
+  "title": "IDPC Decision 2026: The complainant lodged a data protection complaint against a hotel alleging that",
+  "text": "Type: Data Protection Complaint\n\nDescription: The complainant lodged a data protection complaint against a hotel alleging that during her stay, an employee misused her personal data.\n\nOutcome: The Commissioner decided, firstly, that the complainant's personal data was processed for a different purpose than that for which it was collected, as the message received by the complainant, and the context in which it was sent, was unrelated to her stay at the hotel, and secondly, that the practice maintained by the controller for communicating with its guests did not comply with the requirements of the Regulation and facilitated abuse of the guests' personal data by employees.\n\nCorrective Action: The controller was ordered to immediately cease its current practice, and to establish a new procedure for communicating with its guests which complies with the Regulation, and which utilises exclusively official communication channels of the controller to do so.The controller was also ordered to document this procedure through a formal internal policy, and to give proper training to its employees who have access to personal data by reason of their role, to ensure that they are processing personal data in a manner that complies with the Regulation.",
+  "date": "2026-01-01",
+  "url": "https://idpc.org.mt/wp-content/uploads/2026/05/CDP.COMP_.16.2026.pdf",
+  "decision_type": "Data Protection Complaint",
+  "outcome": "The Commissioner decided, firstly, that the complainant's personal data was processed for a different purpose than that for which it was collected, as the message received by the complainant, and the context in which it was sent, was unrelated to her stay at the hotel, and secondly, that the practice maintained by the controller for communicating with its guests did not comply with the requirements of the Regulation and facilitated abuse of the guests' personal data by employees.",
+  "corrective_action": "The controller was ordered to immediately cease its current practice, and to establish a new procedure for communicating with its guests which complies with the Regulation, and which utilises exclusively official communication channels of the controller to do so.The controller was also ordered to document this procedure through a formal internal policy, and to give proper training to its employees who have access to personal data by reason of their role, to ensure that they are processing personal data in a manner that complies with the Regulation.",
+  "case_ref": "CDP.COMP_.16.2026"
+}

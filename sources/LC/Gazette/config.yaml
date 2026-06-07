@@ -1,0 +1,61 @@
+source:
+  id: LC/Gazette
+  name: Saint Lucia Government Gazette
+  country: LC
+  url: https://npc.govt.lc/gazettes
+  description: >
+    Weekly Government Gazette published by the National Printing Corporation
+    of Saint Lucia. Archive spans 2004-2026 (~22 years). PDFs organized by
+    year/month. Contains statutory instruments, government notices, appointments,
+    and other official publications.
+
+data_model:
+  types:
+    - legislation
+  update_strategy: upsert
+  dedup_key:
+    - gazette_id
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+schema:
+  required_fields:
+    - _id
+    - _source
+    - _type
+    - _fetched_at
+    - title
+    - text
+    - date
+    - url
+  key_fields:
+    - name: gazette_id
+      type: string
+      required: true
+    - name: year
+      type: integer
+      required: true
+    - name: month
+      type: integer
+      required: true
+    - name: page_count
+      type: integer
+      required: false
+
+license:
+  name: Public domain (government)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official government gazette of Saint Lucia.
+
+schedule:
+  full_refresh: yearly
+  update_check: weekly

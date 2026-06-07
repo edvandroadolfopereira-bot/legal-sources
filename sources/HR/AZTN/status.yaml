@@ -1,0 +1,26 @@
+last_bootstrap: null
+last_error: '''NoneType'' object has no attribute ''strip'''
+last_run: '2026-05-30T04:37:00.933796+00:00'
+run_history:
+- error_message: '''NoneType'' object has no attribute ''strip'''
+  errors: 195
+  finished_at: '2026-05-30T03:57:14.558988+00:00'
+  records_fetched: 0
+  records_new: 0
+  records_skipped: 0
+  records_updated: 0
+  sample_records_saved: 0
+  skip_exception: 0
+  skip_normalize_none: 195
+  started_at: '2026-05-30T03:45:13.161175+00:00'
+- errors: 0
+  finished_at: '2026-05-30T04:37:00.933796+00:00'
+  records_fetched: 12
+  records_new: 0
+  records_skipped: 0
+  records_updated: 0
+  sample_records_saved: 12
+  skip_exception: 0
+  skip_normalize_none: 0
+  started_at: '2026-05-30T04:36:35.526428+00:00'
+total_records: 0

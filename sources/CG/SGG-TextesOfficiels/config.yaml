@@ -1,0 +1,75 @@
+source:
+  id: "CG/SGG-TextesOfficiels"
+  country: "CG"
+  name: "Congo-Brazzaville Official Texts (SGG)"
+  url: "https://sgg.cg/droit-congolais/recherche.html"
+  description: |
+    Official legal texts of the Republic of Congo (Congo-Brazzaville),
+    published by the Secrétariat Général du Gouvernement (SGG).
+    Covers laws (lois), decrees (décrets), ordinances (ordonnances),
+    and decisions. Individual PDFs with selectable text.
+    ~37K documents total; scraper focuses on Loi, Ordonnance, Décret
+    types. Search interface with pagination. Language: French.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+
+api:
+  type: "html_scrape"
+  base_url: "https://sgg.cg"
+  endpoints:
+    search: "/droit-congolais/recherche.html?field_idType={type_id}&page={page}&row={total}&action=Rechercher"
+
+data_model:
+  type: "legislation"
+  source_nature: "gazette"
+  primary_key: "reference_number"
+  update_strategy: "append_only"
+  versioning: "none"
+  dedup_key:
+    - "reference_number"
+
+schema:
+  total_fields: 11
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier from reference number"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Full title of the legal text"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Adoption date in ISO 8601"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "reference_number"
+      description: "Official reference number (e.g. Loi n°30-2025)"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "Public Domain (Government Work)"
+  url: "https://sgg.cg"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government legislation — public domain under Congolese law"

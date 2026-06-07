@@ -1,0 +1,38 @@
+source:
+  id: BG/CPC
+  country: BG
+  name: Bulgaria Commission for Protection of Competition — Public Register
+  url: https://reg.cpc.bg/
+
+data:
+  types:
+    - case_law
+  language: bul
+  coverage: Public dossiers and resolutions of the Bulgarian Commission for Protection of Competition (Комисия за защита на конкуренцията) covering the Protection of Competition Act, the Public Procurement Act, and the Concessions Act.
+  volume: Tens of thousands of dossiers; full PDFs of resolutions.
+
+access:
+  auth: none
+  license: Public Domain (Government)
+  rate_limit: 1 request/second
+
+endpoints:
+  list_resolutions: https://reg.cpc.bg/AllResolutions.aspx?dt={dt}&ot={ot}
+  dossier: https://reg.cpc.bg/Dossier.aspx?DossID={doss_id}
+
+schema:
+  key_fields:
+    - name: text
+      type: string
+      required: true
+    - name: dossier_number
+      type: string
+      required: false
+  metadata:
+    - statute_type
+
+notes: |
+  ASP.NET WebForms site. PDFs are downloaded via __doPostBack with __VIEWSTATE
+  session token submission. Each Dossier.aspx?DossID=N page exposes one or more
+  linkBtnPDF buttons that trigger PDF responses (application/octet-stream).
+  DossID values are roughly sequential in the 3000xxxxx range.

@@ -1,0 +1,51 @@
+source_id: LC/GovtPortal
+name: Saint Lucia Government Legislation Portal
+country: LC
+url: https://www.govt.lc/legislations
+description: |
+  Legislation published on the Government of Saint Lucia web portal,
+  including acts, regulations, statutory instruments, collective agreements,
+  and bills. Full text extracted from official PDFs via pdfplumber.
+  Covers 103 documents (Constitution, Criminal Code, Labour Code, tax acts,
+  trade acts, public health, education, etc.).
+
+data_types:
+  - legislation
+
+license:
+  name: Open Government Data
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government publications from www.govt.lc"
+
+language: en
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+update_frequency: quarterly
+
+schema:
+  key_fields:
+    - name: title
+      required: true
+      type: string
+    - name: url
+      required: true
+      type: string
+  date_field: date
+  text_field: text
+  title_field: title
+  url_field: url
+
+notes: |
+  ASP.NET site with a JSON API at /api/services.asmx/GetResourceSummaries.
+  Returns all 103 items in a single paginated call. Each item links to a
+  PDF hosted on media.govt.lc. DOCX/DOC files (3 total) are skipped.

@@ -1,0 +1,16 @@
+{
+  "_id": "VA-CIC-Can-8",
+  "_source": "VA/CodexIurisCanonici",
+  "_type": "legislation",
+  "_fetched_at": "2026-05-30T22:16:21.533146+00:00",
+  "title": "Canon 8",
+  "text": "§ 1. Leges ecclesiasticae universales promulgantur per editionem in Actorum Apostolicae Sedis commentario officiali, nisi in casibus particularibus alius promulgandi modus fuerit praescriptus, et vim suam exserunt tantum expletis tribus mensibus a die qui Actorum numero appositus est, nisi ex natura rei illico ligent aut in ipsa lege brevior aut longior vacatio specialiter et expresse fuerit statuta.\n\n§ 2. Leges particulares promulgantur modo a legislatore determinato et obligare incipiunt post mensem a die promulgationis, nisi alius terminus in ipsa lege statuatur.",
+  "text_en": "§1. Universal ecclesiastical laws are promulgated by publication in the official commentary, Acta Apostolicae Sedis, unless another manner of promulgation has been prescribed in particular cases. They take force only after three months have elapsed from the date of that issue of the Acta unless they bind immediately from the very nature of the matter, or the law itself has specifically and expressly established a shorter or longer suspensive period (vacatio).\n\n§2. Particular laws are promulgated in the manner determined by the legislator and begin to oblige a month after the day of promulgation unless the law itself establishes another time period.",
+  "canon_number": 8,
+  "book": "Liber I",
+  "book_title_la": "De Normis Generalibus",
+  "book_title_en": "General Norms",
+  "date": "1983-01-25",
+  "url": "https://www.vatican.va/archive/cod-iuris-canonici/cic_index_la.html",
+  "language": "la"
+}

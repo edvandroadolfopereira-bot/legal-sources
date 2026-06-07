@@ -1,0 +1,83 @@
+# ===================================================================
+# BB/ERT-Decisions -- Barbados Employment Rights Tribunal Decisions
+# ===================================================================
+# Employment Rights Tribunal decisions published by the Barbados
+# Ministry of Labour. Covers unfair dismissal, discrimination,
+# severance, and other employment disputes since 2015.
+# ===================================================================
+
+source:
+  id: "BB/ERT-Decisions"
+  country: "BB"
+  name: "Barbados Employment Rights Tribunal — Decisions"
+  url: "https://labour.gov.bb/employment-rights-tribunal-2/"
+  description: |
+    Full text of decisions issued by the Barbados Employment Rights
+    Tribunal, established under the Employment Rights Act 2012.
+    Covers unfair dismissal, discrimination, redundancy, and other
+    employment disputes. Published as PDFs organized by year (2015-2026).
+    Older decisions (2015-2020) have digital text; newer ones (2022+)
+    are scanned images without extractable text and are skipped.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "html_scrape_pdf"
+  base_url: "https://labour.gov.bb/"
+  discovery: "wordpress_download_manager"
+  notes: |
+    The site uses WordPress Download Manager plugin. Each year has a
+    download-category page listing PDFs with wpdmdl IDs. The actual
+    PDF download requires the ?wpdmdl=ID parameter. Text extraction
+    uses pdfminer; scanned-image PDFs (mostly 2022+) are skipped.
+
+data_model:
+  type: "case_law"
+  primary_key: "url"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 11
+  key_fields:
+    - name: "text"
+      description: "Full text extracted from the decision PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "title"
+      description: "Case title (parties)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision date (YYYY-MM-DD)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "Download URL for the decision PDF"
+      type: "string"
+      role: "identifier"
+      required: true
+    - name: "court"
+      description: "Issuing body (Employment Rights Tribunal)"
+      type: "string"
+      role: "metadata"
+      required: false
+
+license:
+  name: "Open Government Data (Barbados)"
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official tribunal decisions published by Barbados Ministry of Labour for public use."

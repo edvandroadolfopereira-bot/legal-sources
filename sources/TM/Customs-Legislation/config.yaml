@@ -1,0 +1,75 @@
+# ===================================================================
+# TM/Customs-Legislation — Turkmenistan State Customs Service
+# ===================================================================
+# Customs Code, Customs Service Law, regulatory orders, and duty/fee
+# schedules published by the State Customs Service of Turkmenistan.
+# Full text scraped from HTML pages + PDF extraction for the Customs Code.
+#
+# Discovery: HTML scraping of customs.gov.tm
+# Full text: HTML extraction + PDF (pdfplumber/PyPDF2) for Customs Code
+# License: Public domain (government legislation)
+# ===================================================================
+
+source:
+  id: "TM/Customs-Legislation"
+  country: "TM"
+  name: "Turkmenistan State Customs Service — Customs Code & Regulations"
+  url: "https://customs.gov.tm/en/pages/customs-code"
+  description: |
+    Customs legislation published by the State Customs Service of
+    Turkmenistan. Includes the full Customs Code (EN/RU/TM), the Law
+    on Customs Service, regulatory orders, and customs duty/fee/excise
+    schedules. Full text from HTML pages and PDF documents.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+
+fetch:
+  delay: 2.0
+  sample_count: 15
+
+data_model:
+  type: "legislation"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  key_fields:
+    - name: "doc_id"
+      type: "string"
+      required: true
+    - name: "title"
+      type: "string"
+      required: true
+    - name: "text"
+      type: "string"
+      required: true
+    - name: "date"
+      type: "string"
+      required: false
+    - name: "url"
+      type: "string"
+      required: true
+  text_fields:
+    - text
+  date_fields:
+    - date
+    - _fetched_at
+
+license:
+  name: "Public Domain (Government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government legislation of Turkmenistan"

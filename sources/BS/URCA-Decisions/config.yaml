@@ -1,0 +1,93 @@
+# ===================================================================
+# BS/URCA-Decisions -- Bahamas URCA Regulatory Decisions
+# ===================================================================
+# Decisions from the Utilities Regulation & Competition Authority
+# of The Bahamas: adjudications, final determinations, statements
+# of results across electronic communications, electricity, and
+# natural gas sectors (2009-present).
+#
+# Primary: WordPress REST API (custom post type "decisions")
+# Fallback: PDF extraction for documents with insufficient HTML
+# ===================================================================
+
+source:
+  id: "BS/URCA-Decisions"
+  country: "BS"
+  name: "Bahamas URCA Regulatory Decisions"
+  url: "https://urcabahamas.bs"
+  description: |
+    Utilities Regulation and Competition Authority (URCA) decisions:
+    adjudications, final determinations, statements of results,
+    and regulatory orders across ECS, ES, and NGS sectors.
+    151+ decisions available via WordPress REST API.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "rest_api"
+  base_url: "https://urcabahamas.bs"
+  decisions_endpoint: "/wp-json/wp/v2/decisions"
+
+data_model:
+  type: "doctrine"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: 8
+  key_fields:
+    - name: "doc_id"
+      description: "Unique document identifier (WP decision post ID)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Decision title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of decision (HTML stripped or PDF extracted)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "URL to decision page"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "sector"
+      description: "Regulatory sector (ECS, ES, NGS, General)"
+      type: "string"
+      role: "category"
+      required: false
+
+license:
+  name: "Government of the Bahamas public regulatory information"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Public regulatory decisions published by Bahamas government agency"
+
+notes: |
+  - WP REST API custom post type "decisions" (151+ records)
+  - Most decisions have full HTML content; some also have PDF attachments
+  - For records with insufficient HTML text, PDF is downloaded and extracted
+  - Covers ECS (Electronic Communications), ES (Electricity), NGS (Natural Gas)

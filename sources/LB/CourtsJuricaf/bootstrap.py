@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-GA/CourtsJuricaf -- Lebanon Court Decisions via Juricaf
+LB/CourtsJuricaf -- Lebanon Court Decisions via Juricaf
 
 Fetches Lebanon court decisions with full text from juricaf.org
 (AHJUCAF francophone court decisions database).

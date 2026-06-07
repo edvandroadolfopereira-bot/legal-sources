@@ -1,0 +1,83 @@
+# ===================================================================
+# BB/FTC-Decisions -- Barbados Fair Trading Commission Decisions
+# ===================================================================
+# Commission decisions, orders, merger determinations, and
+# standards-of-service rulings on utility regulation (electricity,
+# telecoms, water), competition, and consumer protection.
+# ===================================================================
+
+source:
+  id: "BB/FTC-Decisions"
+  country: "BB"
+  name: "Barbados FTC — Fair Trading Commission Decisions"
+  url: "https://www.ftc.gov.bb/"
+  description: |
+    Full text of decisions, orders, and merger determinations issued by
+    the Barbados Fair Trading Commission. Covers utility rate reviews
+    (Cable & Wireless / FLOW, Barbados Light & Power, Barbados Water
+    Authority), price cap plans, feed-in-tariff decisions, standards of
+    service, interconnection disputes, and competition/merger matters
+    under the Fair Competition Act. Documents span 2002–present.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "html_scrape_pdf"
+  base_url: "https://www.ftc.gov.bb/library/"
+  discovery: "wayback_cdx"
+  notes: |
+    The Joomla site is frequently in offline-maintenance mode, blocking
+    index.php but still serving static /library/*.pdf files. Decision
+    URLs are enumerated from the Wayback Machine CDX index, then the live
+    PDFs are downloaded and text-extracted with pdfplumber.
+
+data_model:
+  type: "case_law"
+  primary_key: "url"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 11
+  key_fields:
+    - name: "text"
+      description: "Full text extracted from the decision PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "title"
+      description: "Decision title derived from the document filename"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Issue date parsed from the filename (YYYY-MM-DD)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "Live URL of the decision PDF"
+      type: "string"
+      role: "identifier"
+      required: true
+    - name: "court"
+      description: "Issuing body (Barbados Fair Trading Commission)"
+      type: "string"
+      role: "metadata"
+      required: false
+
+license:
+  name: "Open Government Data (Barbados)"
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulatory decisions published by a Barbados statutory body for public use."

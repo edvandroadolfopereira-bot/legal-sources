@@ -1,0 +1,59 @@
+# Configuration for LU/Competition (Luxembourg Competition Authority)
+# Autorité de la concurrence du Grand-Duché de Luxembourg
+
+source:
+  id: LU/Competition
+  name: Luxembourg Competition Authority — Decisions
+  country: LU
+  url: https://concurrence.public.lu
+  description: >
+    Competition decisions and opinions from the Luxembourg Competition Authority
+    (formerly Conseil de la concurrence, now Autorité de la concurrence).
+    Decisions cover cartels, abuse of dominant position, mergers, interim measures,
+    fines, and sector opinions. PDFs sourced from data.public.lu open data portal
+    (2012-2018) and the authority's dam-assets repository (additional years).
+    Full text extracted from PDF documents.
+
+data_model:
+  types:
+    - case_law
+  update_strategy: append_only
+  dedup_key:
+    - decision_number
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+schema:
+  required_fields:
+    - _id
+    - _source
+    - _type
+    - _fetched_at
+    - title
+    - text
+    - date
+    - url
+  key_fields:
+    - name: decision_number
+      type: string
+      required: true
+    - name: decision_category
+      type: string
+      required: false
+    - name: year
+      type: integer
+      required: false
+
+license:
+  name: "CC0 1.0"
+  url: "https://creativecommons.org/publicdomain/zero/1.0/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Published on data.public.lu open data portal. Government decisions are public domain under Luxembourg law."

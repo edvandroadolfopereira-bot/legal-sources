@@ -1,0 +1,56 @@
+fetcher:
+  base_url: https://huggingface.co/datasets/sakhadib/Bangladesh-Legal-Acts-Dataset
+  download_url: https://huggingface.co/datasets/sakhadib/Bangladesh-Legal-Acts-Dataset/resolve/main/Contextualized_Bangladesh_Legal_Acts.json
+  rate_limit: 1.0
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: string
+  - name: act_number
+    required: false
+    type: string
+  - name: act_year
+    required: false
+    type: string
+  - name: language
+    required: false
+    type: string
+  - name: is_repealed
+    required: false
+    type: boolean
+  - name: url
+    required: true
+    type: string
+source:
+  auth: none
+  country: BD
+  data_types:
+  - legislation
+  description: >
+    1,484 Bangladesh legal acts (1799-2025) from HuggingFace dataset
+    sakhadib/Bangladesh-Legal-Acts-Dataset. Full text with structured
+    sections, footnotes, government context, and legal system metadata.
+    Sourced originally from bdlaws.minlaw.gov.bd.
+  format: json
+  id: BD/BangladeshActs-HuggingFace
+  language: en
+  name: Bangladesh Legal Acts Dataset (HuggingFace)
+  url: https://huggingface.co/datasets/sakhadib/Bangladesh-Legal-Acts-Dataset
+license:
+  name: "CC BY 4.0"
+  url: "https://creativecommons.org/licenses/by/4.0/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Dataset by sakhadib on HuggingFace, original data from bdlaws.minlaw.gov.bd"

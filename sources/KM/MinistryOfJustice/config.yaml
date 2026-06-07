@@ -1,0 +1,112 @@
+# ═══════════════════════════════════════════════════════════════════
+# KM/MinistryOfJustice — Comoros Ministry of Justice legislation
+# ═══════════════════════════════════════════════════════════════════
+
+source:
+  id: "KM/MinistryOfJustice"
+  country: "KM"
+  name: "Comoros Ministry of Justice — Legislation"
+  url: "https://justice.gouv.km/"
+  description: |
+    Official legislation portal of the Ministère de la Justice de l'Union
+    des Comores. Publishes the consolidated body of Comorian law — lois,
+    décrets, ordonnances, codes and arrêtés — from the colonial era
+    (1900s) through 2025. Each text is exposed at /texte/{slug}/ with the
+    full body either inline in HTML or as a linked PDF. French language.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1.5
+  burst: 3
+  max_workers: 4
+  min_rate: 0.5
+  max_rate: 6.0
+
+api:
+  type: "html_scrape"
+  base_url: "https://justice.gouv.km"
+  # Document enumeration via Yoast sitemap:
+  #   https://justice.gouv.km/texte-sitemap1.xml  (<loc> + <lastmod>)
+  # Each /texte/{slug}/ page holds the full text inline (div.the-content)
+  # or links a PDF under /wp-content/uploads/. Scanned-image PDFs with no
+  # text layer are skipped (no OCR).
+  selectors:
+    sitemap: "https://justice.gouv.km/texte-sitemap1.xml"
+    content: "div.the-content"
+
+data_model:
+  type: "legislation"
+  source_nature: "consolidated"
+  primary_key: "_id"
+  update_strategy: "upsert"
+  versioning: "consolidated"
+  dedup_key:
+    - "_id"
+
+schema:
+  total_fields: 13
+  key_fields:
+    - name: "_id"
+      description: "Stable identifier derived from the document URL"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Title of the law/decree (e.g. 'Loi n°64-1360 du 31 décembre 1964 ...')"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the legal document (inline HTML or extracted PDF)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Enactment/signature date parsed from the title (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "Canonical URL of the document page"
+      type: "string"
+      role: "reference"
+      required: true
+  secondary_fields:
+    - name: "doc_type"
+      description: "loi | décret | ordonnance | code | arrêté | autre"
+    - name: "text_source"
+      description: "Where the full text came from: 'inline' or 'pdf'"
+    - name: "pdf_url"
+      description: "Source PDF URL when text was extracted from a PDF"
+    - name: "language"
+      description: "Document language (fr)"
+  probably_ignorable: []
+
+license:
+  id: "pd-gov"
+  name: "Public domain (official government legal texts)"
+  url: "https://justice.gouv.km/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: |
+    The site publishes no explicit reuse licence. Comorian official legal
+    texts (lois, décrets, ordonnances, codes) are edicts of government and
+    are not subject to copyright (edict-of-government doctrine). Treated as
+    public domain; commercial use permitted.
+
+notes: |
+  - Language: French.
+  - Coverage: ~330 texts, 1900s–2025, enumerated via texte-sitemap1.xml.
+  - Hybrid extraction: full text is inline in div.the-content for many
+    texts, or in a linked /wp-content/uploads/*.pdf for others.
+  - The page sometimes renders TWO div.the-content nodes (one empty
+    placeholder, one filled) — always pick the longest.
+  - Some older PDFs are scanned images with no text layer; these are
+    skipped (no OCR available).

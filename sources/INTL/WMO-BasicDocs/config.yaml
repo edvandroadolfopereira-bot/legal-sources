@@ -1,0 +1,39 @@
+fetch:
+  max_retries: 3
+  rate_limit: 2.0
+  timeout: 120
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: document_type
+    required: false
+    type: string
+source:
+  auth: none
+  country: INTL
+  data_types:
+  - legislation
+  description: >
+    WMO governance instruments: Convention, General/Staff/Financial Regulations,
+    UN Agreement, Privileges Convention, Swiss HQ Agreement (from WMO-No. 15),
+    plus Technical Regulations Volumes I-III (WMO-No. 49). ~10 documents with
+    full text extracted from official PDFs via WMO e-Library.
+  id: INTL/WMO-BasicDocs
+  name: World Meteorological Organization — Convention and Technical Regulations
+  url: https://library.wmo.int/records/item/48992
+license:
+  name: "WMO Copyright (short extracts permitted)"
+  url: "https://library.wmo.int/records/item/48992"
+  commercial_use: false
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "WMO reserves right of publication; short extracts may be reproduced with source attribution"

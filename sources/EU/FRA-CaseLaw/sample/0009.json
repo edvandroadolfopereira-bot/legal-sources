@@ -1,0 +1,20 @@
+{
+  "_id": "FRA-european-ombudsman-decision-22752024pb",
+  "_source": "EU/FRA-CaseLaw",
+  "_type": "case_law",
+  "_fetched_at": "2026-06-06T10:30:54.188101+00:00",
+  "title": "European Ombudsman / Decision 2275/2024/PB",
+  "text": "Parties: Complaint against European External Action Service\n\nkey facts of the complaint:\nThe case concerned the handling of a harassment complaint from a staff member of an EU mission. The EU mission in question decided to open a ‘preliminary investigation’, but faced issues in actually starting it. The complainant contacted the European Ombudsman when, after several months, the preliminary investigation appeared not to have begun.\nThe Ombudsman opened an inquiry, asking the EEAS to give an account of the situation.\nKey legal question raised by the deciding body:\nThe time taken by the European External Action Service (EEAS) to start a preliminary investigation concerning allegations of harassment.\nOutcome of the complaint:\nIn the course of the Ombudsman’s inquiry, the EEAS actually began the preliminary investigation, which led to a report on the basis of which it was decided to open a disciplinary procedure.\nThe Ombudsman concluded that the delay in starting to carry out the preliminary investigation was a breach of the complainant’s fundamental right to a reasonable administrative handling time. The Ombudsman moreover concluded that there had been maladministration in the initial communication with the complainant.\nHowever, given that the preliminary investigation had meanwhile led to the opening of a related disciplinary procedure, the Ombudsman closed the inquiry.\n\n\nCharter Paragraphs:\n28.\nThe obligation to conduct administrative procedures within a reasonable time is a general principle of EU law and a fundamental right under the EU Charter of Fundamental Rights.\n[9]\nWhere an EU institution or body has to deal with an issue as serious as alleged psychological harassment, it has an obligation to respond to the person making the allegation\n[10]\nwith rapidity and solicitude.\n[11]\nThe 2016 Code of Conduct that applied to this case provided that “\nAll persons and authorities acting within the framework of this Code shall act promptly and without undue delay\n.”\n[12]\nIt further provided that “\nThe duration of the disciplinary procedure, which includes the implementation of the final decision, shall be proportionate and shall take into account the potential adverse effects on involved individuals. It shall not exceed one year.\n”\n[13]\nThe EEAS confirmed that the time frame of one year applied to the preliminary investigation and the (possible) disciplinary procedure as a whole. The time frame for both procedures should thus normally not exceed one year.",
+  "date": "2025-12-11",
+  "url": "https://fra.europa.eu/en/caselaw-reference/european-ombudsman-decision-22752024pb",
+  "external_url": "https://www.ombudsman.europa.eu/en/decision/en/217042",
+  "ecli": "",
+  "deciding_body": "Non-judicial body",
+  "deciding_body_type": "Non-judicial body",
+  "case_type": "Decision",
+  "parties": "Complaint against European External Action Service",
+  "charter_articles": [
+    "EU Charter of Fundamental RightsTitle V: Citizens' rightsArticle 41 - Right to good administration",
+    "Article 41 - Right to good administration"
+  ]
+}

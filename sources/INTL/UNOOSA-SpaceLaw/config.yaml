@@ -1,0 +1,75 @@
+# ===================================================================
+# INTL/UNOOSA-SpaceLaw -- UN Office for Outer Space Affairs
+# Space Law Treaties, Principles, and National Legislation
+# ===================================================================
+# Full text of the 5 UN space treaties, 5 GA resolution principles,
+# and national space legislation from ~10 countries hosted on UNOOSA.
+# ===================================================================
+
+source:
+  id: "INTL/UNOOSA-SpaceLaw"
+  country: "INTL"
+  name: "UN Office for Outer Space Affairs — Space Law Database"
+  url: "https://www.unoosa.org/oosa/en/ourwork/spacelaw/treaties.html"
+  description: |
+    The five UN space treaties (Outer Space Treaty, Rescue Agreement,
+    Liability Convention, Registration Convention, Moon Agreement),
+    five GA resolution principles/declarations, and national space
+    legislation hosted on UNOOSA from select countries.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "html_scrape"
+  base_url: "https://www.unoosa.org"
+
+data_model:
+  type: "legislation"
+  primary_key: "_id"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 11
+  key_fields:
+    - name: "title"
+      description: "Treaty, principle, or national law title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the document"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Date of adoption or entry into force"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "doc_type"
+      description: "treaty, principle, or national_legislation"
+      type: "string"
+      role: "metadata"
+      required: true
+    - name: "country"
+      description: "Country code for national legislation, INTL for treaties"
+      type: "string"
+      role: "metadata"
+      required: false
+
+license:
+  name: "UN Terms of Use"
+  url: "https://www.un.org/en/about-us/terms-of-use"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "UN documents are generally public domain or freely reusable with attribution."

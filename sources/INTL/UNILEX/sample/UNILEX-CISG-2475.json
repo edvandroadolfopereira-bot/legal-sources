@@ -1,0 +1,18 @@
+{
+  "_id": "UNILEX-CISG-2475",
+  "_source": "INTL/UNILEX",
+  "_type": "case_law",
+  "_fetched_at": "2026-06-06T16:33:44.993952+00:00",
+  "title": "Frigera NV v. D.E.C. Srl (Court of Cassation of Belgium)",
+  "text": "Original in Dutch:\n\n- available at https://juportal.be/JUPORTAwork/ECLI:BE:CASS:2024:ARR.2024060.6.1N.8_NL.pdf}}",
+  "date": "2024-06-06",
+  "url": "https://www.unilex.info/cisg/case/2475",
+  "language": "multi",
+  "country": "Belgium",
+  "court": "Court of Cassation of Belgium",
+  "parties": "Frigera NV v. D.E.C. Srl",
+  "case_number": "Case No. C.23.0431.N",
+  "instrument": "CISG",
+  "abstract": "[CLOUT CASE NO. 2210]\n\nFrigera NV, a Belgian producer and distributor of pet food, had purchased large quantities of ham bones from the Italian company D.E.C. Srl on behalf of a customer.\n\nThe goods were delivered directly to the customer on 16 and 18 January 2019 and invoices were sent to Frigera NV in four separate instalments. On 8 February 2019,\n\nthe customer complained that the ham bones were non-conforming due to mould, prompting Frigera NV to notify D.E.C. Srl of the alleged non-conformity on\n\n11 February 2019.\n\nThe Antwerp Commercial Court partially satisfied Frigera NV’s claim. On appeal, the Antwerp Court of Appeal held that Frigera NV had neither examined the goods upon\n\ntheir delivery, as required by articles 38(1) and 39(1) CISG, nor demonstrated that the lack of conformity was invisible at that time, thereby forfeiting its right to claim non -\n\nconformity.\n\nFrigera NV subsequently appealed to the Court of Cassation, arguing that the mould was not visible at the time of delivery and that the notification period under\n\narticle 39(1) CISG should not run from when the goods ought to have been examined pursuant to article 38(1) CISG, but rather from when a reasonably diligent buyer\n\nwould have discovered the defect. It further contended that D.E.C. Srl should bear the burden of proving that the lack of conformity was visible at the time of delivery in\n\norder to argue that the reasonable notice period under article 39(1) CISG began to run from that time.\n\nThe Court of Cassation first referred to articles 7(1), 7(2) and 79(1) CISG, stating that issues not explicitly covered by the CISG should be resolved in accordance with its underlying general principles to ensure uniform application. Consequently, the Court affirmed that, whilst the CISG did not provide a comprehensive regime for the\n\nallocation of the burden of proof, the question of the burden of proof fell within the scope of the Convention and it placed the burden of proof on the party making the\n\nalle",
+  "keywords": "BURDEN OF PROOF - MATTER NOT EXPRESSLY SETTLED BY CISG (ART. 7(2) CISG) - RECOURSE TO GENERAL PRINCIPLE UNDERLYING CISG THAT CLAIMANT MUST PROVE ITS CAUSE OF ACTION (ART. 79 CISG)\n\nBURDEN OF PROOF IN CASE OF LACK OF CONFORMITY OF THE GOODS - WHERE BUYER HAS FAILED TO EXAMINE THE GOODS IN ACCORDANCE WITH ART. 38(1) CISG, IT IS UPON TO HIM TO DEMONSTRATE THAT DEFECTS WERE NOT APPARENT AT THE TIME OF DELIVERY"
+}

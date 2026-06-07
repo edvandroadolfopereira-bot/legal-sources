@@ -246,13 +246,26 @@ def main():
         sys.exit(1)
 
     if args.command == "bootstrap":
-        SAMPLE_DIR.mkdir(parents=True, exist_ok=True)
-        count = 0
-        for record in fetch_all(sample=args.sample):
-            out_path = SAMPLE_DIR / ("%04d.json" % count)
-            out_path.write_text(json.dumps(record, ensure_ascii=False, indent=2))
-            count += 1
-        print("Done. Saved %d records to %s/" % (count, SAMPLE_DIR), file=sys.stderr)
+        if args.sample:
+            SAMPLE_DIR.mkdir(parents=True, exist_ok=True)
+            count = 0
+            for record in fetch_all(sample=True):
+                out_path = SAMPLE_DIR / ("%04d.json" % count)
+                out_path.write_text(json.dumps(record, ensure_ascii=False, indent=2))
+                count += 1
+            print("Done. Saved %d records to %s/" % (count, SAMPLE_DIR), file=sys.stderr)
+        else:
+            data_dir = SOURCE_DIR / "data"
+            data_dir.mkdir(parents=True, exist_ok=True)
+            jsonl_path = data_dir / "records.jsonl"
+            count = 0
+            with open(jsonl_path, "w", encoding="utf-8") as f:
+                for record in fetch_all(sample=False):
+                    f.write(json.dumps(record, ensure_ascii=False) + "\n")
+                    count += 1
+                    if count % 100 == 0:
+                        print("  Fetched %d records..." % count, file=sys.stderr)
+            print("Done. Saved %d records to %s" % (count, jsonl_path), file=sys.stderr)
 
 
 if __name__ == "__main__":

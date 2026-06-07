@@ -1,0 +1,11 @@
+{
+  "_id": "1196",
+  "_source": "ZM/BOZ-Directives",
+  "_type": "doctrine",
+  "_fetched_at": "2026-05-29T03:59:35.800233+00:00",
+  "title": "Circular 07/2020 - Revision of the ZIPSS Fees 2020",
+  "text": "Schedule I: ZIPSS Charges\nAmount (K)\nOld New\nNo. Charge\nSOD 10:30 14:30 SOD 10:30 14:30\nto to to to to to\n10:30 14:30 EOD 10:30 14:30 EOD\n1 Processing MT103 10.00 15.00 20.00 0.00 5.00 15.00\nFee for a customer payment\n2 Processing MT202 10.00 15.00 20.00 0.00 5.00 15.00\nFee for processing a bank to bank\npayment\n3 ASA Processing fee per Transaction 100.00 50.00\nCharge for using the Authorised\nSettlement Agent Facility",
+  "date": "2026-01-27",
+  "url": "https://www.boz.zm/sites/default/files/migrated/regulatory/Circular202007RevisionoftheZIPSSFees2020.pdf",
+  "category": "Circulars"
+}

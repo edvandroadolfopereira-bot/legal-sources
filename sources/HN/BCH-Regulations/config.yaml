@@ -1,0 +1,119 @@
+# ===================================================================
+# HN/BCH-Regulations -- Banco Central de Honduras (BCH), the central
+# bank of Honduras. Marco Legal: Leyes y Reglamentos.
+# ===================================================================
+# Full text of the legal and regulatory framework published by the BCH
+# on its "Marco Legal / Leyes y Reglamentos" page: the underlying laws
+# (Ley del BCH, Ley del Sistema Financiero, Ley de Equidad Tributaria,
+# the Constitution, etc.) and the BCH Directorio's own normative
+# instruments — circulares, resoluciones and acuerdos that set monetary
+# policy, exchange policy, payment-system and financial-market rules.
+# Full text extracted with pdfplumber.
+#
+# Access: the page is backed by a public SharePoint document library
+# (/administrativas/JUR/Marco Legal OM 2/) whose contents are exposed
+# without authentication via the SharePoint REST API. We list every PDF
+# and download it directly. PDFs carry an embedded text layer (laws,
+# circulars, resolutions all extract 3k–150k+ chars).
+# ===================================================================
+
+source:
+  id: "HN/BCH-Regulations"
+  country: "HN"
+  name: "Banco Central de Honduras — Marco Legal (Leyes y Reglamentos)"
+  url: "https://www.bch.hn/"
+  description: |
+    The legal and regulatory framework published by the Banco Central de
+    Honduras (BCH), the central bank of Honduras, on its "Marco Legal /
+    Leyes y Reglamentos" page. This comprises the statutes that govern the
+    bank and the financial system — Ley del Banco Central de Honduras
+    (Decreto No. 53), Ley del Sistema Financiero (Decreto No. 129-2004),
+    Ley de Equidad Tributaria, the Constitución de la República, and
+    related decretos — together with the binding normative instruments
+    the BCH Directorio issues to implement them: circulares, resoluciones
+    and acuerdos governing monetary policy, exchange and FX-market policy,
+    payment systems, securities depositary (DV-BCH), reserve requirements,
+    AML/CFT and credit policy. Classified as legislation (laws plus
+    central-bank regulations).
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "sharepoint_rest_pdf"
+  base_url: "https://www.bch.hn"
+  notes: |
+    SharePoint site. The Marco Legal document library at
+      /administrativas/JUR/Marco Legal OM 2/
+    is listed (without authentication) via the SharePoint REST API:
+      /administrativas/JUR/_api/web/GetFolderByServerRelativeUrl('<folder>')/Files
+        ?$select=Name,ServerRelativeUrl,TimeLastModified&$top=2000
+    returning JSON (Accept: application/json;odata=verbose). ~760 PDF
+    documents are listed; each is downloaded directly from its
+    ServerRelativeUrl and its full text extracted with pdfplumber. A
+    browser User-Agent is sent and TLS verification is disabled (public,
+    read-only data). PDFs yielding <500 chars are skipped. Titles and
+    dates are parsed from the document header text, with the file name
+    as a fallback.
+
+data_model:
+  type: "legislation"
+  primary_key: "url"
+  update_strategy: "upsert"
+  dedup_key:
+    - url
+
+schema:
+  total_fields: 13
+  key_fields:
+    - name: "text"
+      description: "Full text extracted from the document PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "title"
+      description: "Document title (from header text or file name)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "doc_number"
+      description: "Reference parsed from the text (e.g. 'D-03/2022', '237-7/2020')"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "doc_kind"
+      description: "ley | decreto | circular | resolucion | acuerdo | reglamento | normativa | constitucion | convenio | documento"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "date"
+      description: "Document date as ISO (from Spanish long-form date in text, else year)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "Direct PDF URL (identifier)"
+      type: "string"
+      role: "identifier"
+      required: true
+    - name: "issuer"
+      description: "Banco Central de Honduras"
+      type: "string"
+      role: "metadata"
+      required: false
+
+license:
+  name: "Open Government Data (Honduras)"
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Honduran official legal texts (laws, decrees) and central-bank regulatory instruments (circulares, resoluciones, acuerdos), published by a public institution — the Banco Central de Honduras — on its institutional website for public use. Official legal texts are not subject to copyright."

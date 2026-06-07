@@ -1,0 +1,52 @@
+source_id: CY/CompetitionCommission
+name: Cyprus Commission for the Protection of Competition
+country: CY
+url: https://www.competition.gov.cy
+data_url: https://www.competition.gov.cy/competition/competition.nsf
+description: |
+  Decisions from the Cyprus Commission for the Protection of Competition (CPC).
+  Covers mergers, cartels/collusions, dominant position abuse, and economic
+  dependence cases. Full text extracted from PDF attachments on a Lotus
+  Domino/Notes backend.
+
+data_types:
+  - case_law
+
+language: el
+language_secondary: en
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+update_frequency: weekly
+
+license:
+  name: "Public Government Data"
+  url: "https://www.competition.gov.cy"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official competition authority decisions published under Cypriot open government principles"
+
+schema:
+  key_fields:
+    - name: decision_number
+      required: true
+      type: string
+    - name: category
+      required: false
+      type: string
+  date_field: date
+  text_field: text
+  title_field: title
+  url_field: url
+
+notes: |
+  Lotus Domino backend. Decisions listed on category pages with PDF attachments.
+  ~200+ decisions across mergers, cartels, dominant position, and economic dependence.
+  PDFs mostly in Greek.

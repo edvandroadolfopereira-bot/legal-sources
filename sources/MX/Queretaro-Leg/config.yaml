@@ -1,0 +1,54 @@
+id: MX/Queretaro-Leg
+name: Querétaro State Legislature — Laws & Codes
+country: MX
+url: http://legislaturaqueretaro.gob.mx/leyes/
+description: >
+  Consolidated laws, codes, organic laws, and the state constitution of
+  Querétaro from the LXI Legislatura website. ~130 documents as PDFs
+  with full text extraction. Covers three categories: Leyes (~111),
+  Códigos (~7), and Leyes Orgánicas (~13). Full text in Spanish.
+data_types:
+  - legislation
+auth:
+  type: none
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+data_model:
+  update_strategy: upsert
+  dedup_key:
+    - _id
+schema:
+  key_fields:
+    - name: _id
+      type: string
+      required: true
+    - name: _source
+      type: string
+      required: true
+    - name: _type
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: date
+      required: false
+    - name: category
+      type: string
+      required: false
+    - name: url
+      type: string
+      required: true
+license:
+  name: "Public Domain (Mexican Government)"
+  url: "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Mexican legislation is in the public domain under Federal Copyright Law Art. 14"

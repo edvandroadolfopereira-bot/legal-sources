@@ -1,0 +1,50 @@
+source_id: DM/FSU
+name: Dominica Financial Services Unit Legislation
+country: DM
+url: https://fsu.gov.dm/legislation
+data_url: https://fsu.gov.dm/legislation
+description: |
+  Curated collection of 27 financial services regulatory statutes from the
+  Dominica Financial Services Unit. Covers insurance, offshore banking, money
+  laundering prevention, virtual asset business, international business companies,
+  tax information exchange, and related legislation.
+
+data_types:
+  - legislation
+
+license:
+  name: Open Government Data
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government regulatory agency publications"
+
+language: en
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+update_frequency: quarterly
+
+schema:
+  key_fields:
+    - name: title
+      required: true
+      type: string
+    - name: pdf_filename
+      required: true
+      type: string
+  date_field: date
+  text_field: text
+  title_field: title
+  url_field: url
+
+notes: |
+  Scrapes the FSU legislation page for PDF links, downloads and extracts text.
+  Most PDFs are hosted on dominica.gov.dm/laws/; two are on fsu.gov.dm.

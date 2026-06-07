@@ -1,0 +1,110 @@
+# ═══════════════════════════════════════════════════════════════════
+# BB/FSC-Legislation — Source Configuration
+# ═══════════════════════════════════════════════════════════════════
+
+source:
+  id: "BB/FSC-Legislation"
+  country: "BB"
+  name: "Barbados FSC — Financial Services Commission Legislation & Guidelines"
+  url: "https://www.fsc.gov.bb/legislation"
+  description: |
+    Legal framework of the Financial Services Commission of Barbados (FSC), the
+    regulator of the non-bank financial sector (insurance, securities, credit
+    unions, occupational pensions). Published openly as full-text PDFs on
+    fsc.gov.bb. Covers binding legislation (the Financial Services Commission
+    Act, the Insurance Act, the Co-operative Societies Act, the Securities Act,
+    the Money Laundering and Financing of Terrorism (Prevention and Control)
+    Act and amendments), industry guidelines, AML/CFT guidelines and regulatory
+    notices. Language: English.
+
+data_types:
+  - legislation
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+  max_workers: 1
+
+api:
+  type: "html_scrape"
+  base_url: "https://www.fsc.gov.bb/"
+  selectors:
+    listing_pages: "/legislation, /industry-guidelines, /legislation-guidelines, /regulatory-notices, /aml-cft"
+    pdf_links: "/viewPDF/documents/{date-prefix}{name}.pdf"
+
+data_model:
+  type: "legislation"
+  source_nature: "regulation"
+  primary_key: "_id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "_id"
+
+schema:
+  total_fields: 11
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier (the PDF URL)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Title of the act / guideline (derived from filename)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the document, extracted from the official PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date (from the filename date prefix)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "_type"
+      description: "legislation (Acts/Regulations) or doctrine (guidelines/notices)"
+      type: "string"
+      role: "classification"
+      required: true
+  secondary_fields:
+    - name: "filename"
+      description: "Original PDF filename"
+    - name: "url"
+      description: "URL of the official source PDF"
+    - name: "language"
+      description: "Document language (en)"
+    - name: "jurisdiction"
+      description: "Jurisdiction (BB)"
+    - name: "pdf_size"
+      description: "Size of the downloaded PDF in bytes"
+  probably_ignorable:
+    - "pdf_size"
+
+license:
+  id: "ogd"
+  name: "Open Government Data (FSC official publications)"
+  url: "https://www.fsc.gov.bb/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: |
+    Legislation, guidelines and notices of the Financial Services Commission of
+    Barbados are official government legal texts, published openly as PDFs on
+    fsc.gov.bb without registration. No explicit machine-readable license is
+    stated; treated as open government data (public legal texts).
+
+notes: |
+  - English-language non-bank financial regulation (insurance, securities,
+    credit unions, pensions, AML/CFT).
+  - No public API; HTML legal-framework pages link to per-document PDFs at
+    /viewPDF/documents/.
+  - ~70+ full-text PDFs across legislation, industry guidelines, AML/CFT
+    guidelines and regulatory notices.

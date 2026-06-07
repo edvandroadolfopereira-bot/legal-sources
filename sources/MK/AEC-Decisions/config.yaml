@@ -1,0 +1,68 @@
+source:
+  id: MK/AEC-Decisions
+  name: North Macedonia Agency for Electronic Communications — Decisions
+  country: MK
+  url: https://aek.mk/
+  data_types:
+    - doctrine
+  description: |
+    Regulatory output of the Agency for Electronic Communications (АЕК /
+    Агенција за електронски комуникации), North Macedonia's telecom and
+    electronic-communications regulator. Covers the regulator's decisions
+    and resolutions (одлуки/решенија), rulebooks and regulations
+    (правилници), sector legislation and plans. Most items are official
+    reprints from the Official Gazette (Службен весник). Full text is
+    extracted from the linked PDF documents. Content in Macedonian (Cyrillic).
+    Free access, no authentication required.
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: rest_api
+  base_url: https://aek.mk/wp-json/wp/v2
+  format: json+pdf
+  notes: >
+    WordPress REST API lists posts per category
+    (/wp-json/wp/v2/posts?categories=ID). Each post links to the official PDF,
+    from which full text is extracted via pdfplumber. Image-only scans are
+    dropped by a Cyrillic/long-token quality filter.
+
+schema:
+  key_fields:
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: category
+      type: string
+      required: true
+    - name: language
+      type: string
+      required: true
+    - name: url
+      type: string
+      required: true
+    - name: pdf_url
+      type: string
+      required: true
+
+license:
+  name: Public Domain (Government of North Macedonia)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: >
+    Official regulatory acts, decisions and gazette reprints published by the
+    state telecom regulator (AEK) for public access.

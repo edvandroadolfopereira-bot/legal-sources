@@ -1,0 +1,80 @@
+# BD/SCOB - Supreme Court Online Bulletin (Bangladesh)
+# https://www.supremecourt.gov.bd/web/?page=bulletin.php&menu=10
+#
+# Official law report published by the Supreme Court of Bangladesh,
+# containing curated judgments from the Appellate Division and
+# High Court Division. 20 volumes (2015-2025), ~456 cases total.
+#
+# Data access strategy:
+#   1. HTML listing pages per volume/division with metadata (case name, judge, keywords, summary)
+#   2. PDF download per judgment from /resources/bulletin/
+#   3. Text extraction from PDF using PyMuPDF (fitz)
+#
+# Coverage: 2015-2025 (volumes 1-20)
+# Languages: English (primary), Bengali
+# License: Public court records
+
+source_id: BD/SCOB
+name: Supreme Court Online Bulletin
+country: BD
+url: https://www.supremecourt.gov.bd/web/?page=bulletin.php&menu=10
+data_types:
+  - case_law
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+  max_workers: 1
+
+data_model:
+  update_strategy: append_only
+  dedup_key:
+    - case_id
+
+schema:
+  key_fields:
+    - name: case_id
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: date
+      required: false
+    - name: division
+      type: string
+      required: true
+    - name: volume
+      type: integer
+      required: true
+    - name: year
+      type: integer
+      required: false
+    - name: citation
+      type: string
+      required: false
+    - name: keywords
+      type: string
+      required: false
+    - name: summary
+      type: string
+      required: false
+    - name: judge
+      type: string
+      required: false
+
+license:
+  name: "Public Domain (court records)"
+  url: "https://www.supremecourt.gov.bd"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official public court records published by the Supreme Court of Bangladesh"

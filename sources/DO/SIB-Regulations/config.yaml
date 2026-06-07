@@ -1,0 +1,114 @@
+# ===================================================================
+# DO/SIB-Regulations -- Superintendencia de Bancos de la República
+# Dominicana (SB). Banking-supervisor regulatory normative output.
+# ===================================================================
+# Full-text Circulares, Cartas Circulares, Circulares e Instructivos,
+# and Resoluciones SB issued by the Dominican banking supervisor under
+# Art. 21 of the Monetary and Financial Law (Ley núm. 183-02). Full text
+# via pdfplumber.
+# ===================================================================
+
+source:
+  id: "DO/SIB-Regulations"
+  country: "DO"
+  name: "Dominican Republic Superintendencia de Bancos — Regulations"
+  url: "https://sb.gob.do/"
+  description: |
+    Regulatory and supervisory normative documents issued by the
+    Superintendencia de Bancos de la República Dominicana (SB), the
+    Dominican banking supervisor. The "Normativas SB" archive collects
+    the provisions the Superintendent of Banks issues to the regulated
+    financial system — Circulares, Cartas Circulares, Circulares e
+    Instructivos, and Resoluciones SB — under the authority of Article 21
+    of the Monetary and Financial Law (Ley núm. 183-02 Monetaria y
+    Financiera). These prudential and supervisory instruments cover
+    regulatory reporting, accounting manuals, debida diligencia/AML,
+    credit information, and the operation and supervision of financial
+    intermediation entities. Classified as doctrine (official regulatory
+    guidance issued by a public administrative authority).
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "html_scrape_pdf"
+  base_url: "https://sb.gob.do"
+  notes: |
+    Custom CMS. The Normativas SB archive
+      /regulacion/normativas-sb/?page=1&size=<N>
+    renders every document as a card carrying its category
+    (Circular / Carta circular / Circular e instructivo / Resolución SB),
+    publication date (DD / MM / YYYY), title, descriptive subject, and a
+    link to the document detail page. A single request with a large page
+    size returns the entire corpus (~229 documents). Each detail page
+    links to one /media/<id>/<file>.pdf carrying the full text, downloaded
+    and extracted with pdfplumber. PDF hrefs contain HTML-escaped non-ASCII
+    characters which are unescaped before download. A browser User-Agent is
+    sent and TLS verification is disabled (public, read-only data). The few
+    oldest documents (1980s–90s scanned resoluciones) have no extractable
+    text and are skipped.
+
+data_model:
+  type: "doctrine"
+  primary_key: "url"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 14
+  key_fields:
+    - name: "text"
+      description: "Full text extracted from the document PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "title"
+      description: "Document title (e.g. 'CIRCULAR SB: CSB-REG-2026000009')"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "doc_number"
+      description: "Reference code, e.g. 'CSB-REG-2026000009', 'No. 13-1994'"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "category"
+      description: "Circular / Carta circular / Circular e instructivo / Resolución SB"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "summary"
+      description: "Descriptive subject parsed from the listing card"
+      type: "string"
+      role: "content"
+      required: false
+    - name: "date"
+      description: "Publication date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "Document detail page URL"
+      type: "string"
+      role: "identifier"
+      required: true
+    - name: "pdf_url"
+      description: "Direct link to the document PDF"
+      type: "string"
+      role: "metadata"
+      required: true
+
+license:
+  name: "Open Government Data (Dominican Republic)"
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official banking-supervision regulations published by a Dominican public institution (Superintendencia de Bancos) on its institutional website for public use."

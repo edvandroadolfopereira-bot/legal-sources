@@ -1,0 +1,54 @@
+source_id: INTL/ECSRC
+name: Eastern Caribbean Securities Regulatory Commission
+country: INTL
+url: https://www.ecsrc.com/
+data_url: https://www.ecsrc.com/cms/CmspageCategories/catalog/228
+description: |
+  Securities legislation, regulations, rules, policies, and guidelines from
+  the Eastern Caribbean Securities Regulatory Commission (ECSRC). Covers the
+  Securities Act 2001, securities regulations (prospectus, conduct of business,
+  collective investment schemes, etc.), ECSRC rules (corporate governance,
+  accounting, registration), policy statements, guidance notes, and proposed
+  legislation. Applies to all ECCU member territories (AG, AI, DM, GD, KN,
+  LC, VC, MS).
+
+data_types:
+  - legislation
+
+license:
+  name: Open Government Data
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official securities regulator publications"
+
+language: en
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+update_frequency: quarterly
+
+schema:
+  key_fields:
+    - name: title
+      required: true
+      type: string
+    - name: url
+      required: true
+      type: string
+  date_field: date
+  text_field: text
+  title_field: title
+  url_field: url
+
+notes: |
+  PDFs hosted on ecsrc.com via multiple path patterns:
+  /gallery/documents/sendFile/{id}, /img/WorkflowsDocument/, /img/source/.
+  Curated catalog approach — all known regulatory documents listed statically.

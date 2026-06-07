@@ -1,0 +1,87 @@
+# ===================================================================
+# GH/ParliamentRepository -- Ghana Parliament Institutional Repository
+# ===================================================================
+# Official Parliament of Ghana DSpace 9 institutional repository.
+# Covers all parliamentary materials: bills, official reports (Hansard),
+# committee reports, constitutional/executive/legislative instruments,
+# decrees, budget estimates, agreements, conventions, and more.
+# DSpace REST API provides metadata + pre-extracted full text.
+# ===================================================================
+
+source:
+  id: "GH/ParliamentRepository"
+  country: "GH"
+  name: "Ghana Parliament Institutional Repository"
+  url: "https://repository.parliament.gh/"
+  description: |
+    Full collection from the Parliament of Ghana institutional repository.
+    3,900+ items covering bills, official reports (Hansard), committee
+    reports, constitutional instruments, executive instruments, legislative
+    instruments, decrees, budget estimates, agreements, conventions, and
+    other parliamentary materials from 1957 onwards. DSpace 9 REST API
+    with pre-extracted full text from PDFs.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+  notes: "DSpace REST API. 1-second delay between requests."
+
+api:
+  type: "rest"
+  base_url: "https://repository.parliament.gh/server/api"
+  endpoints:
+    search: "/discover/search/objects?dsoType=ITEM&size={size}&page={page}"
+    item: "/core/items/{uuid}"
+    bundles: "/core/items/{uuid}/bundles"
+    bitstreams: "/core/bundles/{bundle_uuid}/bitstreams"
+    content: "/core/bitstreams/{bitstream_uuid}/content"
+  response_format: "json"
+
+data_model:
+  type: "legislation"
+  primary_key: "uuid"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 11
+  key_fields:
+    - name: "_id"
+      description: "DSpace item UUID"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF by DSpace"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Date issued"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "url"
+      description: "Handle URL to original repository item"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "Open Government Data (Parliament of Ghana)"
+  url: "https://repository.parliament.gh/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Parliament institutional repository. DSpace open access."

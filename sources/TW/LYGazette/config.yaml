@@ -1,0 +1,30 @@
+source_id: TW/LYGazette
+name: Taiwan Legislative Yuan Gazette (立法院公報)
+description: >
+  Official gazette of the Taiwan Legislative Yuan, containing full-text
+  parliamentary proceedings, committee reports, bill readings, interpellations,
+  and meeting minutes. Accessed via the g0v LY Open Data API (v2.ly.govapi.tw).
+url: https://v2.ly.govapi.tw/
+country: TW
+data_types:
+  - legislation
+schema:
+  key_fields:
+    - _id
+    - title
+    - text
+    - date
+    - url
+    - gazette_id
+    - agenda_number
+    - category_code
+    - term
+    - session
+license:
+  name: Open Government Data (Taiwan)
+  url: https://data.gov.tw/en
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: Taiwan Legislative Yuan open data policy

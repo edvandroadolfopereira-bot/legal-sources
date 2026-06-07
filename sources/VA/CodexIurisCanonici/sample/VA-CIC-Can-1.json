@@ -1,0 +1,16 @@
+{
+  "_id": "VA-CIC-Can-1",
+  "_source": "VA/CodexIurisCanonici",
+  "_type": "legislation",
+  "_fetched_at": "2026-05-30T22:16:21.530575+00:00",
+  "title": "Canon 1",
+  "text": "Canones huius Codicis unam Ecclesiam latinam respiciunt.",
+  "text_en": "The canons of this Code regard only the Latin Church.",
+  "canon_number": 1,
+  "book": "Liber I",
+  "book_title_la": "De Normis Generalibus",
+  "book_title_en": "General Norms",
+  "date": "1983-01-25",
+  "url": "https://www.vatican.va/archive/cod-iuris-canonici/cic_index_la.html",
+  "language": "la"
+}

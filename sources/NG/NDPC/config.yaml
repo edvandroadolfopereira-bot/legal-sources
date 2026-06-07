@@ -1,0 +1,26 @@
+source_id: NG/NDPC
+name: Nigeria Data Protection Commission — Enforcement & Regulations
+country: NG
+url: https://www.ndpc.gov.ng/
+data_types:
+  - doctrine
+auth:
+  type: none
+schedule: monthly
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - date
+    - text
+    - document_type
+
+license:
+  name: "Custom Terms (Government)"
+  url: "https://www.ndpc.gov.ng/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Nigerian government data protection authority. Publications include the NDP Act 2023, GAID, enforcement orders, guidance notices, and regulatory instruments."

@@ -1,0 +1,109 @@
+# ═══════════════════════════════════════════════════════════════════
+# Legal Data Hunter — Turkish Central Bank (TCMB) Configuration
+# ═══════════════════════════════════════════════════════════════════
+
+# ── Source Identity ───────────────────────────────────────────────
+source:
+  id: "TR/TCMB"
+  country: "TR"
+  name: "Turkish Central Bank (TCMB) Regulations & Circulars"
+  url: "https://www.tcmb.gov.tr"
+  description: |
+    Central Bank of the Republic of Türkiye (TCMB) — regulations,
+    communiqués (tebliğ), circulars (genelge), and instructions (talimat)
+    covering banking, payment systems, markets, foreign exchange, foreign
+    trade, statistics, and operational matters. ~600+ regulatory documents.
+
+# ── Data Types ────────────────────────────────────────────────────
+data_types:
+  - doctrine
+
+# ── Authentication ────────────────────────────────────────────────
+auth:
+  type: "none"
+
+# ── Rate Limiting ─────────────────────────────────────────────────
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+# ── API / Scraping Configuration ──────────────────────────────────
+api:
+  type: "html_scraping_pdf"
+  base_url: "https://www.tcmb.gov.tr"
+  sections:
+    - path: "/wps/wcm/connect/TR/TCMB+TR/Main+Menu/Banka+Hakkinda/Mevzuat/Bankacilik/"
+      name: "Bankacılık"
+    - path: "/wps/wcm/connect/TR/TCMB+TR/Main+Menu/Banka+Hakkinda/Mevzuat/Odeme+Sistemleri/"
+      name: "Ödeme Sistemleri"
+    - path: "/wps/wcm/connect/TR/TCMB+TR/Main+Menu/Banka+Hakkinda/Mevzuat/Piyasalar/"
+      name: "Piyasalar"
+    - path: "/wps/wcm/connect/TR/TCMB+TR/Main+Menu/Banka+Hakkinda/Mevzuat/Dis+Ticaret/"
+      name: "Dış Ticaret"
+    - path: "/wps/wcm/connect/TR/TCMB+TR/Main+Menu/Banka+Hakkinda/Mevzuat/Emisyon/"
+      name: "Emisyon"
+    - path: "/wps/wcm/connect/TR/TCMB+TR/Main+Menu/Banka+Hakkinda/Mevzuat/Kambiyo/"
+      name: "Kambiyo"
+    - path: "/wps/wcm/connect/TR/TCMB+TR/Main+Menu/Banka+Hakkinda/Mevzuat/Isci+Dovizleri/"
+      name: "İşçi Dövizleri"
+    - path: "/wps/wcm/connect/TR/TCMB+TR/Main+Menu/Banka+Hakkinda/Mevzuat/Istatistik/"
+      name: "İstatistik"
+    - path: "/wps/wcm/connect/TR/TCMB+TR/Main+Menu/Banka+Hakkinda/Mevzuat/Operasyon+Mevzuat/"
+      name: "Operasyonel İşlemler"
+
+# ── Data Model ────────────────────────────────────────────────────
+data_model:
+  type: "doctrine"
+  primary_key: "document_uuid"
+  update_strategy: "append_only"
+  versioning: "none"
+  dedup_key:
+    - "document_uuid"
+
+# ── Schema ────────────────────────────────────────────────────────
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "document_uuid"
+      description: "UUID from TCMB content management system"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "url"
+      description: "URL to the PDF document"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "section"
+      description: "Regulatory section (Banking, Payment Systems, etc.)"
+      type: "string"
+      role: "classification"
+      required: true
+
+# ── License ───────────────────────────────────────────────────────
+license:
+  name: "Public Domain (Turkish Government)"
+  url: "https://www.tcmb.gov.tr"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government regulations are public domain under Turkish law"
+
+# ── Notes ─────────────────────────────────────────────────────────
+notes: |
+  - Language: Turkish (UTF-8)
+  - ~600+ regulatory documents across 9 sections
+  - All documents are PDFs hosted on TCMB's WCM content platform
+  - PDF links require ?MOD=AJPERES parameter for direct download
+  - UUID in URL path uniquely identifies each document

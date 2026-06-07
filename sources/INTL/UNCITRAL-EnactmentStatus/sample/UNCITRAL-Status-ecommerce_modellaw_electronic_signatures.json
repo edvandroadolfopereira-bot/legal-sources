@@ -1,0 +1,193 @@
+{
+  "_id": "UNCITRAL-Status-ecommerce_modellaw_electronic_signatures",
+  "_source": "INTL/UNCITRAL-EnactmentStatus",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-04T22:06:49.763246+00:00",
+  "title": "Status: UNCITRAL Model Law on Electronic Signatures (2001)",
+  "text": "This page is updated whenever the UNCITRAL Secretariat is informed of changes in enactment of the Model Law.\nThe UNCITRAL Secretariat also prepares yearly a document containing the Status of Conventions and Enactments of UNCITRAL Model Laws, which is available on the web page of the corresponding\nUNCITRAL Commission Session\n.\nLegislation based on or influenced by the Model Law has been adopted in 40 States and a total of 42 jurisdictions:\nState\nYear\nNotes\nAfghanistan\n2020\nAntigua and Barbuda\n2013\n(a), (c)\nBarbados\n2001\nBhutan\n2006\nBotswana\n2014\nCabo Verde\n2003\nChina\n2004\nColombia\n2012\nCosta Rica\n2005\n(a)\nGambia\n2009\nGhana\n2008\nGrenada\n2008\nGuatemala\n2008\nHonduras\n2013\nIndia\n2009\n(a)\nJamaica\n2006\nLibya\n2022\n(a)\nMadagascar\n2014\nMaldives\n2022\nMexico\n2003\nNicaragua\n2010\n(a)\nOman\n2008\n(a)\nPapua New Guinea\n2022\nParaguay\n2021\n(a), (c)\nPeru\n2000\n(a)\nQatar\n2010\nRwanda\n2010\nSaint Kitts and Nevis\n2011\nSaint Lucia\n2011\nSaint Vincent and the Grenadines\n2007\nSan Marino\n2013\nSaudi Arabia\n2007\n(a)\nThailand\n2001\nTimor Leste\n2024\nTrinidad and Tobago\n2011\nUganda\n2011\nUnited Arab Emirates\n2006\nUnited Kingdom of Great Britain and Northern Ireland\n   Anguilla\n2006\n(b)\n   British Virgin Islands\n2021\n(b)\n   Montserrat\n2009\n(b)\nViet Nam\n2005\nZambia\n2009\nNotes\n(a) The legislation is influenced by the Model Law and the principles on which it is based.\n(b) Overseas territory of the United Kingdom of Great Britain and Northern Ireland.\n(c) The legislation amends previous legislation based on the Model Law.\nDisclaimer:\nA model law is created as a suggested pattern for law-makers to consider adopting as part of their domestic legislation. Since States enacting legislation based upon a model law have the flexibility to depart from the text, the above list is only indicative of the enactments that were made known to the UNCITRAL Secretariat. The legislation of each State should be considered in order to identify the exact nature of any possible deviation from the model in the legislative text that was adopted. The year of enactment indicated above is the year the legislation was passed by the relevant legislative body, as indicated to the UNCITRAL Secretariat; it does not address the date of entry into force of that piece of legislation, the procedures for which vary from State to State, and could result in entry into force some time after enactment.",
+  "date": "2001-01-01",
+  "url": "https://uncitral.un.org/en/texts/ecommerce/modellaw/electronic_signatures/status",
+  "num_jurisdictions": 42,
+  "entries": [
+    {
+      "state": "Afghanistan",
+      "year": "2020"
+    },
+    {
+      "state": "Antigua and Barbuda",
+      "year": "2013",
+      "notes": "(a), (c)"
+    },
+    {
+      "state": "Barbados",
+      "year": "2001"
+    },
+    {
+      "state": "Bhutan",
+      "year": "2006"
+    },
+    {
+      "state": "Botswana",
+      "year": "2014"
+    },
+    {
+      "state": "Cabo Verde",
+      "year": "2003"
+    },
+    {
+      "state": "China",
+      "year": "2004"
+    },
+    {
+      "state": "Colombia",
+      "year": "2012"
+    },
+    {
+      "state": "Costa Rica",
+      "year": "2005",
+      "notes": "(a)"
+    },
+    {
+      "state": "Gambia",
+      "year": "2009"
+    },
+    {
+      "state": "Ghana",
+      "year": "2008"
+    },
+    {
+      "state": "Grenada",
+      "year": "2008"
+    },
+    {
+      "state": "Guatemala",
+      "year": "2008"
+    },
+    {
+      "state": "Honduras",
+      "year": "2013"
+    },
+    {
+      "state": "India",
+      "year": "2009",
+      "notes": "(a)"
+    },
+    {
+      "state": "Jamaica",
+      "year": "2006"
+    },
+    {
+      "state": "Libya",
+      "year": "2022",
+      "notes": "(a)"
+    },
+    {
+      "state": "Madagascar",
+      "year": "2014"
+    },
+    {
+      "state": "Maldives",
+      "year": "2022"
+    },
+    {
+      "state": "Mexico",
+      "year": "2003"
+    },
+    {
+      "state": "Nicaragua",
+      "year": "2010",
+      "notes": "(a)"
+    },
+    {
+      "state": "Oman",
+      "year": "2008",
+      "notes": "(a)"
+    },
+    {
+      "state": "Papua New Guinea",
+      "year": "2022"
+    },
+    {
+      "state": "Paraguay",
+      "year": "2021",
+      "notes": "(a), (c)"
+    },
+    {
+      "state": "Peru",
+      "year": "2000",
+      "notes": "(a)"
+    },
+    {
+      "state": "Qatar",
+      "year": "2010"
+    },
+    {
+      "state": "Rwanda",
+      "year": "2010"
+    },
+    {
+      "state": "Saint Kitts and Nevis",
+      "year": "2011"
+    },
+    {
+      "state": "Saint Lucia",
+      "year": "2011"
+    },
+    {
+      "state": "Saint Vincent and the Grenadines",
+      "year": "2007"
+    },
+    {
+      "state": "San Marino",
+      "year": "2013"
+    },
+    {
+      "state": "Saudi Arabia",
+      "year": "2007",
+      "notes": "(a)"
+    },
+    {
+      "state": "Thailand",
+      "year": "2001"
+    },
+    {
+      "state": "Timor Leste",
+      "year": "2024"
+    },
+    {
+      "state": "Trinidad and Tobago",
+      "year": "2011"
+    },
+    {
+      "state": "Uganda",
+      "year": "2011"
+    },
+    {
+      "state": "United Arab Emirates",
+      "year": "2006"
+    },
+    {
+      "state": "Anguilla",
+      "year": "2006",
+      "notes": "(b)"
+    },
+    {
+      "state": "British Virgin Islands",
+      "year": "2021",
+      "notes": "(b)"
+    },
+    {
+      "state": "Montserrat",
+      "year": "2009",
+      "notes": "(b)"
+    },
+    {
+      "state": "Viet Nam",
+      "year": "2005"
+    },
+    {
+      "state": "Zambia",
+      "year": "2009"
+    }
+  ]
+}

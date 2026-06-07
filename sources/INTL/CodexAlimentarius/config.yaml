@@ -1,0 +1,86 @@
+# ===================================================================
+# INTL/CodexAlimentarius -- FAO/WHO Codex Alimentarius Commission
+# International Food Standards, Guidelines, and Codes of Practice
+# ===================================================================
+# The Codex Alimentarius ("Food Code") is the collection of
+# international food safety and quality standards adopted by the
+# Codex Alimentarius Commission (joint FAO/WHO body). Full text
+# PDFs are publicly available on the FAO website.
+# ===================================================================
+
+source:
+  id: "INTL/CodexAlimentarius"
+  country: "INTL"
+  name: "Codex Alimentarius — FAO/WHO International Food Standards"
+  url: "https://www.fao.org/fao-who-codexalimentarius/codex-texts/en/"
+  description: |
+    International food safety and quality standards, guidelines, and codes
+    of practice adopted by the Codex Alimentarius Commission (joint FAO/WHO).
+    Covers commodity standards (CXS), general guidelines (CXG), and codes
+    of practice (CXC). Full text extracted from official PDFs via FAO proxy.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "html_scrape_pdf"
+  base_url: "https://www.fao.org"
+  pages:
+    standards: "/fao-who-codexalimentarius/codex-texts/list-standards/en/"
+    guidelines: "/fao-who-codexalimentarius/codex-texts/guidelines/en/"
+    codes: "/fao-who-codexalimentarius/codex-texts/codes-of-practice/en/"
+
+data_model:
+  type: "legislation"
+  primary_key: "reference"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "title"
+      description: "Standard/guideline/code title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from official PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "reference"
+      description: "Codex reference number (e.g., CXS 107-1981)"
+      type: "string"
+      role: "identifier"
+      required: true
+    - name: "date"
+      description: "Last modified year (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "committee"
+      description: "Responsible Codex committee code (e.g., CCFA, CCFH)"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "doc_type"
+      description: "Document type: standard, guideline, or code_of_practice"
+      type: "string"
+      role: "metadata"
+      required: true
+
+license:
+  name: "CC BY-NC-SA 3.0 IGO"
+  url: "https://creativecommons.org/licenses/by-nc-sa/3.0/igo/"
+  commercial_use: false
+  attribution_required: true
+  share_alike: true
+  no_derivatives: false
+  notes: "FAO open data terms — CC BY-NC-SA 3.0 IGO"

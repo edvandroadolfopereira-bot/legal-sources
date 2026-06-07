@@ -1,0 +1,27 @@
+source_id: NG/PENCOM
+name: Nigeria National Pension Commission — Regulations & Guidelines
+country: NG
+url: https://www.pencom.gov.ng/category/regulations-guidelines-circulars-frameworks/regulations/
+data_types:
+  - legislation
+  - doctrine
+auth:
+  type: none
+schedule: monthly
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - date
+    - text
+    - document_type
+
+license:
+  name: "Custom Terms (Government)"
+  url: "https://www.pencom.gov.ng/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Nigerian government regulatory documents published by the National Pension Commission (PenCom) under the Pension Reform Act 2014 for public compliance. Regulations are subsidiary legislation."

@@ -1,0 +1,120 @@
+# ===================================================================
+# UA/HACC -- High Anti-Corruption Court of Ukraine (ВАКС)
+# ===================================================================
+# Anti-corruption court decisions (2019-present). Subset of EDRSR
+# registry filtered to HACC court codes 4910 (first instance) and
+# 4911 (Appeals Chamber). Same bulk pipeline: data.gov.ua CSV ZIPs
+# + od.reyestr.court.gov.ua full text HTML.
+# ===================================================================
+
+source:
+  id: "UA/HACC"
+  country: "UA"
+  name: "High Anti-Corruption Court of Ukraine (ВАКС)"
+  url: "https://hcac.court.gov.ua"
+  description: |
+    Decisions of Ukraine's High Anti-Corruption Court (HACC / ВАКС),
+    established April 2019. Handles corruption-related cases involving
+    high-ranking officials. Data from the Unified State Register of Court
+    Decisions (EDRSR) filtered to HACC court codes 4910 (first instance)
+    and 4911 (Appeals Chamber). ~125K+ court documents.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 3
+  burst: 5
+
+api:
+  type: "bulk_csv_plus_html"
+  metadata:
+    base_url: "https://data.gov.ua"
+    format: "ZIP containing tab-delimited CSV"
+    years: "2019-present"
+    court_codes: ["4910", "4911"]
+  full_text:
+    base_url: "http://od.reyestr.court.gov.ua"
+    pattern: "/files/{hash}.html"
+    encoding: "windows-1251"
+
+data_model:
+  type: "case_law"
+  primary_key: "doc_id"
+  update_strategy: "append_only"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: 14
+  key_fields:
+    - name: "doc_id"
+      description: "Unique document ID from the register"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Case number and court name"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the court decision"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Adjudication date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "url"
+      description: "URL to full text HTML on od.reyestr.court.gov.ua"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "court_code"
+      description: "Court identifier code (4910 or 4911)"
+      type: "string"
+      role: "classification"
+      required: false
+    - name: "judge"
+      description: "Judge name(s)"
+      type: "string"
+      role: "content"
+      required: false
+    - name: "justice_kind"
+      description: "Type of justice (criminal, civil, etc.)"
+      type: "string"
+      role: "classification"
+      required: false
+    - name: "judgment_form"
+      description: "Type of judgment/decision"
+      type: "string"
+      role: "classification"
+      required: false
+    - name: "date_published"
+      description: "Publication date in the register"
+      type: "date"
+      role: "temporal_key"
+      required: false
+
+license:
+  name: "CC BY 4.0"
+  url: "https://creativecommons.org/licenses/by/4.0/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Open government data from Ukraine's official court register"
+
+notes: |
+  - HACC established April 2019, so decisions exist from 2019 onward
+  - Court codes: 4910 (first instance), 4911 (Appeals Chamber)
+  - ~125K+ documents in the HACC subset
+  - Same data pipeline as UA/EDRSR but filtered
+  - Full text at od.reyestr.court.gov.ua (HTTP only, windows-1251 encoding)
+  - Language: Ukrainian

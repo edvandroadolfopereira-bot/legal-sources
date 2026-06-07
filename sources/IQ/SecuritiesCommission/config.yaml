@@ -1,0 +1,57 @@
+source:
+  id: IQ/SecuritiesCommission
+  name: Iraqi Securities Commission — Regulations & Decisions
+  country: IQ
+  url: https://www.isc.gov.iq/en
+  data_types:
+    - legislation
+  description: |
+    Regulations, instructions, board decisions, and related laws from the Iraqi
+    Securities Commission (ISC). ~34 regulatory regulations (PDFs), ~9 related laws
+    (PDFs), and ~30 board decisions (HTML pages). Covers securities trading,
+    brokerage licensing, financial disclosure, AML, and corporate governance.
+    English and Arabic. Free access.
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+api:
+  type: html_scrape
+  base_url: https://www.isc.gov.iq
+  format: html_pdf
+  endpoints:
+    commission_law: /en/pages/42
+    related_laws: /en/pages/43
+    instructions_regulations: /en/pages/44
+    board_decisions: /en/pages/45
+
+schema:
+  key_fields:
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: document_type
+      type: string
+      required: true
+    - name: category
+      type: string
+      required: false
+
+license:
+  name: Open Government Data (Iraq)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official securities commission regulatory documents published for public access.

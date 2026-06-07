@@ -1,19 +1,18 @@
 # Eritrea Legislation
 
-**Source:** [https://africanlii.org/country/eritrea](https://africanlii.org/country/eritrea)
+**Source:** [Library of Congress — Foreign Legal Gazettes](https://www.loc.gov/collections/foreign-legal-gazettes/)
 **Country:** ER
 **Data types:** legislation
-**Status:** Blocked
+**Status:** Complete
 
-## Why this source is blocked
+Gazette of Eritrean Laws: Proclamations and Legal Notices (1991–2022),
+digitized by the Library of Congress Law Library. ~390 items available via the
+LOC public JSON API with direct PDF downloads.
 
-**Category:** No full text access
+Note: Many older gazette issues are scanned images without a text layer.
+The scraper extracts text only from born-digital or OCR-processed PDFs and
+skips scanned-only documents.
 
-**Technical reason:** `no_full_text_access`
+## License
 
-## How you can help
-
-The source only provides metadata (titles, dates) without full document text.
-- If you know of a way to access full text for this source, please file an issue
-
-- File an issue or open a PR at [worldwidelaw/legal-sources](https://github.com/worldwidelaw/legal-sources)
+[No known restrictions on use or reproduction](https://www.loc.gov/legal/) — Library of Congress digital collection, public domain government documents.

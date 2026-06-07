@@ -1,0 +1,292 @@
+{
+  "_id": "UNCITRAL-Status-insolvency_modellaw_cross-border_insolvency",
+  "_source": "INTL/UNCITRAL-EnactmentStatus",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-04T22:06:50.843444+00:00",
+  "title": "Status: UNCITRAL Model Law on Cross-Border Insolvency (1997)",
+  "text": "This page is updated whenever the UNCITRAL Secretariat is informed of changes in enactment of the Model Law.\nThe UNCITRAL Secretariat also prepares yearly a document containing the Status of Conventions and Enactments of UNCITRAL Model Laws, which is available on the web page of the corresponding\nUNCITRAL Commission session\n.\n62 States in a total of 65 jurisdictions have used the Model Law and accompanying Guide to Enactment (and Interpretation) in reforming their cross-border insolvency law and systems, though the extent to which the resulting framework incorporates the provisions of the Model Law varies, as that framework also reflects legal traditions, domestic policy and other objectives:\n \nState\nNotes\nAlbania\n2016\nAngola\n2021\nAustralia\n2008\nBahrain\n2018\nBelize\n2025\nBenin\n2015\n(b)\nBrazil\n2020\nBurkina Faso\n2015\n(b)\nCameroon\n2015\n(b)\nCanada\n2005\nCentral African Republic\n2015\n(b)\nChad\n2015\n(b)\nChile\n2013\nColombia\n2006\nComoros\n2015\n(b)\nCongo\n2015\n(b)\nCosta Rica\n2021\nCôte d'Ivoire\n2015\n(b)\nDemocratic Republic of the Congo\n2015\n(b)\nDominican Republic\n2015\nEquatorial Guinea\n2015\n(b)\nGabon\n2015\n(b)\nGhana\n2020\nGreece\n2010\nGuinea\n2015\n(b)\nGuinea-Bissau\n2015\n(b)\nIsrael\n2018\nJamaica\n2016\nJapan\n2000\nJordan\n2018\nKenya\n2015\nMalawi\n2015\nMalaysia\n2025\nMali\n2015\n(b)\nMarshall Islands\n2018\nMauritius\n2009\nMexico\n2000\nMontenegro\n2002\nMorocco\n2018\nMyanmar\n2020\nNew Zealand\n2006\nNiger\n2015\n(b)\nPanama\n2016\nPhilippines\n2010\nPoland\n2003\nRepublic of Korea\n2006\nRomania\n2002\nRwanda\n2021\nSaudi Arabia\n2022\nSenegal\n2015\n(b)\nSerbia\n2004\nSeychelles\n2013\nSingapore\n2017\nSlovenia\n2007\nSouth Africa\n2000\nTogo\n2015\n(b)\nUganda\n2011\nUnited Arab Emirates\nAbu Dhabi Global Market\n2015\nDubai International Financial Centre\n2019\nUnited Kingdom of Great Britain and Northern Ireland\nGreat Britain\n2006\nBritish Virgin Islands\n2003\n(a)\nGibraltar\n2014\n(a)\nUnited States of America\n2005\nVanuatu\n2013\nZimbabwe\n2018\nNotes\n(a) Overseas territory of the United Kingdom of Great Britain and Northern Ireland.\n(b) Enacting the\nActe uniforme portant organisation des procédures collectives d'apurement du passif\n (OHADA), adopted on 10 September 2015 at Grand-Bassam, Côte d'Ivoire.\nDisclaimer: A model law is created as a suggested pattern for law-makers to consider adopting as part of their domestic legislation. Since States enacting legislation based upon a model law have the flexibility to depart from the text, the above list is only indicative of the enactments that were made known to the UNCITRAL Secretariat. The legislation of each State should be considered in order to identify the exact nature of any possible deviation from the model in the legislative text that was adopted. The year of enactment indicated above is the year the legislation was passed by the relevant legislative body, as indicated to the UNCITRAL Secretariat; it does not address the date of entry into force of that piece of legislation, the procedures for which vary from State to State, and could result in entry into force some time after enactment.",
+  "date": "1997-01-01",
+  "url": "https://uncitral.un.org/en/texts/insolvency/modellaw/cross-border_insolvency/status",
+  "num_jurisdictions": 65,
+  "entries": [
+    {
+      "state": "Albania",
+      "year": "2016"
+    },
+    {
+      "state": "Angola",
+      "year": "2021"
+    },
+    {
+      "state": "Australia",
+      "year": "2008"
+    },
+    {
+      "state": "Bahrain",
+      "year": "2018"
+    },
+    {
+      "state": "Belize",
+      "year": "2025"
+    },
+    {
+      "state": "Benin",
+      "year": "2015",
+      "notes": "(b)"
+    },
+    {
+      "state": "Brazil",
+      "year": "2020"
+    },
+    {
+      "state": "Burkina Faso",
+      "year": "2015",
+      "notes": "(b)"
+    },
+    {
+      "state": "Cameroon",
+      "year": "2015",
+      "notes": "(b)"
+    },
+    {
+      "state": "Canada",
+      "year": "2005"
+    },
+    {
+      "state": "Central African Republic",
+      "year": "2015",
+      "notes": "(b)"
+    },
+    {
+      "state": "Chad",
+      "year": "2015",
+      "notes": "(b)"
+    },
+    {
+      "state": "Chile",
+      "year": "2013"
+    },
+    {
+      "state": "Colombia",
+      "year": "2006"
+    },
+    {
+      "state": "Comoros",
+      "year": "2015",
+      "notes": "(b)"
+    },
+    {
+      "state": "Congo",
+      "year": "2015",
+      "notes": "(b)"
+    },
+    {
+      "state": "Costa Rica",
+      "year": "2021"
+    },
+    {
+      "state": "Côte d'Ivoire",
+      "year": "2015",
+      "notes": "(b)"
+    },
+    {
+      "state": "Democratic Republic of the Congo",
+      "year": "2015",
+      "notes": "(b)"
+    },
+    {
+      "state": "Dominican Republic",
+      "year": "2015"
+    },
+    {
+      "state": "Equatorial Guinea",
+      "year": "2015",
+      "notes": "(b)"
+    },
+    {
+      "state": "Gabon",
+      "year": "2015",
+      "notes": "(b)"
+    },
+    {
+      "state": "Ghana",
+      "year": "2020"
+    },
+    {
+      "state": "Greece",
+      "year": "2010"
+    },
+    {
+      "state": "Guinea",
+      "year": "2015",
+      "notes": "(b)"
+    },
+    {
+      "state": "Guinea-Bissau",
+      "year": "2015",
+      "notes": "(b)"
+    },
+    {
+      "state": "Israel",
+      "year": "2018"
+    },
+    {
+      "state": "Jamaica",
+      "year": "2016"
+    },
+    {
+      "state": "Japan",
+      "year": "2000"
+    },
+    {
+      "state": "Jordan",
+      "year": "2018"
+    },
+    {
+      "state": "Kenya",
+      "year": "2015"
+    },
+    {
+      "state": "Malawi",
+      "year": "2015"
+    },
+    {
+      "state": "Malaysia",
+      "year": "2025"
+    },
+    {
+      "state": "Mali",
+      "year": "2015",
+      "notes": "(b)"
+    },
+    {
+      "state": "Marshall Islands",
+      "year": "2018"
+    },
+    {
+      "state": "Mauritius",
+      "year": "2009"
+    },
+    {
+      "state": "Mexico",
+      "year": "2000"
+    },
+    {
+      "state": "Montenegro",
+      "year": "2002"
+    },
+    {
+      "state": "Morocco",
+      "year": "2018"
+    },
+    {
+      "state": "Myanmar",
+      "year": "2020"
+    },
+    {
+      "state": "New Zealand",
+      "year": "2006"
+    },
+    {
+      "state": "Niger",
+      "year": "2015",
+      "notes": "(b)"
+    },
+    {
+      "state": "Panama",
+      "year": "2016"
+    },
+    {
+      "state": "Philippines",
+      "year": "2010"
+    },
+    {
+      "state": "Poland",
+      "year": "2003"
+    },
+    {
+      "state": "Republic of Korea",
+      "year": "2006"
+    },
+    {
+      "state": "Romania",
+      "year": "2002"
+    },
+    {
+      "state": "Rwanda",
+      "year": "2021"
+    },
+    {
+      "state": "Saudi Arabia",
+      "year": "2022"
+    },
+    {
+      "state": "Senegal",
+      "year": "2015",
+      "notes": "(b)"
+    },
+    {
+      "state": "Serbia",
+      "year": "2004"
+    },
+    {
+      "state": "Seychelles",
+      "year": "2013"
+    },
+    {
+      "state": "Singapore",
+      "year": "2017"
+    },
+    {
+      "state": "Slovenia",
+      "year": "2007"
+    },
+    {
+      "state": "South Africa",
+      "year": "2000"
+    },
+    {
+      "state": "Togo",
+      "year": "2015",
+      "notes": "(b)"
+    },
+    {
+      "state": "Uganda",
+      "year": "2011"
+    },
+    {
+      "state": "Abu Dhabi Global Market",
+      "year": "2015"
+    },
+    {
+      "state": "Dubai International Financial Centre",
+      "year": "2019"
+    },
+    {
+      "state": "Great Britain",
+      "year": "2006"
+    },
+    {
+      "state": "British Virgin Islands",
+      "year": "2003",
+      "notes": "(a)"
+    },
+    {
+      "state": "Gibraltar",
+      "year": "2014",
+      "notes": "(a)"
+    },
+    {
+      "state": "United States of America",
+      "year": "2005"
+    },
+    {
+      "state": "Vanuatu",
+      "year": "2013"
+    },
+    {
+      "state": "Zimbabwe",
+      "year": "2018"
+    }
+  ]
+}

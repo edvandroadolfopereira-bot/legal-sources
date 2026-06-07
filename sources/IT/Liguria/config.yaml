@@ -1,0 +1,48 @@
+source:
+  id: IT/Liguria
+  name: Raccolta Normativa Regione Liguria
+  country: IT
+  url: https://lrv.regione.liguria.it/liguriass_prod/documenti-tree/leggi/
+  data_types:
+    - legislation
+  auth: none
+  description: >
+    Regional laws (leggi regionali) of Liguria from the Raccolta Normativa
+    database of the Assemblea Legislativa della Liguria. Coverage from 1971
+    (I Legislature) to present (X Legislature). Full text downloaded via
+    official bulk export endpoint in TXT format per legislature.
+
+fetch:
+  max_retries: 3
+  rate_limit: 1.5
+  timeout: 120
+
+schema:
+  key_fields:
+    - name: _id
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: date
+      required: false
+    - name: law_number
+      type: string
+      required: false
+
+license:
+  name: "Public domain (official acts)"
+  url: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:legge:1941-04-22;633!vig="
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: >
+    Regional laws are official acts of a public administration and are not
+    protected by copyright under Art. 5 of the Italian Copyright Law
+    (Legge 22 aprile 1941, n. 633).

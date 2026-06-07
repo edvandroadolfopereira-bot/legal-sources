@@ -1,0 +1,53 @@
+source_id: INTL/ECTEL
+name: Eastern Caribbean Telecommunications Authority
+country: INTL
+url: https://www.ectel.int/legislation/
+data_url: https://www.ectel.int/wp-json/wp/v2/pages
+description: |
+  Telecommunications legislation, regulations, and statutory rules from the
+  Eastern Caribbean Telecommunications Authority (ECTEL). Covers the
+  Telecommunications Acts and ~20 subsidiary regulations per member state
+  (Dominica, Grenada, St Kitts & Nevis, Saint Lucia, St Vincent & the
+  Grenadines), plus the ECTEL Treaty and Electronic Communications Bill.
+  Full text extracted from official PDFs hosted on ectel.int.
+
+data_types:
+  - legislation
+
+license:
+  name: Open Government Data
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official telecommunications regulator publications for ECTEL member states"
+
+language: en
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+update_frequency: quarterly
+
+schema:
+  key_fields:
+    - name: title
+      required: true
+      type: string
+    - name: url
+      required: true
+      type: string
+  date_field: date
+  text_field: text
+  title_field: title
+  url_field: url
+
+notes: |
+  PDFs hosted on ectel.int/wp-content/uploads/. Legislation pages use WordPress
+  ACF with structured data tables. Curated catalog of ~95 documents across 5
+  ECTEL member states (DM, GD, KN, LC, VC).

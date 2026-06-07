@@ -1,0 +1,28 @@
+{
+  "_id": "gdprhub-1509",
+  "_source": "EU/GDPRhub",
+  "_type": "case_law",
+  "_fetched_at": "2026-06-02T17:13:26.352679+00:00",
+  "page_id": 1509,
+  "title": "AKI (Estonia) - 2.1.-1/19/126",
+  "text": "Facts:\nThe appellant complained that the company, in response to his access request, provided an incomplete dataset in English.\n\nHolding:\nThe DPA found that much of the data that the complainant found as missing is data that the complainant is expected to possess. So, it concluded that the company is not obliged to provide data that the data subject already possesses under Articles 13(4) and 14(5)(a) GDPR. Thus, the DPA found that the company has adequately fulfilled the obligation to inform the data subject of the data processing as required by Articles 13-15 GDPR. Finally, the DPA pointed out that the complainant had indicated in its customer profile a language preference to use English, which justifies the data export in English (Article 12(1) GDPR).\n\nComment:\nShare your comments here!\n\nFull Decision (Machine Translation):\nThe decision below is a machine translation of the original. Please refer to the original for more details.\n\nTo be completed ...",
+  "date": "2019-11-01",
+  "date_published": "2019-11-13",
+  "url": "https://gdprhub.eu/index.php?title=AKI_(Estonia)_-_2.1.-1/19/126",
+  "jurisdiction": "Estonia",
+  "dpa": "AKI (Estonia)",
+  "dpa_full": "AKI (Estonia)",
+  "case_number": "2.1.-1/19/126",
+  "outcome": "Rejected",
+  "decision_type": "Complaint",
+  "fine": null,
+  "currency": "",
+  "gdpr_articles": [
+    "Article 12(1) GDPR",
+    "Article 13(4) GDPR",
+    "Article 14(5)(a) GDPR",
+    "Article 15 GDPR"
+  ],
+  "original_url": "https://www.aki.ee/sites/default/files/vaideotsused/2019/vaideotsus_13.11.2019_isiku_andmete_kaitse_asjas_nr_2.1.-3-19-3971_eraisik__0.pdf",
+  "original_language": "Estonian"
+}

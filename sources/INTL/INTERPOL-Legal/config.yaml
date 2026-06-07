@@ -1,0 +1,36 @@
+auth: none
+country: INTL
+data_types:
+- legislation
+fetch:
+  delay: 2.0
+  base_url: https://www.interpol.int
+  legal_docs_page: /Who-we-are/Legal-framework/Legal-documents
+name: INTERPOL — Constitution and Legal Framework
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: text
+    required: true
+    type: string
+  - name: document_number
+    required: false
+    type: string
+source_id: INTL/INTERPOL-Legal
+url: https://www.interpol.int/Who-we-are/Legal-framework/Legal-documents
+license:
+  name: INTERPOL Official Instruments
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official governance instruments of an international organization, publicly available for download"

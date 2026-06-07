@@ -1,0 +1,70 @@
+# ===================================================================
+# INTL/UNCITRAL-TransparencyRegistry -- Investor-State Arbitration
+# ===================================================================
+# ~33 cases with ~100+ documents (awards, decisions, pleadings).
+# HTML scrape for case listing + PDF text extraction via pdfplumber.
+# ===================================================================
+
+source:
+  id: "INTL/UNCITRAL-TransparencyRegistry"
+  country: "INTL"
+  name: "UNCITRAL Transparency Registry (Investor-State Arbitration)"
+  url: "https://www.uncitral.org/transparency-registry/registry/search.jspx"
+  description: |
+    Central repository of investor-state arbitration documents under UNCITRAL
+    Transparency Rules. Freely accessible, covers notices of arbitration, awards,
+    pleadings, procedural orders. ~33 cases registered since 2014.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "html_scrape_plus_pdf"
+  search_url: "https://www.uncitral.org/transparency-registry/registry/search.jspx"
+  base_url: "https://www.uncitral.org"
+  pdf_base: "https://www.uncitral.org"
+
+data_model:
+  type: "case_law"
+  primary_key: "pdf_url"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 14
+  key_fields:
+    - name: "title"
+      description: "Document title (e.g., Award, Notice of Arbitration)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Document date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "case_name"
+      description: "Case name (Claimant v. Respondent)"
+      type: "string"
+      role: "identifier"
+      required: true
+
+license:
+  name: "United Nations Terms of Use"
+  url: "https://www.un.org/en/about-us/terms-of-use"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "UN materials are generally freely reproducible with attribution."

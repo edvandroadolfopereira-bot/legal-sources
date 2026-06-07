@@ -1,0 +1,38 @@
+{
+  "_id": "INTL-IEA-IRENA-13",
+  "_source": "INTL/IEA-IRENA-PolicyDB",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-06T18:05:19.147943+00:00",
+  "title": "Solar Decathlon",
+  "text": "The US Solar Decathlon is a competition in which teams of college and university students compete to design, build, and operate the most attractive, effective, and energy-efficient solar powered house. Since 2002, the Solar Decathlon has challenged over 25,000 students from more than 900 university teams across 40 countries. The goals of the Decathlon are to:1) educate the student participants - the \"decathletes\" - about the benefits of energy efficiency, renewable energy and green building technologies;2) raise awareness among the general public about renewable energy and energy efficiency and how solar energy technologies can reduce energy use;3) help solar energy technologies enter the marketplace faster;4) foster collaboration among students from different academic disciplines;5) promote an integrated or \"whole building design\" approach to new construction; and6) demonstrate to the public the potential of zero-energy homes, which produce as much energy from renewable sources, such as the sun and wind, as they consume.In FY2016, EERE is moving the Solar Decathalon from the Building Technologies Office to the Strategic Programs Office's Technology-to-Markets subprogram, where it can be better coordinated with the Strategic Programs Office's workforce development and communications resources.\n\nStatus: In force\nJurisdiction: International",
+  "date": "2002-01-01",
+  "url": "http://www.solardecathlon.gov",
+  "language": "English",
+  "policy_id": "13",
+  "status": "In force",
+  "year": 2002,
+  "countries": [
+    "United States"
+  ],
+  "country_codes": [
+    "USA"
+  ],
+  "jurisdiction": "International",
+  "technologies": [
+    "Solar thermal heaters",
+    "Space, water and process heating technologies",
+    "Electricity generation and CHP technologies",
+    "Building design (incl. passive cooling and heating)",
+    "Building envelope technologies",
+    "Heating, cooling and climate control technologies",
+    "Solar PV"
+  ],
+  "topics": [
+    "Technology R&D and innovation"
+  ],
+  "policy_types": [
+    "Awards",
+    "Education and training"
+  ],
+  "date_modified": "2021-08-23T22:00:00.000Z"
+}

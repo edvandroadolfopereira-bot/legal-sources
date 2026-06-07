@@ -1,0 +1,80 @@
+source:
+  id: "AE/DubaiLegalAffairs"
+  country: "AE"
+  name: "Dubai Legal Affairs Department - Official Gazette"
+  url: "https://legal.dubai.gov.ae/en/Services/Pages/Official-Gazette.aspx"
+  description: |
+    Dubai Official Gazette published by the Legal Affairs Department.
+    Contains laws, decrees, resolutions, regulations, bylaws, and orders
+    issued by the Government of Dubai since 1950. Arabic language.
+    Each gazette issue is a PDF containing multiple pieces of legislation.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+
+api:
+  type: "html_scrape"
+  base_url: "https://legal.dubai.gov.ae"
+
+data_model:
+  type: "legislation"
+  source_nature: "gazette_issues"
+  primary_key: "issue_number"
+  update_strategy: "upsert"
+  dedup_key:
+    - "issue_number"
+
+schema:
+  total_fields: null
+  key_fields:
+    - name: "issue_number"
+      description: "Gazette issue number"
+      type: "integer"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Gazette issue title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from the gazette PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date in ISO 8601"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "year"
+      description: "Publication year"
+      type: "integer"
+      role: "reference"
+      required: true
+  secondary_fields: []
+  probably_ignorable: []
+
+license:
+  id: "ogd"
+  name: "Dubai Government Open Data"
+  url: "https://legal.dubai.gov.ae/en/Pages/TermsAndConditions.aspx"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government gazette published for public access. No explicit restrictive license."
+
+notes: |
+  The Legal Affairs Department hosts the Dubai Official Gazette as downloadable PDFs.
+  Each gazette issue contains multiple pieces of legislation (laws, decrees, resolutions).
+  The page uses ASP.NET PostBack for year selection. PDFs are Arabic-language.
+  URL pattern: /OfficialGazette/{year}/OGD-{year}-{issue}.pdf
+  ~769 issues from 1950 to 2026. Separate from AE/DubaiGazette (which uses the SLC/DLP portal).

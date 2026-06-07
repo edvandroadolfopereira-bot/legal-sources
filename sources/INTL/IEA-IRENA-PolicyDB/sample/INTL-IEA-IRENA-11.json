@@ -1,0 +1,35 @@
+{
+  "_id": "INTL-IEA-IRENA-11",
+  "_source": "INTL/IEA-IRENA-PolicyDB",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-06T18:05:19.147704+00:00",
+  "title": "Government Vehicle Procurement Directives",
+  "text": "Since 2005, state authorities have been given directives on procurement of environmentally friendly cars (Ordinance on state authorities' purchasing and leasing of green cars. (SFS 2004:1364)) In 2005, half of all cars purchased had to be classified as environmentally friendly; this proportion increased to 75% in 2006 and to 85% in 2007.\nSince February 2009, all vehicles procured by state authorities must be classified as environmentally friendly, i.e. include those powered by electricity, biogas or ethanol (E85).\nSince 2006, gasoline and diesel cars with less than 120gCO2/km of emissions are also classified as environmentally friendly.\nAs of February 2009, the previous measure was superseded by a new Ordinance (SFS 2009:1) on environmental and traffic safety requirements for government vehicles and trips. The new ordinance included procurement requirements for light trucks, limiting procurement to those emitting less than 230gCO2/km. The new regulations also stated that at least 50% of emergency vehicles must also be classified as environmentally friendly, compared to 25% in 2008. State authorities must report on vehicles purchased and leased during the calendar year to the National Road Administration, including on how many cars are defined as environmentally friendly according to statute.\nIn 2011, the new Act came into force, replacing/superseding this measure. See entry on: \"Environmental requirements in the procurement of vehicles.\n\nStatus: Ended\nJurisdiction: National",
+  "date": "2005-01-01",
+  "url": "http://www.trafikverket.se",
+  "language": "Swedish",
+  "policy_id": "11",
+  "status": "Ended",
+  "year": 2005,
+  "countries": [
+    "Sweden"
+  ],
+  "country_codes": [
+    "SWE"
+  ],
+  "jurisdiction": "National",
+  "technologies": [
+    "Road vehicles",
+    "Medium duty vehicles, small trucks and minibuses",
+    "Commercial vehicles",
+    "Transport technologies"
+  ],
+  "topics": [
+    "Transport"
+  ],
+  "policy_types": [
+    "Sales ban",
+    "Low-emissions and efficient transport spending programmes"
+  ],
+  "date_modified": "2025-09-05T08:57:02.234Z"
+}

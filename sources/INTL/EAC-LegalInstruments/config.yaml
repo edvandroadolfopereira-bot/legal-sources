@@ -1,0 +1,48 @@
+source_id: INTL/EAC-LegalInstruments
+name: East African Community Legal Instruments (Treaties, Protocols, Acts & Regulations)
+country: INTL
+url: https://www.eac.int/documents
+description: >
+  Treaty, protocols, acts, and regulations of the East African Community (EAC).
+  8 partner states: Burundi, DRC, Kenya, Rwanda, South Sudan, Tanzania, Uganda, Somalia.
+  PDFs from eac.int document manager and eala.org (Acts of the Community).
+  Treaty full text from eacj.org. Text extracted via pdfplumber.
+data_types:
+  - legislation
+auth:
+  type: none
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+data_model:
+  update_strategy: append_only
+  dedup_key:
+    - _id
+schema:
+  key_fields:
+    - name: _id
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: url
+      type: string
+      required: true
+    - name: instrument_type
+      type: string
+      required: false
+license:
+  name: "EAC official publications"
+  url: "https://www.eac.int/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official legal instruments of the East African Community, published for public access"

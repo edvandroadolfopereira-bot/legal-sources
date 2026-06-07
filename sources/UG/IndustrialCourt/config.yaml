@@ -1,0 +1,68 @@
+# ===================================================================
+# UG/IndustrialCourt -- Industrial Court of Uganda
+# ===================================================================
+
+source:
+  id: "UG/IndustrialCourt"
+  country: "UG"
+  name: "Industrial Court of Uganda"
+  url: "https://industrialcourt.go.ug/"
+  description: |
+    Labour court awards, rulings, and judgements from Uganda's Industrial
+    Court. PDF case files via the WordPress Media REST API; titles encode
+    case numbers (LDR/MA/LDA/...) and parties.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "wordpress_rest"
+  base_url: "https://industrialcourt.go.ug/wp-json/wp/v2"
+  endpoints:
+    - "/media?media_type=application (~564 attachments — PDFs filtered)"
+  notes: "PDF case files (awards, rulings). Cause lists excluded. PDFs extracted via pdfplumber."
+
+data_model:
+  type: "case_law"
+  primary_key: "_id"
+  update_strategy: "append_only"
+
+schema:
+  total_fields: 11
+  key_fields:
+    - name: "text"
+      description: "Full text from PDF ruling/award"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "title"
+      description: "Case title (e.g., LDR-NO-70-OF-2016-AWARD-PARTY-A-VS-PARTY-B)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "case_number"
+      description: "Parsed case number"
+      type: "string"
+      role: "identifier"
+      required: false
+    - name: "document_type"
+      description: "ruling, award, or judgement"
+      type: "string"
+      role: "status"
+      required: false
+
+license:
+  name: "Public Government Documents (Uganda)"
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official court rulings from Uganda Industrial Court"

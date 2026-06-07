@@ -1,0 +1,60 @@
+source:
+  id: VU/RBV-PrudentialGuidelines
+  name: Reserve Bank of Vanuatu — Prudential Guidelines
+  country: VU
+  url: https://www.rbv.gov.vu/index.php/en/financial-stability/prudential-framework
+  description: >
+    The Reserve Bank of Vanuatu prudential framework: prudential guidelines
+    for domestic banks (12) and international banks (12), insurance prudential
+    guidelines (5), and the underlying banking and insurance legislation —
+    Financial Institutions Act CAP 254, International Banking Act CAP 280,
+    Insurance Act, and AML/CFT Act. Full text extracted from PDFs. Guidelines
+    are classified as doctrine; Acts and Regulations as legislation.
+
+data_model:
+  types:
+    - doctrine
+    - legislation
+  update_strategy: upsert
+  dedup_key:
+    - doc_id
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+schema:
+  required_fields:
+    - _id
+    - _source
+    - _type
+    - _fetched_at
+    - title
+    - text
+    - url
+  key_fields:
+    - name: doc_id
+      type: string
+      required: true
+    - name: category
+      type: string
+      required: true
+    - name: language
+      type: string
+      required: true
+
+schedule:
+  full_refresh: quarterly
+  update_check: monthly
+
+license:
+  name: Public Domain (Government)
+  url: https://www.rbv.gov.vu/
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Reserve Bank of Vanuatu official prudential guidelines and Republic of Vanuatu legislation published for public access.

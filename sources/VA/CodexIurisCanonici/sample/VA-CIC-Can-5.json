@@ -1,0 +1,16 @@
+{
+  "_id": "VA-CIC-Can-5",
+  "_source": "VA/CodexIurisCanonici",
+  "_type": "legislation",
+  "_fetched_at": "2026-05-30T22:16:21.532337+00:00",
+  "title": "Canon 5",
+  "text": "§ 1. Vigentes in praesens contra horum praescripta canonum consuetudines sive universales sive particulares, quae ipsis canonibus huius Codicis reprobantur, prorsus suppressae sunt, nec in posterum reviviscere sinantur; ceterae quoque suppressae habeantur, nisi expresse Codice aliud caveatur, aut centenariae sint vel immemorabiles, quae quidem, si de iudicio Ordinarii pro locorum ac personarum adiunctis submoveri nequeunt, tolerari possunt.\n\n§ 2. Consuetudines praeter ius hucusque vigentes, sive universales sive particulares, servantur.",
+  "text_en": "§1. Universal or particular customs presently in force which are contrary to the prescripts of these canons and are reprobated by the canons of this Code are absolutely suppressed and are not permitted to revive in the future. Other contrary customs are also considered suppressed unless the Code expressly provides otherwise or unless they are centenary or immemorial customs which can be tolerated if, in the judgment of the ordinary, they cannot be removed due to the circumstances of places and persons.\n\n§2. Universal or particular customs beyond the law (praeter ius) which are in force until now are preserved.",
+  "canon_number": 5,
+  "book": "Liber I",
+  "book_title_la": "De Normis Generalibus",
+  "book_title_en": "General Norms",
+  "date": "1983-01-25",
+  "url": "https://www.vatican.va/archive/cod-iuris-canonici/cic_index_la.html",
+  "language": "la"
+}

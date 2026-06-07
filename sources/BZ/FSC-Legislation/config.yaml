@@ -1,0 +1,72 @@
+# ===================================================================
+# BZ/FSC-Legislation -- Financial Services Commission Laws & Amendments
+# ===================================================================
+# Financial services legislation from Belize FSC: Companies Act,
+# Securities Industry Act, FSC Act, AML/CFT, Economic Substance, etc.
+# ===================================================================
+
+source:
+  id: "BZ/FSC-Legislation"
+  country: "BZ"
+  name: "Belize Financial Services Commission — Laws & Amendments"
+  url: "https://www.belizefsc.org.bz/laws-amendments/"
+  description: |
+    Financial services legislation, statutory instruments, and amendments
+    published by the Belize Financial Services Commission. Covers the
+    Belize Companies Act, Securities Industry Act, Financial Services
+    Commission Act, Money Laundering & Terrorism Prevention Act,
+    Economic Substance Act, International Foundations, Limited Liability
+    Partnerships, High Seas Fishing, and related regulations.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "wp_rest_api_pdf"
+  base_url: "https://www.belizefsc.org.bz"
+  notes: "WP REST API v2 for post listing, PDF download + pdfplumber for text extraction"
+
+data_model:
+  type: "legislation"
+  primary_key: "url"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "title"
+      description: "Document title from WP post"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date from WP post"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "category"
+      description: "WP category slug"
+      type: "string"
+      role: "metadata"
+      required: false
+
+license:
+  name: "Public Government Documents (Belize)"
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulatory documents published for public compliance use"

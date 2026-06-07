@@ -1,0 +1,74 @@
+# GE/NBG-LegalActs - Georgia National Bank Legal Acts & Regulations
+# Source configuration
+
+source_id: GE/NBG-LegalActs
+name: Georgia National Bank — Legal Acts & Regulations
+country: GE
+url: https://nbg.gov.ge/en/legal-acts/acts
+description: >
+  Legal acts, orders, decrees and regulations issued by the National Bank of Georgia.
+  Covers banking supervision, payment systems, securities market, monetary policy,
+  consumer protection, sustainable finance, and other regulatory domains.
+  Published via the NBG website with PDF attachments containing full text.
+
+# Data model
+data_model:
+  type: legislation
+  update_strategy: upsert
+  dedup_key:
+    - document_number
+    - id
+
+# Authentication
+auth:
+  type: none
+
+# Rate limiting
+rate_limit:
+  requests_per_second: 2
+  burst: 5
+  max_workers: 1
+
+# Schema
+schema:
+  key_fields:
+    - name: "_id"
+      type: "string"
+      required: true
+    - name: "document_number"
+      type: "string"
+      required: false
+    - name: "title"
+      type: "string"
+      required: true
+    - name: "date"
+      type: "string"
+      required: true
+    - name: "text"
+      type: "string"
+      required: true
+    - name: "category"
+      type: "string"
+      required: false
+    - name: "sub_category"
+      type: "string"
+      required: false
+    - name: "document_type"
+      type: "string"
+      required: false
+    - name: "recipient"
+      type: "string"
+      required: false
+    - name: "status"
+      type: "string"
+      required: false
+
+# License
+license:
+  name: "Public Government Data"
+  url: "https://nbg.gov.ge/en/page/legal-acts"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government regulatory documents published for public access"

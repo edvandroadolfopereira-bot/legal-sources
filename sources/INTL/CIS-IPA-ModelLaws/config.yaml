@@ -1,0 +1,35 @@
+fetch:
+  max_retries: 3
+  rate_limit: 1.5
+  timeout: 60
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+source:
+  auth: none
+  country: INTL
+  data_types:
+  - legislation
+  description: >
+    CIS Interparliamentary Assembly model codes, laws, and recommendations.
+    ~500 model legislative acts for harmonization across CIS member states.
+    DOCX downloads from paginated HTML listing.
+  id: INTL/CIS-IPA-ModelLaws
+  name: CIS Interparliamentary Assembly Model Laws
+  url: https://iacis.ru/
+license:
+  name: CIS open access
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "CIS interparliamentary model laws are publicly accessible"

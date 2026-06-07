@@ -1,0 +1,47 @@
+fetch:
+  endpoints:
+    karar_ozetleri: https://www.kvkk.gov.tr/Icerik/5406/kurul-karar-ozetleri
+    ilke_kararlari: https://www.kvkk.gov.tr/Icerik/7201/ilke-kararlari
+    kurul_kararlari: https://www.kvkk.gov.tr/Icerik/5419/kurul-kararlari
+  rate_limit: 2.0
+  user_agent: LegalDataHunter/1.0 (Open Data Research)
+schema:
+  key_fields:
+  - name: decision_number
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  normalized_fields:
+  - _id
+  - _source
+  - _type
+  - _fetched_at
+  - title
+  - text
+  - date
+  - url
+  - decision_number
+  - decision_category
+source:
+  auth: none
+  country: TR
+  data_types:
+  - doctrine
+  description: >
+    Turkey Personal Data Protection Authority (KVKK) board decisions,
+    principle decisions, and decision summaries. Covers enforcement actions,
+    administrative fines, and policy guidance under Law No. 6698.
+  id: TR/KVKK
+  name: Turkey Personal Data Protection Authority (KVKK) — Board Decisions
+  update_frequency: monthly
+  url: https://www.kvkk.gov.tr
+license:
+  name: "Public Domain (Turkish Government)"
+  url: "https://www.mevzuat.gov.tr/MevzuatMetin/1.5.5846.pdf"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Turkish government publications are in the public domain under Law No. 5846 Art. 31"

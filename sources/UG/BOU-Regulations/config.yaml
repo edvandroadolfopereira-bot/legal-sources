@@ -1,0 +1,26 @@
+source_id: UG/BOU-Regulations
+name: Bank of Uganda — Acts, Regulations and Guidelines
+country: UG
+url: https://www.bou.or.ug/
+data_types:
+  - legislation
+auth:
+  type: none
+schedule: monthly
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - date
+    - text
+    - document_type
+
+license:
+  name: "Custom Terms (Government)"
+  url: "https://www.bou.or.ug/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Bank of Uganda regulatory documents — acts, regulations, guidelines, and supervisory circulars published for public compliance."

@@ -1,0 +1,53 @@
+source:
+  id: MM/LincolnLegal
+  name: Myanmar Laws in English (Lincoln Legal Services)
+  country: MM
+  url: https://www.lincolnmyanmar.com/laws-in-english/
+  language: en
+  data_types:
+    - legislation
+
+endpoints:
+  listing_page: https://www.lincolnmyanmar.com/laws-in-english/
+
+rate_limit:
+  requests_per_second: 0.5
+  delay_seconds: 2.0
+
+schema:
+  key_fields:
+    - name: _id
+      type: string
+      required: true
+    - name: _source
+      type: string
+      required: false
+    - name: _type
+      type: string
+      required: false
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: date
+      required: false
+    - name: url
+      type: string
+      required: true
+
+data_model:
+  update_strategy: upsert
+  dedup_key:
+    - _id
+
+license:
+  name: "Lincoln Legal Services Terms"
+  url: "https://www.lincolnmyanmar.com/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "English translations of Myanmar laws published freely by Lincoln Legal Services Myanmar"

@@ -1,0 +1,86 @@
+# ===================================================================
+# LB/BCCL — Banking Control Commission of Lebanon
+# ===================================================================
+# Banking circulars issued by the BCCL. ~90+ circulars from 1967-2025.
+# Full text via PDF extraction (Arabic). English metadata from website.
+# ===================================================================
+
+source:
+  id: "LB/BCCL"
+  country: "LB"
+  name: "Banking Control Commission of Lebanon (BCCL) Circulars"
+  url: "https://bccl.gov.lb/circulars/"
+  description: |
+    The Banking Control Commission of Lebanon (BCCL) is the supervisory
+    authority for banks, financial institutions, exchange institutions,
+    credit counters and electronic cash transfer companies in Lebanon.
+    This source collects BCCL circulars — regulatory directives covering
+    capital adequacy, foreign exchange, AML/CFT, reporting, and governance.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+  notes: "2-second delay between PDF downloads to be respectful."
+
+api:
+  type: "html-scraping"
+  base_url: "https://bccl.gov.lb"
+  endpoints:
+    circulars_page: "/circulars/"
+    pdf_pattern: "/Documents/ArabicCirculars/BCCLCircularNo{number}.pdf"
+  response_format: "html+pdf"
+  pagination: "none"
+
+schema:
+  total_fields: 9
+  key_fields:
+    - name: "_id"
+      description: "Unique ID from circular number"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Circular description (English)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the circular (Arabic, from PDF)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Issue date"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "url"
+      description: "URL to PDF"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "circular_number"
+      description: "Circular number"
+      type: "string"
+      role: "identifier"
+      required: true
+    - name: "addressee"
+      description: "Target institutions"
+      type: "string"
+      role: "classifier"
+      required: false
+
+license:
+  name: "Lebanese Government Publication"
+  url: "https://bccl.gov.lb/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government regulatory circulars published for public compliance."

@@ -1,0 +1,42 @@
+fetcher:
+  base_url: https://www.gra.gov.gy
+  rate_limit: 2.0
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: url
+    required: true
+    type: string
+source:
+  auth: none
+  country: GY
+  data_types:
+  - doctrine
+  description: >
+    Guyana Revenue Authority tax policies and guidance documents on VAT,
+    income tax, customs, and excise. 48 posts fetched via WordPress REST
+    API (category 12). English language.
+  format: html
+  id: GY/GRA-TaxPolicy
+  language: en
+  name: Guyana Revenue Authority — Tax Policies
+  url: https://www.gra.gov.gy/category/tax-policies/
+license:
+  name: "Government of Guyana — Public Information"
+  url: "https://www.gra.gov.gy/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official tax policy documents published by the Guyana Revenue Authority for public access."

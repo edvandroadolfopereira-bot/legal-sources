@@ -1,0 +1,51 @@
+id: TR/BDDK
+name: Turkish Banking Regulation and Supervision Agency (BDDK)
+country: TR
+url: https://www.bddk.org.tr/Mevzuat
+description: >
+  Banking regulations, communiques, board decisions, and supervisory guidance
+  from the Turkish Banking Regulation and Supervision Agency (BDDK).
+  ~1,100+ documents across regulations, circulars, guides, and board decisions.
+  Full text extracted from PDF documents.
+data_types:
+  - doctrine
+auth:
+  type: none
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+data_model:
+  update_strategy: upsert
+  dedup_key:
+    - _id
+schema:
+  key_fields:
+    - name: _id
+      type: string
+      required: true
+    - name: _source
+      type: string
+      required: true
+    - name: _type
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: date
+      required: false
+    - name: url
+      type: string
+      required: true
+license:
+  name: "BDDK Terms of Use (commercial use restricted)"
+  url: "https://www.bddk.org.tr/"
+  commercial_use: false
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Commercial use requires written permission from BDDK. Excerpts permitted with attribution."

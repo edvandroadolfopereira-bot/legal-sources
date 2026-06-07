@@ -1,0 +1,16 @@
+{
+  "_id": "VA-CIC-Can-2",
+  "_source": "VA/CodexIurisCanonici",
+  "_type": "legislation",
+  "_fetched_at": "2026-05-30T22:16:21.531350+00:00",
+  "title": "Canon 2",
+  "text": "Codex plerumque non definit ritus, qui in actionibus liturgicis celebrandis sunt servandi; quare leges liturgicae hucusque vigentes vim suam retinent, nisi earum aliqua Codicis canonibus sit contraria.",
+  "text_en": "For the most part the Code does not define the rites which must be observed in celebrating liturgical actions. Therefore, liturgical laws in force until now retain their force unless one of them is contrary to the canons of the Code.",
+  "canon_number": 2,
+  "book": "Liber I",
+  "book_title_la": "De Normis Generalibus",
+  "book_title_en": "General Norms",
+  "date": "1983-01-25",
+  "url": "https://www.vatican.va/archive/cod-iuris-canonici/cic_index_la.html",
+  "language": "la"
+}

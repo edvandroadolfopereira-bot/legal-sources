@@ -1,0 +1,45 @@
+{
+  "_id": "UNCITRAL-Status-payments_conventions_bills_of_exchange",
+  "_source": "INTL/UNCITRAL-EnactmentStatus",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-04T22:06:52.148489+00:00",
+  "title": "Status: United Nations Convention on International Bills of Exchange and International Promissory Notes (New York, 1988)",
+  "text": "Authoritative information on the status of the treaties deposited with the Secretary-General of the United Nations, including historical status information, may be obtained by consulting the United Nations Treaty Collection (\ntreaties.un.org\n).\nThe UNCITRAL Secretariat also prepares yearly a document containing the Status of Conventions and Enactments of UNCITRAL Model Laws, which is available on the web page of the corresponding\nUNCITRAL Commission Session\n.\nAll dates: DD/MM/YYYY\nState\nNotes\nSignature\nRatification, Accession(*), Approval(†), Acceptance(‡) or Succession(§)\nEntry into force\nCanada\n07/12/1989\nGabon\n15/12/2004(*)\nGuinea\n23/01/1991(*)\nHonduras\n08/08/2001(*)\nLiberia\n16/09/2005(*)\nMexico\n11/09/1992(*)\nRussian Federation\n30/06/1990\nUnited States of America\n29/06/1990\nParties: 5\n(10 ACTIONS ARE REQUIRED FOR ENTRY INTO FORCE)",
+  "date": "1988-01-01",
+  "url": "https://uncitral.un.org/en/texts/payments/conventions/bills_of_exchange/status",
+  "num_jurisdictions": 8,
+  "entries": [
+    {
+      "state": "Canada",
+      "year": "07/12/1989"
+    },
+    {
+      "state": "Gabon",
+      "year": "15/12/2004(*)"
+    },
+    {
+      "state": "Guinea",
+      "year": "23/01/1991(*)"
+    },
+    {
+      "state": "Honduras",
+      "year": "08/08/2001(*)"
+    },
+    {
+      "state": "Liberia",
+      "year": "16/09/2005(*)"
+    },
+    {
+      "state": "Mexico",
+      "year": "11/09/1992(*)"
+    },
+    {
+      "state": "Russian Federation",
+      "year": "30/06/1990"
+    },
+    {
+      "state": "United States of America",
+      "year": "29/06/1990"
+    }
+  ]
+}

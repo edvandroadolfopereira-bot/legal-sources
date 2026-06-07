@@ -1,0 +1,86 @@
+source:
+  id: "BA/BihKonk"
+  country: "BA"
+  name: "Competition Council of Bosnia and Herzegovina"
+  url: "https://bihkonk.gov.ba"
+  description: |
+    Decisions of the Competition Council of BiH (Konkurencijsko vijeće BiH).
+    Covers concentrations, prohibited agreements, abuse of dominant position,
+    and other competition decisions. Published as PDFs via WordPress.
+    Languages: Bosnian, Serbian, Croatian, English.
+    Coverage: 2005-present, ~672 decisions across all categories.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+  max_workers: 3
+
+api:
+  type: "rest"
+  base_url: "https://bihkonk.gov.ba/wp-json/wp/v2"
+
+data_model:
+  type: "doctrine"
+  source_nature: "gazette"
+  primary_key: "id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "id"
+
+schema:
+  total_fields: null
+  key_fields:
+    - name: "id"
+      description: "WordPress post ID"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Decision title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the decision (extracted from PDF)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date"
+      type: "date"
+      role: "temporal_key"
+      required: true
+  secondary_fields:
+    - name: "category"
+      description: "Decision category (concentrations, prohibited_agreements, abuse_of_dominance, other)"
+    - name: "pdf_url"
+      description: "URL to the original PDF document"
+  probably_ignorable: []
+
+license:
+  id: "ogd"
+  name: "Open Government Data (Bosnia and Herzegovina)"
+  url: "https://bihkonk.gov.ba"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government competition decisions, published for public transparency."
+
+notes: |
+  WordPress REST API at /wp-json/wp/v2/posts with category filters.
+  Decisions are PDF embeds — full text extracted via pdfplumber/pypdf.
+  Four Bosnian-language decision categories:
+    506 = Koncentracije (Concentrations)
+    564 = Zabranjeni sporazumi (Prohibited agreements)
+    578 = Zloupotreba dominantnog položaja (Abuse of dominance)
+    536 = Ostalo - odluke (Other decisions)
+  English categories exist but have very few posts (<10).
+  ~672 total decisions across categories.

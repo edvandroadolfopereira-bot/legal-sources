@@ -1,0 +1,19 @@
+{
+  "_id": "sv-sc-80",
+  "_source": "SV/SC-Decisions",
+  "_type": "case_law",
+  "_fetched_at": "2026-05-28T06:05:30.986371+00:00",
+  "title": "Caso INTER-TOURS",
+  "text": "# Caso INTER-TOURS\n\nLas cuatro agencias de viajes U-Travel, Agencias de Viajes Escamilla, Amate Travel e Inter-Tours acordaron ofertar precios idénticos respecto de las comisiones por servicio ofertadas en licitaciones públicas promovidas por el MINEC y CORSATUR.\n\n## Datos del caso\n- Agente económico: INTER-TOURS\n- Práctica: Acuerdo anticompetitivo en licitaciones públicas, tipificado en la letra c) del artículo 25 de la Ley de Competencia.\n- Mercado: Suministro de boletos aéreos a instituciones públicas\n- Sanción: $3,046.50\n- Fecha de apertura: 07 Jul 2009\n\n## Cronología de actuaciones\n- 2009-07-07 (SC): El Consejo Directivo de la SC emite la resolución final donde sanciona a cuatro agencias de viajes por acuerdos anticompetitivos en licitaciones públicas. [Resolución PDF: https://uploads.sc.gob.sv/C-001-O-PA-NR-2009_070709_0900.pdf]\n- 2009-09-28 (SC): La SC solicita a la FGR el pago de las multas.\n- 2011-03-09 (SC): Reunión de personal técnico de la SC y la FGR para actualizar el proceso de pago de multas.\n- 2011-03-10 (SC): SC remitió información a FGR sobre procesos contenciosos administrativos iniciados por Amate Travel y U Travel.\n- 2011-03-30 (SC): La SC solicita nuevamente a la Fiscalí­a General de la República el cobro de las multas\n- 2012-08-24 (SC): La SC solicita nuevamente a la FGR el cobro de las multas.\n- 2013-01-30 (SC): FGR informa a la SC sobre el incumplimiento de pago de las multas por inicio de contenciosos administrativos.\n- 2013-02-25 (SC): SC informa a la FGR que Inter Tours y Agencia de Viajes Escamilla no iniciaron procesos contenciosos administrativos, y a U Travel y Amate Travel no les suspendieron el pago de la multa, por lo que todas deben pagar la multa.",
+  "date": "2013-02-25",
+  "url": "https://app.sc.gob.sv/caso.php?id=80",
+  "case_id": 80,
+  "economic_agent": "INTER-TOURS",
+  "practice": "Acuerdo anticompetitivo en licitaciones públicas, tipificado en la letra c) del artículo 25 de la Ley de Competencia.",
+  "market": "Suministro de boletos aéreos a instituciones públicas",
+  "sanction": "$3,046.50",
+  "opened_date": "2009-07-07",
+  "event_count": 8,
+  "language": "es",
+  "country": "SV"
+}

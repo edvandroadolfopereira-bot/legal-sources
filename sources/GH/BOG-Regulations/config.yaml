@@ -1,0 +1,45 @@
+fetcher:
+  base_url: https://www.bog.gov.gh
+  rate_limit: 2.0
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: doc_type
+    required: false
+    type: string
+  - name: url
+    required: true
+    type: string
+source:
+  auth: none
+  country: GH
+  data_types:
+  - legislation
+  description: >
+    Bank of Ghana regulations, directives, and banking acts. ~66 PDF documents
+    (61 regulations/directives + 5 banking acts) discovered via WordPress REST
+    API custom post types. English language.
+  format: pdf
+  id: GH/BOG-Regulations
+  language: en
+  name: Bank of Ghana — Regulations & Directives
+  url: https://www.bog.gov.gh/downloads/supervision-and-regulation-downloads/regulations-directives/
+license:
+  name: "Bank of Ghana Terms of Use"
+  url: "https://www.bog.gov.gh/disclaimer/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulatory documents published by the Bank of Ghana for public access."

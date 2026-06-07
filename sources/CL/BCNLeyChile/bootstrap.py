@@ -131,7 +131,7 @@ def search_norms(page: int = 1, per_page: int = 20, tipo_norma: int = 0, max_ret
     Search for norms via the buscarjson endpoint.
 
     Returns (results_list, total_items).
-    Retries on transient server errors (502, 503, 504) with exponential backoff.
+    Retries on transient errors (timeouts, 502/503/504) with exponential backoff.
     """
     params = {
         'string': '',
@@ -142,7 +142,7 @@ def search_norms(page: int = 1, per_page: int = 20, tipo_norma: int = 0, max_ret
     }
     for attempt in range(max_retries + 1):
         try:
-            response = requests.get(SEARCH_URL, params=params, headers=HEADERS, timeout=30)
+            response = requests.get(SEARCH_URL, params=params, headers=HEADERS, timeout=60)
             response.raise_for_status()
             data = response.json()
 
@@ -159,6 +159,14 @@ def search_norms(page: int = 1, per_page: int = 20, tipo_norma: int = 0, max_ret
                 time.sleep(wait)
                 continue
             raise
+        except (requests.exceptions.ReadTimeout, requests.exceptions.ConnectionError) as e:
+            if attempt < max_retries:
+                wait = 2 ** (attempt + 1)
+                logger.warning(f"Page {page}: {type(e).__name__}, retrying in {wait}s (attempt {attempt + 1}/{max_retries})...")
+                time.sleep(wait)
+                continue
+            logger.error(f"Page {page}: {type(e).__name__} after {max_retries} retries, stopping pagination")
+            return [], 0
 
 
 def fetch_norm_text(id_norma: int) -> Optional[dict]:
@@ -392,14 +400,17 @@ def main():
             sys.exit(0 if success else 1)
         else:
             logger.info("Full bootstrap mode")
+            data_dir = SOURCE_DIR / "data"
+            data_dir.mkdir(parents=True, exist_ok=True)
+            jsonl_path = data_dir / "records.jsonl"
             count = 0
-            SAMPLE_DIR.mkdir(parents=True, exist_ok=True)
-            for record in fetch_all():
-                count += 1
-                filepath = SAMPLE_DIR / f"record_{record['idNorma']}.json"
-                with open(filepath, "w", encoding="utf-8") as f:
-                    json.dump(record, f, ensure_ascii=False, indent=2)
-            logger.info(f"Processed {count} records")
+            with open(jsonl_path, "w", encoding="utf-8") as f:
+                for record in fetch_all():
+                    f.write(json.dumps(record, ensure_ascii=False) + "\n")
+                    count += 1
+                    if count % 500 == 0:
+                        f.flush()
+            logger.info(f"Processed {count} records to {jsonl_path}")
             sys.exit(0)
 
 

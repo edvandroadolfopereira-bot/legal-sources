@@ -1,0 +1,29 @@
+source_id: MV/CMDA-Regulations
+name: Capital Market Development Authority of Maldives
+country: MV
+url: https://cmda.gov.mv/en
+data_types:
+  - legislation
+auth:
+  type: none
+schedule: monthly
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - date
+    - text
+
+license:
+  name: "Public Domain (Government)"
+  url: "https://cmda.gov.mv/en"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official CMDA regulatory documents (regulations, circulars, guidelines) published in English for public compliance."

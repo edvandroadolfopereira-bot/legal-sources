@@ -1,0 +1,112 @@
+# ===================================================================
+# DO/ConsultoriaJuridica -- Consultoría Jurídica del Poder Ejecutivo
+# (Dominican Republic), Comprehensive Legislation Database
+# ===================================================================
+# Laws, decrees, regulations, resolutions, and Official Gazette entries
+# dating back to 1926. Full text extracted from PDFs via pdfminer.
+# ===================================================================
+
+source:
+  id: "DO/ConsultoriaJuridica"
+  country: "DO"
+  name: "Consultoría Jurídica del Poder Ejecutivo — Dominican Legislation Database"
+  url: "https://www.consultoria.gov.do/consulta/"
+  description: |
+    The most comprehensive database of Dominican legislation maintained by the
+    Executive Branch's Legal Advisory Office (Consultoría Jurídica del Poder
+    Ejecutivo). Covers laws (leyes), decrees (decretos), regulations
+    (reglamentos), resolutions (resoluciones), miscellaneous acts (varios),
+    and Official Gazette entries (gaceta oficial) from 1926 to present.
+    AJAX-based search with PDF document downloads. Metadata available via
+    JSON API endpoint.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "html_scrape_pdf"
+  base_url: "https://www.consultoria.gov.do"
+  search_endpoint: "/Consulta/Home/Search?Length=7"
+  info_endpoint: "/consulta/Home/DocumentInfo"
+  file_endpoint: "/Consulta/Home/FileManagement"
+  notes: |
+    ASP.NET MVC site with AJAX search form. POST to Search endpoint with
+    DocumentTypeCode (0=all, 1=Leyes, 2=Decretos, etc.) and year filters.
+    Returns HTML table with document IDs. JSON metadata via DocumentInfo
+    endpoint. PDFs via FileManagement with managementType=1 (view) or 2
+    (download). Anti-forgery token required for search POST.
+
+data_model:
+  type: "legislation"
+  primary_key: "document_id"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 14
+  key_fields:
+    - name: "text"
+      description: "Full text extracted from the PDF document"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "title"
+      description: "Document title from the search results"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "document_id"
+      description: "Internal document ID from the database"
+      type: "string"
+      role: "identifier"
+      required: true
+    - name: "document_number"
+      description: "Official document number (e.g., '12-20')"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "document_type"
+      description: "Type: Leyes, Decretos, Reglamentos, Resoluciones, Varios, Gaceta Oficial"
+      type: "string"
+      role: "metadata"
+      required: true
+    - name: "gazette_number"
+      description: "Official Gazette (Gaceta Oficial) number"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "date"
+      description: "Document date in ISO 8601 format"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "president"
+      description: "President who signed the document"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "consultor"
+      description: "Legal advisor (Consultor Jurídico) at the time"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "url"
+      description: "URL to view the original PDF"
+      type: "string"
+      role: "identifier"
+      required: true
+
+license:
+  name: "Open Government Data (Dominican Republic)"
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official legislation published by the Dominican government's Legal Advisory Office for public consultation."

@@ -1,0 +1,91 @@
+# ===================================================================
+# CR/SUGEF-Regulations -- Superintendencia General de Entidades
+# Financieras (Costa Rica), Normativa Vigente
+# ===================================================================
+# Prudential/financial-sector regulations: "Acuerdos SUGEF" plus the
+# cross-cutting CONASSIF "Normativa Transversal". ~39 PDFs.
+# ===================================================================
+
+source:
+  id: "CR/SUGEF-Regulations"
+  country: "CR"
+  name: "Costa Rica SUGEF — Financial Entities Supervision Regulations"
+  url: "https://www.sugef.fi.cr/"
+  description: |
+    Current regulatory framework ("Normativa Vigente") of the Costa Rican
+    banking and financial-entities supervisor (SUGEF). Includes the
+    "Acuerdos SUGEF" (e.g. SUGEF 3-06 suficiencia patrimonial, SUGEF 24-00
+    grupos y conglomerados financieros, SUGEF 11-18 prevención de
+    legitimación de capitales) and the cross-cutting "Normativa
+    Transversal" issued by CONASSIF (Consejo Nacional de Supervisión del
+    Sistema Financiero), which applies across all financial supervisors.
+    Covers capital adequacy, credit risk, AML/CFT, corporate governance,
+    information disclosure, and financial-group consolidation.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "html_scrape_pdf"
+  base_url: "https://www.sugef.fi.cr"
+  notes: |
+    Two .aspx listing pages embed direct links to the regulation PDFs:
+    /normativa/normativa_vigente.aspx and /normativa/NormativaTransversal.aspx.
+    Hrefs ending in .pdf are extracted, then each PDF is downloaded and
+    text-extracted with pdfplumber. TLS verification is disabled because the
+    server presents an incomplete certificate chain (public, read-only data).
+
+data_model:
+  type: "doctrine"
+  primary_key: "url"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 13
+  key_fields:
+    - name: "text"
+      description: "Full text extracted from the PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "title"
+      description: "Document title derived from the filename (version annotation stripped)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "doc_number"
+      description: "Acuerdo identifier, e.g. 'SUGEF 3-06' or 'CONASSIF 1-10'"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "category"
+      description: "acuerdo_sugef | acuerdo_conassif | reglamento"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "date"
+      description: "Best-effort issue/version date parsed from document text (ISO)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "Live PDF URL"
+      type: "string"
+      role: "identifier"
+      required: true
+
+license:
+  name: "Open Government Data (Costa Rica)"
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulatory documents published by a Costa Rican public institution (SUGEF / CONASSIF) for public use."

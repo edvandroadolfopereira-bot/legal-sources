@@ -1,0 +1,64 @@
+# ===================================================================
+# JM/TAJ-PracticeNotes -- Jamaica Tax Administration Practice Notes & Bulletins
+# ===================================================================
+# ~125+ tax practice notes, technical advisories, and bulletins.
+# HTML scraping of publication pages + PDF text extraction.
+# ===================================================================
+
+source:
+  id: "JM/TAJ-PracticeNotes"
+  country: "JM"
+  name: "Jamaica Tax Administration — Practice Notes & Bulletins"
+  url: "https://www.jamaicatax.gov.jm/publications"
+  description: |
+    Tax practice notes, technical advisories, and bulletins from
+    Jamaica's Tax Administration (TAJ). Covers GCT, income tax,
+    transfer pricing, withholding tax, FATCA, and more.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "html_scrape_plus_pdf"
+  practice_notes_url: "https://www.jamaicatax.gov.jm/web/guest/practice-notes"
+  tax_bulletins_url: "https://www.jamaicatax.gov.jm/web/guest/tax-bulletins"
+
+data_model:
+  type: "doctrine"
+  primary_key: "pdf_filename"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "category"
+      description: "practice_note or tax_bulletin"
+      type: "string"
+      role: "classifier"
+      required: true
+
+license:
+  name: "Jamaica Government Open Data"
+  url: "https://www.jamaicatax.gov.jm/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government tax guidance, freely accessible. Attribution to TAJ required."

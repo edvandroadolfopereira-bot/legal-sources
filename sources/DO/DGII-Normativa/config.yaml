@@ -1,0 +1,102 @@
+# ===================================================================
+# DO/DGII-Normativa -- Dirección General de Impuestos Internos
+# (Dominican Republic), Normas Generales + Resoluciones
+# ===================================================================
+# Full-text general tax norms (issued under arts. 34-35 of the Tax
+# Code, Ley 11-92) and DGII resolutions. Full text via pdfplumber.
+# ===================================================================
+
+source:
+  id: "DO/DGII-Normativa"
+  country: "DO"
+  name: "Dominican Republic DGII — Tax Norms & Resolutions"
+  url: "https://dgii.gov.do/"
+  description: |
+    Regulatory output of the Dominican tax authority (Dirección General
+    de Impuestos Internos). Covers the "Normas Generales" — binding
+    general norms the DGII issues under articles 34-35 of the Tax Code
+    (Ley 11-92) on income tax (ISR), VAT (ITBIS), selective consumption
+    tax (ISC), fiscal vouchers (comprobantes fiscales), incentive laws,
+    casinos and games of chance, motor vehicles, asset tax, and sectoral
+    matters — plus the DGII's "Resoluciones" (e.g. fiscal-closure
+    multiplier/adjustment resolutions and ISC indexation resolutions).
+    The Tax Code and laws themselves are authored by Congress and belong
+    to legislation sources; this source carries the DGII's own normative
+    and resolutory acts.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "html_scrape_pdf"
+  base_url: "https://dgii.gov.do"
+  notes: |
+    ASP.NET/SharePoint site. Two listing pages enumerate the corpus as
+    static HTML with direct anchors to /Documents/*.pdf files:
+      /legislacion/normasGenerales/Paginas/default.aspx (~176 norms)
+      /legislacion/resoluciones/Paginas/default.aspx     (~61 resolutions)
+    Each anchor's text carries a descriptive title plus "Año:" /
+    "Modificado:" metadata. PDFs are downloaded and text-extracted with
+    pdfplumber. TLS verification is disabled (incomplete certificate
+    chain; public, read-only data). File paths contain spaces and accents
+    and are re-encoded before download.
+
+data_model:
+  type: "doctrine"
+  primary_key: "url"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 13
+  key_fields:
+    - name: "text"
+      description: "Full text extracted from the PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "title"
+      description: "Descriptive title parsed from the listing anchor text"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "doc_number"
+      description: "Norm/resolution identifier, e.g. '07-19' or 'DDG-AR1-2026-00003'"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "category"
+      description: "norma_general | resolucion"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "subcategory"
+      description: "Topical folder, e.g. 'NG sobre Impuesto sobre la Renta (ISR)'"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "date"
+      description: "Issue date (dateline in body, else listing modification date; ISO)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "Live PDF URL"
+      type: "string"
+      role: "identifier"
+      required: true
+
+license:
+  name: "Open Government Data (Dominican Republic)"
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official tax norms and resolutions published by a Dominican public institution (DGII) for public use."

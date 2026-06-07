@@ -1,0 +1,16 @@
+{
+  "_id": "VA-CIC-Can-11",
+  "_source": "VA/CodexIurisCanonici",
+  "_type": "legislation",
+  "_fetched_at": "2026-05-30T22:16:21.533804+00:00",
+  "title": "Canon 11",
+  "text": "Legibus mere ecclesiasticis tenentur baptizati in Ecclesia catholica vel in eandem recepti, quique sufficienti rationis usu gaudent et, nisi aliud iure expresse caveatur, septimum aetatis annum expleverunt.",
+  "text_en": "Merely ecclesiastical laws bind those who have been baptized in the Catholic Church or received into it, possess the efficient use of reason, and, unless the law expressly provides otherwise, have completed seven years of age.",
+  "canon_number": 11,
+  "book": "Liber I",
+  "book_title_la": "De Normis Generalibus",
+  "book_title_en": "General Norms",
+  "date": "1983-01-25",
+  "url": "https://www.vatican.va/archive/cod-iuris-canonici/cic_index_la.html",
+  "language": "la"
+}

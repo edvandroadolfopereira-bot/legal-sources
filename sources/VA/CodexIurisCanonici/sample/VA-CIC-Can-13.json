@@ -1,0 +1,16 @@
+{
+  "_id": "VA-CIC-Can-13",
+  "_source": "VA/CodexIurisCanonici",
+  "_type": "legislation",
+  "_fetched_at": "2026-05-30T22:16:21.534238+00:00",
+  "title": "Canon 13",
+  "text": "§ 1. Leges particulares non praesumuntur personales, sed territoriales nisi aliud constet.\n\n§ 2. Peregrini non adstringuntur:\n\r\n\n\r\n\n1° legibus particularibus sui territorii quamdiu ab eo absunt, nisi aut earum transgressio in proprio territorio noceat, aut leges sint personales;\n\r\n\n2° neque legibus territorii in quo versantur, iis exceptis quae ordini publico consulunt, aut actuum sollemnia determinant, aut res immobiles in territorio sitas respiciunt.\n\r\n\n§ 3. Vagi obligantur legibus tam universalibus quam particularibus quae vigent in loco in quo versantur.",
+  "text_en": "§1. Particular laws are not presumed to be personal but territorial unless it is otherwise evident.\n\n§2. Travelers are not bound:\n\n1/ by the particular laws of their own territory as long as they are absent from it unless either the transgression of those laws causes harm in their own territory or the laws are personal;\n\n2/ by the laws of the territory in which they are present, with the exception of those laws which provide for public order, which determine the formalities of acts, or which regard immovable goods located in the territory.\n\n§3. Transients are bound by both universal and particular laws which are in force in the place where they are present.",
+  "canon_number": 13,
+  "book": "Liber I",
+  "book_title_la": "De Normis Generalibus",
+  "book_title_en": "General Norms",
+  "date": "1983-01-25",
+  "url": "https://www.vatican.va/archive/cod-iuris-canonici/cic_index_la.html",
+  "language": "la"
+}

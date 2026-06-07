@@ -1,0 +1,51 @@
+source:
+  id: MT/IDPC
+  name: "Malta Information & Data Protection Commissioner — GDPR Decisions"
+  country: MT
+  url: https://idpc.org.mt/decisions/
+  auth: none
+  data_types:
+    - doctrine
+  description: >
+    GDPR enforcement decisions issued by the Information and Data Protection
+    Commissioner of Malta. 254 decisions from 2022-2026 covering data protection
+    complaints, breach notifications, and enforcement actions. Full text extracted
+    from PDF decisions where available, with structured metadata (type, outcome,
+    corrective action) for all entries.
+  license:
+    name: "Public Government Data"
+    url: "https://idpc.org.mt/copyright/"
+    commercial_use: true
+    attribution_required: true
+    share_alike: false
+    no_derivatives: false
+    notes: "Official government enforcement decisions, publicly available"
+
+fetch:
+  max_retries: 3
+  rate_limit: 1.0
+  timeout: 30
+
+schema:
+  key_fields:
+    - name: _id
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: text
+      type: string
+      required: true
+    - name: decision_type
+      type: string
+      required: false
+    - name: outcome
+      type: string
+      required: false
+    - name: corrective_action
+      type: string
+      required: false

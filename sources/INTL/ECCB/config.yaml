@@ -1,0 +1,54 @@
+source_id: INTL/ECCB
+name: Eastern Caribbean Central Bank Regulations & Standards
+country: INTL
+url: https://www.eccb-centralbank.org/regulations-and-standards
+data_url: https://www.eccb-centralbank.org/regulations-and-standards
+description: |
+  Prudential standards, banking regulations, and guidance notes from the
+  Eastern Caribbean Central Bank (ECCB). Covers valuation standards, internal
+  auditing, permissible activities, credit risk, AML guidance, capital
+  measurement (Basel I/II/III), corporate governance, liquidity risk, market
+  risk, operational risk, outsourcing, related party transactions, and the
+  Banking Act 2015. Applies to all ECCU member states (AG, DM, GD, KN, LC,
+  VC, MS, AI).
+
+data_types:
+  - legislation
+
+license:
+  name: Open Government Data
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official central bank regulatory publications"
+
+language: en
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+update_frequency: quarterly
+
+schema:
+  key_fields:
+    - name: title
+      required: true
+      type: string
+    - name: url
+      required: true
+      type: string
+  date_field: date
+  text_field: text
+  title_field: title
+  url_field: url
+
+notes: |
+  PDFs hosted on cdn.eccb-centralbank.org and eccb-centralbank.org/viewPDF.
+  Scrapes /regulations, /standards, and /banking-act pages for PDF links
+  with headings as titles.

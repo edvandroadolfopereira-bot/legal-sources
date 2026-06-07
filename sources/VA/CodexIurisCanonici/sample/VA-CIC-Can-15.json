@@ -1,0 +1,16 @@
+{
+  "_id": "VA-CIC-Can-15",
+  "_source": "VA/CodexIurisCanonici",
+  "_type": "legislation",
+  "_fetched_at": "2026-05-30T22:16:21.534665+00:00",
+  "title": "Canon 15",
+  "text": "§ 1. Ignorantia vel error circa leges irritantes vel inhabilitantes earundem effectum non impediunt, nisi aliud expresse statuatur.\n\n§ 2. Ignorantia vel error circa legem aut poenam aut circa factum proprium aut circa factum alienum notorium non praesumitur; circa factum alienum non notorium praesumitur, donec contrarium probetur.",
+  "text_en": "§1. Ignorance or error about invalidating or disqualifying laws does not impede their effect unless it is expressly established otherwise.\n\n§2. Ignorance or error about a law, a penalty, a fact concerning oneself, or a notorious fact concerning another is not presumed; it is presumed about a fact concerning another which is not notorious until the contrary is proven.",
+  "canon_number": 15,
+  "book": "Liber I",
+  "book_title_la": "De Normis Generalibus",
+  "book_title_en": "General Norms",
+  "date": "1983-01-25",
+  "url": "https://www.vatican.va/archive/cod-iuris-canonici/cic_index_la.html",
+  "language": "la"
+}

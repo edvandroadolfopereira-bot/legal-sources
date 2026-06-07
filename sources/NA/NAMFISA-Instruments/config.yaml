@@ -1,0 +1,64 @@
+source:
+  id: NA/NAMFISA-Instruments
+  name: Namibia Financial Institutions Supervisory Authority — Regulatory Instruments
+  country: NA
+  url: https://www.namfisa.com.na/regulatory-frameworks/
+  data_types:
+    - legislation
+  description: |
+    Regulatory instruments published by the Namibia Financial Institutions
+    Supervisory Authority (NAMFISA). Covers Acts, regulations, standards,
+    directives and circulars across all NAMFISA-regulated industries: short-term
+    and long-term insurance, pension funds, medical aid funds, capital markets,
+    microlending, and friendly societies. Documents are PDF files served via the
+    WordPress Download Manager plugin. Full text is extracted with pdfplumber.
+    Content in English. Free access, no authentication required.
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+
+api:
+  type: html_scraping
+  base_url: https://www.namfisa.com.na
+  format: pdf
+  notes: >
+    Multiple industry pages are crawled for data-downloadurl attributes
+    (WordPress Download Manager plugin). PDFs are downloaded and parsed with
+    pdfplumber. Image-only scans are dropped via text quality filter.
+
+schema:
+  key_fields:
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: url
+      type: string
+      required: true
+    - name: category
+      type: string
+      required: false
+    - name: doc_type
+      type: string
+      required: false
+    - name: language
+      type: string
+      required: true
+
+license:
+  name: "Public Domain (Government of Namibia)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official NAMFISA regulatory instruments published via Government Gazette for public compliance."

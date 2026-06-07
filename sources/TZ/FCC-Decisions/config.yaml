@@ -1,0 +1,22 @@
+source_id: TZ/FCC-Decisions
+name: "Fair Competition Commission — Decisions"
+country: TZ
+url: https://www.fcc.go.tz/
+data_types:
+  - case_law
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - date
+    - text
+
+license:
+  name: "Open Government Data (Tanzania)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government competition authority decisions, published via public API"

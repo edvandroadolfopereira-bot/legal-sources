@@ -1,0 +1,71 @@
+source:
+  id: "LY/LawSocietyGazette"
+  country: "LY"
+  name: "Libya Law Society — Official Gazette & Legislation Archive"
+  url: "https://lawsociety.ly/legislation/"
+  description: |
+    Comprehensive archive of Libyan legislation maintained by the Libyan Law Society.
+    19,993 documents including laws, decisions, decrees, regulations, circulars,
+    and constitutional texts. Full text in Arabic with structured metadata.
+
+data_types:
+  - legislation
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+
+api:
+  type: "html_scrape"
+  base_url: "https://lawsociety.ly"
+
+data_model:
+  type: "legislation"
+  source_nature: "consolidated"
+  primary_key: "slug"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "slug"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier based on URL slug"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title in Arabic"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the legislation"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication or issuance date"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "legislation_type"
+      description: "Type: laws, decisions, decrees, regulations, circulars, constitutional"
+      type: "string"
+      role: "category"
+      required: false
+
+license:
+  name: "Open Government Data"
+  url: "https://lawsociety.ly/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Libyan legislation published by the Libyan Law Society NGO. Government legislation is public domain under Libyan law."

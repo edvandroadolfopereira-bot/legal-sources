@@ -1,0 +1,92 @@
+# ===================================================================
+# LB/BDL — Banque du Liban (Central Bank of Lebanon)
+# ===================================================================
+# Central bank circulars and regulations. ~950+ circulars (basic +
+# intermediate) from 1963-present. Full text via PDF extraction.
+# ===================================================================
+
+source:
+  id: "LB/BDL"
+  country: "LB"
+  name: "Banque du Liban — Central Bank Circulars & Regulations"
+  url: "https://www.bdl.gov.lb/lawsandregulations.php"
+  description: |
+    Banque du Liban (BDL) is the central bank of Lebanon. It issues
+    Basic Circulars (major regulatory frameworks) and Intermediate
+    Circulars (amendments, operational guidance). This source collects
+    both types plus banking laws published on the BDL website.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+  notes: "2-second delay between requests."
+
+api:
+  type: "html-scraping"
+  base_url: "https://www.bdl.gov.lb"
+  endpoints:
+    basic_circulars: "/basiccirculars.php"
+    intermediate_circulars: "/intermediatecirculars.php"
+    basic_detail: "/basiccircular_detail.php?id={id}&langid=EN"
+    intermediate_detail: "/intermediatecirc_detail.php?id={id}&langid=EN"
+  response_format: "html+pdf"
+  pagination: "page-number"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "_id"
+      description: "Unique ID from circular type and number"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Circular title (English)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the circular (from PDF)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Issue date"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "url"
+      description: "URL to source"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "circular_number"
+      description: "Circular number"
+      type: "string"
+      role: "identifier"
+      required: true
+    - name: "decision_number"
+      description: "Decision number"
+      type: "string"
+      role: "identifier"
+      required: true
+    - name: "circular_type"
+      description: "basic or intermediate"
+      type: "string"
+      role: "classifier"
+      required: true
+
+license:
+  name: "Lebanese Government Publication"
+  url: "https://www.bdl.gov.lb/disclaimer.php"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official central bank regulatory circulars published for public compliance."

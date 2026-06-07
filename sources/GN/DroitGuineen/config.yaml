@@ -1,0 +1,80 @@
+source:
+  id: "GN/DroitGuineen"
+  country: "GN"
+  name: "Droitguinéen"
+  url: "https://droitguineen.com/"
+  description: |
+    Droitguinéen — the legal reference portal of the Republic of Guinea.
+    278 legal texts (codes, laws, decrees, ordinances, OHADA uniform acts)
+    and 156 court decisions (Supreme Court, Court of Appeal, CCJA).
+    Full text in French. Free and open access.
+
+data_types:
+  - legislation
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "html_scrape"
+  base_url: "https://droitguineen.com"
+
+data_model:
+  type: "legislation"
+  source_nature: "consolidated"
+  primary_key: "id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "id"
+
+schema:
+  total_fields: null
+  key_fields:
+    - name: "id"
+      description: "UUID from droitguineen.com"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the legislation or court decision"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Date of signature or decision"
+      type: "date"
+      role: "temporal_key"
+      required: true
+  secondary_fields:
+    - name: "nature"
+      description: "Document type (CODE, LOI, DECRET, JURISPRUDENCE, etc.)"
+    - name: "numero"
+      description: "Official reference number"
+    - name: "etat"
+      description: "Status (VIGUEUR = in force)"
+    - name: "sous_categorie"
+      description: "Sub-category (civil, penal, cour-supreme, etc.)"
+  probably_ignorable:
+    - name: "cid"
+      description: "Internal content ID"
+
+license:
+  id: "custom-terms"
+  name: "Free access, terms of use"
+  url: "https://droitguineen.com/cgu"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Free access to Guinean law. Legal texts are public domain under Guinean law. Platform terms require attribution."

@@ -1,0 +1,25 @@
+source_id: MM/SECM
+name: Myanmar Securities and Exchange Commission — Instructions
+country: MM
+url: https://secm.gov.mm/en/instructions/
+data_types:
+  - doctrine
+auth:
+  type: none
+schedule: monthly
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - date
+    - text
+
+license:
+  name: "Public Domain (Government)"
+  url: "https://secm.gov.mm/en/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government securities regulatory instructions published for public compliance."

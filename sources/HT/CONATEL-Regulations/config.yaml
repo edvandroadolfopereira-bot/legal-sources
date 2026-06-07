@@ -1,0 +1,57 @@
+source:
+  id: HT/CONATEL-Regulations
+  name: Haiti CONATEL — Telecom Regulatory Texts
+  country: HT
+  url: https://conatel.gouv.ht/
+  data_types:
+    - legislation
+    - doctrine
+  description: |
+    Telecom legal and regulatory corpus of the Conseil National des
+    Télécommunications (Haiti): founding decree (1969), organic law,
+    telecom law, taxation decree, regulatory decisions (décisions
+    réglementaires), the national numbering plan, the digital TV
+    transition plan, and licensing procedures and forms. Full text via
+    PDF extraction (pdfminer). French language. Free public access.
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: html_pdf
+  base_url: https://conatel.gouv.ht
+  format: pdf
+  endpoints:
+    textes_reglementaires: /textes-r-glementaires
+    decisions: /node/113
+
+schema:
+  key_fields:
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: document_type
+      type: string
+      required: true
+    - name: language
+      type: string
+      required: false
+
+license:
+  name: Open Government Data (Haiti)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official telecom regulator documents published on the government domain (gouv.ht) for public access.

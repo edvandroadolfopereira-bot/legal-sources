@@ -1,0 +1,48 @@
+source:
+  id: MS/Parliament
+  country: MS
+  name: "Montserrat Legislative Assembly"
+  url: https://parliament.ms/
+  data_types:
+    - legislation
+    - doctrine
+  language: en
+license:
+  name: "Open Government Data"
+  url: https://parliament.ms/
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official parliament records published by the Montserrat Legislative Assembly."
+fetcher:
+  type: api
+  api_type: wordpress_rest
+  base_url: https://parliament.ms/wp-json/wp/v2/legal_document
+  pagination: page_number
+  rate_limit: 1.5
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: doc_type
+      required: false
+      type: string
+    - name: pdf_url
+      required: false
+      type: string
+    - name: publish_date
+      required: false
+      type: string
+  date_fields:
+    - _fetched_at
+    - publish_date
+  text_fields:
+    - text
+    - title
+notes: >
+  ~599 legal documents from the Montserrat Legislative Assembly website.
+  Covers Acts (88), Bills (28), Laws (217), Resolutions (1), SROs (265).
+  Uses WordPress REST API to enumerate documents, then fetches attached
+  PDF media and extracts full text via pdfplumber.

@@ -1,0 +1,60 @@
+auth: none
+country: PY
+data_types:
+- case_law
+id: PY/CONACOM-Decisions
+source_id: PY/CONACOM-Decisions
+license: Open Government Data (Paraguay)
+name: Paraguay CONACOM — Competition Authority Decisions
+notes: 'Comisión Nacional de la Competencia (CONACOM), Paraguay''s competition
+  authority under Ley N° 4956/2013. Two public "historial de expedientes" pages
+  list every released document for control-of-concentrations and restrictive-practices
+  cases: resoluciones (RAL), directorate opinions (DIPARCC), authorizations,
+  cautelares, sanctions. Each row links a Google Drive PDF. Mix of digital and
+  scanned PDFs; scanned images yield no text and are skipped. Full text extracted
+  from digital PDFs via common.pdf_extract (opendataloader → pdfplumber → pypdf).'
+schedule: monthly
+license_block:
+  name: Open Government Data (Paraguay)
+  url: https://www.conacom.gov.py/
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official decisions of a Paraguayan public authority, published for public
+    access. No explicit reuse license; treated as open government data.
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: _source
+    required: false
+    type: string
+  - name: _type
+    required: false
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: url
+    required: true
+    type: string
+  - name: case
+    required: false
+    type: string
+  - name: resolution_id
+    required: false
+    type: string
+  - name: description
+    required: false
+    type: string
+  - name: category
+    required: false
+    type: string

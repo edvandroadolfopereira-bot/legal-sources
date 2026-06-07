@@ -1,0 +1,78 @@
+# ===================================================================
+# INTL/UEFA-Disciplinary -- UEFA Disciplinary Decisions & Regulations
+# Control, Ethics and Disciplinary Body (CEDB) + Appeals Body (AB)
+# ===================================================================
+# UEFA publishes disciplinary decisions as PDFs on editorial.uefa.com
+# and regulations/statutes via the documents.uefa.com Knowledge Hub API.
+# ===================================================================
+
+source:
+  id: "INTL/UEFA-Disciplinary"
+  country: "INTL"
+  name: "UEFA Disciplinary Decisions & Regulations"
+  url: "https://www.uefa.com/running-competitions/disciplinary/"
+  description: |
+    Disciplinary decisions issued by the UEFA Control, Ethics and
+    Disciplinary Body (CEDB) and Appeals Body (AB), plus all UEFA
+    regulations and statutes. Decisions cover European football clubs
+    and associations; regulations govern UEFA competitions.
+
+data_types:
+  - case_law
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "rest_json_pdf"
+  base_url: "https://documents.uefa.com"
+  regulations_endpoint: "/api/khub/documents"
+  decisions_page: "https://www.uefa.com/running-competitions/disciplinary/meeting-decisions/"
+
+data_model:
+  type: "mixed"
+  primary_key: "_id"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "title"
+      description: "Document or decision title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from official PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision or enforcement date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "body"
+      description: "Issuing body (CEDB, AB, UEFA)"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "doc_type"
+      description: "Document type: decision, regulation, statute, guideline"
+      type: "string"
+      role: "metadata"
+      required: true
+
+license:
+  name: "Custom Terms — UEFA.com"
+  url: "https://www.uefa.com/general-terms/"
+  commercial_use: false
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "UEFA publishes decisions and regulations for transparency; commercial redistribution restricted by UEFA general terms."

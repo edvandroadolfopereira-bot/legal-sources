@@ -1,0 +1,69 @@
+{
+  "_id": "UNCITRAL-Status-ecommerce_modellaw_electronic_transferable_records",
+  "_source": "INTL/UNCITRAL-EnactmentStatus",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-04T22:06:50.504350+00:00",
+  "title": "Status: UNCITRAL Model Law on Electronic Transferable Records (2017)",
+  "text": "This page is updated whenever the UNCITRAL Secretariat is informed of changes in enactment of the Model Law.\nThe UNCITRAL Secretariat also prepares yearly a document containing the Status of Conventions and Enactments of UNCITRAL Model Laws, which is available on the web page of the corresponding\nUNCITRAL Commission Session\n.\nLegislation based on or influenced by the Model Law has been adopted in 13 States and a total of 13 jurisdictions:\nState\nNotes\nBahrain\n2018\nBelize\n2021\nChina\n2025\n(a); (c)\nFrance\n2024\nKiribati\n2021\nMarshall Islands\n2025\n(a)\nMauritius\n2025\n(b)\nPapua New Guinea\n2022\nParaguay\n2021\nSingapore\n2021\nTimor Leste\n2024\nUnited Arab Emirates\nAbu Dhabi Global Market\n2021\nUnited Kingdom of Great Britain and Northern Ireland\n2023\n(a)\nNotes\n(a) The legislation is influenced by the Model Law and the principles on which it is based.\n(b) Only for bills of exchange.\n(c) Only for bills of lading.\n \nDisclaimer\nA model law is created as a suggested pattern for law-makers to consider adopting as part of their domestic legislation. Since States enacting legislation based upon a model law have the flexibility to depart from the text, the above list is only indicative of the enactments that were made known to the UNCITRAL Secretariat. The legislation of each State should be considered in order to identify the exact nature of any possible deviation from the model in the legislative text that was adopted. The year of enactment indicated above is the year the legislation was passed by the relevant legislative body, as indicated to the UNCITRAL Secretariat; it does not address the date of entry into force of that piece of legislation, the procedures for which vary from State to State, and could result in entry into force some time after enactment.",
+  "date": "2017-01-01",
+  "url": "https://uncitral.un.org/en/texts/ecommerce/modellaw/electronic_transferable_records/status",
+  "num_jurisdictions": 13,
+  "entries": [
+    {
+      "state": "Bahrain",
+      "year": "2018"
+    },
+    {
+      "state": "Belize",
+      "year": "2021"
+    },
+    {
+      "state": "China",
+      "year": "2025",
+      "notes": "(a); (c)"
+    },
+    {
+      "state": "France",
+      "year": "2024"
+    },
+    {
+      "state": "Kiribati",
+      "year": "2021"
+    },
+    {
+      "state": "Marshall Islands",
+      "year": "2025",
+      "notes": "(a)"
+    },
+    {
+      "state": "Mauritius",
+      "year": "2025",
+      "notes": "(b)"
+    },
+    {
+      "state": "Papua New Guinea",
+      "year": "2022"
+    },
+    {
+      "state": "Paraguay",
+      "year": "2021"
+    },
+    {
+      "state": "Singapore",
+      "year": "2021"
+    },
+    {
+      "state": "Timor Leste",
+      "year": "2024"
+    },
+    {
+      "state": "Abu Dhabi Global Market",
+      "year": "2021"
+    },
+    {
+      "state": "United Kingdom of Great Britain and Northern Ireland",
+      "year": "2023",
+      "notes": "(a)"
+    }
+  ]
+}

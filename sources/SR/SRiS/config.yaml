@@ -1,0 +1,49 @@
+source:
+  id: "SR/SRiS"
+  country: "SR"
+  name: "Suriname Rechtsinformatie Systeem — Legal Information System"
+  url: "https://www.sris.sr/"
+  description: |
+    Official legal information platform of the Foundation for the Rule of Law
+    in Suriname. ~1,300+ PDF documents including Staatsblad legislation, draft
+    bills, Constitutional Court decisions, government decrees, and resolutions.
+    Dutch language.
+
+data_types:
+  - legislation
+  - case_law
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.67
+  burst: 1
+  max_workers: 1
+
+api:
+  type: "rest"
+  base_url: "https://www.sris.sr"
+  endpoints:
+    media: "/wp-json/wp/v2/media?media_type=application"
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - date
+    - text
+    - url
+    - pdf_url
+    - doc_type
+    - sb_reference
+
+license:
+  name: "Public Domain (Government)"
+  url: "https://www.sris.sr/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government legal texts published for public access. Government legislation is public domain under Suriname law."

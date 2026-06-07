@@ -1,0 +1,64 @@
+source:
+  id: NA/CRAN-Decisions
+  name: Communications Regulatory Authority of Namibia — Decisions
+  country: NA
+  url: https://www.cran.na/
+  data_types:
+    - doctrine
+  description: |
+    Regulatory output of the Communications Regulatory Authority of Namibia
+    (CRAN), the independent regulator for telecommunications, broadcasting,
+    postal services and radio spectrum established under the Communications Act
+    (No. 8 of 2009). Covers CRAN's regulations, determinations, decisions,
+    withdrawals and notices as filed in the Government Gazette. Full text is
+    extracted from the gazette PDF documents. Content in English. Free access,
+    no authentication required.
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: html_scraping
+  base_url: https://www.cran.na
+  format: pdf
+  notes: >
+    The /government-gazettes/ page (and the final-regulation pages) list gazette
+    PDFs under /wp-content/uploads/. Each PDF is parsed with pdfplumber; a
+    descriptive title is built from the gazette CONTENTS (CRAN notice headings).
+    Image-only scans are dropped by a Latin-text quality filter.
+
+schema:
+  key_fields:
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: language
+      type: string
+      required: true
+    - name: url
+      type: string
+      required: true
+    - name: source_page
+      type: string
+      required: false
+
+license:
+  name: Public Domain (Government of Namibia)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: >
+    Official Government Gazette notices and regulatory acts published by CRAN
+    for public access.

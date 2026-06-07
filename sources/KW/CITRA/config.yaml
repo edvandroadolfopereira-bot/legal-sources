@@ -1,0 +1,77 @@
+source:
+  id: "KW/CITRA"
+  country: "KW"
+  name: "CITRA — Telecom & IT Regulations"
+  url: "https://www.citra.gov.kw"
+  description: |
+    Regulations, decisions, resolutions, and policies issued by the Kuwait
+    Communication and Information Technology Regulatory Authority (CITRA).
+    Covers data privacy, cloud computing, cybersecurity, frequency spectrum,
+    numbering plans, device approval, and telecommunications licensing.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "html_scrape"
+  base_url: "https://www.citra.gov.kw"
+
+data_model:
+  type: "doctrine"
+  source_nature: "consolidated"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: 9
+  key_fields:
+    - name: "_id"
+      description: "Unique document identifier"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text content extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "url"
+      description: "URL to the original PDF"
+      type: "string"
+      role: "reference"
+      required: true
+  secondary_fields:
+    - name: "section"
+      description: "Directory path (LegalReferences, LawofCITRA)"
+    - name: "date"
+      description: "Document date if available"
+  probably_ignorable: []
+
+license:
+  name: "Custom Terms — Kuwait Government"
+  url: "https://www.citra.gov.kw/sites/en/Pages/regulations.aspx"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Government regulatory documents, publicly available."
+
+notes: |
+  ~50 PDF documents across regulations listing pages and law directory.
+  Some PDFs are scanned images (no OCR) — only text-based PDFs are ingested.
+  No API — PDF links scraped from SharePoint paginated listing.

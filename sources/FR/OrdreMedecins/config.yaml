@@ -1,0 +1,52 @@
+endpoints:
+  base_url: https://www.jurisprudence.ordre.medecin.fr
+  detail_page: https://www.jurisprudence.ordre.medecin.fr/FicheDetailConsultation.do?ficId={fic_id}&isFromRecherche=listeResultats
+notes: 'Disciplinary decisions of the French Medical Order (Ordre national des médecins).
+
+  Covers decisions from:
+  - Chambres disciplinaires de première instance (regional)
+  - Chambre disciplinaire nationale (national appeal)
+
+  Each decision includes full text extracted from official PDF via export function.
+  ficId range: 1-23000+ (non-sequential, gaps exist).
+
+  '
+rate_limit:
+  delay_between_requests: 2.0
+  requests_per_second: 0.5
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: dossier_number
+    required: false
+    type: string
+  - name: date
+    required: false
+    type: date
+  required_fields:
+  - _id
+  - _source
+  - _type
+  - _fetched_at
+  - title
+  - text
+  - date
+  - url
+source:
+  auth: none
+  country: FR
+  data_types:
+  - case_law
+  id: FR/OrdreMedecins
+  name: "Ordre des M\xE9decins \u2014 Jurisprudence disciplinaire"
+  url: https://www.jurisprudence.ordre.medecin.fr/
+license:
+  name: "Licence Ouverte 2.0"
+  url: "https://www.etalab.gouv.fr/licence-ouverte-open-licence/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "French public sector disciplinary decisions — open data under Loi République Numérique"

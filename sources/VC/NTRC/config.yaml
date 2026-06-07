@@ -1,0 +1,76 @@
+# ===================================================================
+# VC/NTRC -- SVG National Telecommunications Regulatory Commission
+# ===================================================================
+# ~20 telecom regulatory PDFs: Telecommunications Act, ECTEL Treaty,
+# interconnection, spectrum, licensing, tariff regulations, etc.
+# All documents served as PDFs from ntrc.vc/docs/legislations/.
+# ===================================================================
+
+source:
+  id: "VC/NTRC"
+  country: "VC"
+  name: "SVG National Telecommunications Regulatory Commission"
+  url: "https://www.ntrc.vc/providers/legislation/"
+  description: |
+    Telecommunications legislation and regulations for Saint Vincent
+    and the Grenadines. Includes the Telecommunications Act (Cap 418),
+    ECTEL Treaty, and ~15 subsidiary regulations covering spectrum,
+    interconnection, licensing, tariffs, dispute resolution, and USF.
+    Also includes related acts (Consumer Protection, Electronic
+    Transactions, Electronic Filing).
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+  notes: "Small government site. 2s delay between PDF downloads."
+
+api:
+  type: "html_scrape"
+  base_url: "https://www.ntrc.vc"
+  endpoints:
+    legislation_page: "/providers/legislation/"
+  response_format: "html"
+
+schema:
+  total_fields: 8
+  key_fields:
+    - name: "_id"
+      description: "Document identifier derived from PDF filename"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Year of enactment/publication"
+      type: "string"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "URL to original PDF"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "Open Government Data"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government legislation, publicly available."

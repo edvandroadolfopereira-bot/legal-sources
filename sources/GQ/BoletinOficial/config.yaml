@@ -1,0 +1,94 @@
+source:
+  id: "GQ/BoletinOficial"
+  country: "GQ"
+  name: "Boletín Oficial del Estado de Guinea Ecuatorial"
+  url: "https://boe.gob.gq/"
+  description: |
+    Official State Gazette of Equatorial Guinea. Contains laws, decrees,
+    decree-laws, edicts, orders, resolutions, and international treaties.
+    Searchable digital portal launched 2020 by CNIAPGE. Spanish language.
+    ~146 documents as PDF files with full text.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "html_scrape"
+  base_url: "https://boe.gob.gq"
+  endpoints:
+    search: "/resultados"
+    pagination: "/masresultados"
+
+data_model:
+  type: "legislation"
+  source_nature: "gazette"
+  primary_key: "pdf_url"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "pdf_url"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "_id"
+      description: "Hash of PDF URL"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "category"
+      description: "Document category (LEYES, DECRETOS, etc.)"
+      type: "string"
+      role: "content"
+      required: false
+    - name: "subject_class"
+      description: "Subject classification"
+      type: "string"
+      role: "content"
+      required: false
+  secondary_fields:
+    - name: "summary"
+      description: "Document summary/abstract from search results"
+    - name: "pdf_url"
+      description: "URL to original PDF document"
+  probably_ignorable: []
+
+license:
+  id: "ogd"
+  name: "Open Government Data (Equatorial Guinea)"
+  url: "https://boe.gob.gq/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government gazette, publicly accessible without login requirement."
+
+notes: |
+  - SSL certificate may fail verification; verify=False needed for requests.
+  - All documents are PDFs hosted at boe.gob.gq/files/
+  - Search uses session-based pagination (POST to /resultados, then GET /masresultados?offset=N)
+  - ~146 documents total as of 2026-06
+  - Spanish language documents
+  - Coverage: legislation from 1968 to present

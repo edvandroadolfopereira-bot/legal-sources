@@ -1,0 +1,70 @@
+# KH/HuskyPartners - Husky & Partners Cambodian Legal Library
+# https://huskyandpartners.com/huskypublication/legal-library
+#
+# Largest free online collection of Cambodian laws and regulations.
+# ~640 documents across 30+ categories, 1920-2024.
+# Document types: Royal Decrees, Laws, Sub-Decrees, Prakas, Circulars.
+# ~243 English translations, ~400 Khmer-only.
+#
+# Data access strategy:
+#   1. Single HTML page contains all document listings (1.4MB server-rendered)
+#   2. Parse document metadata (title, year, type, category, language)
+#   3. Download English PDFs where available, fallback to Khmer
+#   4. Extract text using PyMuPDF (fitz)
+#
+# Coverage: 1920-2024
+# Languages: English (unofficial translations), Khmer
+# License: Custom terms (law firm publication, public access)
+
+source_id: KH/HuskyPartners
+name: Husky & Partners Cambodian Legal Library
+country: KH
+url: https://huskyandpartners.com/huskypublication/legal-library
+data_types:
+  - legislation
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+  max_workers: 1
+
+data_model:
+  update_strategy: upsert
+  dedup_key:
+    - doc_id
+
+schema:
+  key_fields:
+    - name: doc_id
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: date
+      required: false
+    - name: doc_type
+      type: string
+      required: false
+    - name: category
+      type: string
+      required: false
+    - name: language
+      type: string
+      required: false
+
+license:
+  name: "Custom Terms"
+  url: "https://huskyandpartners.com/huskypublication/legal-library"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Unofficial English translations published by Husky & Partners law firm. Public access, no explicit restrictions."

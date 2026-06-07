@@ -1,0 +1,66 @@
+# ===================================================================
+# PG/MRA-MiningRegulations -- Papua New Guinea Mining Regulations
+# ===================================================================
+# Mining acts, regulations, and policies from mra.gov.pg.
+# ~7 documents. English language. PDF full text extracted.
+# ===================================================================
+
+source_id: PG/MRA-MiningRegulations
+name: Papua New Guinea Mineral Resources Authority — Mining Regulations
+country: PG
+url: https://mra.gov.pg/investment/miningregulations/
+description: |
+  Papua New Guinea Mineral Resources Authority (MRA) publishes core mining
+  legislation including the Mining Act 1992, Mining (Safety) Act 1977,
+  MRA Act 2005, Environment Act 2000, and related policies. ~7 documents
+  with full text extracted from PDFs.
+
+data_types:
+  - legislation
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "scraping"
+  base_url: "https://mra.gov.pg"
+  endpoints:
+    regulations: "/investment/miningregulations/"
+  response_format: "html"
+
+schema:
+  total_fields: 8
+  key_fields:
+    - name: "_id"
+      description: "Unique document ID (PG-MRA-{hash})"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "url"
+      description: "PDF download URL on mra.gov.pg"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "Public Domain (Government of Papua New Guinea)"
+  url: "https://mra.gov.pg/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Government of Papua New Guinea public legislation"

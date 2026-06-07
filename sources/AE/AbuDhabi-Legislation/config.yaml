@@ -1,0 +1,70 @@
+source:
+  id: "AE/AbuDhabi-Legislation"
+  country: "AE"
+  name: "Abu Dhabi Policies and Legislation (Official Gazette)"
+  url: "https://www.abudhabi.gov.ae/en/policies-and-legislations"
+  description: |
+    Monthly Official Gazette of the Government of Abu Dhabi, containing new
+    legislation, decrees issued by the Ruler and Crown Prince, decisions
+    of the Executive Council, circulars and regulations. Editions 2009-2023
+    available as PDF (Arabic and English versions). English-language editions
+    extracted via pdfplumber.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+
+api:
+  type: "html_scrape_pdf"
+  base_url: "https://www.abudhabi.gov.ae"
+
+data_model:
+  type: "legislation"
+  source_nature: "consolidated"
+  primary_key: "edition_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "edition_id"
+
+schema:
+  key_fields:
+    - name: "edition_id"
+      description: "Unique gazette edition identifier (year + edition number)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Gazette edition title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full extracted text of the gazette PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Year of publication"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "url"
+      description: "Direct URL of the PDF"
+      type: "string"
+      role: "metadata"
+      required: true
+
+license:
+  name: "Abu Dhabi Government Official Gazette - Unverified"
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Gazette published by Government of Abu Dhabi. No formal open license specified; standard government copyright applies to official publications."

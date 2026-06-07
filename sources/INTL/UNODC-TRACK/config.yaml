@@ -1,0 +1,73 @@
+source:
+  id: INTL/UNODC-TRACK
+  name: UNODC TRACK Anti-Corruption Legal Library
+  country: INTL
+  url: https://track.unodc.org/track/en/legal-library/index.html
+  auth: none
+  data_types:
+    - legislation
+  license: United Nations / UNODC
+fetch:
+  base_url: https://www.unodc.org
+  search_endpoint: /cld/en/trackview/data.json
+  detail_endpoint: /cld/trackview/x2j.jspx
+  page_size: 100
+  delay_seconds: 1.5
+notes: >
+  National anti-corruption legislation from 180+ States parties to UNCAC,
+  indexed at the article level and mapped to UNCAC chapters and articles.
+  ~80,500 article-level records. Search API returns metadata; per-article
+  full text is fetched from the x2j.jspx endpoint as JSON containing the
+  originalText.html body.
+license:
+  name: United Nations / UNODC
+  url: https://www.unodc.org/unodc/en/terms-of-use.html
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: >
+    UN materials are generally free to use with attribution; UNODC TRACK
+    aggregates national legislation submitted by States parties under the
+    UNCAC Implementation Review Mechanism.
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: _source
+      required: true
+      type: string
+    - name: _type
+      required: true
+      type: string
+    - name: title
+      required: true
+      type: string
+    - name: text
+      required: true
+      type: string
+    - name: url
+      required: true
+      type: string
+    - name: country
+      required: false
+      type: string
+    - name: country_code
+      required: false
+      type: string
+    - name: law_title
+      required: false
+      type: string
+    - name: chapter
+      required: false
+      type: string
+    - name: article
+      required: false
+      type: string
+    - name: law_identifier
+      required: false
+      type: string
+    - name: uncac_provisions
+      required: false
+      type: string

@@ -1,0 +1,25 @@
+source_id: LA/LaoTradePortal
+country: LA
+name: "Lao Trade Portal — Trade-Related Legal Documents"
+url: https://www.laotradeportal.gov.la/en-gb/legal-document/index
+data_types:
+  - legislation
+auth:
+  type: none
+schedule: monthly
+schema:
+  key_fields:
+    - _id
+    - title
+    - date
+    - doc_type
+    - issuing_agency
+    - responsible_agency
+license:
+  name: "Open Government Data (Lao PDR)"
+  url: "https://www.laotradeportal.gov.la/en-gb"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Published by Ministry of Industry and Commerce. Trade-related laws, decrees, decisions, and notifications in English."

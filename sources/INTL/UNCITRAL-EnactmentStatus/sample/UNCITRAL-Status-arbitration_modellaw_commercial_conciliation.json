@@ -1,0 +1,233 @@
+{
+  "_id": "UNCITRAL-Status-arbitration_modellaw_commercial_conciliation",
+  "_source": "INTL/UNCITRAL-EnactmentStatus",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-04T22:06:47.785627+00:00",
+  "title": "Status: UNCITRAL Model Law on International Commercial Mediation and International Settlement Agreements Resulting from Mediation (2018) (amending the Model Law on International Commercial Conciliation, 2002)",
+  "text": "This page is updated whenever the UNCITRAL Secretariat is informed of changes in enactment of the Model Law.\nThe UNCITRAL Secretariat also prepares yearly a document containing the Status of Conventions and Enactments of UNCITRAL Model Laws, which is available on the web page of the corresponding\nUNCITRAL Commission session\n.\nLegislation based on or influenced by the Model Law has been adopted in 33 States in a total of 46 jurisdictions:\nState\nNotes\nAlbania\n2011\n(d)\nBelgium\n2005\nBenin\n2017\n(e)\nBhutan\n2013\nBurkina Faso\n2017\n(e)\nCameroon\n2017\n(e)\nCanada\nNova Scotia\n2005\n(b)\nOntario\n2010\n(b)\nCentral African Republic\n2017\n(e)\nChad\n2017\n(e)\nComoros\n2017\n(e)\nCongo\n2017\n(e)\nCôte d'Ivoire\n2017\n(e)\nCroatia\n2003\nDemocratic Republic of the Congo\n2017\n(e)\nEquatorial Guinea\n2017\nFrance\n2011\n(c)\nGabon\n2017\n(e)\nGuinea\n2017\n(e)\nGuinea-Bissau\n2017\n(e)\nHonduras\n2000\nHungary\n2002\nLuxembourg\n2012\nMalaysia\n2012\nMali\n2017\n(e)\nMontenegro\n2005\n(c)\nNicaragua\n2005\n(e)\nNiger\n2017\n(e)\nNorth Macedonia\n2009\nSenegal\n2017\n(e)\nSlovenia\n2008\nSwitzerland\n2008\n(c)\nTogo\n2017\n(e)\nUnited States of America\nDistrict of Columbia\n2006\n(a)\nGeorgia\n2021\n(f)\nHawaii\n2013\n(a)\nIdaho\n2008\n(a)\nIllinois\n2004\n(a)\nIowa\n2005\n(a)\nNebraska\n2003\n(a)\nNew Jersey\n2004\n(a)\nOhio\n2005\n(a)\nSouth Dakota\n2007\n(a)\nUtah\n2006\n(a)\nVermont\n2005\n(a)\nWashington\n2005\n(a)\nNotes\n(a) The legislation enacts uniform legislation influenced by the Model Law and the principles on which it is based.\nUniform Mediation Act, adopted in 2001 (amended in 2003) by the National Conference of Commissioners on Uniform State Laws\n(b) The legislation enacts uniform legislation influenced by the Model Law and the principles on which it is based.\nUniform [International] Commercial Mediation Act, adopted in 2005 by the Uniform Law Conference of Canada\n(c) The legislation is influenced by the Model Law and the principles on which it is based.\n(d) The legislation amends previous legislation based on the Model Law.\nLaw on mediation in dispute resolution, 2003\n(e) Enacting the\nActe uniforme relatif à la médiation\n (OHADA), adopted on 11 November 2017 at Conakry, Guinea.\n(f) Indicates legislation based on the text of the UNCITRAL Model Law on International Commercial Mediation and International Settlement Agreements Resulting from Mediation (2018) (amending the Model Law on International Commercial Conciliation, 2002).\nDisclaimer: A model law is created as a suggested pattern for law-makers to consider adopting as part of their domestic legislation. Since States enacting legislation based upon a model law have the flexibility to depart from the text, the above list is only indicative of the enactments that were made known to the UNCITRAL Secretariat. The legislation of each State should be considered in order to identify the exact nature of any possible deviation from the model in the legislative text that was adopted. The year of enactment indicated above is the year the legislation was passed by the relevant legislative body, as indicated to the UNCITRAL Secretariat; it does not address the date of entry into force of that piece of legislation, the procedures for which vary from State to State, and could result in entry into force some time after enactment.",
+  "date": "2018-01-01",
+  "url": "https://uncitral.un.org/en/texts/arbitration/modellaw/commercial_conciliation/status",
+  "num_jurisdictions": 46,
+  "entries": [
+    {
+      "state": "Albania",
+      "year": "2011",
+      "notes": "(d)"
+    },
+    {
+      "state": "Belgium",
+      "year": "2005"
+    },
+    {
+      "state": "Benin",
+      "year": "2017",
+      "notes": "(e)"
+    },
+    {
+      "state": "Bhutan",
+      "year": "2013"
+    },
+    {
+      "state": "Burkina Faso",
+      "year": "2017",
+      "notes": "(e)"
+    },
+    {
+      "state": "Cameroon",
+      "year": "2017",
+      "notes": "(e)"
+    },
+    {
+      "state": "Nova Scotia",
+      "year": "2005",
+      "notes": "(b)"
+    },
+    {
+      "state": "Ontario",
+      "year": "2010",
+      "notes": "(b)"
+    },
+    {
+      "state": "Central African Republic",
+      "year": "2017",
+      "notes": "(e)"
+    },
+    {
+      "state": "Chad",
+      "year": "2017",
+      "notes": "(e)"
+    },
+    {
+      "state": "Comoros",
+      "year": "2017",
+      "notes": "(e)"
+    },
+    {
+      "state": "Congo",
+      "year": "2017",
+      "notes": "(e)"
+    },
+    {
+      "state": "Côte d'Ivoire",
+      "year": "2017",
+      "notes": "(e)"
+    },
+    {
+      "state": "Croatia",
+      "year": "2003"
+    },
+    {
+      "state": "Democratic Republic of the Congo",
+      "year": "2017",
+      "notes": "(e)"
+    },
+    {
+      "state": "Equatorial Guinea",
+      "year": "2017"
+    },
+    {
+      "state": "France",
+      "year": "2011",
+      "notes": "(c)"
+    },
+    {
+      "state": "Gabon",
+      "year": "2017",
+      "notes": "(e)"
+    },
+    {
+      "state": "Guinea",
+      "year": "2017",
+      "notes": "(e)"
+    },
+    {
+      "state": "Guinea-Bissau",
+      "year": "2017",
+      "notes": "(e)"
+    },
+    {
+      "state": "Honduras",
+      "year": "2000"
+    },
+    {
+      "state": "Hungary",
+      "year": "2002"
+    },
+    {
+      "state": "Luxembourg",
+      "year": "2012"
+    },
+    {
+      "state": "Malaysia",
+      "year": "2012"
+    },
+    {
+      "state": "Mali",
+      "year": "2017",
+      "notes": "(e)"
+    },
+    {
+      "state": "Montenegro",
+      "year": "2005",
+      "notes": "(c)"
+    },
+    {
+      "state": "Nicaragua",
+      "year": "2005",
+      "notes": "(e)"
+    },
+    {
+      "state": "Niger",
+      "year": "2017",
+      "notes": "(e)"
+    },
+    {
+      "state": "North Macedonia",
+      "year": "2009"
+    },
+    {
+      "state": "Senegal",
+      "year": "2017",
+      "notes": "(e)"
+    },
+    {
+      "state": "Slovenia",
+      "year": "2008"
+    },
+    {
+      "state": "Switzerland",
+      "year": "2008",
+      "notes": "(c)"
+    },
+    {
+      "state": "Togo",
+      "year": "2017",
+      "notes": "(e)"
+    },
+    {
+      "state": "District of Columbia",
+      "year": "2006",
+      "notes": "(a)"
+    },
+    {
+      "state": "Georgia",
+      "year": "2021",
+      "notes": "(f)"
+    },
+    {
+      "state": "Hawaii",
+      "year": "2013",
+      "notes": "(a)"
+    },
+    {
+      "state": "Idaho",
+      "year": "2008",
+      "notes": "(a)"
+    },
+    {
+      "state": "Illinois",
+      "year": "2004",
+      "notes": "(a)"
+    },
+    {
+      "state": "Iowa",
+      "year": "2005",
+      "notes": "(a)"
+    },
+    {
+      "state": "Nebraska",
+      "year": "2003",
+      "notes": "(a)"
+    },
+    {
+      "state": "New Jersey",
+      "year": "2004",
+      "notes": "(a)"
+    },
+    {
+      "state": "Ohio",
+      "year": "2005",
+      "notes": "(a)"
+    },
+    {
+      "state": "South Dakota",
+      "year": "2007",
+      "notes": "(a)"
+    },
+    {
+      "state": "Utah",
+      "year": "2006",
+      "notes": "(a)"
+    },
+    {
+      "state": "Vermont",
+      "year": "2005",
+      "notes": "(a)"
+    },
+    {
+      "state": "Washington",
+      "year": "2005",
+      "notes": "(a)"
+    }
+  ]
+}

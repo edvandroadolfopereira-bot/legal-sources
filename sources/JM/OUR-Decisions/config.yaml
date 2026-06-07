@@ -1,0 +1,65 @@
+source:
+  id: JM/OUR-Decisions
+  name: Jamaica OUR — Utility Regulation Determination Notices
+  country: JM
+  url: https://our.org.jm/
+  data_types:
+    - doctrine
+  description: |
+    Determination notices, decisions, regulations, and directives from the
+    Office of Utilities Regulation (OUR), Jamaica's multi-sector economic
+    regulator covering electricity, telecommunications, water & sewerage,
+    and public passenger transport. ~500 binding regulatory documents
+    (tariff reviews, rate determinations, licence conditions, quality-of-
+    service standards) spanning 2001–present. Enumerated via the WordPress
+    REST API; full text extracted from linked PDFs. Older notices that are
+    scanned image-only PDFs (no text layer) are skipped. English language.
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: wordpress_rest
+  base_url: https://our.org.jm
+  format: json+pdf
+  endpoints:
+    posts: /wp-json/wp/v2/posts
+  categories:
+    determination_notices: 30
+    decisions_and_regulations: 70
+    decisions_regulations: 80
+    directives: 35
+
+schema:
+  key_fields:
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: document_type
+      type: string
+      required: false
+    - name: category
+      type: string
+      required: false
+    - name: language
+      type: string
+      required: false
+
+license:
+  name: Open Government Data (Jamaica)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official regulator determinations published for public access on the OUR Jamaica government-agency website.

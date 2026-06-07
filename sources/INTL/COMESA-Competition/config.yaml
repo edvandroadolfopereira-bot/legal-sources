@@ -1,0 +1,53 @@
+source:
+  id: INTL/COMESA-Competition
+  name: COMESA Competition and Consumer Commission — Decided Cases
+  country: INTL
+  url: https://comesacompetition.org/decided-cases/
+  language: en
+  data_types:
+    - case_law
+
+endpoints:
+  listing_page: https://comesacompetition.org/decided-cases/
+
+rate_limit:
+  requests_per_second: 0.5
+  delay_seconds: 2.0
+
+schema:
+  key_fields:
+    - name: _id
+      type: string
+      required: true
+    - name: _source
+      type: string
+      required: false
+    - name: _type
+      type: string
+      required: false
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: date
+      required: false
+    - name: url
+      type: string
+      required: true
+
+data_model:
+  update_strategy: upsert
+  dedup_key:
+    - _id
+
+license:
+  name: "COMESA Terms of Use"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Published official decisions of regional competition authority"

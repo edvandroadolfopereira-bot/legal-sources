@@ -1,0 +1,37 @@
+source:
+  id: BW/CCA-Decisions
+  country: BW
+  name: "Botswana Competition and Consumer Authority — Merger Decisions"
+  url: https://www.cca.co.bw/index.php/merger-decisions
+  data_types:
+    - doctrine
+  language: en
+license:
+  name: "Public domain (government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Botswana government competition authority merger decisions, publicly available."
+fetcher:
+  type: pdf_download
+  rate_limit: 2.0
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: title
+      required: true
+      type: string
+  date_fields:
+    - _fetched_at
+    - date
+  text_fields:
+    - text
+    - title
+notes: >
+  512+ merger decisions (2015-2026) from Botswana CCA. Each decision is a PDF
+  hosted on a Drupal site. Listing pages at /index.php/merger-decisions?page=N
+  contain links to decision pages, each with one PDF attachment.

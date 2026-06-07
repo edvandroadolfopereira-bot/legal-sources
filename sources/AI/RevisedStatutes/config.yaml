@@ -1,0 +1,26 @@
+source_id: "AI/RevisedStatutes"
+name: "Revised Statutes and Regulations of Anguilla"
+country: AI
+url: "https://laws.gov.ai"
+data_types:
+  - legislation
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+schema:
+  key_fields:
+    - chapter_no
+    - title
+
+license:
+  name: "Government of Anguilla — All rights reserved (unofficial online edition)"
+  url: "https://laws.gov.ai/?selected_page=disclaimer"
+  commercial_use: false
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Site provides free online access to unofficial versions. Official copies available from Attorney General's Chambers."

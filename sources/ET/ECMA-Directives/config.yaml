@@ -1,0 +1,57 @@
+source:
+  id: ET/ECMA-Directives
+  name: Ethiopia Ethiopian Capital Market Authority — Directives
+  country: ET
+  url: https://ecma.gov.et/laws-regulation/
+  description: >
+    Capital market directives, proclamations, and guidelines from the Ethiopian
+    Capital Market Authority (ECMA). Established under Proclamation No. 1248/2021.
+    Covers securities regulation, public offering, SROs, AML/CFT compliance.
+    WordPress Download Manager plugin with PDF downloads.
+
+data_model:
+  types:
+    - legislation
+  update_strategy: upsert
+  dedup_key:
+    - doc_id
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+schema:
+  required_fields:
+    - _id
+    - _source
+    - _type
+    - _fetched_at
+    - title
+    - text
+    - url
+  key_fields:
+    - name: doc_id
+      type: string
+      required: true
+    - name: pdf_url
+      type: string
+      required: false
+    - name: document_type
+      type: string
+      required: false
+
+schedule:
+  full_refresh: quarterly
+  update_check: monthly
+
+license:
+  name: Public domain (government)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Ethiopian Capital Market Authority public regulatory documents

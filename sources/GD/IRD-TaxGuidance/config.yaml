@@ -1,0 +1,56 @@
+source:
+  id: GD/IRD-TaxGuidance
+  name: Grenada Inland Revenue Division Tax Guidance
+  country: GD
+  url: https://ird.gd/
+  description: >
+    Official tax guidance from the Grenada Inland Revenue Division (IRD).
+    Covers all 11 tax types (Income Tax, VAT, Excise, Property, Gaming,
+    Withholding, Annual Stamp Tax, Property Transfer Tax, Motor Vehicle
+    Licence, Refreshment House Licence, Other Licences) plus international
+    tax/EOI guidance (FATCA, CRS, Tax Treaty). Content includes definitions,
+    rates, filing deadlines, penalties, exemptions and compliance rules.
+
+data_model:
+  types:
+    - doctrine
+  update_strategy: upsert
+  dedup_key:
+    - slug
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+schema:
+  required_fields:
+    - _id
+    - _source
+    - _type
+    - _fetched_at
+    - title
+    - text
+    - url
+  key_fields:
+    - name: slug
+      type: string
+      required: true
+    - name: section
+      type: string
+      required: false
+
+schedule:
+  full_refresh: quarterly
+  update_check: monthly
+
+license:
+  name: Open Government Data
+  url: https://ird.gd/
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government tax guidance published for public access."

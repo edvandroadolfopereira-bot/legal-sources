@@ -1,0 +1,35 @@
+fetch:
+  max_retries: 3
+  rate_limit: 1.5
+  timeout: 60
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: country
+    required: false
+    type: string
+source:
+  auth: none
+  country: INTL
+  data_types:
+  - legislation
+  description: >
+    National legislation from 50+ countries on deep seabed mining, compiled
+    by the International Seabed Authority. ~112 PDF documents. Single listing
+    page with direct PDF download links.
+  id: INTL/ISA-NatLeg
+  name: International Seabed Authority — National Legislation Database
+  url: https://isa.org.jm/national-legislation-database/
+license:
+  name: ISA open access
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "National legislation submitted by member states to ISA"

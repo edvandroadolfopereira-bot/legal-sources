@@ -1,0 +1,111 @@
+# ===================================================================
+# GT/BANGUAT-Regulations -- Banco de Guatemala (BANGUAT), the central
+# bank of Guatemala. Banking and financial-system legal framework.
+# ===================================================================
+# Full text of the monetary, banking, and financial-sector laws that
+# BANGUAT publishes as the legal basis for its operation and for the
+# supervision of the Guatemalan financial system. Full text via
+# pdfplumber.
+#
+# NOTE: BANGUAT's own "resoluciones" (Junta Monetaria and Gerencia
+# General archives) are published only as scanned-image PDFs with no
+# embedded text layer (pdfplumber extracts 0-6 chars), so they are not
+# full-text accessible and are excluded. This source captures the
+# full-text legal framework only.
+# ===================================================================
+
+source:
+  id: "GT/BANGUAT-Regulations"
+  country: "GT"
+  name: "Banco de Guatemala — Marco Legal del Sistema Financiero"
+  url: "https://banguat.gob.gt/"
+  description: |
+    The banking and financial-system legal framework published by the
+    Banco de Guatemala (BANGUAT), the central bank of Guatemala, on its
+    "Leyes Bancarias y Financieras" page. This is the body of monetary,
+    banking, and financial-system law that constitutes the legal basis
+    for the bank's operation and for the supervision of the Guatemalan
+    financial system: the Ley Orgánica del Banco de Guatemala (Decreto
+    16-2002), Ley Monetaria (Decreto 17-2002), Ley de Supervisión
+    Financiera (Decreto 18-2002), Ley de Bancos y Grupos Financieros
+    (Decreto 19-2002), Ley de Sociedades Financieras Privadas, Ley de
+    Almacenes Generales de Depósito, Ley de Libre Negociación de Divisas,
+    Ley Contra el Lavado de Dinero u Otros Activos, Ley para Prevenir y
+    Reprimir el Financiamiento del Terrorismo, Ley de la Actividad
+    Aseguradora, Ley de Garantías Mobiliarias, and related decrees and
+    acuerdos. Classified as legislation.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "html_scrape_pdf"
+  base_url: "https://banguat.gob.gt"
+  notes: |
+    Drupal CMS. The "Leyes Bancarias y Financieras" page
+      /page/leyes-bancarias-y-financieras
+    lists each law as an <a> link to a text PDF under
+      /sites/default/files/banguat/leyes/<year>/<name>.pdf
+    Each PDF is downloaded and its full text extracted with pdfplumber.
+    A browser User-Agent is sent and TLS verification is disabled
+    (public, read-only data). PDFs that yield <500 chars (none observed
+    on this page; all 16 laws extract 2.7k-150k chars) are skipped.
+
+    The Junta Monetaria (/page/ano-YYYY) and Gerencia General
+    (/page/resoluciones-de-gerencia-general-*) resolution archives are
+    scanned-image PDFs with no text layer and are intentionally excluded.
+
+data_model:
+  type: "legislation"
+  primary_key: "url"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "text"
+      description: "Full text extracted from the law PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "title"
+      description: "Law title (e.g. 'Ley Orgánica del Banco de Guatemala')"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "doc_number"
+      description: "Decree/acuerdo reference parsed from the text (e.g. '16-2002')"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "date"
+      description: "BANGUAT edition year as ISO date (YYYY-01-01); null if unknown"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "Direct PDF URL (identifier)"
+      type: "string"
+      role: "identifier"
+      required: true
+    - name: "issuer"
+      description: "Banco de Guatemala"
+      type: "string"
+      role: "metadata"
+      required: false
+
+license:
+  name: "Open Government Data (Guatemala)"
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Guatemalan financial-sector statutes (public-domain official legal texts) published by a public institution, the Banco de Guatemala, on its institutional website for public use."

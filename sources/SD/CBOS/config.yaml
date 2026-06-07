@@ -1,0 +1,71 @@
+source:
+  id: "SD/CBOS"
+  country: "SD"
+  name: "Central Bank of Sudan"
+  url: "https://cbos.gov.sd/en"
+  description: |
+    Laws, regulations, circulars, and policy documents issued by the Central Bank
+    of Sudan (CBOS). Covers banking legislation, foreign exchange regulations,
+    AML/CFT circulars, and annual monetary policies. Mix of English and Arabic.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+
+api:
+  type: "html_scrape"
+  base_url: "https://cbos.gov.sd"
+
+data_model:
+  type: "legislation"
+  source_nature: "consolidated"
+  primary_key: "slug"
+  update_strategy: "upsert"
+  dedup_key:
+    - "slug"
+
+schema:
+  total_fields: null
+  key_fields:
+    - name: "slug"
+      description: "URL slug or node ID for the document"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the law, regulation, or circular"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "category"
+      description: "Document category (law, regulation, circular, policy)"
+      type: "string"
+      role: "reference"
+      required: false
+  secondary_fields: []
+  probably_ignorable: []
+
+license:
+  name: "Custom Terms"
+  url: "https://cbos.gov.sd/en/content/copy-right-disclaimer"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Public regulatory information published by Sudan's central bank. No explicit open license, but regulations are published for public compliance."
+
+notes: |
+  Drupal 7 site at cbos.gov.sd. Content in field-name-body divs.
+  Laws and regulations in English. FX circulars mostly in Arabic.
+  ~13 laws/regulations + ~50 FX circulars + AML docs + policies.

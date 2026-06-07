@@ -1,0 +1,106 @@
+# ═══════════════════════════════════════════════════════════════════
+# TT/e-Gazette — Source Configuration
+# ═══════════════════════════════════════════════════════════════════
+
+source:
+  id: "TT/e-Gazette"
+  country: "TT"
+  name: "Trinidad & Tobago Official Gazette (Government Printery)"
+  url: "https://printery.gov.tt/e-gazette/"
+  description: |
+    Official e-Gazette of the Republic of Trinidad & Tobago, published by the
+    Government Printery. The open directory carries enacted Acts of Parliament
+    and Legal Notices (statutory instruments / subsidiary legislation) as
+    per-document PDFs, organized by year. This source collects the "Acts" and
+    "Legal Notices" folders — both full-text legislation. Language: English.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+  max_workers: 3
+
+api:
+  type: "html_scrape"
+  base_url: "https://printery.gov.tt/e-gazette/"
+  selectors:
+    year_index: "/e-gazette/"
+    year_listing: "/e-gazette/{year}/"
+    folders: ["Acts", "Legal Notices"]
+
+data_model:
+  type: "legislation"
+  source_nature: "gazette"
+  primary_key: "_id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "_id"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier (TT-GAZ-{slug of filename})"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Act / Legal Notice title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the document, extracted from the official PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Date found in the document (assent/publication); falls back to year"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "document_number"
+      description: "Act number or Legal Notice number"
+      type: "string"
+      role: "reference"
+      required: false
+  secondary_fields:
+    - name: "category"
+      description: "Source folder (Acts or Legal Notices)"
+    - name: "year"
+      description: "Gazette year directory"
+    - name: "pdf_url"
+      description: "URL of the official source PDF"
+    - name: "language"
+      description: "Document language (en)"
+    - name: "jurisdiction"
+      description: "Jurisdiction (TT)"
+  probably_ignorable: []
+
+license:
+  id: "ogd"
+  name: "Open Government Data (Trinidad & Tobago official publications)"
+  url: "https://printery.gov.tt/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: |
+    Acts of Parliament and Legal Notices of Trinidad & Tobago are official
+    government legal texts published openly by the Government Printery without
+    registration. No explicit machine-readable license is stated; treated as
+    open government data (public legal texts).
+
+notes: |
+  - English-language legislation.
+  - No public API; open Apache directory listing + per-document PDF.
+  - Coverage: Acts and Legal Notices for structured years (2023-present);
+    older years (2000-2001) hold scanned Gazette compilations and are skipped.
+  - PDFs are digital-native (extractable text). Documents yielding < 400 chars
+    of extractable text are skipped (no OCR).

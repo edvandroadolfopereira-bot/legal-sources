@@ -1,0 +1,62 @@
+source:
+  id: "VU/VFSC-Legislation"
+  country: "VU"
+  name: "Vanuatu Financial Services Commission — Legislation Collection"
+  url: "https://www.vfsc.vu/legislation/"
+  description: |
+    Financial services legislation administered by the Vanuatu Financial Services
+    Commission (VFSC). Covers ~180+ PDF documents including consolidated acts,
+    amendments, regulations, and guidelines in English and French. Key areas:
+    companies law, international companies, financial dealers licensing, AML/CFT,
+    e-business, partnerships, foundations, mutual funds, unit trusts, VASP, and more.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+endpoints:
+  listing_page: "https://www.vfsc.vu/legislation/"
+  wp_api_page: "https://www.vfsc.vu/wp-json/wp/v2/pages/3208"
+  pdf_base: "https://www.vfsc.vu/wp-content/uploads/"
+
+data_model:
+  update_strategy: "upsert"
+  table: "legislation"
+
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: title
+      required: true
+      type: string
+    - name: text
+      required: true
+      type: string
+    - name: url
+      required: true
+      type: string
+    - name: date
+      required: false
+      type: string
+  date_fields:
+    - _fetched_at
+  text_fields:
+    - text
+    - title
+
+license:
+  name: "Public Domain (Government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government legislation published for public access by the VFSC."

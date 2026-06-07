@@ -1,0 +1,65 @@
+# ===================================================================
+# ZW/SECZ -- Securities and Exchange Commission of Zimbabwe
+# ===================================================================
+
+source:
+  id: "ZW/SECZ"
+  country: "ZW"
+  name: "Securities and Exchange Commission of Zimbabwe"
+  url: "https://seczim.co.zw/"
+  description: |
+    Regulatory notices, directives, guidelines, AML guidance, and
+    publications from Zimbabwe's securities regulator. 479 PDFs via
+    WP Media API with text extraction, plus posts with inline text.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "wordpress_rest"
+  base_url: "https://seczim.co.zw/wp-json/wp/v2"
+  endpoints:
+    - "/media?media_type=application (479 PDF attachments)"
+    - "/posts (604 posts)"
+    - "/categories"
+  notes: "Directives, notices, AML guidance, publications. PDFs extracted via pdfplumber."
+
+data_model:
+  type: "doctrine"
+  primary_key: "_id"
+  update_strategy: "append_only"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "text"
+      description: "Full text from PDF or WP post content"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "document_type"
+      description: "Category: directive, notice, guideline, publication, etc."
+      type: "string"
+      role: "status"
+      required: false
+
+license:
+  name: "Public Government Documents (Zimbabwe)"
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulatory documents from SECZ"

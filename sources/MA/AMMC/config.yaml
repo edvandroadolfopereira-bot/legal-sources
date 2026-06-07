@@ -1,0 +1,58 @@
+# MA/AMMC - Autorité Marocaine du Marché des Capitaux — Circulars & Regulations
+name: "Autorité Marocaine du Marché des Capitaux — Circulars"
+country: MA
+source_id: "MA/AMMC"
+source_type: doctrine
+
+base_url: "https://www.ammc.ma"
+official_url: "https://www.ammc.ma/fr/reglementations/circulaires"
+
+data_types:
+  - doctrine
+  - legislation
+
+languages:
+  - fr
+
+coverage:
+  start_year: 2013
+  end_year: 2026
+  notes: "Capital markets regulatory circulars, arrêtés, laws, decrees, and general regulations from AMMC (Morocco). ~20% of PDFs have extractable text; scanned PDFs are skipped."
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+data_model:
+  update_strategy: upsert
+  dedup_key:
+    - _id
+
+schema:
+  key_fields:
+    - name: "category"
+      type: "string"
+      required: true
+    - name: "text"
+      type: "string"
+      required: true
+  required_fields:
+    - _id
+    - _source
+    - _type
+    - _fetched_at
+    - title
+    - text
+    - url
+
+license:
+  name: "Open Government Data"
+  url: "https://www.ammc.ma/fr/mentions-legales"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulatory documents published by Morocco's capital markets authority (AMMC)"

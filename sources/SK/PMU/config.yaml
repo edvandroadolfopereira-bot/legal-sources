@@ -1,0 +1,71 @@
+# Configuration for SK/PMU (Slovakia Antimonopoly Office - PMÚ SR)
+# Protimonopolný úrad Slovenskej republiky
+
+source:
+  id: SK/PMU
+  name: Slovakia Antimonopoly Office (PMÚ SR) — Decisions
+  country: SK
+  url: https://www.antimon.gov.sk/prehlad-rozhodnuti/
+  description: >
+    Decisions from the Antimonopoly Office of the Slovak Republic (Protimonopolný
+    úrad SR) covering cartels, abuse of dominance, concentrations (mergers), vertical
+    agreements, and other competition law cases. Full text extracted from PDF decisions.
+
+data_model:
+  types:
+    - case_law
+  update_strategy: append_only
+  dedup_key:
+    - decision_number
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+schema:
+  required_fields:
+    - _id
+    - _source
+    - _type
+    - _fetched_at
+    - title
+    - text
+    - date
+    - url
+  key_fields:
+    - name: decision_number
+      type: string
+      required: true
+    - name: proceeding_type
+      type: string
+      required: true
+    - name: instance
+      type: string
+      required: false
+    - name: verdict
+      type: string
+      required: false
+    - name: effective_date
+      type: string
+      required: false
+    - name: legal_basis
+      type: string
+      required: false
+    - name: market_sector
+      type: string
+      required: false
+    - name: participants
+      type: string
+      required: true
+
+license:
+  name: "Public Domain (Slovak Government)"
+  url: "https://www.antimon.gov.sk/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government decisions published for transparency under Slovak law."

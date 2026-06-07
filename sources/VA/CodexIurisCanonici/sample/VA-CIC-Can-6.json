@@ -1,0 +1,16 @@
+{
+  "_id": "VA-CIC-Can-6",
+  "_source": "VA/CodexIurisCanonici",
+  "_type": "legislation",
+  "_fetched_at": "2026-05-30T22:16:21.532608+00:00",
+  "title": "Canon 6",
+  "text": "§ 1. Hoc Codice vim obtinente, abrogantur:\n\r\n\n\r\n\n1° \"Codex Iuris Canonici\" anno 1917 promulgatus;\n\r\n\n2° aliae quoque leges, sive universales sive particulares, praescriptis huius Codicis contrariae, nisi de particularibus aliud expresse caveatur;\n\r\n\n3° leges poenales quaelibet, sive universales sive particulares a Sede Apostolica latae, nisi in ipso hoc Codice recipiantur;\n\r\n\n4° ceterae quoque leges disciplinares universales materiam respicientes, quae hoc Codice ex integro ordinatur.\n\r\n\n§ 2. Canones huius Codicis, quatenus ius vetus referunt, aestimandi sunt ratione etiam canonicae traditionis habita.\n\nTITULUS I\nDE LEGIBUS ECCLESIASTICIS",
+  "text_en": "§1. When this Code takes force, the following are abrogated:\n\n1/ the Code of Canon Law promulgated in 1917;\n\n2/ other universal or particular laws contrary to the prescripts of this Code unless other provision is expressly made for particular laws;\n\n3/ any universal or particular penal laws whatsoever issued by the Apostolic See unless they are contained in this Code;\n\n4/ other universal disciplinary laws regarding matter which this Code completely reorders.\n\n§2. Insofar as they repeat former law, the canons of this Code must be assessed also in accord with canonical tradition.",
+  "canon_number": 6,
+  "book": "Liber I",
+  "book_title_la": "De Normis Generalibus",
+  "book_title_en": "General Norms",
+  "date": "1983-01-25",
+  "url": "https://www.vatican.va/archive/cod-iuris-canonici/cic_index_la.html",
+  "language": "la"
+}

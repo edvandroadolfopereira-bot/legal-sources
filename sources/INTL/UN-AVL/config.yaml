@@ -1,0 +1,47 @@
+source:
+  id: INTL/UN-AVL
+  name: "UN Audiovisual Library of International Law"
+  country: INTL
+  url: https://legal.un.org/avl/
+  auth: none
+  data_types:
+    - doctrine
+  description: >
+    Introductory scholarly notes on 100+ major international legal instruments
+    from the UN Audiovisual Library of International Law. Expert analyses by
+    recognized international law scholars covering treaties, conventions,
+    resolutions, and declarations across all areas of international law.
+  license:
+    name: "UN Terms of Use"
+    url: "https://www.un.org/en/about-us/terms-of-use"
+    commercial_use: true
+    attribution_required: true
+    share_alike: false
+    no_derivatives: false
+    notes: "UN educational materials freely available; attribution to authors and UN required"
+
+fetch:
+  max_retries: 3
+  rate_limit: 1.0
+  timeout: 30
+
+schema:
+  key_fields:
+    - name: _id
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: text
+      type: string
+      required: true
+    - name: author
+      type: string
+      required: false
+    - name: category
+      type: string
+      required: false

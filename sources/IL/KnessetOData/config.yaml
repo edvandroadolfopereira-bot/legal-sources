@@ -1,0 +1,39 @@
+country: IL
+data_types:
+- legislation
+license:
+  name: "Open Government Data (Israel)"
+  url: "https://main.knesset.gov.il/Activity/Info/Pages/Databases.aspx"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Israeli legislation published via Knesset OData API. Government data."
+name: Israel Knesset OData API (Bills & Laws)
+notes: >
+  2,009 Israeli laws with full text via OData API + PDF download from fs.knesset.gov.il.
+  Uses KNS_IsraelLaw for metadata and KNS_DocumentLaw for PDF links.
+  Text extracted from PDFs using pdfminer.
+schema:
+  key_fields:
+  - name: law_id
+    required: true
+    type: integer
+  - name: knesset_num
+    required: false
+    type: integer
+  - name: is_basic_law
+    required: false
+    type: boolean
+  required_fields:
+  - _id
+  - _source
+  - _type
+  - _fetched_at
+  - title
+  - text
+  - date
+  - url
+source_id: IL/KnessetOData
+update_frequency: monthly
+url: https://knesset.gov.il/Odata/ParliamentInfo.svc

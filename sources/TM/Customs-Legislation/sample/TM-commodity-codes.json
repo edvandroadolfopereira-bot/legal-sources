@@ -1,0 +1,12 @@
+{
+  "_id": "TM-commodity-codes",
+  "_source": "TM/Customs-Legislation",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-05T06:50:48.036513+00:00",
+  "title": "Commodity Nomenclature Codes — Classification Explanations",
+  "text": "In order to achieve an automatic accurate calculation of customs payments, providing explanations regarding goods assigned to the same code in accordance with the Commodity Nomenclature of Foreign Economic Activity, but to which various customs duties are applied in the ASYCUDA World integrated customs information system by order No. 31 of the Chairman The State Customs Service of Turkmenistan “On Improving the Calculation of Customs Payments” dated March 10, 2020 approved the Lists with explanations of the Commodity Codes nomenclature of foreign economic activity for goods for which customs duties and excises are established and the Classifier of additional customs information used for customs purposes.",
+  "date": null,
+  "url": "https://customs.gov.tm/en/customs-info/customs-fees/lists_of_codes",
+  "language": "en",
+  "pdf_url": null
+}

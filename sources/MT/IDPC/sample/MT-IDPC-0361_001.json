@@ -1,0 +1,14 @@
+{
+  "_id": "MT-IDPC-0361_001",
+  "_source": "MT/IDPC",
+  "_type": "doctrine",
+  "_fetched_at": "2026-06-06T12:38:35.743655+00:00",
+  "title": "IDPC Decision 2026: The controller provided an incomplete copy of his personal data when exercising",
+  "text": "Type: Data protection complaint\n\nDescription: The controller provided an incomplete copy of his personal data when exercising his right of access pursuant to article 15 of the Regulation.\n\nOutcome: The Commissioner decided that the controller violated the GDPR’s accountability principle by failing to justify its refusal to fully comply with a data access request. It relied on the wrong national law, did not properly apply Maltese law and could not show that any restriction of the request was lawful or proportionate, resulting in a breach of the individual’s right of access under Article 15.\n\nCorrective Action: Order in terms of Article 58(2)(c) GDPR & reprimand in terms of Article 58(2)(b) GDPR",
+  "date": "2026-01-01",
+  "url": "https://idpc.org.mt/wp-content/uploads/2026/02/0361_001.pdf",
+  "decision_type": "Data protection complaint",
+  "outcome": "The Commissioner decided that the controller violated the GDPR’s accountability principle by failing to justify its refusal to fully comply with a data access request. It relied on the wrong national law, did not properly apply Maltese law and could not show that any restriction of the request was lawful or proportionate, resulting in a breach of the individual’s right of access under Article 15.",
+  "corrective_action": "Order in terms of Article 58(2)(c) GDPR & reprimand in terms of Article 58(2)(b) GDPR",
+  "case_ref": "0361_001"
+}

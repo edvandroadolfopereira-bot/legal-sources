@@ -1,0 +1,27 @@
+source_id: NG/NCC
+name: Nigerian Communications Commission — Determinations & Regulations
+country: NG
+url: https://ncc.gov.ng/industry/regulations-guidelines/determinations
+data_types:
+  - legislation
+  - doctrine
+auth:
+  type: none
+schedule: monthly
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - date
+    - text
+    - document_type
+
+license:
+  name: "Custom Terms (Government)"
+  url: "https://ncc.gov.ng/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Nigerian government regulatory documents published by the NCC under the Nigerian Communications Act 2003 for public compliance. Regulations are subsidiary legislation."

@@ -1,0 +1,41 @@
+source:
+  id: GD/GovernmentPrinteryGazette
+  country: GD
+  name: "Grenada Government Printery Gazette"
+  url: https://gazettes.gov.gd/
+  data_types:
+    - legislation
+  language: en
+license:
+  name: "Government of Grenada (Open Access)"
+  url: https://gazettes.gov.gd/
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government gazette published by the Grenada Government Printery. Government documents are public records."
+fetcher:
+  type: html_scraper
+  pagination: year_pages
+  rate_limit: 2.0
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: doc_id
+      required: true
+      type: integer
+    - name: pdf_url
+      required: false
+      type: string
+  date_fields:
+    - date
+    - _fetched_at
+  text_fields:
+    - text
+    - title
+notes: >
+  ~604 gazette issues (2017-2026, plus historical 1953/1983/2015).
+  Joomla/eDocman system with direct PDF download via viewdocument IDs.
+  Full text extracted from PDFs via pdfplumber.

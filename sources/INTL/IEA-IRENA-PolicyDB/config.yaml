@@ -1,0 +1,33 @@
+auth:
+  type: none
+base_url: https://api.iea.org/v3/policies
+country: INTL
+data_types:
+- legislation
+description: >
+  Joint IEA/IRENA database of renewable energy policies and measures across
+  190+ countries. Covers laws, regulations, programs and incentives for energy
+  efficiency, renewable energy and clean technology. ~13K policy records with
+  full descriptions.
+language: en
+name: IEA/IRENA Renewable Energy Policies and Measures Database
+rate_limit:
+  burst: 5
+  requests_per_second: 1
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: policyId
+    required: true
+    type: string
+source_id: INTL/IEA-IRENA-PolicyDB
+license:
+  name: "IEA Terms of Use"
+  url: "https://www.iea.org/terms"
+  commercial_use: false
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "IEA data is subject to their terms of use. API is publicly accessible but commercial redistribution may require license."

@@ -1,0 +1,55 @@
+# INTL/GCC-LegalDocs - Gulf Cooperation Council Digital Library
+name: "Gulf Cooperation Council — Digital Library (Legal Instruments)"
+country: INTL
+source_id: "INTL/GCC-LegalDocs"
+source_type: legislation
+
+base_url: "https://www.gcc-sg.org"
+official_url: "https://www.gcc-sg.org/en/MediaCenter/DigitalLibrary/Pages/default.aspx"
+
+data_types:
+  - legislation
+
+languages:
+  - en
+  - ar
+
+coverage:
+  start_year: 1985
+  end_year: 2026
+  notes: "GCC Secretariat legal instruments: Economic Agreement (2004), Anti-Dumping Law, Human Rights Declaration (2015), unified regulations, Supreme Council resolutions. ~30 documents covering 6 Gulf states."
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+data_model:
+  update_strategy: upsert
+  dedup_key:
+    - _id
+
+schema:
+  key_fields:
+    - name: "text"
+      type: "string"
+      required: true
+  required_fields:
+    - _id
+    - _source
+    - _type
+    - _fetched_at
+    - title
+    - text
+    - url
+
+license:
+  name: "Open Government Data"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official GCC Secretariat publications. No explicit license stated."

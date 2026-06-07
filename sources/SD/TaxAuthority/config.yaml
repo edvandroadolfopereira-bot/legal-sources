@@ -1,0 +1,56 @@
+fetch:
+  max_retries: 3
+  rate_limit: 2.0
+  timeout: 120
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: _source
+    required: true
+    type: string
+  - name: _type
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: string
+  - name: url
+    required: false
+    type: string
+  - name: category
+    required: false
+    type: string
+source:
+  auth: none
+  country: SD
+  data_types:
+  - legislation
+  - doctrine
+  description: >-
+    Sudan Taxation Chamber (tax.gov.sd). Two open, no-auth sources: (1) the
+    consolidated English tax Acts published as PDFs on /en/tax-laws/ — Income
+    Tax Act 1986, Stamp Duty Act 1986, Capital Gains Tax Act 1986 — extracted to
+    full text (legislation); and (2) the Chamber's official tax-guidance pages
+    via the WordPress REST API (wp-json/wp/v2/pages), covering tax procedures,
+    income tax, VAT, stamp duty, business-profits tax and double-taxation
+    agreements in English and Arabic (doctrine). Scanned and broken-font Arabic
+    PDFs that yield no usable text are filtered out by a readability check.
+  id: SD/TaxAuthority
+  name: Sudan Tax Authority (SudanTax)
+  url: https://tax.gov.sd/en/tax-laws/
+license:
+  name: Open Government Data
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Sudan government tax legislation and official tax guidance

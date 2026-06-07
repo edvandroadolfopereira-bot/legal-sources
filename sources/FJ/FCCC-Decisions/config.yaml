@@ -1,0 +1,36 @@
+source:
+  id: FJ/FCCC-Decisions
+  name: Fijian Competition and Consumer Commission — Decisions
+  country: FJ
+  url: https://fccc.gov.fj
+  data_types:
+    - doctrine
+  auth: none
+  description: >
+    Media releases, price control orders, LPG authorisations, enforcement
+    decisions, and regulatory determinations from the Fijian Competition &
+    Consumer Commission. ~533 posts fetched via WordPress REST API; each
+    post links to one or more PDF attachments whose text is extracted.
+
+schema:
+  key_fields:
+    - post_id
+  record_type: doctrine
+
+fetcher:
+  method: api
+  rate_limit: 1.5
+  notes: >
+    Uses the WordPress REST API (wp-json/wp/v2/posts) to paginate all
+    posts. Extracts PDF URLs from content.rendered, downloads and extracts
+    text via common/pdf_extract. Falls back to inline HTML text when no
+    PDF is found.
+
+license:
+  name: "Public Domain (Government of Fiji)"
+  url: "https://fccc.gov.fj/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Government regulatory publications, publicly available"

@@ -1,0 +1,26 @@
+source_id: TZ/CMSA
+name: Tanzania Capital Markets and Securities Authority — Regulations
+country: TZ
+url: https://www.cmsa.go.tz/
+data_types:
+  - legislation
+auth:
+  type: none
+schedule: monthly
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - date
+    - text
+    - document_type
+
+license:
+  name: "Custom Terms (Government)"
+  url: "https://www.cmsa.go.tz/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Tanzanian government regulatory documents. Capital Markets and Securities Act, regulations, and EAC Council Directives published for public compliance."

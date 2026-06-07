@@ -1,0 +1,68 @@
+# MT/MCCAA Configuration
+# Malta Competition and Consumer Affairs Authority — Competition Decisions
+
+source_id: MT/MCCAA
+country: MT
+name: Malta Competition and Consumer Affairs Authority
+description: >
+  Competition decisions from the Office for Competition within the Malta
+  Competition and Consumer Affairs Authority (MCCAA). Includes concentration
+  (merger/acquisition) clearance decisions and antitrust enforcement decisions.
+
+# Base URL
+base_url: https://mccaa.org.mt
+
+# Data types available
+data_types:
+  - case_law
+
+# Authentication (none required - public regulatory data)
+auth:
+  type: none
+
+# Rate limiting configuration
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+# Data schema
+schema:
+  key_fields:
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: true
+    - name: url
+      type: string
+      required: true
+  secondary_fields:
+    - name: case_reference
+      type: string
+      required: false
+    - name: sector
+      type: string
+      required: false
+    - name: decision_type
+      type: string
+      required: false
+
+# Data model
+data_model:
+  update_strategy: upsert
+  dedup_key:
+    - _id
+
+# License information
+license:
+  name: Public Regulatory Data
+  url: https://mccaa.org.mt
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Public competition decisions published by Maltese government authority"

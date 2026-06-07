@@ -1,0 +1,71 @@
+# ===================================================================
+# GW/MEF-TaxLegislation -- Guinea-Bissau Ministry of Economy & Finance
+# ===================================================================
+# Kontaktu tax portal at kontaktu.mef.gw/legislation.
+# Full-text tax codes, decrees, and ministerial orders in HTML accordion.
+# ===================================================================
+
+source:
+  id: "GW/MEF-TaxLegislation"
+  country: "GW"
+  name: "Guinea-Bissau Ministry of Economy & Finance — Tax Legislation (Kontaktu)"
+  url: "https://kontaktu.mef.gw/legislation"
+  description: |
+    Guinea-Bissau's Ministry of Economy & Finance publishes consolidated
+    tax codes, ministerial decrees, and service instructions via the
+    Kontaktu portal. Full text is embedded in a Semantic UI accordion
+    on a single page. Covers: Industrial Contribution, Urban Property Tax,
+    Capital Tax, Consumption Tax, IGV, Professional Tax, IVA, General Tax Law.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 1
+
+schema:
+  key_fields:
+    - name: "_id"
+      description: "Unique document identifier derived from title slug"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the legislation"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication or update date if available"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "URL to the legislation page"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "Public Domain (Government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government tax legislation published by Guinea-Bissau Ministry of Finance"
+
+notes: |
+  - Single-page accordion with all legislation embedded in HTML
+  - Coverage: 8 tax codes, ministerial decrees, service instructions, General Tax Law
+  - Language: Portuguese
+  - Updated periodically (latest updates through 2024)

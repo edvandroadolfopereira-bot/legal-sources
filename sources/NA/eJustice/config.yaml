@@ -1,0 +1,97 @@
+source:
+  id: "NA/eJustice"
+  country: "NA"
+  name: "Namibia eJustice Portal — Court Judgments"
+  url: "https://ejustice.jud.na/"
+  description: |
+    High Court and Supreme Court judgments of the Republic of Namibia published
+    on the official eJustice portal (a SharePoint site). Judgments are uploaded
+    as Microsoft Word (.docx / .doc) documents organised by category (Civil,
+    Criminal, Labour, Tax). Full text is extracted via python-docx. English
+    content; ~640+ judgments covering High Court (Civil/Criminal/Labour/Tax)
+    and the Supreme Court.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "html"
+  base_url: "https://ejustice.jud.na"
+  folder_listings:
+    - "/High Court/Judgments/Civil/"
+    - "/High Court/Judgments/Criminal/"
+    - "/High Court/Judgments/Labour/"
+    - "/High Court/Judgments/Tax/"
+    - "/Supreme Court/Judgments/Judgments/"
+
+data_model:
+  type: "case_law"
+  source_nature: "consolidated"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: 11
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier (NA/eJustice/{slug})"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Parties and citation parsed from the filename"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full judgment text (extracted from .docx paragraphs + tables)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Judgment date (ISO 8601) parsed from filename"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "court"
+      description: "High Court / Supreme Court"
+      type: "string"
+      role: "metadata"
+  secondary_fields:
+    - name: "category"
+      description: "Civil / Criminal / Labour / Tax (HC only)"
+    - name: "case_number"
+      description: "Case number e.g. HC-MD-CIV-ACT-DEL-2022-04306"
+    - name: "citation"
+      description: "Neutral citation e.g. [2025] NAHCMD 21"
+    - name: "url"
+      description: "Direct link to the .docx file"
+  probably_ignorable: []
+
+license:
+  name: "Public Domain (Government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official judgments of Namibian courts are public domain."
+
+notes: |
+  - SharePoint document libraries; folder listings are paginated but each
+    folder root URL returns a large directory page that grep yields hundreds
+    of files in one request.
+  - File names embed parties, case number, citation, and date.
+  - python-docx extracts paragraphs and tables (the SharePoint template puts
+    a structured header in a table — without table extraction text would be
+    only ~120 chars).

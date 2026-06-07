@@ -1,0 +1,19 @@
+{
+  "_id": "sv-sc-77",
+  "_source": "SV/SC-Decisions",
+  "_type": "case_law",
+  "_fetched_at": "2026-05-28T06:05:27.316948+00:00",
+  "title": "Caso TELEMÓVIL",
+  "text": "# Caso TELEMÓVIL\n\nLas cuatro empresas de telefonía TELEMOVIL, TELEFONICA, DIGICEL e INTELEFON fijaron la tarifa de US$0.21 más IVA por minuto para una llamada originada en la red fija y terminada en sus redes móviles.\n\n## Datos del caso\n- Agente económico: TELEMOVIL EL SALVADOR S.A.\n- Práctica: Acuerdo anticompetitivo entre competidores\n- Mercado: Telecomunicaciones - Telefonía móvil\n- Sanción: $609,300\n- Fecha de apertura: 19 Dec 2011\n\n## Cronología de actuaciones\n- 2011-12-19 (SC): SC sanciona a Telemóvil y tres empresas telefónicas más por acuerdos anticompetitivos entre competidores. [Resolución PDF: https://uploads.sc.gob.sv/C-017-O-PS-R-2010_191211_1055.pdf]\n- 2012-02-10 (TELEM): TELEMÓVIL presenta demanda ante la SCA contra el CD de la SC\n- 2012-07-03 (SCA): SCA notifica a SC admisión de la demanda y suspende el pago de la multa de la SC [Resolución PDF: https://uploads.sc.gob.sv/EF60-2012_300712_1102.pdf]\n- 2012-07-10 (SC): CD de la SC presenta primer informe requerido por SCA [Resolución PDF: https://uploads.sc.gob.sv/EF60-2012_040712.pdf]\n- 2012-07-10 (SC): CD de la SC presenta primer informe requerido por SCA [Resolución PDF: https://uploads.sc.gob.sv/EF60-2012_040712.pdf]\n- 2013-01-09 (SC): CD de la SC presenta segundo informe requerido por SCA y además informa rectificación de multa contra TELEMÓ?VIL por error en el cálculo\n- 2013-01-09 (SC): SC presenta informe justificativo [Resolución PDF: http://uploads.sc.gob.sv/appsc/casos/60-2012_TELEMOVIL_090113.pdf]\n- 2013-10-16 (CSJ): SCA notifica a SC sobre audiencia a TELEMÓVIL para que se pronuncie sobre corrección de multa hecha por la SC [Resolución PDF: https://uploads.sc.gob.sv/EF60-2012_201212.pdf]\n- 2015-01-05 (CSJ): La SCA notifica a la SC la apertura a pruebas del proceso contencioso administrativo [Resolución PDF: https://uploads.sc.gob.sv/EF60-2012_050115.pdf]\n- 2015-01-15 (SC): CD y el Superintendente presentan pruebas. [Resolución PDF: https://uploads.sc.gob.sv/EF60-2012_140115.pdf]\n- 2015-08-17 (SCA): Sala notifica traslado final de acuerdo al articulo 28 LJCA [Resolución PDF: https://uploads.sc.gob.sv/EF60-2012_170815_1535.pdf]\n- 2015-08-27 (C): Consejo Directivo evacuo traslado final de conformidad al Art.28 LJCA [Resolución PDF: https://uploads.sc.gob.sv/EF60-2012_260815.pdf]\n- 2016-09-12 (SCA): SCA notifica sentencia declarando la legalidad del acto impugnado [Resolución PDF: https://uploads.sc.gob.sv/EF60-2012_060717.pdf]\n- 2017-03-23 (SCA): SCA declara sin lugar el recurso de aclaración interpuesto por TELEMOVIL. [Resolución PDF: https://uploads.sc.gob.sv/EF60-2012_230317_1040.pdf]\n- 2018-03-01 (TELEMOVIL): La multa sancionada al agente económico, fue ejecutada.\n- 2018-03-01 (TELEMOVIL): TELEMOVIL paga la multa que le fue impuesta por el CDSC [Resolución PDF: https://uploads.sc.gob.sv/appsc/casos/ReciboPago_TELEMOVIL_01mar2018.pdf]",
+  "date": "2018-03-01",
+  "url": "https://app.sc.gob.sv/caso.php?id=77",
+  "case_id": 77,
+  "economic_agent": "TELEMOVIL EL SALVADOR S.A.",
+  "practice": "Acuerdo anticompetitivo entre competidores",
+  "market": "Telecomunicaciones - Telefonía móvil",
+  "sanction": "$609,300",
+  "opened_date": "2011-12-19",
+  "event_count": 16,
+  "language": "es",
+  "country": "SV"
+}

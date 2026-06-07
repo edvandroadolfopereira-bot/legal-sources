@@ -1,0 +1,68 @@
+# ═══════════════════════════════════════════════════════════════════
+# Legal Data Hunter — Source Configuration
+# SV/SC-Decisions — Superintendencia de Competencia de El Salvador
+# ═══════════════════════════════════════════════════════════════════
+
+source:
+  id: "SV/SC-Decisions"
+  country: "SV"
+  name: "El Salvador Superintendencia de Competencia — Decisions"
+  url: "https://app.sc.gob.sv/"
+  description: |
+    Cases and resolutions of El Salvador's Superintendencia de Competencia
+    (SC), the national competition authority. The public "Casos en Línea"
+    portal (app.sc.gob.sv) publishes, per case, the subject, the economic
+    agent investigated, the affected market, the sanction imposed, and a
+    full chronological timeline of every administrative and judicial event
+    (resolutions of the Superintendent, decisions of the Consejo Directivo,
+    appeals before the Sala de lo Contencioso Administrativo, etc.), each
+    with a link to the underlying PDF. The full narrative — case metadata
+    plus the dated event-by-event procedural history — is captured as the
+    document text.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+  max_workers: 1
+
+api:
+  type: "html_scrape"
+  base_url: "https://app.sc.gob.sv"
+  endpoints:
+    index: "/"
+    case: "/caso.php?id={case_id}"
+
+schema:
+  primary_key: "_id"
+  key_fields:
+    - _id
+    - _source
+    - _type
+    - title
+    - text
+    - date
+    - url
+    - case_id
+    - economic_agent
+    - market
+    - practice
+    - sanction
+    - event_count
+
+license:
+  name: "Open Government Data"
+  url: "https://www.transparencia.gob.sv/institutions/sc"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: |
+    Published by El Salvador's Superintendencia de Competencia on its
+    public Casos en Línea portal under the transparency law (Ley de Acceso
+    a la Información Pública). No registration or paywall.

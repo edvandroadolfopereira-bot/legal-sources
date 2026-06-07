@@ -1,0 +1,37 @@
+source_id: "BB/JudiciaryDecisions"
+name: "Barbados Judiciary Decisions"
+country: BB
+url: "https://www.barbadoslawcourts.gov.bb/judgments/"
+description: >
+  Judgments from the Barbados Supreme Court (Court of Appeal and High Court),
+  Magistrate's Courts, and Registrar's Taxation Decisions, 2007-2022.
+
+data_types:
+  - case_law
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - date
+    - court
+    - judge
+    - citation
+    - text
+    - url
+
+license:
+  name: "Public Domain (government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government court judgments published for public access"

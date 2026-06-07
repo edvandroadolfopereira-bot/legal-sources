@@ -1,0 +1,51 @@
+source_id: LC/FSRA
+name: Saint Lucia Financial Services Regulatory Authority
+country: LC
+url: https://fsrastlucia.org/
+description: |
+  Legislation, regulations, guidelines, and directives from Saint Lucia's
+  Financial Services Regulatory Authority. Covers insurance, pensions, credit
+  unions, international banking, money services, virtual assets, and registered
+  agents. Full text extracted from official PDFs.
+
+data_types:
+  - legislation
+  - doctrine
+
+license:
+  name: Open Government Data
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulatory publications from Saint Lucia FSRA"
+
+language: en
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+update_frequency: quarterly
+
+schema:
+  key_fields:
+    - name: title
+      required: true
+      type: string
+    - name: url
+      required: true
+      type: string
+  date_field: date
+  text_field: text
+  title_field: title
+  url_field: url
+
+notes: |
+  Joomla site with legislation and guidelines across multiple sector-specific
+  pages. PDFs hosted in /images/ directory. Scrapes HTML pages for PDF links,
+  then downloads and extracts text.

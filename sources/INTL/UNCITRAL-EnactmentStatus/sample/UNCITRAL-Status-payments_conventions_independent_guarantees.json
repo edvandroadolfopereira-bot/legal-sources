@@ -1,0 +1,57 @@
+{
+  "_id": "UNCITRAL-Status-payments_conventions_independent_guarantees",
+  "_source": "INTL/UNCITRAL-EnactmentStatus",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-04T22:06:52.742830+00:00",
+  "title": "Status: United Nations Convention on Independent Guarantees and Stand-by Letters of Credit (New York, 1995)",
+  "text": "Authoritative information on the status of the treaties deposited with the Secretary-General of the United Nations, including historical status information, may be obtained by consulting the United Nations Treaty Collection (\ntreaties.un.org\n).\nThe UNCITRAL Secretariat also prepares yearly a document containing the Status of Conventions and Enactments of UNCITRAL Model Laws, which is available on the web page of the corresponding\nUNCITRAL Commission Session\n.\nAll dates: DD/MM/YYYY\nState\nNotes\nSignature\nRatification, Accession(*), Approval(†), Acceptance(‡) or Succession(§)\nEntry into force\nBelarus\n03/12/1996\n23/01/2002\n01/02/2003\nEcuador\n18/06/1997(*)\n01/01/2000\nEl Salvador\n05/09/1997\n31/07/1998\n01/01/2000\nGabon\n15/12/2004(*)\n01/01/2006\nKuwait\n28/10/1998(*)\n01/01/2000\nLiberia\n16/09/2005(*)\n01/10/2006\nPanama\n09/07/1997\n21/05/1998\n01/01/2000\nTunisia\n08/12/1998(*)\n01/01/2000\nUnited States of America\n11/12/1997\nParties 8",
+  "date": "1995-01-01",
+  "url": "https://uncitral.un.org/en/texts/payments/conventions/independent_guarantees/status",
+  "num_jurisdictions": 9,
+  "entries": [
+    {
+      "state": "Belarus",
+      "year": "03/12/1996",
+      "notes": "23/01/2002"
+    },
+    {
+      "state": "Ecuador",
+      "year": "18/06/1997(*)",
+      "notes": "01/01/2000"
+    },
+    {
+      "state": "El Salvador",
+      "year": "05/09/1997",
+      "notes": "31/07/1998"
+    },
+    {
+      "state": "Gabon",
+      "year": "15/12/2004(*)",
+      "notes": "01/01/2006"
+    },
+    {
+      "state": "Kuwait",
+      "year": "28/10/1998(*)",
+      "notes": "01/01/2000"
+    },
+    {
+      "state": "Liberia",
+      "year": "16/09/2005(*)",
+      "notes": "01/10/2006"
+    },
+    {
+      "state": "Panama",
+      "year": "09/07/1997",
+      "notes": "21/05/1998"
+    },
+    {
+      "state": "Tunisia",
+      "year": "08/12/1998(*)",
+      "notes": "01/01/2000"
+    },
+    {
+      "state": "United States of America",
+      "year": "11/12/1997"
+    }
+  ]
+}

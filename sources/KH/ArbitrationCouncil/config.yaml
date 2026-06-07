@@ -1,0 +1,115 @@
+# ===================================================================
+# KH/ArbitrationCouncil -- Arbitration Council of Cambodia (labor awards)
+# ===================================================================
+# The Arbitration Council is Cambodia's tripartite quasi-judicial body
+# for collective labor disputes, established in 2003 under the 1997
+# Labour Law and Prakas No. 099 MOSALVY. Its arbitral awards are
+# published openly (since 2004) on arbitrationcouncil.org as PDFs via
+# the WordPress Download Manager plugin. Many awards from 2004-2016 are
+# born-digital English PDFs with extractable text; later awards are
+# often Khmer-only scans (skipped — no text layer).
+# ===================================================================
+
+source:
+  id: "KH/ArbitrationCouncil"
+  country: "KH"
+  name: "Arbitration Council of Cambodia — Labor Decisions"
+  url: "https://www.arbitrationcouncil.org/"
+  description: |
+    Arbitral awards of Cambodia's Arbitration Council, the tripartite
+    quasi-judicial body that resolves collective labor disputes under the
+    1997 Labour Law. ~1,940 awards published openly since 2004 in Khmer
+    and (for many) English. Awards are PDF files served through the
+    WordPress Download Manager plugin; full text extracted from
+    born-digital English PDFs. Khmer-only scanned awards without a text
+    layer are skipped.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+  max_workers: 3
+
+api:
+  type: "html_scrape"
+  base_url: "https://www.arbitrationcouncil.org"
+  selectors:
+    list_page: "https://www.arbitrationcouncil.org/arbitral-decision/arbitral-award/?wpdmc=arbitral-awards"
+    item_selector: "a[href*='/download/']"
+
+data_model:
+  type: "case_law"
+  source_nature: "bulk_archive"
+  primary_key: "case_id"
+  update_strategy: "append_only"
+  versioning: "none"
+  dedup_key:
+    - "case_id"
+
+schema:
+  total_fields: 13
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier (KH-AC-{slug})"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Award title, e.g. '076/05 - Global Footwear'"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the arbitral award, extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Award create/publication date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "case_id"
+      description: "Case number, e.g. '076/05'"
+      type: "string"
+      role: "reference"
+      required: true
+  secondary_fields:
+    - name: "language"
+      description: "Document language (English or Khmer)"
+    - name: "url"
+      description: "Award download page URL"
+    - name: "pdf_filename"
+      description: "Original PDF file name"
+    - name: "page_count"
+      description: "Number of PDF pages"
+  probably_ignorable: []
+
+# ── License ──────────────────────────────────────────────────────
+license:
+  id: "custom-terms"
+  name: "Arbitration Council — All Rights Reserved (site terms)"
+  url: "https://www.arbitrationcouncil.org/"
+  commercial_use: false
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: |
+    Arbitral awards are official quasi-judicial decisions of a statutory
+    body (public legal records), but the publisher's website footer asserts
+    "Copyright © The Arbitration Council. All rights reserved." with no open
+    license. Commercial use flagged as restricted pending clarification.
+
+notes: |
+  - Quasi-judicial body (case_law). Awards 2004-2025, ~1,940 total.
+  - English PDFs (2004-2016) are born-digital with extractable text.
+  - Many later/Khmer-only awards are scanned images with no text layer;
+    these are skipped (no OCR available).
+  - Access: WordPress Download Manager. Each award page exposes a download
+    button with a per-request `refresh` token; PDF fetched with a Referer
+    header set to the award page.

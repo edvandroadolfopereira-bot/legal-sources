@@ -1,0 +1,81 @@
+# ===================================================================
+# CR/BCCR-Regulations -- Banco Central de Costa Rica, Marco Legal
+# ===================================================================
+# Reglamentos, normativa, acuerdos de la Junta Directiva, and control
+# gacetario published by the Central Bank of Costa Rica. ~340 PDFs.
+# ===================================================================
+
+source:
+  id: "CR/BCCR-Regulations"
+  country: "CR"
+  name: "Banco Central de Costa Rica — Regulations"
+  url: "https://www.bccr.fi.cr/"
+  description: |
+    Regulatory framework ("Marco Legal") of the Central Bank of Costa
+    Rica: reglamentos (e.g. Sistema de Pagos, SINPE, tarjetas de pago),
+    normativa, acuerdos de la Junta Directiva (board agreements and
+    resolutions), and control gacetario. Documents cover payment systems,
+    international reserves, banking coordination, corporate governance,
+    and internal operating rules.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "html_scrape_pdf"
+  base_url: "https://www.bccr.fi.cr"
+  notes: |
+    SharePoint site. Each Marco Legal section page embeds its document
+    catalogue as a JSON blob with PDF paths (slashes escaped as \\u002f)
+    under /marco-legal/Doc*/. Paths are extracted, then PDFs downloaded
+    and text-extracted with pdfplumber.
+
+data_model:
+  type: "doctrine"
+  primary_key: "url"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "text"
+      description: "Full text extracted from the PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "title"
+      description: "Document title derived from the filename"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "category"
+      description: "reglamento | normativa | acuerdo_junta_directiva | control_gacetario"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "date"
+      description: "Best-effort issue date parsed from document text (ISO)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "Live PDF URL"
+      type: "string"
+      role: "identifier"
+      required: true
+
+license:
+  name: "Open Government Data (Costa Rica)"
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulatory documents published by a Costa Rican public institution (Banco Central de Costa Rica) for public use."

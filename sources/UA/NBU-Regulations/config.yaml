@@ -1,0 +1,105 @@
+# ===================================================================
+# UA/NBU-Regulations — National Bank of Ukraine Regulatory Acts
+# ===================================================================
+# Central bank regulations, resolutions, instructions on banking,
+# monetary policy, and financial markets. Full text from PDF documents.
+# ===================================================================
+
+source:
+  id: "UA/NBU-Regulations"
+  country: "UA"
+  name: "National Bank of Ukraine — Regulatory Acts"
+  url: "https://bank.gov.ua/ua/legislation"
+  description: |
+    Regulatory acts of the National Bank of Ukraine (NBU), including
+    resolutions, decisions, regulations, instructions, orders, and rules.
+    ~2,900 documents. Full text extracted from PDF files.
+
+data_types:
+  - legislation
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 2
+  burst: 3
+
+api:
+  type: "html_search_plus_pdf"
+  search:
+    url: "https://bank.gov.ua/ua/component/source/legislationSearchResults"
+    method: "POST"
+    pagination: "page parameter, 1-indexed"
+    max_per_page: 100
+  full_text:
+    format: "PDF"
+    pattern: "https://bank.gov.ua/admin_uploads/law/{DDMMYYYY}_{number}.pdf"
+
+data_model:
+  type: "legislation"
+  primary_key: "doc_slug"
+  update_strategy: "append_only"
+  dedup_key:
+    - "doc_slug"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "doc_slug"
+      description: "URL slug (e.g., Resolution_27052026_54)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the regulatory act (from PDF)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Adoption date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "url"
+      description: "URL to document page on bank.gov.ua"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "doc_number"
+      description: "Document number"
+      type: "string"
+      role: "identifier"
+      required: false
+    - name: "doc_type"
+      description: "Document type (Resolution, Decision, etc.)"
+      type: "string"
+      role: "classification"
+      required: false
+    - name: "date_published"
+      description: "Official publication date"
+      type: "date"
+      role: "temporal_key"
+      required: false
+
+license:
+  name: "Open Government Data"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government regulatory acts, publicly accessible"
+
+notes: |
+  - ~2,900 documents total across all types
+  - Main types: Resolutions (2,120), Decisions (251), Council Decisions (158)
+  - Full text in PDF format, extracted via pdfplumber
+  - Behind Cloudflare but no JS challenge for plain requests
+  - Language: Ukrainian

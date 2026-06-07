@@ -1,0 +1,75 @@
+# ===================================================================
+# ZM/ZRA-PracticeNotes -- Zambia Revenue Authority Practice Notes
+# ===================================================================
+# Tax practice notes issued annually by ZRA covering income tax, VAT,
+# customs, PAYE, excise duty, and other tax types. Published as PDFs
+# on the ZRA WordPress site, accessible via WP REST API.
+# ===================================================================
+
+source:
+  id: "ZM/ZRA-PracticeNotes"
+  country: "ZM"
+  name: "Zambia Revenue Authority — Practice Notes"
+  url: "https://www.zra.org.zm/tax-information/"
+  description: |
+    Annual practice notes from the Zambia Revenue Authority explaining
+    changes to tax legislation, rates, thresholds, and compliance
+    procedures. Covers income tax, VAT, PAYE, excise duty, customs,
+    property transfer tax, and more. Published since 2002.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+  notes: "WordPress site with SSL issues. Use verify=False."
+
+api:
+  type: "rest"
+  base_url: "https://www.zra.org.zm"
+  endpoints:
+    media_search: "/wp-json/wp/v2/media?per_page=100&search=practice+note&media_type=application"
+  response_format: "json"
+  notes: "WordPress REST API media endpoint. PDFs indexed as media attachments."
+
+schema:
+  total_fields: 7
+  key_fields:
+    - name: "_id"
+      description: "WordPress media ID"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Practice note title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "URL to original PDF"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "Public Domain (Zambia Revenue Authority)"
+  url: "https://www.zra.org.zm/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Government tax guidance published for public access and compliance."

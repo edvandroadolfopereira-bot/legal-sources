@@ -51,6 +51,7 @@ from common.http_client import HttpClient
 
 from common.pdf_extract import extract_pdf_markdown
 
+PDF_SUPPORT = True  # handled by common.pdf_extract
 
 logging.basicConfig(
     level=logging.INFO,

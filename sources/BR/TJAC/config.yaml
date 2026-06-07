@@ -1,0 +1,35 @@
+auth:
+  type: none
+base_url: https://esaj.tjac.jus.br/cjsg/resultadoCompleta.do
+country: BR
+data_types:
+- case_law
+description: >
+  Court decisions (acordãos) from the Tribunal de Justiça do Estado do Acre
+  via the eSAJ jurisprudence search system. Returns ementas (legal summaries
+  with holdings and reasoning) plus metadata.
+language: pt
+name: Acre State Court (TJAC) Jurisprudence
+rate_limit:
+  burst: 2
+  requests_per_second: 0.5
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: process_number
+    required: false
+    type: string
+  - name: cd_acordao
+    required: false
+    type: string
+source_id: BR/TJAC
+license:
+  name: "Public Domain (Brazilian Government Acts)"
+  url: "https://dados.gov.br"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Brazilian court decisions are public domain under Art. 8 of Lei 9.610/1998"

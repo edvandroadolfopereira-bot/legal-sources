@@ -1,0 +1,35 @@
+last_bootstrap: null
+last_error: null
+last_run: '2026-05-29T16:18:49.271135+00:00'
+run_history:
+- errors: 0
+  finished_at: '2026-05-29T16:16:02.727032+00:00'
+  records_fetched: 15
+  records_new: 0
+  records_skipped: 0
+  records_updated: 0
+  sample_records_saved: 15
+  skip_exception: 0
+  skip_normalize_none: 0
+  started_at: '2026-05-29T16:15:17.566922+00:00'
+- errors: 0
+  finished_at: '2026-05-29T16:17:47.815032+00:00'
+  records_fetched: 15
+  records_new: 0
+  records_skipped: 0
+  records_updated: 0
+  sample_records_saved: 15
+  skip_exception: 0
+  skip_normalize_none: 0
+  started_at: '2026-05-29T16:17:08.562751+00:00'
+- errors: 0
+  finished_at: '2026-05-29T16:18:49.271135+00:00'
+  records_fetched: 15
+  records_new: 0
+  records_skipped: 0
+  records_updated: 0
+  sample_records_saved: 15
+  skip_exception: 0
+  skip_normalize_none: 0
+  started_at: '2026-05-29T16:18:10.249704+00:00'
+total_records: 0

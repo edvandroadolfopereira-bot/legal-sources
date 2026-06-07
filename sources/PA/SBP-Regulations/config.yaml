@@ -1,0 +1,79 @@
+source_id: PA/SBP-Regulations
+name: Superintendencia de Bancos de Panamá — Regulations
+country: PA
+url: https://www.superbancos.gob.pa/
+data_types:
+- legislation
+auth: none
+description: >
+  Binding prudential regulations ("Acuerdos") issued by the Junta Directiva of
+  Panama's banking superintendency (Superintendencia de Bancos de Panamá),
+  covering banking, fiduciary, and AML/CFT-prevention rulebooks. Each acuerdo is
+  published as a born-digital PDF on superbancos.gob.pa and listed in Drupal
+  "accordion" views at /acuerdos/bancarios, /acuerdos/fiduciarios, and
+  /acuerdos/prevencion. The scraper parses each listing row to recover the
+  acuerdo number, the official description (purpose + Gaceta Oficial reference),
+  and the row's own PDF URL, then downloads the PDF and extracts its full text
+  with pdfplumber. Records are emitted only when real full text is recovered;
+  the rare recent acuerdo published as a signed scan with no text layer
+  (< 400 extracted chars) is skipped.
+api:
+  type: html_scrape
+  base_url: https://www.superbancos.gob.pa
+  listings:
+  - path: /acuerdos/bancarios
+    name: Acuerdos Bancarios
+  - path: /acuerdos/fiduciarios
+    name: Acuerdos Fiduciarios
+  - path: /acuerdos/prevencion
+    name: Acuerdos Prevención
+license:
+  name: Open Government Data
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: >
+    Official regulatory acts of a Panamanian government authority published for
+    public access. No explicit reuse license is stated; treated as open
+    government data. Attribution to the Superintendencia de Bancos de Panamá
+    recommended.
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: _source
+    required: true
+    type: string
+  - name: _type
+    required: true
+    type: string
+  - name: _fetched_at
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: description
+    required: false
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: url
+    required: true
+    type: string
+  - name: number
+    required: false
+    type: string
+  - name: gaceta_oficial
+    required: false
+    type: string
+  - name: category
+    required: false
+    type: string

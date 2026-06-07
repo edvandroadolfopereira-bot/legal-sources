@@ -1,0 +1,63 @@
+# ═══════════════════════════════════════════════════════════════════
+# Legal Data Hunter — Source Configuration
+# TJ/SupremeCourt — Supreme Court of the Republic of Tajikistan
+# ═══════════════════════════════════════════════════════════════════
+
+source:
+  id: "TJ/SupremeCourt"
+  country: "TJ"
+  name: "Supreme Court of the Republic of Tajikistan — Bulletins (Нашрия / Мизони Қонун)"
+  url: "https://sud.tj/nashriyai-sudi-oli/"
+  description: |
+    Quarterly publications of the Supreme Court of the Republic of Tajikistan
+    (Суди Олии Ҷумҳурии Тоҷикистон): "Нашрияи Суди Олии Ҷумҳурии Тоҷикистон"
+    (Supreme Court Bulletin, 2020–2024) and its successor "Мизони Қонун"
+    (Scale of Law, 2025–). Each issue compiles selected cassation decisions,
+    Plenum interpretations of legislation, doctrinal commentary on amendments
+    to codes, and procedural guidance for lower courts. Full Tajik-language
+    text extracted from the official PDFs.
+
+data_types:
+  - case_law
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+  max_workers: 1
+
+api:
+  type: "html_scrape"
+  base_url: "https://sud.tj"
+  endpoints:
+    listing: "/nashriyai-sudi-oli/"
+
+schema:
+  primary_key: "_id"
+  key_fields:
+    - _id
+    - _source
+    - _type
+    - title
+    - text
+    - date
+    - url
+    - issue
+    - year
+    - series
+
+license:
+  name: "Open Government Data"
+  url: "https://sud.tj/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: |
+    Official publications of the Supreme Court of the Republic of Tajikistan,
+    distributed free of charge (Барои ройгон паҳн намудан пешбинӣ шудааст).
+    The publications credit GIZ programme support but are produced and owned
+    by the Supreme Court itself as official judicial output.

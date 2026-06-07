@@ -1,0 +1,70 @@
+# ===================================================================
+# AT/DSB -- Austrian Data Protection Authority (Datenschutzbehörde)
+# ===================================================================
+# Uses the same RIS OGD API v2.6 as AT/RIS, targeting the "Dsk"
+# (Datenschutz-Aufsichtsbehörden) application for GDPR decisions.
+# 1,854 decisions, no authentication required, CC BY 4.0.
+# ===================================================================
+
+source:
+  id: "AT/DSB"
+  country: "AT"
+  name: "Datenschutzbehörde (DSB) — GDPR Decisions"
+  url: "https://www.ris.bka.gv.at"
+  description: |
+    GDPR enforcement decisions by Austria's Data Protection Authority
+    (Datenschutzbehörde), published through the RIS OGD API. Covers
+    data protection complaints, fines, and regulatory decisions since
+    the 1990s (DSK era) through present-day DSB/GDPR enforcement.
+    1,854 decisions available via the Dsk application endpoint.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 2
+  burst: 5
+
+api:
+  type: "rest"
+  base_url: "https://data.bka.gv.at/ris/api/v2.6"
+  endpoints:
+    judikatur: "/Judikatur"
+  application: "Dsk"
+  pagination:
+    page_param: "Seitennummer"
+    page_size_param: "DokumenteProSeite"
+    max_page_size: "OneHundred"
+
+schema:
+  key_fields:
+    - name: "_id"
+      type: "string"
+      role: "primary_key"
+    - name: "title"
+      type: "string"
+      role: "content"
+    - name: "text"
+      type: "string"
+      role: "content"
+    - name: "date"
+      type: "date"
+      role: "temporal_key"
+    - name: "url"
+      type: "string"
+      role: "reference"
+    - name: "ecli"
+      type: "string"
+      role: "identifier"
+
+license:
+  name: "CC BY 4.0"
+  url: "https://creativecommons.org/licenses/by/4.0/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Austrian Open Government Data"

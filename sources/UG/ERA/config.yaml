@@ -1,0 +1,27 @@
+source_id: UG/ERA
+name: Uganda Electricity Regulatory Authority — Tariff Orders & Decisions
+country: UG
+url: https://www.era.go.ug/index.php/decisions-notices/orders
+data_types:
+  - legislation
+  - doctrine
+auth:
+  type: none
+schedule: monthly
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - date
+    - text
+    - document_type
+
+license:
+  name: "Custom Terms (Government)"
+  url: "https://www.era.go.ug"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulatory documents published by Uganda's Electricity Regulatory Authority for public compliance."

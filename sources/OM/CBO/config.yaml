@@ -1,0 +1,66 @@
+source:
+  id: "OM/CBO"
+  country: "OM"
+  name: "Central Bank of Oman — Regulations & Circulars"
+  url: "https://cbo.gov.om/"
+  description: |
+    Circulars issued by the Central Bank of Oman (CBO) covering banking
+    regulation, AML/CFT guidance, payment systems, and financial stability.
+    Fetched via SharePoint REST API from the English and Global document
+    libraries.  PDF text extracted with PyMuPDF (fitz).
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "rest"
+  base_url: "https://cbo.gov.om/sites/assets/_api/web"
+
+data_model:
+  type: "doctrine"
+  source_nature: "gazette"
+  primary_key: "circular_id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "circular_id"
+
+schema:
+  total_fields: 9
+  key_fields:
+    - name: "_id"
+      description: "Unique circular identifier (year/filename hash)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Circular title derived from filename"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date (from filename or file metadata)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+
+license:
+  name: "Public Domain (Government)"
+  url: "https://cbo.gov.om/Pages/Copyright.aspx"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government regulatory circulars"

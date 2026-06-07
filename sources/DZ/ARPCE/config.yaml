@@ -1,0 +1,59 @@
+# DZ/ARPCE - Algeria Telecom/Postal Regulatory Authority
+name: "ARPCE Telecom & Postal Regulatory Decisions"
+country: DZ
+source_id: "DZ/ARPCE"
+source_type: legislation
+
+base_url: "https://www.arpce.dz"
+official_url: "https://www.arpce.dz/en/reg"
+
+data_types:
+  - legislation
+  - doctrine
+
+languages:
+  - fr
+  - en
+
+coverage:
+  start_year: 2000
+  end_year: 2026
+  notes: "Laws, presidential/executive decrees, judgements, decisions governing telecom and postal sectors in Algeria"
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+data_model:
+  update_strategy: upsert
+  dedup_key:
+    - _id
+
+schema:
+  key_fields:
+    - name: "category"
+      type: "string"
+      required: true
+    - name: "text"
+      type: "string"
+      required: true
+  required_fields:
+    - _id
+    - _source
+    - _type
+    - _fetched_at
+    - title
+    - text
+    - url
+
+license:
+  name: "Open Government Data"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulatory documents published by Algerian telecom regulator"

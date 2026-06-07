@@ -1,0 +1,107 @@
+# ===================================================================
+# DO/ProCompetencia -- Comisión Nacional de Defensa de la Competencia
+# (PRO-COMPETENCIA), Dominican Republic. Consejo Directivo resolutions.
+# ===================================================================
+# Full-text competition decisions and regulatory acts of PRO-COMPETENCIA's
+# Board of Directors, issued under the General Competition Law (Ley 42-08).
+# Full text via pdfplumber.
+# ===================================================================
+
+source:
+  id: "DO/ProCompetencia"
+  country: "DO"
+  name: "Dominican Republic PRO-COMPETENCIA — Competition Decisions"
+  url: "https://procompetencia.gob.do/"
+  description: |
+    Resolutions of the Board of Directors (Consejo Directivo) of the
+    Comisión Nacional de Defensa de la Competencia (PRO-COMPETENCIA), the
+    Dominican Republic's national competition authority. These are the
+    binding adjudicatory and regulatory acts issued under the General
+    Competition Law (Ley General de Defensa de la Competencia, núm.
+    42-08): merger-control decisions, abuse-of-dominance and
+    anticompetitive-practice rulings, sanctioning procedures, hierarchical
+    appeals (recursos jerárquicos), advocacy opinions, market studies, and
+    procedural resolutions deciding specific competition cases. Classified
+    as case_law (decisions of an administrative adjudicatory body on
+    specific cases).
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "html_scrape_pdf"
+  base_url: "https://procompetencia.gob.do"
+  notes: |
+    WordPress site. Each resolution is a post under the custom post type
+    `resoluciones-procompetencia`. The Yoast SEO sitemap
+      /resoluciones-pc-sitemap.xml
+    enumerates the entire corpus (~490 posts). Each post page carries an
+    <meta property="og:title"> (the resolution title), a direct link to a
+    /wp-content/uploads/YYYY/MM/*.pdf file (the full text), an
+    og:description summary, and on newer posts a "Fecha Publicación:
+    DD/MM/YYYY" field. PDFs are downloaded and text-extracted with
+    pdfplumber. The resolution's own adoption date is recovered from the
+    closing formula ("...el día NUMBER (NN) de MES de AÑO (YYYY)"), falling
+    back to a numeric dateline matching the resolution's year, then to the
+    listing publication date. A browser User-Agent is sent and TLS
+    verification is disabled (public, read-only data).
+
+data_model:
+  type: "case_law"
+  primary_key: "post_url"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 13
+  key_fields:
+    - name: "text"
+      description: "Full text extracted from the resolution PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "title"
+      description: "Resolution title (e.g. 'RESOLUCIÓN NÚM. 002-2026')"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "doc_number"
+      description: "Resolution identifier, e.g. '002-2026', 'FT-01-2015'"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "summary"
+      description: "Descriptive subject parsed from the post (og:description)"
+      type: "string"
+      role: "content"
+      required: false
+    - name: "date"
+      description: "Resolution adoption date (closing formula; ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "Resolution post URL"
+      type: "string"
+      role: "identifier"
+      required: true
+    - name: "pdf_url"
+      description: "Direct link to the resolution PDF"
+      type: "string"
+      role: "metadata"
+      required: true
+
+license:
+  name: "Open Government Data (Dominican Republic)"
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official competition resolutions published by a Dominican public institution (PRO-COMPETENCIA) on its institutional website for public use."

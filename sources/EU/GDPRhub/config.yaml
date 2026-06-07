@@ -1,0 +1,82 @@
+source:
+  id: "EU/GDPRhub"
+  country: "EU"
+  name: "GDPRhub — European DPA Decisions Wiki"
+  url: "https://gdprhub.eu/"
+  description: |
+    noyb.eu initiative collecting GDPR Data Protection Authority decisions
+    from 30+ European countries in English. 3,200+ enforcement actions.
+    MediaWiki API for structured access.
+
+data_types:
+  - case_law
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "rest"
+  base_url: "https://gdprhub.eu/api.php"
+
+data_model:
+  type: "case_law"
+  source_nature: "bulk_archive"
+  primary_key: "page_id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "page_id"
+
+schema:
+  total_fields: 18
+  key_fields:
+    - name: "page_id"
+      description: "MediaWiki page ID"
+      type: "integer"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Page title (DPA name + case number)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text — English summary + machine translation"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+  secondary_fields:
+    - name: "jurisdiction"
+      description: "Country of the DPA"
+    - name: "dpa"
+      description: "Data Protection Authority abbreviation"
+    - name: "case_number"
+      description: "Official case reference number"
+    - name: "fine"
+      description: "Fine amount (if any)"
+    - name: "currency"
+      description: "Currency of the fine"
+    - name: "outcome"
+      description: "Decision outcome"
+    - name: "gdpr_articles"
+      description: "GDPR articles cited"
+
+license:
+  id: "cc-by-sa-4.0"
+  name: "CC BY-SA 4.0"
+  url: "https://creativecommons.org/licenses/by-sa/4.0/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: true
+  no_derivatives: false
+  notes: "noyb.eu open data initiative"

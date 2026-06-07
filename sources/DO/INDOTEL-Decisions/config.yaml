@@ -1,0 +1,101 @@
+# ===================================================================
+# DO/INDOTEL-Decisions -- Instituto Dominicano de las
+# Telecomunicaciones (Dominican Republic), Consejo Directivo
+# resolutions.
+# ===================================================================
+# Full-text resolutions of INDOTEL's Board of Directors, issued under
+# the General Telecommunications Law (Ley 153-98). Full text via
+# pdfplumber.
+# ===================================================================
+
+source:
+  id: "DO/INDOTEL-Decisions"
+  country: "DO"
+  name: "Dominican Republic INDOTEL — Telecom Regulatory Decisions"
+  url: "https://indotel.gob.do/"
+  description: |
+    Resolutions of the Board of Directors (Consejo Directivo) of the
+    Instituto Dominicano de las Telecomunicaciones (INDOTEL), the
+    Dominican Republic's telecommunications regulator. These are the
+    binding regulatory and adjudicatory acts INDOTEL issues under the
+    General Telecommunications Law (Ley General de Telecomunicaciones,
+    núm. 153-98): spectrum and frequency assignments, broadcasting and
+    operator concessions/licences, sanctioning procedures, public
+    consultations, interconnection, numbering, tariffs, universal
+    service, and reconsideration appeals. Classified as doctrine
+    (regulatory acts of a public institution).
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "html_scrape_pdf"
+  base_url: "https://indotel.gob.do"
+  notes: |
+    WordPress site. A single transparency listing page enumerates the
+    entire corpus (~3,300 resolutions) as static HTML:
+      /transparencia/documentos/resoluciones-del-consejo-directivo/
+    Each entry is a <li class="el-archivo-N"> block with a
+    <span class="name"> (e.g. "Resolución No. 032-2026"), a direct link
+    to a /wp-content/uploads/YYYY/MM/*.pdf file, a descriptive subject,
+    file size, and an upload date ("Fecha de subida"). PDFs are
+    downloaded and text-extracted with pdfplumber. The resolution's own
+    date is recovered from the body's "de fecha DD de MES de YYYY"
+    formula, falling back to the listing upload date. A browser
+    User-Agent is required (the server returns HTTP 473 otherwise). TLS
+    verification is disabled (public, read-only data).
+
+data_model:
+  type: "doctrine"
+  primary_key: "url"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 11
+  key_fields:
+    - name: "text"
+      description: "Full text extracted from the resolution PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "title"
+      description: "Resolution number + descriptive subject"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "doc_number"
+      description: "Resolution identifier, e.g. '032-2026'"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "summary"
+      description: "Descriptive subject parsed from the listing"
+      type: "string"
+      role: "content"
+      required: false
+    - name: "date"
+      description: "Resolution date (body 'de fecha' formula, else upload date; ISO)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "Live PDF URL"
+      type: "string"
+      role: "identifier"
+      required: true
+
+license:
+  name: "Open Government Data (Dominican Republic)"
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulatory resolutions published by a Dominican public institution (INDOTEL) on its transparency portal for public use."

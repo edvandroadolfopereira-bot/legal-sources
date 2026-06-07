@@ -1,0 +1,14 @@
+{
+  "_id": "MT-IDPC-0583_001",
+  "_source": "MT/IDPC",
+  "_type": "doctrine",
+  "_fetched_at": "2026-06-06T12:38:40.803590+00:00",
+  "title": "IDPC Decision 2026: The complaint concerns the insurance company’s failure to comply with the Commis",
+  "text": "Type: Data protection complaint\n\nDescription: The complaint concerns the insurance company’s failure to comply with the Commissioner’s previous decision by allowing a third-party company to contact him again for marketing purposes. Despite informing the caller that the matter had already been decided, his telephone number remained on marketing call lists, thereby infringing his data protection rights.\n\nOutcome: The Commissioner found that the insurance company had breached data protection obligations by continuing to process the complainant’s personal data for direct marketing despite his objection, failing to implement adequate safeguards and accountability measures, and not ensuring compliant arrangements with third-party processors. As a result, the Commissioner issued a reprimand, ordered corrective measures to ensure compliance within twenty days and imposed administrative fines totalling €1,000.\n\nCorrective Action: Order in terms of Article 58(2)(d) GDPR, reprimand in terms of Article 58(2)(b) GDPR & the imposition of two (2) administrative fines in terms of Article 58(2)(i) GDPR",
+  "date": "2026-01-01",
+  "url": "https://idpc.org.mt/wp-content/uploads/2026/05/0583_001.pdf",
+  "decision_type": "Data protection complaint",
+  "outcome": "The Commissioner found that the insurance company had breached data protection obligations by continuing to process the complainant’s personal data for direct marketing despite his objection, failing to implement adequate safeguards and accountability measures, and not ensuring compliant arrangements with third-party processors. As a result, the Commissioner issued a reprimand, ordered corrective measures to ensure compliance within twenty days and imposed administrative fines totalling €1,000.",
+  "corrective_action": "Order in terms of Article 58(2)(d) GDPR, reprimand in terms of Article 58(2)(b) GDPR & the imposition of two (2) administrative fines in terms of Article 58(2)(i) GDPR",
+  "case_ref": "0583_001"
+}

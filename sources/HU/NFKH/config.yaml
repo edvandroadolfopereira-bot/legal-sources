@@ -1,0 +1,39 @@
+country: HU
+data_types:
+- doctrine
+license:
+  name: "Public (Government of Hungary)"
+  url: "https://nkfh.gov.hu/adatkezelesi-tajekoztato"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official consumer protection decisions published by a Hungarian government authority."
+name: National Authority for Trade and Consumer Protection (NFKH)
+notes: >
+  Consumer protection and trade regulatory decisions (határozatok) from
+  the Hungarian NFKH. ~3,500 decisions. Strapi CMS API with public token,
+  PDFs on Azure CDN, text extracted via pdfminer.
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: case_id
+    required: true
+    type: string
+  - name: authority
+    required: false
+    type: string
+  required_fields:
+  - _id
+  - _source
+  - _type
+  - _fetched_at
+  - title
+  - text
+  - date
+  - url
+source_id: HU/NFKH
+update_frequency: weekly
+url: https://nkfh.gov.hu/hatarozatok

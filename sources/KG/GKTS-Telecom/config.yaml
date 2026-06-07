@@ -1,0 +1,60 @@
+source:
+  id: KG/GKTS-Telecom
+  name: Kyrgyzstan State Agency for Communications — Decisions
+  country: KG
+  url: https://nas.gov.kg/
+  data_types:
+    - doctrine
+  description: |
+    Normative acts and regulatory decisions of the Kyrgyz telecommunications
+    regulator (historically GKTS → NAS → SRNOS, the Service for Regulation and
+    Supervision in the Communications Sector under the Ministry of Digital
+    Development). Covers licensing rules, certification rules, radio-frequency
+    spectrum rules, numbering-resource regulations and individual orders.
+    Full text is extracted from PDF documents published under nas.gov.kg/dp/.
+    Content in Russian. Free access, no authentication required.
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: html_scraping
+  base_url: https://nas.gov.kg
+  format: pdf
+  notes: >
+    Topic pages under /dp/ list PDF documents. The site serves an expired TLS
+    certificate, so HTTPS verification is disabled. Text extracted via pdfplumber.
+
+schema:
+  key_fields:
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: category
+      type: string
+      required: true
+    - name: language
+      type: string
+      required: true
+    - name: url
+      type: string
+      required: true
+
+license:
+  name: Public Domain (Government of Kyrgyzstan)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official regulatory acts and decisions published by the state communications regulator for public access.

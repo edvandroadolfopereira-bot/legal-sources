@@ -1,0 +1,59 @@
+source:
+  id: INTL/EACCA
+  name: East African Community Competition Authority — Legal Framework
+  country: INTL
+  url: https://www.eacompetition.org/
+  language: en
+  data_types:
+    - legislation
+    - doctrine
+
+endpoints:
+  laws_categories:
+    - https://www.eacompetition.org/laws/category/competition-act
+    - https://www.eacompetition.org/laws/category/regulations-and-rules
+    - https://www.eacompetition.org/laws/category/gazettes
+    - https://www.eacompetition.org/laws/category/guidelines
+    - https://www.eacompetition.org/laws/category/mous
+
+rate_limit:
+  requests_per_second: 0.5
+  delay_seconds: 2.0
+
+schema:
+  key_fields:
+    - name: _id
+      type: string
+      required: true
+    - name: _source
+      type: string
+      required: true
+    - name: _type
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: date
+      required: false
+    - name: url
+      type: string
+      required: true
+
+data_model:
+  update_strategy: upsert
+  dedup_key:
+    - _id
+
+license:
+  name: "EAC Public Documents"
+  url: "https://www.eacompetition.org/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulatory documents published by EAC Competition Authority for public access"

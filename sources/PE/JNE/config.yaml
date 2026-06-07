@@ -1,0 +1,69 @@
+rate_limit:
+  burst: 2
+  requests_per_second: 1
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: url
+    required: true
+    type: string
+  - name: _type
+    required: false
+    type: string
+  - name: _source
+    required: false
+    type: string
+  - name: _fetched_at
+    required: false
+    type: string
+  - name: case_number
+    required: false
+    type: string
+  - name: case_type
+    required: false
+    type: string
+  - name: subject_matter
+    required: false
+    type: string
+  - name: ruling
+    required: false
+    type: string
+  - name: jurisdiction
+    required: false
+    type: string
+  - name: electoral_process
+    required: false
+    type: string
+source:
+  auth: none
+  country: PE
+  data_types:
+  - case_law
+  description: >
+    Resolutions and jurisprudence from Peru's Jurado Nacional de Elecciones
+    (National Elections Jury). Covers vacancia, suspension, electoral disputes,
+    propaganda, and other electoral matters. Full text from the JNE
+    jurisprudencia search API (jurisprudencia.jne.gob.pe).
+  id: PE/JNE
+  language: es
+  name: Peru Jurado Nacional de Elecciones — Resoluciones
+  url: https://jurisprudencia.jne.gob.pe/
+license:
+  name: "Government of Peru (open access)"
+  url: "https://www.gob.pe/institucion/jne/informes-publicaciones"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Public electoral jurisprudence published by JNE for transparency"

@@ -1,0 +1,25 @@
+{
+  "_id": "INTL-IEA-IRENA-1",
+  "_source": "INTL/IEA-IRENA-PolicyDB",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-06T18:05:19.146360+00:00",
+  "title": "Law 47-09 on Energy Efficiency",
+  "text": "Law 47-09, or the \"Law on Energy Efficiency\" aims to increase energy efficiency in the use of energy sources, to avoid waste, to reduce the energy costs on the national economy, and to enhance sustainable development. The law includes a range of measures such as mandatory energy audits, minimum energy performances standards for appliances and preferential tariffs (known as super-peak tariffs) for industries that voluntarily shift their energy consumption away from peak periods.\nThis law sets the criteria of minimum energy performance for appliances and electrical equipment powered by natural gas, liquid or gaseous petroleum products, coal and renewable energies. It makes mandatory energy audits for companies and institutions in the production, transmission and distribution of energy, as well as the performance of an energy impact study for new construction and urban projects. It also defines the role of energy services and facilities, and establishes technical control.\n\nStatus: In force\nJurisdiction: National",
+  "date": "2011-01-01",
+  "url": "http://www.muat.gov.ma/sites/default/files/Reglementation/Loi-n-47-09-efficacite-energ%C3%A9tique-fr.pdf",
+  "language": "en",
+  "policy_id": "1",
+  "status": "In force",
+  "year": 2011,
+  "countries": [
+    "Morocco"
+  ],
+  "country_codes": [
+    "MAR"
+  ],
+  "jurisdiction": "National",
+  "technologies": [],
+  "topics": [],
+  "policy_types": [],
+  "date_modified": "2021-11-15T13:29:35.000Z"
+}

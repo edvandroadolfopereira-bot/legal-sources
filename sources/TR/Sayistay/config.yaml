@@ -1,0 +1,137 @@
+# ═══════════════════════════════════════════════════════════════════
+# Legal Data Hunter — Turkish Court of Accounts Configuration
+# ═══════════════════════════════════════════════════════════════════
+
+# ── Source Identity ───────────────────────────────────────────────
+source:
+  id: "TR/Sayistay"
+  country: "TR"
+  name: "Turkish Court of Accounts (Sayıştay)"
+  url: "https://www.sayistay.gov.tr"
+  description: |
+    Sayıştay (Turkish Court of Accounts) — supreme audit institution
+    of Turkey with judicial powers. Issues binding decisions on public
+    financial management, procurement, and fiscal compliance.
+    Three decision bodies: Daire (Chamber), Temyiz Kurulu (Appeals Board),
+    and Genel Kurul (General Assembly).
+    Coverage: ~51,000+ decisions with full text.
+
+# ── Data Types ────────────────────────────────────────────────────
+data_types:
+  - case_law
+
+# ── Authentication ────────────────────────────────────────────────
+auth:
+  type: "none"
+
+# ── Rate Limiting ─────────────────────────────────────────────────
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+# ── API / Scraping Configuration ──────────────────────────────────
+api:
+  type: "datatables_api"
+  base_url: "https://www.sayistay.gov.tr"
+  endpoints:
+    daire_list:
+      path: "/KararlarDaire/DataTablesList"
+      method: "POST"
+      description: "Chamber decisions via DataTables server-side processing"
+    daire_detail:
+      path: "/KararlarDaire/Detay/{id}/"
+      method: "GET"
+      description: "Individual chamber decision with full text"
+    temyiz_list:
+      path: "/KararlarTemyiz/DataTablesList"
+      method: "POST"
+      description: "Appeals Board decisions via DataTables"
+    temyiz_detail:
+      path: "/KararlarTemyiz/Detay/{id}/"
+      method: "GET"
+      description: "Individual appeals decision with full text"
+    genel_kurul_list:
+      path: "/KararlarGenelKurul/DataTablesList"
+      method: "POST"
+      description: "General Assembly decisions via DataTables"
+    genel_kurul_detail:
+      path: "/KararlarGenelKurul/Detay/{id}/"
+      method: "GET"
+      description: "Individual assembly decision with full text"
+
+# ── Data Model ────────────────────────────────────────────────────
+data_model:
+  type: "case_law"
+  primary_key: "decision_id"
+  update_strategy: "append_only"
+  versioning: "none"
+  dedup_key:
+    - "decision_id"
+
+# ── Schema ────────────────────────────────────────────────────────
+schema:
+  total_fields: 14
+  key_fields:
+    - name: "decision_id"
+      description: "Unique ID from Sayıştay database"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Decision subject and summary"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full decision text from detail page"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision date in ISO 8601 format"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "url"
+      description: "URL to the decision detail page"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "decision_body"
+      description: "Body that issued the decision (Daire/Temyiz/GenelKurul)"
+      type: "string"
+      role: "classification"
+      required: true
+    - name: "chamber"
+      description: "Specific chamber number (for Daire decisions)"
+      type: "string"
+      role: "classification"
+      required: false
+    - name: "decision_number"
+      description: "Decision number (Karar No)"
+      type: "string"
+      role: "identifier"
+      required: false
+    - name: "ilam_number"
+      description: "Judgment number (İlam No)"
+      type: "string"
+      role: "identifier"
+      required: false
+
+# ── License ───────────────────────────────────────────────────────
+license:
+  name: "Public Domain (Turkish Government)"
+  url: "https://www.sayistay.gov.tr"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government decisions are public domain under Turkish law"
+
+# ── Notes ─────────────────────────────────────────────────────────
+notes: |
+  - Language: Turkish (UTF-8)
+  - Three decision types: Daire (~22K), Temyiz (~29K), Genel Kurul
+  - DataTables API requires CSRF token from initial page load
+  - Full text available on detail pages in div#metin
+  - List API returns truncated text; detail page fetch required

@@ -1,0 +1,60 @@
+source:
+  id: "SO/CBS"
+  country: "SO"
+  name: "Central Bank of Somalia — Regulations"
+  url: "https://centralbank.gov.so/"
+  description: |
+    Banking regulations, governance guidelines, AML/CFT laws, and licensing
+    requirements issued by the Central Bank of Somalia.  PDFs scraped from
+    the /regulatory-guidelines/ page.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "html_scrape"
+  base_url: "https://centralbank.gov.so"
+
+data_model:
+  type: "doctrine"
+  source_nature: "gazette"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: 8
+  key_fields:
+    - name: "_id"
+      description: "Hash of PDF filename"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title from filename"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+
+license:
+  name: "Public Domain (Government)"
+  url: "https://centralbank.gov.so/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government regulatory publications"

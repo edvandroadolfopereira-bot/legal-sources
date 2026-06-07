@@ -1,0 +1,54 @@
+source:
+  id: BF/AssembleeNationale
+  name: Burkina Faso Assemblée Nationale — Textes Législatifs
+  country: BF
+  url: https://www.an.bf/loip
+  description: >
+    Promulgated laws from Burkina Faso's National Assembly (Assemblée législative
+    de transition). Full text extracted from attached PDF documents via pdfplumber.
+    Covers legislation from 2018 onward (~200+ laws).
+
+data_model:
+  types:
+    - legislation
+  update_strategy: upsert
+  dedup_key:
+    - law_id
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+
+schema:
+  required_fields:
+    - _id
+    - _source
+    - _type
+    - _fetched_at
+    - title
+    - text
+    - date
+    - url
+  key_fields:
+    - name: law_id
+      type: string
+      required: true
+    - name: law_number
+      type: string
+      required: false
+
+license:
+  name: Public domain (government)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official legislative texts from Burkina Faso National Assembly. Government works.
+
+schedule:
+  full_refresh: monthly
+  update_check: weekly

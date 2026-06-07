@@ -1,0 +1,82 @@
+# ===================================================================
+# PG/NICTA-Gazettes -- Papua New Guinea National ICT Authority
+# ===================================================================
+# Telecom/ICT legislation and regulatory instruments from nicta.gov.pg.
+# WordPress REST API + embedded PDF full-text extraction (pdfplumber).
+# ~11 instruments with extractable text. English language.
+# ===================================================================
+
+source_id: PG/NICTA-Gazettes
+name: Papua New Guinea National ICT Authority — Gazette Instruments
+country: PG
+url: https://www.nicta.gov.pg/category/regulatory/gazettes/
+description: |
+  The National Information and Communications Technology Authority (NICTA)
+  of Papua New Guinea publishes the country's telecom/ICT legal framework:
+  the NICT Act 2009, Cybercrime Code Act 2016, Operator Licensing / Radio
+  Spectrum / SIM Card Registration Regulations, QoS / Type Approval /
+  Reference Interconnection / Licence Conditions Rules, Wholesale Service
+  Declarations, the National Numbering Plan, the Consumer Complaints
+  Management Guideline, and National Gazette notices. Instruments are
+  fetched via the WordPress REST API and full text is extracted from the
+  embedded PDFs. Older scanned image-only PDFs (no text layer) are skipped.
+
+data_types:
+  - legislation
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "rest"
+  base_url: "https://www.nicta.gov.pg"
+  endpoints:
+    posts: "/wp-json/wp/v2/posts"
+  response_format: "json"
+
+schema:
+  total_fields: 9
+  key_fields:
+    - name: "_id"
+      description: "Unique document ID (PG-NICTA-{hash})"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Instrument title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from the instrument PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date (ISO 8601)"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "url"
+      description: "Canonical post URL on nicta.gov.pg"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "pdf_url"
+      description: "Direct PDF download URL"
+      type: "string"
+      role: "reference"
+      required: false
+
+license:
+  name: "Public Domain (Government of Papua New Guinea)"
+  url: "https://www.nicta.gov.pg/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Government of Papua New Guinea public telecom/ICT legislation"

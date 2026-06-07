@@ -1,0 +1,16 @@
+{
+  "_id": "VA-CIC-Can-12",
+  "_source": "VA/CodexIurisCanonici",
+  "_type": "legislation",
+  "_fetched_at": "2026-05-30T22:16:21.534007+00:00",
+  "title": "Canon 12",
+  "text": "§ 1. Legibus universalibus tenentur ubique terrarum omnes pro quibus latae sunt.\n\n§ 2. A legibus autem universalibus, quae in certo territorio non vigent, eximuntur omnes qui in eo territorio actu versantur. \n\n§ 3. Legibus conditis pro peculiari territorio ii subiciuntur proquibus latae sunt, quique ibidem domicilium vel quasi-domicilium habent et simul actu commorantur, firmo praescripto can. 13.",
+  "text_en": "§1. Universal laws bind everywhere all those for whom they were issued.\n\n§2. All who are actually present in a certain territory, however, are exempted from universal laws which are not in force in that territory.\n\n§3. Laws established for a particular territory bind those for whom they were issued as well as those who have a domicile or quasi-domicile there and who at the same time are actually residing there, without prejudice to the prescript of can. 13.",
+  "canon_number": 12,
+  "book": "Liber I",
+  "book_title_la": "De Normis Generalibus",
+  "book_title_en": "General Norms",
+  "date": "1983-01-25",
+  "url": "https://www.vatican.va/archive/cod-iuris-canonici/cic_index_la.html",
+  "language": "la"
+}

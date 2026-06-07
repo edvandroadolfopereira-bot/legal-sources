@@ -1,0 +1,58 @@
+rate_limit:
+  burst: 2
+  requests_per_second: 1
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: url
+    required: true
+    type: string
+  - name: _type
+    required: false
+    type: string
+  - name: _source
+    required: false
+    type: string
+  - name: _fetched_at
+    required: false
+    type: string
+  - name: category
+    required: false
+    type: string
+  - name: reference
+    required: false
+    type: string
+source:
+  auth: none
+  country: SY
+  data_types:
+  - legislation
+  - case_law
+  description: >
+    English-language Syrian legislation and Court of Cassation case law from
+    syria.law. Covers 17 legal categories (civil, commercial, investment,
+    property, IP, finance, tax, criminal, etc.) with ~90+ laws and ~280 court
+    judgments. Full text via WordPress REST API.
+  id: SY/SyriaLaw
+  language: en
+  name: Syria.Law — English Syrian Legislation & Case Law
+  url: https://www.syria.law/
+license:
+  name: "Custom Terms (educational/informational)"
+  url: "https://www.syria.law/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Independent legal reference portal; content is English translations of Syrian law"

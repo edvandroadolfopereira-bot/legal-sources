@@ -1,0 +1,60 @@
+# Configuration for HR/AZTN (Croatian Competition Agency — AZTN)
+# Agencija za zaštitu tržišnog natjecanja
+
+source:
+  id: HR/AZTN
+  name: Croatian Competition Agency (AZTN)
+  country: HR
+  url: https://www.aztn.hr
+  description: >
+    Competition and unfair trading practices decisions from the Croatian
+    Agency for the Protection of Market Competition (AZTN). ~1,800 decisions
+    from 2003 to present, plus ~220 related court decisions. Full text
+    extracted from PDF documents via the AZTN WordPress REST API.
+
+data_model:
+  types:
+    - case_law
+  update_strategy: append_only
+  dedup_key:
+    - case_number
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+schema:
+  required_fields:
+    - _id
+    - _source
+    - _type
+    - _fetched_at
+    - title
+    - text
+    - date
+    - url
+  key_fields:
+    - name: case_number
+      type: string
+      required: true
+    - name: decision_area
+      type: string
+      required: false
+    - name: decision_type
+      type: string
+      required: false
+    - name: parties
+      type: string
+      required: false
+
+license:
+  name: "Custom — Croatian public authority decisions"
+  url: "https://www.aztn.hr/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official decisions of a Croatian public authority, published for public access."

@@ -1,0 +1,45 @@
+fetch:
+  max_retries: 3
+  rate_limit: 2.0
+  timeout: 120
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: num_jurisdictions
+    required: false
+    type: integer
+source:
+  auth: none
+  country: INTL
+  data_types:
+  - legislation
+  description: 'UNCITRAL Secretariat enactment/accession status tables for model laws
+    and conventions across 12 subject areas (arbitration, e-commerce, CISG, insolvency,
+    secured transactions, etc.). Each record is one instrument''s authoritative status
+    page listing every State and sub-jurisdiction that enacted/acceded, with year and
+    footnotes on reservations and modifications. ~20 instruments with full table text.
+
+    '
+  id: INTL/UNCITRAL-EnactmentStatus
+  name: UNCITRAL Model Law Enactment Status Tables
+  url: https://uncitral.un.org/en/texts
+license:
+  name: UN Terms of Use
+  url: https://www.un.org/en/about-us/terms-of-use
+  commercial_use: false
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: Official UN documents. Personal, non-commercial use permitted; redistribution
+    for resale requires UN permission.

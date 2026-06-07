@@ -1,0 +1,88 @@
+# ===================================================================
+# RW/CMA-Regulations -- Rwanda Capital Market Authority
+# ===================================================================
+# Capital markets legal framework from cma.rw (TYPO3 site):
+# laws, regulations, guidelines, orders, directives. Direct PDF
+# downloads, full text extracted with pdfplumber. ~30 instruments.
+# Trilingual (Kinyarwanda / English / French). English language tag.
+# ===================================================================
+
+source_id: RW/CMA-Regulations
+name: Rwanda Capital Market Authority — Regulations & Guidelines
+country: RW
+url: https://www.cma.rw/regulatory-framework/regulations
+description: |
+  The Capital Market Authority (CMA) of Rwanda publishes the country's
+  capital-markets legal framework on its Regulatory Framework pages: the
+  laws establishing and governing the CMA, collective investment schemes,
+  trusts, central securities depository, and virtual asset business; the
+  regulations (corporate governance code, CSD operations, REITs, leveraged
+  FX trading, AML sanctions, fees, financial reporting); guidelines (GSS+
+  bond issuance, Fintech regulatory sandbox, ML/FT prevention, SME
+  disclosure); ministerial orders; and directives. Instruments are
+  published trilingually (Kinyarwanda/English/French) in Official Gazette
+  format and downloaded as PDFs with full text extracted.
+
+data_types:
+  - legislation
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "scraping"
+  base_url: "https://www.cma.rw"
+  endpoints:
+    laws: "/regulatory-framework/laws"
+    regulations: "/regulatory-framework/regulations"
+    guidelines: "/regulatory-framework/guidelines"
+    orders: "/regulatory-framework/orders"
+    directives: "/regulatory-framework/directives"
+  response_format: "html"
+
+schema:
+  total_fields: 9
+  key_fields:
+    - name: "_id"
+      description: "Unique document ID (RW-CMA-{hash})"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Instrument title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from the instrument PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date (ISO 8601)"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "url"
+      description: "Direct PDF download URL on cma.rw"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "category"
+      description: "Instrument category (law/regulation/guideline/order/directive)"
+      type: "string"
+      role: "metadata"
+      required: false
+
+license:
+  name: "Public Domain (Government of Rwanda)"
+  url: "https://www.cma.rw/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official legal instruments of a Rwandan statutory regulator; published in the Official Gazette of Rwanda (public domain)."

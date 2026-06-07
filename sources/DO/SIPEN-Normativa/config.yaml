@@ -1,0 +1,97 @@
+# ===================================================================
+# DO/SIPEN-Normativa -- Superintendencia de Pensiones (Dominican Republic)
+# Circulares + Resoluciones SIPEN + Resoluciones CCRLI
+# ===================================================================
+# Full-text pension regulatory documents: circulars, SIPEN resolutions,
+# and CCRLI resolutions. Full text extracted via pdfplumber from PDFs
+# hosted on sipen.gob.do.
+# ===================================================================
+
+source:
+  id: "DO/SIPEN-Normativa"
+  country: "DO"
+  name: "Dominican Republic SIPEN — Pension Normativa"
+  url: "https://sipen.gob.do/"
+  description: |
+    Regulatory output of the Superintendencia de Pensiones (SIPEN) of the
+    Dominican Republic. Covers circulares (technical specifications and
+    operational instructions for pension fund administrators — AFPs),
+    SIPEN resolutions (binding decisions of the Superintendencia), and
+    CCRLI resolutions (Comisión Clasificadora de Riesgos Laborales e
+    Invalidez decisions on disability/occupational risk pension claims).
+    Published under Law 87-01 (Dominican Social Security System).
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "html_scrape_pdf"
+  base_url: "https://sipen.gob.do"
+  notes: |
+    Laravel/Bootstrap site. Three paginated listing pages enumerate the
+    corpus as HTML tables with direct links to /documentos/*.pdf files:
+      /normativas/circulares           (~150 circulars, 15 pages)
+      /normativas/resoluciones-de-la-sipen (~520 resolutions, 52 pages)
+      /normativas/resoluciones-de-la-ccrli (~300 resolutions, 30 pages)
+    Each table row has: number, description, date, status, PDF link.
+    PDFs are downloaded and text-extracted with pdfplumber.
+
+data_model:
+  type: "legislation"
+  primary_key: "url"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 14
+  key_fields:
+    - name: "text"
+      description: "Full text extracted from the PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "title"
+      description: "Description from the listing table"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "doc_number"
+      description: "Document number, e.g. '141-26' or 'SIPEN-512-26'"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "category"
+      description: "circular | resolucion_sipen | resolucion_ccrli"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "status"
+      description: "Vigente | Derogada | Modificada"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "date"
+      description: "Publication date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "Live PDF URL"
+      type: "string"
+      role: "identifier"
+      required: true
+
+license:
+  name: "Open Government Data (Dominican Republic)"
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official pension regulatory documents published by a Dominican public institution (SIPEN) for public use."

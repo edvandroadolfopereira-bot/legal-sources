@@ -1,0 +1,84 @@
+# ===================================================================
+# OM/MTCIT-PDPL -- Oman MTCIT Laws & Regulations
+# ===================================================================
+# Laws, executive regulations, and policy documents published by the
+# Oman Ministry of Transport, Communications and Information Technology.
+# Covers data protection (PDPL), cybercrime, e-transactions, telecoms,
+# civil aviation, maritime, land transport, and postal services.
+#
+# Discovery: Known document IDs from mtcit.gov.om library
+# Full text: PDF extraction via common/pdf_extract
+# License: Free public access (government legislation)
+# ===================================================================
+
+source:
+  id: "OM/MTCIT-PDPL"
+  country: "OM"
+  name: "Oman MTCIT Laws & Regulations"
+  url: "https://mtcit.gov.om/library-3/legislations-policies-8/"
+  description: |
+    Laws and executive regulations published by the Oman Ministry of
+    Transport, Communications and Information Technology. Includes the
+    Personal Data Protection Law (Royal Decree 6/2022), Cybercrime
+    Combat Law, Electronic Transactions Law, Telecommunications
+    Regulation Law, maritime laws, civil aviation, land transport,
+    and related executive regulations.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+
+api:
+  type: "static_pdf"
+  base_url: "https://mtcit.gov.om"
+
+data_model:
+  type: "legislation"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "doc_id"
+      description: "MTCIT content ID"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date (ISO 8601)"
+      type: "string"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "Download URL"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "Public Domain (Government Legislation)"
+  url: "https://mtcit.gov.om/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Omani government legislation published for public compliance"

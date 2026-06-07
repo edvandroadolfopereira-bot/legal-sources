@@ -1,0 +1,72 @@
+# ===================================================================
+# GW/AssembleiaNacional -- Assembleia Nacional Popular da Guiné-Bissau
+# ===================================================================
+# Plone CMS portal at parlamento.gw. Full-text legislation in HTML.
+# Categories: constitution, legislation, statutes, treaties.
+# Some documents are PDF-only; text extracted where possible.
+# ===================================================================
+
+source:
+  id: "GW/AssembleiaNacional"
+  country: "GW"
+  name: "Assembleia Nacional Popular da Guiné-Bissau"
+  url: "https://www.parlamento.gw/leis"
+  description: |
+    Guinea-Bissau's National People's Assembly (Assembleia Nacional Popular)
+    publishes laws, the constitution, statutes, and international treaties
+    via a Plone CMS portal. Full text is available in HTML for most
+    documents; some are PDF-only attachments.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+
+schema:
+  key_fields:
+    - name: "_id"
+      description: "Unique document identifier derived from URL slug"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the document (extracted from HTML or PDF)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication or enactment date if available"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "URL to the document on parlamento.gw"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "Public Domain (Government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government legislation published by Guinea-Bissau parliament"
+
+notes: |
+  - Plone CMS portal, no authentication needed
+  - Full text in HTML for most documents
+  - Some documents are PDF-only attachments
+  - Coverage: Constitution, laws, statutes, treaties
+  - Language: Portuguese

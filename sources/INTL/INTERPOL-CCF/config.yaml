@@ -1,0 +1,63 @@
+source:
+  id: INTL/INTERPOL-CCF
+  name: INTERPOL Commission for the Control of Files — Decisions
+  country: INTL
+  url: https://www.interpol.int/en/Who-we-are/Commission-for-the-Control-of-INTERPOL-s-Files-CCF/CCF-sessions-and-decisions
+  auth: none
+  data_types:
+    - case_law
+fetch:
+  method: html_scrape_pdf
+  index_url: https://www.interpol.int/en/Who-we-are/Commission-for-the-Control-of-INTERPOL-s-Files-CCF/CCF-sessions-and-decisions
+  delay_seconds: 1.5
+notes: >
+  ~65 anonymized decision excerpts (2017-2025) from INTERPOL's CCF,
+  the quasi-judicial body overseeing Red Notices, diffusions, and data
+  processing complaints. PDFs contain full decision text covering
+  Article 2 (human rights), Article 3 (political offences), due process,
+  ne bis in idem, extradition, and data quality issues.
+license:
+  name: INTERPOL Website Terms
+  url: https://www.interpol.int/en/Terms-of-use
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: >
+    CCF decisions are published on INTERPOL's website as public information.
+    Anonymized excerpts provided for transparency under the CCF Statute.
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: _source
+      required: true
+      type: string
+    - name: _type
+      required: true
+      type: string
+    - name: title
+      required: true
+      type: string
+    - name: text
+      required: true
+      type: string
+    - name: url
+      required: true
+      type: string
+    - name: date
+      required: false
+      type: string
+    - name: year
+      required: false
+      type: string
+    - name: decision_number
+      required: false
+      type: integer
+    - name: topics
+      required: false
+      type: string
+    - name: body
+      required: false
+      type: string

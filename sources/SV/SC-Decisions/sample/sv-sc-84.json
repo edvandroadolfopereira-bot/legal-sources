@@ -1,0 +1,19 @@
+{
+  "_id": "sv-sc-84",
+  "_source": "SV/SC-Decisions",
+  "_type": "case_law",
+  "_fetched_at": "2026-05-28T06:05:37.778117+00:00",
+  "title": "Caso DIGICEL",
+  "text": "# Caso DIGICEL\n\nLas cuatro empresas de telefoní­a TELEMOVIL, TELEFONICA, DIGICEL e INTELEFON fijaron la tarifa de US$0.21 más IVA por minuto para una llamada originada en la red fija y terminada en sus redes móviles.\n\n## Datos del caso\n- Agente económico: DIGICEL\n- Práctica: Acuerdo anticompetitivo entre competidores\n- Mercado: Telecomunicaciones - Telefonía móvil\n- Sanción: $216,504.60\n- Fecha de apertura: 19 Dec 2011\n\n## Cronología de actuaciones\n- 2011-12-19 (SC): SC sanciona a Digicel y tres empresas telefónicas más por acuerdos anticompetitivos entre competidores. [Resolución PDF: https://uploads.sc.gob.sv/C-017-O-PS-R-2010_191211_1055.pdf]\n- 2012-04-17 (DIGICEL): Digicel presenta demanda contra el CD de la SC ante la Sala de lo Contencioso Administrativo de la CSJ (SCA)\n- 2012-09-13 (CSJ): SCA notifica a SC admisión de la demanda pero no suspende el pago de la multa impuesta por la SC [Resolución PDF: https://uploads.sc.gob.sv/EF136-2012_280512_1504.pdf]\n- 2012-09-14 (SC): CD de la SC presenta primer informe requerido por SCA [Resolución PDF: https://uploads.sc.gob.sv/EF136-2012_140912.pdf]\n- 2013-01-24 (SC): El CD de la SC presenta a la SCA de la CSJ escrito informando rectificación de multa contra DIGICEL por error en el cálculo [Resolución PDF: https://uploads.sc.gob.sv/EF136-2012_230113.pdf]\n- 2013-07-25 (CSJ): SCA notifica la suspensión del pago de la multa impuesta por SC y da audiencia a DIGICEL para que se pronuncie respecto del cambio de multa [Resolución PDF: https://uploads.sc.gob.sv/EF136-2012_130213_1500.pdf]\n- 2014-07-14 (SCA): Sala de lo Contencioso Administrativo solicita informe justificativo [Resolución PDF: https://uploads.sc.gob.sv/EF136-2012_090913_1412.pdf]\n- 2014-07-30 (SC): CD presenta informe justificativo [Resolución PDF: http://uploads.sc.gob.sv/appsc/casos/136-2012_DIGICEL_300714.pdf]\n- 2015-02-05 (SCA): La SCA notifica la apertura a pruebas del proceso contencioso [Resolución PDF: https://uploads.sc.gob.sv/EF136-2012_171114_1516.pdf]\n- 2015-03-04 (SC): CD presenta escrito evacuando plazo probatorio [Resolución PDF: https://uploads.sc.gob.sv/EF136-2012_040315.pdf]\n- 2015-09-16 (CSJ): SCA notifica traslado final (art. 28 LJCA) al CD. [Resolución PDF: https://uploads.sc.gob.sv/EF136-2012_020715_1532.pdf]\n- 2015-09-29 (S): CD presenta escrito evacuando traslado final (Art.28 LJCA) [Resolución PDF: https://uploads.sc.gob.sv/EF136-2012_230915.pdf]\n- 2017-01-06 (SCA): SCA notifica sentencia. [Resolución PDF: https://uploads.sc.gob.sv/EF136-2012_280616_1506.pdf]",
+  "date": "2017-01-06",
+  "url": "https://app.sc.gob.sv/caso.php?id=84",
+  "case_id": 84,
+  "economic_agent": "DIGICEL",
+  "practice": "Acuerdo anticompetitivo entre competidores",
+  "market": "Telecomunicaciones - Telefonía móvil",
+  "sanction": "$216,504.60",
+  "opened_date": "2011-12-19",
+  "event_count": 13,
+  "language": "es",
+  "country": "SV"
+}

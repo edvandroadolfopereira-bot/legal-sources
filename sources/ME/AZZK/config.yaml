@@ -1,0 +1,31 @@
+source_id: ME/AZZK
+name: "Montenegro Agency for Protection of Competition — Decisions"
+country: ME
+url: https://azzk.me/en/
+data_types:
+  - doctrine
+language: sr
+description: >
+  Competition enforcement decisions from Montenegro's Agency for Protection
+  of Competition (Agencija za zaštitu konkurencije). Covers merger approvals,
+  restrictive agreement findings, abuse of dominant position cases, and opinions.
+  All documents are PDF decisions published on azzk.me.
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - date
+    - text
+    - category
+    - decision_type
+    - url
+
+license:
+  name: "Public Domain (Government of Montenegro)"
+  url: "https://azzk.me/en/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government decisions published for public access"

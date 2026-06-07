@@ -1,0 +1,67 @@
+# ===================================================================
+# KE/IRA -- Kenya Insurance Regulatory Authority — Guidelines & Decisions
+# ===================================================================
+# Circulars, guidelines, legal notices, and regulatory documents from
+# Kenya's Insurance Regulatory Authority.
+# ===================================================================
+
+source:
+  id: "KE/IRA"
+  country: "KE"
+  name: "Kenya Insurance Regulatory Authority — Guidelines & Decisions"
+  url: "https://www.ira.go.ke/"
+  description: |
+    Regulatory circulars, guidelines, and legal notices from Kenya's
+    Insurance Regulatory Authority (IRA). Fetched via custom AJAX API
+    with PDF text extraction (pdfplumber). Scanned-image PDFs are
+    skipped as they have no extractable text.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "ajax"
+  base_url: "https://www.ira.go.ke/assets/includes/ajapp.php"
+  endpoints:
+    - "POST fdt=base64(JSON) for each section"
+  notes: "8 sections (circulars, guidelines, legal notices), ~121 resources total. PDFs via lib.html?f={slug}."
+
+data_model:
+  type: "doctrine"
+  primary_key: "_id"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 11
+  key_fields:
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "document_type"
+      description: "Type: circular, guideline, or legal_notice"
+      type: "string"
+      role: "status"
+      required: true
+
+license:
+  name: "Public Government Documents (Kenya)"
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulatory publications from Kenya IRA"

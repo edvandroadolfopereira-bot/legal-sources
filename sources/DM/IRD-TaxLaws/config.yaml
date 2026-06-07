@@ -1,0 +1,52 @@
+source_id: DM/IRD-TaxLaws
+name: Dominica Inland Revenue Division Tax Laws & Guides
+country: DM
+url: https://ird.gov.dm/tax-laws
+data_url: https://ird.gov.dm/tax-laws
+description: |
+  Tax guidance and policy documentation from Dominica's Inland Revenue Division.
+  Covers corporate income tax, excise tax, PAYE, personal income tax, VAT,
+  withholding tax, travel tax, license requirements, past taxes, international
+  tax (AEOI, FATCA, CbCR, MAP), and downloadable tax guides/tables.
+
+data_types:
+  - legislation
+  - doctrine
+
+license:
+  name: Open Government Data
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government tax authority publications"
+
+language: en
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+update_frequency: quarterly
+
+schema:
+  key_fields:
+    - name: title
+      required: true
+      type: string
+    - name: slug
+      required: true
+      type: string
+  date_field: date
+  text_field: text
+  title_field: title
+  url_field: url
+
+notes: |
+  HTML scraping of IRD sub-pages for tax doctrine content, plus IRD-hosted
+  PDF guides/tables. Legislation PDFs on dominica.gov.dm are excluded
+  (covered by DM/Legislation).

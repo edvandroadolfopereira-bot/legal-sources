@@ -1,36 +1,33 @@
+auth:
+  type: none
+base_url: https://www.fao.org/faolex/opendata/en/
+country: INTL
+data_types:
+- legislation
+description: >
+  FAOLEX is FAO's comprehensive legislative database containing 220K+ national
+  laws, regulations, and policies on food, agriculture, natural resources, and
+  environment from 200+ countries. Bulk CSV download provides metadata; full text
+  available via individual .txt file URLs on faolex.fao.org.
+language: multi
+name: FAO Legislation Database (FAOLEX)
+rate_limit:
+  burst: 3
+  requests_per_second: 1
 schema:
   key_fields:
+  - name: _id
+    required: true
+    type: string
   - name: record_id
-    required: false
+    required: true
     type: string
-  - name: country_territory
-    required: false
-    type: string
-  - name: date_of_original_text
-    required: false
-    type: string
-  - name: language
-    required: false
-    type: string
-  - name: keywords
-    required: false
-    type: string
-  - name: abstract
-    required: false
-    type: string
-  - name: repealed
-    required: false
-    type: string
-source:
-  auth: none
-  country: INTL
-  data_types:
-  - legislation
-  description: '218,607 legislation records across 200+ countries covering agriculture, food, land, water, and environment law. Bulk CSV with direct links to pre-extracted plain text files (.txt) on faolex.fao.org.
-
-    '
-  id: INTL/FAOLEX
-  license: CC BY-NC-SA 3.0 IGO
-  method: Bulk CSV download from open data portal + per-record .txt fetch
-  name: FAO Legislation Database (FAOLEX)
-  url: https://www.fao.org/faolex/en/
+source_id: INTL/FAOLEX
+license:
+  name: "CC BY-NC-SA 3.0 IGO"
+  url: "https://creativecommons.org/licenses/by-nc-sa/3.0/igo/"
+  commercial_use: false
+  attribution_required: true
+  share_alike: true
+  no_derivatives: false
+  notes: "FAO Open Data terms apply. Non-commercial redistribution permitted with attribution and share-alike."

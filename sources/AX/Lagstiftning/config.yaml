@@ -1,0 +1,37 @@
+country: AX
+data_types:
+- legislation
+endpoints:
+  listing: https://www.regeringen.ax/alandsk-lagstiftning/alex
+  base: https://www.regeringen.ax
+fetcher:
+  max_retries: 3
+  rate_limit_ms: 2000
+  ssl_verify: true
+  timeout_s: 60
+language: sv
+license:
+  name: Open Government Data (Finland Copyright Act § 9)
+  url: https://www.regeringen.ax/alandsk-lagstiftning
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Finnish Copyright Act § 9 excludes laws and decrees from copyright. Åland legislative texts are public records."
+name: Åland Legislation (Ålex consolidated laws)
+notes: >
+  Ålex is the consolidated/updated collection of Åland Islands legislation
+  maintained by Ålands landskapsregering (Government of Åland). Contains ~517
+  consolidated laws with amendments incorporated into the text. Swedish language.
+  Drupal CMS with paginated listing at /alex?page={n}.
+schema:
+  date_format: ISO8601
+  key_fields:
+  - name: alex_id
+    required: true
+    type: string
+  - name: reference
+    required: false
+    type: string
+  text_field: text
+source_id: AX/Lagstiftning

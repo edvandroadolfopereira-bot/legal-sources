@@ -1,0 +1,56 @@
+source:
+  id: GY/EPA-Regulations
+  name: Guyana Environmental Protection Agency — Regulations & Guidelines
+  country: GY
+  url: https://epaguyana.org/
+  data_types:
+    - legislation
+  description: |
+    Environmental regulations, guidelines, EIA guidelines, and policies from
+    the Guyana Environmental Protection Agency (EPA). Covers air pollution,
+    water quality, noise management, hazardous wastes, litter enforcement,
+    styrofoam, authorisations, and environmental impact assessment procedures.
+    Full text via PDF extraction from WordPress Download Manager.
+    English language. Free access.
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: wp_rest_api
+  base_url: https://epaguyana.org
+  format: pdf
+  endpoints:
+    wpdmpro_list: /wp-json/wp/v2/wpdmpro
+    wpdm_categories: /wp-json/wp/v2/wpdmcategory
+  notes: |
+    WordPress Download Manager plugin exposes REST API.
+    PDFs downloaded via ?wpdmdl=<id> URL pattern.
+
+schema:
+  key_fields:
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: category
+      type: string
+      required: true
+
+license:
+  name: Open Government Data (Guyana)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official environmental regulations published for public compliance.

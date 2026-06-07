@@ -1,0 +1,44 @@
+source_id: HT/MEF-Budget
+name: Haiti Ministry of Economy & Finance — Lois de Finances
+country: HT
+url: https://mef.gouv.ht/budgets/lois
+description: |
+  Budget laws, decrees, and finance documents from Haiti's Ministry of Economy
+  and Finance. ~112 PDF documents spanning 1849-2026 including annual budget decrees,
+  rectified budgets, citizen budgets, and framework letters. French language.
+
+data_types:
+  - legislation
+
+license:
+  name: "Public domain — Haitian government publications"
+  url: https://mef.gouv.ht/budgets/lois
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government budget documents from Haiti MEF. Public records."
+
+language: fr
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+
+update_frequency: yearly
+
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: title
+      required: true
+      type: string
+  date_field: date
+  text_field: text
+  title_field: title
+  url_field: url

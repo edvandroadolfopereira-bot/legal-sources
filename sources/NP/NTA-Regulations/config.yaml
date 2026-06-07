@@ -1,0 +1,80 @@
+# ===================================================================
+# NP/NTA-Regulations -- Nepal Telecommunications Authority Regulations
+# ===================================================================
+# Directives, regulations, and guidelines from nta.gov.np.
+# ~22 documents. Nepali language with some English translations.
+# PDF full text extracted via common/pdf_extract.
+# ===================================================================
+
+source_id: NP/NTA-Regulations
+name: Nepal Telecommunications Authority — Directives & Guidelines
+country: NP
+url: https://www.nta.gov.np/page/directives
+description: |
+  Nepal Telecommunications Authority (NTA) publishes directives, regulations,
+  and guidelines governing telecommunications in Nepal. Covers optical fiber,
+  equipment identity, inflight communication, radio, broadcasting, tariff
+  approval, interconnection, child safety, and more. ~22 documents with
+  full text extracted from PDFs. Some available in both English and Nepali.
+
+data_types:
+  - legislation
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "scraping"
+  base_url: "https://www.nta.gov.np"
+  endpoints:
+    directives: "/page/directives"
+    regulations: "/page/regulation"
+    guidelines: "/page/guideline"
+  response_format: "html"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "_id"
+      description: "Unique document ID (NP-NTA-{category}-{index})"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title (Nepali or English)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Year of publication (Bikram Sambat calendar)"
+      type: "string"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "PDF download URL on nta.gov.np"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "category"
+      description: "Document category (directive, regulation, guideline)"
+      type: "string"
+      role: "metadata"
+      required: false
+
+license:
+  name: "Public Domain (Government of Nepal)"
+  url: "https://www.nta.gov.np/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Government of Nepal public regulatory documents"

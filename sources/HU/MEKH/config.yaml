@@ -1,0 +1,37 @@
+country: HU
+data_types:
+- doctrine
+license:
+  name: "Public (Government of Hungary)"
+  url: "https://mekh.hu/adatkezelesi-tajekoztato"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulatory decisions published by a Hungarian government authority."
+name: Hungarian Energy and Public Utility Regulatory Authority (MEKH)
+notes: >
+  Regulatory decisions (határozatok) of the Hungarian Energy and Public Utility
+  Regulatory Authority (MEKH). Covers energy licensing, pricing, market integrity
+  enforcement, and utility regulation. ~2,600 documents.
+  HTML scraping with session-based doctype filter.
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: category
+    required: false
+    type: string
+  required_fields:
+  - _id
+  - _source
+  - _type
+  - _fetched_at
+  - title
+  - text
+  - date
+  - url
+source_id: HU/MEKH
+update_frequency: weekly
+url: https://mekh.hu/mekh-hatarozatok

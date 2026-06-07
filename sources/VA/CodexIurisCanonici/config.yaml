@@ -1,0 +1,71 @@
+source:
+  id: "VA/CodexIurisCanonici"
+  country: "VA"
+  name: "Codex Iuris Canonici (1983)"
+  url: "https://www.vatican.va/archive/cod-iuris-canonici/cic_index_la.html"
+  description: |
+    1983 Code of Canon Law (Codex Iuris Canonici) promulgated by Pope John Paul II.
+    1752 canons organized in 7 books covering governance of the Latin Church.
+    Official Latin text from vatican.va with English translations.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+api:
+  type: "html_scrape"
+  base_url: "https://www.vatican.va/archive/cod-iuris-canonici"
+
+data_model:
+  type: "legislation"
+  source_nature: "consolidated"
+  primary_key: "canon_number"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "canon_number"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "_id"
+      description: "Unique canon identifier"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Canon number and book"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the canon in Latin"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text_en"
+      description: "English translation of the canon"
+      type: "string"
+      role: "content"
+      required: false
+    - name: "date"
+      description: "Promulgation date"
+      type: "date"
+      role: "temporal_key"
+      required: true
+
+license:
+  id: "pd-gov"
+  name: "Public Domain (Holy See)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official legislative texts of the Holy See"

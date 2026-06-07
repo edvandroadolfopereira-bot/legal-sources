@@ -1,0 +1,87 @@
+# ===================================================================
+# MV/MMA-Regulations -- Maldives Monetary Authority Regulations & Guidelines
+# ===================================================================
+# Prudential regulations, banking guidelines, insurance regulations,
+# AML/CFT guidelines, and monetary policy rules issued by the MMA
+# (central bank of the Republic of Maldives).
+#
+# Discovery: Known PDF URLs catalogued from mma.gov.mv
+# Full text: PDF extraction via common/pdf_extract
+# License: Free public access (government regulatory documents)
+# ===================================================================
+
+source:
+  id: "MV/MMA-Regulations"
+  country: "MV"
+  name: "Maldives Monetary Authority — Regulations & Guidelines"
+  url: "https://www.mma.gov.mv/"
+  description: |
+    Prudential regulations, banking and insurance guidelines, AML/CFT
+    compliance documents, and monetary policy rules issued by the
+    Maldives Monetary Authority. ~30 documents in English covering
+    banking supervision, insurance, payment systems, foreign currency,
+    and anti-money laundering.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "static_pdf"
+  base_url: "https://www.mma.gov.mv"
+
+data_model:
+  type: "legislation"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "doc_id"
+      description: "Stable identifier derived from PDF filename"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication or effective date (if known)"
+      type: "string"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "Direct URL to the PDF"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "category"
+      description: "Document category (act, banking, insurance, aml_cft, monetary, payment)"
+      type: "string"
+      role: "classification"
+      required: true
+
+license:
+  name: "Public Domain (Government Regulations)"
+  url: "https://www.mma.gov.mv/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government regulatory documents published for public compliance"

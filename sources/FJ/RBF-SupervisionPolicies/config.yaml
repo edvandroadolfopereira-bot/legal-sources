@@ -1,0 +1,35 @@
+source:
+  id: FJ/RBF-SupervisionPolicies
+  name: Reserve Bank of Fiji — Supervision Policy Statements
+  country: FJ
+  url: https://www.rbf.gov.fj/core-functions/financial-stability/regulation/supervision-policies/
+  data_types:
+    - doctrine
+  auth: none
+  description: >
+    Prudential supervision policy statements issued by the Reserve Bank of Fiji
+    covering banking (BSPS), insurance (ISPS), capital markets (CMSPS), payment
+    service providers, superannuation (SSPS), foreign exchange dealers (RFEDMC),
+    and cross-sector prudential policies (PSPS). ~60 PDF documents.
+
+schema:
+  key_fields:
+    - doc_id
+    - category
+  record_type: doctrine
+
+fetcher:
+  method: api+pdf
+  rate_limit: 1.5
+  notes: >
+    Fetches page content via WordPress REST API (page ID 20542) to extract all
+    PDF links. Downloads each PDF and extracts text via common/pdf_extract.
+
+license:
+  name: "Open Government Data (Fiji)"
+  url: "https://www.rbf.gov.fj/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulatory publications freely available for public use"

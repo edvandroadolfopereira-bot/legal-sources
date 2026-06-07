@@ -1,0 +1,65 @@
+# ===================================================================
+# ML/SectionDesComptes -- Cour Suprême du Mali — Jurisprudence
+# ===================================================================
+
+source:
+  id: "ML/SectionDesComptes"
+  country: "ML"
+  name: "Cour Suprême du Mali — Jurisprudence"
+  url: "https://www.coursupreme.ml/"
+  description: |
+    Court decisions (arrêts) from all chambers of Mali's Supreme Court.
+    PDFs extracted from WP REST API pages for Civile, Criminelle,
+    Commerciale, Sociale, and Administrative chambers. ~121 decisions.
+
+data_types:
+  - case_law
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "wordpress_rest"
+  base_url: "https://www.coursupreme.ml/wp-json/wp/v2"
+  endpoints:
+    - "/pages/{id} for decision pages"
+    - "/posts for news"
+  notes: "6 decision pages with ~121 PDFs, 22 news posts."
+
+data_model:
+  type: "case_law"
+  primary_key: "_id"
+  update_strategy: "append_only"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "text"
+      description: "Full text extracted from court decision PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "title"
+      description: "Decision title (from PDF filename)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "chamber"
+      description: "Chamber: civile, criminelle, commerciale, sociale, administrative"
+      type: "string"
+      role: "status"
+      required: false
+
+license:
+  name: "Public Government Documents (Mali)"
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official court decisions from Mali Supreme Court"

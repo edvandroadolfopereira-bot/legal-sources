@@ -1,0 +1,59 @@
+source:
+  id: BB/SubsidiaryLegislation
+  name: Barbados Subsidiary Legislation (Attorney General)
+  country: BB
+  url: https://oag.gov.bb/Laws/Consolidated-Laws/Subsidiary-Legislation-of-Barbados/
+  description: >
+    Subsidiary legislation of Barbados (regulations, orders, rules) from the
+    Office of the Attorney General & Legal Affairs. 400+ instruments available
+    as PDF downloads. Complements BB/Statutes (primary legislation).
+
+data_model:
+  types:
+    - legislation
+  update_strategy: upsert
+  dedup_key:
+    - doc_id
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+schema:
+  required_fields:
+    - _id
+    - _source
+    - _type
+    - _fetched_at
+    - title
+    - text
+    - url
+  key_fields:
+    - name: doc_id
+      type: string
+      required: true
+    - name: cap_number
+      type: string
+      required: false
+    - name: year
+      type: string
+      required: false
+    - name: pdf_url
+      type: string
+      required: false
+
+license:
+  name: Open Government Data
+  url: https://oag.gov.bb/Laws/Consolidated-Laws/Subsidiary-Legislation-of-Barbados/
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official Barbadian subsidiary legislation published by the Attorney General's Office.
+
+schedule:
+  full_refresh: quarterly
+  update_check: monthly

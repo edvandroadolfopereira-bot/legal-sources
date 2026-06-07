@@ -1,0 +1,29 @@
+source_id: LK/PUCSL-Regulations
+name: Public Utilities Commission of Sri Lanka — Electricity Regulations
+country: LK
+url: https://www.pucsl.gov.lk/legal_documents_types/regulations/
+data_types:
+  - legislation
+auth:
+  type: none
+schedule: monthly
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - date
+    - text
+
+license:
+  name: "Public Domain (Government)"
+  url: "https://www.pucsl.gov.lk/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Public Utilities Commission of Sri Lanka legal documents (acts, regulations, codes, rules, tariff decisions, guidelines, methodologies) published for public compliance."

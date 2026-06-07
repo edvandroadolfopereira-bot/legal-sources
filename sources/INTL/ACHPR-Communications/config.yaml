@@ -1,0 +1,76 @@
+# ===================================================================
+# INTL/ACHPR-Communications -- African Commission on Human and
+# Peoples' Rights — Decisions on Communications
+# ===================================================================
+# Quasi-judicial merits/admissibility decisions ("communications")
+# of the African Commission (distinct from the African Court /
+# INTL/AfCHPR). HTML listing scrape + decision PDF text extraction.
+# ===================================================================
+
+source:
+  id: "INTL/ACHPR-Communications"
+  country: "INTL"
+  name: "African Commission on Human and Peoples' Rights — Decisions on Communications"
+  url: "https://achpr.au.int/en/category/decisions-communications"
+  description: |
+    Decisions on Communications (individual/inter-state complaints) of the
+    African Commission on Human and Peoples' Rights — the quasi-judicial
+    organ of the African Union established under the African Charter (Banjul
+    Charter). Each communication page links the adopted decision as a PDF
+    (merits, admissibility, or inadmissibility). Full text is extracted from
+    the official decision PDFs hosted on achpr.au.int. Distinct from the
+    African Court on Human and Peoples' Rights (see INTL/AfCHPR).
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+api:
+  type: "html_scrape_pdf"
+  listing_url: "https://achpr.au.int/en/category/decisions-communications"
+  base_url: "https://achpr.au.int"
+
+data_model:
+  type: "case_law"
+  primary_key: "communication_number"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 11
+  key_fields:
+    - name: "title"
+      description: "Communication title with number and parties"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from the adopted decision PDF(s)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "communication_number"
+      description: "Communication reference (e.g., 424/12)"
+      type: "string"
+      role: "identifier"
+      required: true
+    - name: "date"
+      description: "Decision/adoption date (ISO 8601) when parseable, else null"
+      type: "date"
+      role: "temporal_key"
+      required: false
+
+notes: |
+  - Listing paginated at /en/category/decisions-communications?page=N until empty
+  - Each detail page exposes og:title + one or more decision PDFs
+  - Decision PDFs preferred (engdecision-*-merits / -admissible / -inadmissible);
+    pure transmittal/cover letters are skipped
+  - English PDFs preferred when both EN and FR are present
+  - PDFs are scanned with an embedded OCR text layer — text is readable but may
+    contain minor OCR artifacts
+  - Text extracted via common/pdf_extract.py (opendataloader -> pdfplumber -> pypdf)

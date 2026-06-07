@@ -1,0 +1,38 @@
+country: DE
+data_types:
+- case_law
+- legislation
+endpoints:
+  api: https://testphase.rechtsinformationen.bund.de/v1
+  docs: https://docs.rechtsinformationen.bund.de
+fetcher:
+  max_retries: 3
+  rate_limit_ms: 500
+  ssl_verify: true
+  timeout_s: 60
+language: de
+license:
+  name: Public Domain (Amtliche Werke)
+  url: https://www.gesetze-im-internet.de/urhg/__5.html
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "German official works (amtliche Werke) are not protected by copyright under § 5 UrhG."
+name: NeuRIS — German Federal Legal Information System
+notes: >
+  New unified REST API replacing rechtsprechung-im-internet.de and gesetze-im-internet.de.
+  Currently in test phase but publicly accessible with no authentication.
+  Covers 82,000+ case law decisions from federal courts and 2,400+ federal laws.
+  Provides full text via JSON metadata (caseFacts, decisionGrounds, etc.) and HTML endpoints.
+schema:
+  date_format: ISO8601
+  key_fields:
+  - name: documentNumber
+    required: true
+    type: string
+  - name: ecli
+    required: false
+    type: string
+  text_field: text
+source_id: DE/NeuRIS

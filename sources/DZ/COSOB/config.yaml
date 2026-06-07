@@ -1,0 +1,59 @@
+# DZ/COSOB - Algeria Securities & Exchange Commission
+name: "COSOB Securities Market Regulations"
+country: DZ
+source_id: "DZ/COSOB"
+source_type: legislation
+
+base_url: "https://cosob.dz"
+official_url: "https://cosob.dz/reglementations/"
+
+data_types:
+  - legislation
+  - doctrine
+
+languages:
+  - fr
+  - ar
+
+coverage:
+  start_year: 1993
+  end_year: 2026
+  notes: "Laws, decrees, arrêtés, COSOB regulations/instructions, AML/CFT texts, guidelines governing Algeria's securities market"
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+data_model:
+  update_strategy: upsert
+  dedup_key:
+    - _id
+
+schema:
+  key_fields:
+    - name: "category"
+      type: "string"
+      required: true
+    - name: "text"
+      type: "string"
+      required: true
+  required_fields:
+    - _id
+    - _source
+    - _type
+    - _fetched_at
+    - title
+    - text
+    - url
+
+license:
+  name: "Open Government Data"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulatory documents published by Algerian securities regulator"

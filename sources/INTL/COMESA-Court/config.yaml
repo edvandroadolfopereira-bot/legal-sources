@@ -1,0 +1,60 @@
+source:
+  id: "INTL/COMESA-Court"
+  name: "COMESA Court of Justice"
+  description: |
+    Judgments and rulings from the COMESA Court of Justice, the judicial organ
+    of the Common Market for Eastern and Southern Africa. Covers trade,
+    investment, and employment disputes from 21 member states. ~19 decisions
+    from AfricanLII (OCR'd PDFs), plus fallback to comesacourt.org originals.
+  url: "https://africanlii.org/judgments/COMESACJ/"
+  country: "INTL"
+  language: "EN"
+  data_types:
+    - case_law
+  auth:
+    type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "html_scrape_pdf"
+  base_url: "https://africanlii.org"
+  listing_url: "https://africanlii.org/judgments/COMESACJ/"
+  fallback_url: "https://comesacourt.org/court-decisions/"
+
+schema:
+  key_fields:
+    - name: "title"
+      type: "string"
+      required: true
+    - name: "text"
+      type: "string"
+      required: true
+    - name: "date"
+      type: "date"
+      required: false
+    - name: "url"
+      type: "string"
+      required: true
+    - name: "reference_number"
+      type: "string"
+      required: false
+    - name: "decision_type"
+      type: "string"
+      required: false
+
+data_model:
+  update_strategy: append_only
+  dedup_key:
+    - _id
+
+license:
+  name: "Public Judicial Records"
+  url: "https://comesacourt.org/court-decisions/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Court judgments are public judicial records. No restrictive terms found."

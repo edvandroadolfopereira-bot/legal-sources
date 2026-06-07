@@ -1,0 +1,123 @@
+# ===================================================================
+# HN/CNBS-Regulations -- Comisión Nacional de Bancos y Seguros (CNBS),
+# the Honduran financial-sector supervisor. Resoluciones y circulares.
+# ===================================================================
+# Full text of the regulatory framework published by the CNBS on its
+# public "Resoluciones y circulares" portal: the circulares, resoluciones
+# and prudential normas/reglamentos governing banks, insurers, pension
+# fund managers (AFP), credit-card issuers and the wider financial system
+# (loan-portfolio classification, reserves, investments, AML/CFT, market
+# conduct, etc.). Classified as legislation (financial-sector regulation).
+# Full text extracted with pdfplumber.
+#
+# Access: the portal (circulares.cnbs.gob.hn) is a DevExpress ASP.NET MVC
+# app whose listing is served as an HTML partial by /Home/Circulares,
+# filtered by year (1996..present), 0-indexed pages of 20 cards. Each card
+# links to the circular PDF at /Archivo/Viewer/<id>/<file>.pdf, downloaded
+# directly and extracted with pdfplumber.
+# ===================================================================
+
+source:
+  id: "HN/CNBS-Regulations"
+  country: "HN"
+  name: "Honduras CNBS — Banking & Insurance Commission Regulations"
+  url: "https://circulares.cnbs.gob.hn/"
+  description: |
+    The regulatory framework of the Comisión Nacional de Bancos y Seguros
+    (CNBS), the Honduran financial-sector supervisor, published on its
+    public "Resoluciones y circulares" portal. CNBS circulars carry the
+    binding prudential regulation of Honduras — the normas and reglamentos
+    governing banks, insurers, pension fund managers (AFP), credit-card
+    issuers, securities-market participants and the rest of the supervised
+    financial system (loan-portfolio evaluation and classification,
+    reserves, institutional investments, AML/CFT, market conduct, capital
+    adequacy, etc.) — together with the resoluciones of the CNBS board that
+    enact them. Classified as legislation (financial-sector regulation).
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "html_listing_pdf"
+  base_url: "https://circulares.cnbs.gob.hn"
+  notes: |
+    DevExpress ASP.NET MVC portal. The circular listing is served as an
+    HTML partial view by:
+      /Home/Circulares?filterType=CircularesYear&valueFilter=<year>
+        &page=<n>&lastPageShow=0
+    Paging is 0-indexed with 20 cards per page; we enumerate every year from
+    1996 to the current year. Each card exposes the circular title
+    (e.g. "CIRCULAR CNBS No.012/2024"), an optional resolution reference
+    ("RESOLUCIÓN GAD No.299/15-05-2024"), the dd/mm/yyyy date and a one-line
+    summary, plus a link to the circular PDF at
+      /Archivo/Viewer/<id>/<filename>.pdf
+    Each PDF is downloaded directly and its full text extracted with
+    pdfplumber. A browser User-Agent is sent and TLS verification is
+    disabled (public, read-only data). PDFs yielding <180 chars are skipped.
+
+data_model:
+  type: "legislation"
+  primary_key: "url"
+  update_strategy: "upsert"
+  dedup_key:
+    - url
+
+schema:
+  total_fields: 14
+  key_fields:
+    - name: "text"
+      description: "Full text extracted from the circular/norm PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "title"
+      description: "Circular title (e.g. 'CIRCULAR CNBS No.012/2024')"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "doc_number"
+      description: "Circular/resolution number parsed from the title or reference"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "doc_kind"
+      description: "circular | resolucion | norma"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "date"
+      description: "Circular date as ISO (from the listing's dd/mm/yyyy span)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "Direct PDF Viewer URL (identifier)"
+      type: "string"
+      role: "identifier"
+      required: true
+    - name: "resolution_ref"
+      description: "Underlying resolution reference, when present"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "issuer"
+      description: "Comisión Nacional de Bancos y Seguros"
+      type: "string"
+      role: "metadata"
+      required: false
+
+license:
+  name: "Open Government Data (Honduras)"
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Honduran financial-sector regulatory instruments (circulares, resoluciones, normas) issued by a public institution — the Comisión Nacional de Bancos y Seguros — and published on its institutional portal for public use. Official regulatory texts are not subject to copyright."

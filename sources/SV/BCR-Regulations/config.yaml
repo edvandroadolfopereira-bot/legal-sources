@@ -1,0 +1,121 @@
+# ═══════════════════════════════════════════════════════════════════
+# Legal Data Hunter — Source Configuration
+# SV/BCR-Regulations — Banco Central de Reserva de El Salvador
+# ═══════════════════════════════════════════════════════════════════
+
+# ── Source Identity ───────────────────────────────────────────────
+source:
+  id: "SV/BCR-Regulations"
+  country: "SV"
+  name: "Banco Central de Reserva de El Salvador — Regulations"
+  url: "https://www.bcr.gob.sv/regulaciones/"
+  description: |
+    Technical regulatory framework (marco normativo) of El Salvador's
+    financial system, issued by the Comité de Normas del Banco Central de
+    Reserva (BCR). Covers normas técnicas (prudential, accounting, general),
+    reglamentos, instructivos, lineamientos and resoluciones governing banks,
+    insurers, the pension system, the securities market and other supervised
+    entities. Full text in Spanish, extracted from the official PDF of each norm.
+
+# ── Data Types ────────────────────────────────────────────────────
+data_types:
+  - doctrine
+
+# ── Authentication ────────────────────────────────────────────────
+auth:
+  type: "none"
+
+# ── Rate Limiting ─────────────────────────────────────────────────
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+  max_workers: 2
+
+# ── API / Scraping Configuration ──────────────────────────────────
+api:
+  type: "html_scrape"
+  base_url: "https://www.bcr.gob.sv/regulaciones"
+  endpoints:
+    detail: "/normativa.php"        # POST norma=<numeric id> -> detail HTML
+    pdf: "/upload/{reference}.pdf"   # full-text PDF per norm reference
+
+# ── Data Model ────────────────────────────────────────────────────
+data_model:
+  type: "doctrine"
+  source_nature: "consolidated"
+  primary_key: "_id"
+  update_strategy: "upsert"
+  versioning: "consolidated"
+  dedup_key:
+    - "reference"
+
+# ── Schema ────────────────────────────────────────────────────────
+schema:
+  total_fields: 18
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier (BCR-<reference>)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Norm reference + official title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the norm, extracted from the official PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "reference"
+      description: "Official norm code (e.g., NCF-13, NRP-41)"
+      type: "string"
+      role: "reference"
+      required: true
+    - name: "date"
+      description: "Effective date (falls back to approval date)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+  secondary_fields:
+    - name: "objeto"
+      description: "Stated purpose of the norm (Objeto field)"
+    - name: "approval_date"
+      description: "Date the Comité de Normas approved the norm"
+    - name: "effective_date"
+      description: "Date the norm enters into force (vigencia)"
+    - name: "approved_by"
+      description: "Approving body / resolution reference"
+    - name: "regulatory_status"
+      description: "'vigente' (enacted) or 'consulta' (draft under public consultation)"
+    - name: "publisher"
+      description: "Banco Central de Reserva de El Salvador (Comité de Normas)"
+    - name: "jurisdiction"
+      description: "ISO country code (SV)"
+    - name: "language"
+      description: "Document language (es)"
+  probably_ignorable: []
+
+# ── License ──────────────────────────────────────────────────────
+license:
+  id: "ogd"
+  name: "Open Government Data"
+  url: "https://www.bcr.gob.sv/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulations issued by a public authority (central bank). Public official texts."
+
+# ── Notes ─────────────────────────────────────────────────────────
+notes: |
+  - Language: Spanish.
+  - The regulations portal renders each norm's detail via a POST to
+    normativa.php with norma=<numeric id>. Full text PDFs live at
+    /regulaciones/upload/<reference>.pdf.
+  - Numeric ids are scanned from ~1100 downward; recent norms have the
+    highest ids, so a bounded sample captures the current framework first.
+  - References containing "-C-" are consultation drafts (en consulta) and
+    have no effective/approval date until enacted; their text is still full.
+  - Scanned PDFs with no text layer (< 500 chars extracted) are skipped.

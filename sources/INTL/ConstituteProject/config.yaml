@@ -1,0 +1,71 @@
+# ===================================================================
+# INTL/ConstituteProject -- World Constitutions (Comparative Constitutions Project)
+# ===================================================================
+# 232 constitutions from ~200 countries. Full text via JSON API.
+# Free API at constituteproject.org/service — no auth required.
+# ===================================================================
+
+source:
+  id: "INTL/ConstituteProject"
+  country: "INTL"
+  name: "Constitute Project — World Constitutions"
+  url: "https://www.constituteproject.org/"
+  description: |
+    The Constitute Project (Comparative Constitutions Project, UT Austin / Google Ideas)
+    provides the full text of 232 national constitutions from around the world, both
+    current and historical. Constitution texts are annotated with topic tags and available
+    in English translation. The JSON API returns constitution metadata and full HTML text.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "rest_json"
+  base_url: "https://www.constituteproject.org/service"
+  list_endpoint: "GET /constitutions"
+  html_endpoint: "GET /html?cons_id={id}&lang=en"
+
+data_model:
+  type: "legislation"
+  primary_key: "id"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "title"
+      description: "Constitution title (e.g., Albania 1998 (rev. 2016))"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the constitution (HTML stripped)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Year enacted or last revised (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "country"
+      description: "Country name"
+      type: "string"
+      role: "identifier"
+      required: true
+
+license:
+  name: "Creative Commons Attribution-NonCommercial 4.0"
+  url: "https://creativecommons.org/licenses/by-nc/4.0/"
+  commercial_use: false
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Constitute data includes HeinOnline and Oxford Constitutions translations used with permission. Non-commercial use."

@@ -1,0 +1,65 @@
+# ===================================================================
+# HT/MEF-Lois -- Haiti Ministry of Economy and Finance — Key Laws
+# ===================================================================
+# 8 foundational fiscal/governance laws: anti-corruption, budget process,
+# public procurement, road maintenance fund, municipal revenues, etc.
+# ===================================================================
+
+source:
+  id: "HT/MEF-Lois"
+  country: "HT"
+  name: "Haiti Ministry of Economy and Finance — Key Laws"
+  url: "https://mef.gouv.ht/cadre-reglementaire/lois"
+  description: |
+    8 foundational fiscal and governance laws published by the Haitian
+    Ministry of Economy and Finance. Covers anti-corruption, budget
+    process, public procurement, road maintenance fund, municipal
+    revenues, and social assistance. PDFs from Laravel storage.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+api:
+  type: "html_scrape_pdf"
+  base_url: "https://mef.gouv.ht"
+  notes: "Static list of 8 PDF URLs scraped from /cadre-reglementaire/lois"
+
+data_model:
+  type: "legislation"
+  primary_key: "url"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 8
+  key_fields:
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "title"
+      description: "Law title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Date of the law"
+      type: "date"
+      role: "temporal_key"
+      required: false
+
+license:
+  name: "Public Government Documents (Haiti)"
+  url: null
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government laws published for public access"

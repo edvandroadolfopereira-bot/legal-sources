@@ -1,0 +1,22 @@
+source_id: ZW/RBZ-Directives
+name: "Reserve Bank of Zimbabwe — Exchange Control Directives"
+country: ZW
+url: https://www.rbz.co.zw/index.php/regulation-supervision/exchange-control/directives-circulars-and-orders
+data_types:
+  - legislation
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - date
+    - text
+
+license:
+  name: "Open Government Data (Zimbabwe)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official exchange control directives and circulars published by the Reserve Bank of Zimbabwe"

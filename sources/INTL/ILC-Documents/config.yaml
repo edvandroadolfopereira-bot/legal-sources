@@ -1,0 +1,43 @@
+fetch:
+  max_retries: 3
+  rate_limit: 1.5
+  timeout: 120
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: topic_category
+    required: false
+    type: string
+  - name: document_type
+    required: false
+    type: string
+source:
+  auth: none
+  country: INTL
+  data_types:
+  - doctrine
+  description: >
+    UN International Law Commission (ILC) draft articles, commentaries,
+    conventions, and final reports across ~50 topics (1949-present).
+    Covers foundational international law including State Responsibility,
+    Law of Treaties, Diplomatic Immunity, Crimes Against Humanity, etc.
+    Full text extracted from PDFs at legal.un.org/ilc/.
+  id: INTL/ILC-Documents
+  name: UN International Law Commission — Draft Articles & Yearbooks
+  url: https://legal.un.org/ilc/
+license:
+  name: "United Nations Terms of Use"
+  url: "https://www.un.org/en/about-us/terms-of-use"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "UN materials are generally available for reuse with attribution per UN terms of use."

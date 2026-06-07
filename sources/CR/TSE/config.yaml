@@ -1,0 +1,91 @@
+# ===================================================================
+# CR/TSE -- Costa Rica Tribunal Supremo de Elecciones
+# ===================================================================
+# Supreme Electoral Tribunal of Costa Rica.
+# Publishes electoral and municipal resolutions (resoluciones)
+# as ZIP archives of HTML files organized by year.
+#
+# URL: https://www.tse.go.cr/juris_anual.html
+# Access: Direct ZIP downloads per year, browser User-Agent required.
+# No auth, no API key needed.
+# ===================================================================
+
+source:
+  id: "CR/TSE"
+  country: "CR"
+  name: "TSE - Tribunal Supremo de Elecciones"
+  url: "https://www.tse.go.cr/"
+  description: |
+    Costa Rica Supreme Electoral Tribunal resolutions.
+    Electoral resolutions from 1946 to present.
+    Municipal resolutions from 1975 to present.
+    Full text HTML files bundled in yearly ZIP archives.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+api:
+  type: "bulk_download"
+  base_url: "https://www.tse.go.cr"
+  electoral_zip: "https://www.tse.go.cr/juris/zip/E-{year}.zip"
+  municipal_zip: "https://www.tse.go.cr/juris/zip/M-{year}.zip"
+  electoral_years: "1946-2026"
+  municipal_years: "1975-2026"
+
+data_model:
+  type: "case_law"
+  primary_key: "resolution_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "resolution_id"
+
+schema:
+  key_fields:
+    - name: "resolution_id"
+      description: "Resolution identifier from filename (e.g. 0001-E1-2024)"
+      type: "string"
+      role: "primary_key"
+    - name: "resolution_type"
+      description: "Type: electoral (E) or municipal (M)"
+      type: "string"
+      role: "category"
+    - name: "title"
+      description: "Resolution title from HTML <title> tag"
+      type: "string"
+      role: "content"
+    - name: "text"
+      description: "Full text of the resolution"
+      type: "string"
+      role: "content"
+    - name: "date"
+      description: "Year of the resolution"
+      type: "string"
+      role: "temporal_key"
+    - name: "url"
+      description: "URL to the ZIP archive containing this resolution"
+      type: "string"
+      role: "reference"
+
+license:
+  name: "Open Government Data"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government tribunal decisions, public domain"
+
+notes: |
+  - ZIP archives downloadable per year, requires browser User-Agent
+  - Electoral resolutions: 1946-2026 (~300-500 per year in recent years)
+  - Municipal resolutions: 1975-2026 (~200-300 per year in recent years)
+  - HTML files are Word-exported, windows-1252 encoding
+  - Filename pattern: {NUMBER}-{CATEGORY}-{YEAR}.html
+  - Language: Spanish

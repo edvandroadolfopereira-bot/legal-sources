@@ -1,21 +1,36 @@
-# El Salvador Legislative Assembly
+# El Salvador Legislative Assembly — Leyes y Decretos
 
 **Source:** [https://www.asamblea.gob.sv/leyes-y-decretos/busqueda-decretos](https://www.asamblea.gob.sv/leyes-y-decretos/busqueda-decretos)
 **Country:** SV
 **Data types:** legislation
-**Status:** Blocked
+**Status:** Complete
 
-## Why this source is blocked
+## Overview
 
-**Category:** No full text access
+Official database of laws and legislative decrees published by the Asamblea
+Legislativa de la República de El Salvador. Decrees are organized by year (1860s
+to present). Each decree links to the official PDF carrying the full text.
+Language: Spanish.
 
-**Technical reason:** `no_full_text_access`
+## Access strategy
 
-**Details:** Re-blocked: original issue (no_full_text_access) not solvable by PDF extraction alone
+No public API. The fetcher uses the structured Drupal HTML index plus per-document
+PDFs:
 
-## How you can help
+1. `/leyes-y-decretos/decretos-por-anios` lists every year with decrees;
+   `/leyes-y-decretos/decretos-por-anios/{year}/0` lists all decree cards for a year.
+2. Each card links to a node page `/leyes-y-decretos/view/{id}` carrying structured
+   metadata (decree number, dates, materia, rama del derecho, resumen) and the
+   official PDF link.
+3. The PDF holds the **full text**. Recent decrees are digital-native (extractable
+   text), extracted with `pdfplumber`.
 
-The source only provides metadata (titles, dates) without full document text.
-- If you know of a way to access full text for this source, please file an issue
+Older scanned-image decrees that yield fewer than 400 extractable characters are
+skipped — this source only contributes full-text records.
 
-- File an issue or open a PR at [worldwidelaw/legal-sources](https://github.com/worldwidelaw/legal-sources)
+## License
+
+[Open Government Data](https://www.asamblea.gob.sv/) — legislation produced by the
+State of El Salvador is public. The Asamblea Legislativa publishes official texts
+openly without registration. No explicit machine-readable license is stated;
+treated as open government data (public-domain legal texts). Commercial use OK.

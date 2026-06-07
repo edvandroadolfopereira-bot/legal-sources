@@ -1,21 +1,20 @@
-# Saudi Arabia Capital Market Authority
+# Saudi Capital Market Authority — Regulations
 
-**Source:** [https://cma.org.sa/](https://cma.org.sa/)
+**Source:** [https://cma.gov.sa/en/RulesRegulations/Regulations/Pages/default.aspx](https://cma.gov.sa/en/RulesRegulations/Regulations/Pages/default.aspx)
 **Country:** SA
-**Data types:** case_law, doctrine
-**Status:** Blocked
+**Data types:** legislation
+**Status:** Complete
 
-## Why this source is blocked
+## Overview
 
-**Category:** Server blocks or errors
+Fetches ~36 implementing regulations, rules, and instructions from the Saudi
+Capital Market Authority (CMA) plus the Capital Market Law itself. All
+documents are English-language PDFs published on the official CMA website.
 
-**Technical reason:** `server_unreachable`
+Categories include: Rules, Instructions & Procedures, Regulations, and Guides
+covering securities business, investment funds, corporate governance, market
+conduct, merger & acquisition, and more.
 
-**Details:** cma.org.sa connection timeout. OpenData API is for market stats only, not regulations.
+## License
 
-## How you can help
-
-The server blocks automated access or returns errors.
-- If you know of an alternative endpoint, please share it
-
-- File an issue or open a PR at [worldwidelaw/legal-sources](https://github.com/worldwidelaw/legal-sources)
+[Open Government Data](https://cma.gov.sa/) — Saudi government regulatory publications, publicly available.

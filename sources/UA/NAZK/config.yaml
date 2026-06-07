@@ -1,0 +1,53 @@
+fetcher:
+  register_url: https://data.gov.ua/dataset/560e5f5d-0b8b-491e-a0b1-72eb08602edc/resource/b09c40e0-8cab-468f-ae99-fe7b8eda3463/download/corruptinfo-nazk-gov-ua-ep-1-0-corrupt-getalldata.json
+  conclusions_url: https://data.gov.ua/dataset/b20fbfc3-c0f1-4630-9707-c8dc71c6bd7c/resource/5b6f4585-b8c8-40b0-a892-018758d03705/download/conclusions.csv
+  rate_limit: 2.0
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: offense_type
+    required: false
+    type: string
+  - name: legal_articles
+    required: false
+    type: string
+  - name: court_name
+    required: false
+    type: string
+  - name: url
+    required: true
+    type: string
+source:
+  auth: none
+  country: UA
+  data_types:
+  - doctrine
+  description: >
+    NAZK (National Agency on Corruption Prevention) open data from data.gov.ua.
+    Includes the Unified State Register of Persons Who Committed Corruption
+    Offenses (~50K records with offense descriptions and punishment details)
+    and NAZK monitoring conclusions on conflict-of-interest violations (~170 records).
+  format: json
+  id: UA/NAZK
+  language: uk
+  name: National Agency on Corruption Prevention (NAZK)
+  url: https://nazk.gov.ua/en/
+license:
+  name: "CC BY 4.0"
+  url: "https://creativecommons.org/licenses/by/4.0/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "All datasets published by NAZK on data.gov.ua use CC BY 4.0"

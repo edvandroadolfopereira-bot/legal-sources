@@ -1,0 +1,90 @@
+# ===================================================================
+# DO/MedioAmbiente -- Ministerio de Medio Ambiente y Recursos Naturales
+# (Dominican Republic), Environmental Laws, Decrees & Norms
+# ===================================================================
+# Full-text environmental legislation: leyes, decretos, normas
+# ambientales, resoluciones, and políticas medioambientales.
+# Full text via pdfplumber from official WordPress site.
+# ===================================================================
+
+source:
+  id: "DO/MedioAmbiente"
+  country: "DO"
+  name: "Dominican Republic Ministry of Environment — Regulations"
+  url: "https://ambiente.gob.do/"
+  description: |
+    Regulatory corpus of the Dominican Republic's Ministry of
+    Environment and Natural Resources (Ministerio de Medio Ambiente y
+    Recursos Naturales). Covers environmental laws (Ley General 64-00,
+    forestry codes, water laws, mining laws, protected areas), executive
+    decrees on environmental protection and natural reserves, technical
+    environmental norms (water quality, waste management, noise,
+    radioactive waste), and environmental policy documents.
+    Two main listing pages: /regulaciones/ (recent regulations) and
+    /sobre-nosotros/marco-legal (full legal framework).
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "html_scrape_pdf"
+  base_url: "https://ambiente.gob.do"
+  notes: |
+    WordPress site using WP File Download plugin (wpfd). Two listing
+    pages contain all documents as PDF download links:
+      /regulaciones/ (~23 recent regulations/policies)
+      /sobre-nosotros/marco-legal (~89 laws, decrees, norms)
+    Each <a class="wpfd_downloadlink"> has a title attribute with the
+    document name and an href to the PDF. Category is derived from the
+    URL path (leyes, decretos, normas, politicas-medioambientales).
+    PDFs are downloaded and text-extracted with pdfplumber.
+
+data_model:
+  type: "legislation"
+  primary_key: "url"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "text"
+      description: "Full text extracted from the PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "title"
+      description: "Document title from the WPFD link title attribute"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "category"
+      description: "Document category: ley, decreto, norma, resolucion, politica"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "date"
+      description: "Document date (ISO 8601) extracted from title or text"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "PDF download URL"
+      type: "string"
+      role: "identifier"
+      required: true
+
+license:
+  name: "Open Government Data (Dominican Republic)"
+  url: "https://ambiente.gob.do/terminos-de-uso/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official environmental regulations published by Dominican government ministry for public use."

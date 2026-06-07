@@ -1,0 +1,50 @@
+source_id: TZ/TCRA
+<<<<<<< HEAD
+name: Tanzania Communications Regulatory Authority — Regulations & Legislation
+country: TZ
+url: https://www.tcra.go.tz/documents/legislation-1
+=======
+name: Tanzania Communications Regulatory Authority — Regulations & Guidelines
+country: TZ
+url: https://www.tcra.go.tz/documents
+>>>>>>> 626f2584b (Complete TZ/TCRA: Tanzania telecom regulator — 100 PDFs across 7 categories (full text))
+data_types:
+  - legislation
+  - doctrine
+auth:
+  type: none
+schedule: monthly
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - date
+    - text
+    - document_type
+<<<<<<< HEAD
+  secondary_fields:
+    - _type
+    - _source
+    - _fetched_at
+    - url
+
+license:
+  name: "Custom Terms (Government)"
+  url: "https://www.tcra.go.tz"
+=======
+    - category
+
+license:
+  name: "Custom Terms (Government)"
+  url: "https://www.tcra.go.tz/terms-of-use"
+>>>>>>> 626f2584b (Complete TZ/TCRA: Tanzania telecom regulator — 100 PDFs across 7 categories (full text))
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+<<<<<<< HEAD
+  notes: "Official Tanzanian telecom/postal regulatory documents published by TCRA (Tanzania Communications Regulatory Authority). Acts, regulations, rules, codes and guidelines published for public compliance."
+=======
+  notes: "Official regulatory documents published by TCRA for public compliance. Telecom laws, regulations, guidelines, rules, codes, and sector plans."
+>>>>>>> 626f2584b (Complete TZ/TCRA: Tanzania telecom regulator — 100 PDFs across 7 categories (full text))

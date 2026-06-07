@@ -1,0 +1,82 @@
+# ===================================================================
+# CY/CyLII -- Cyprus Legal Information Institute (CyLaw)
+# ===================================================================
+# Consolidated legislation and Supreme Court case law from
+# cylaw.org. ~1700 laws + tens of thousands of court decisions.
+# Static HTML served from Apache. Encoding: windows-1253.
+# ===================================================================
+
+source:
+  id: "CY/CyLII"
+  country: "CY"
+  name: "Cyprus Legal Information Institute (CyLaw)"
+  url: "https://www.cylaw.org"
+  description: |
+    CyLaw provides free access to consolidated Cypriot legislation
+    (1700+ laws) and Supreme Court case law (1961-present) via the
+    Cyprus Legal Information Institute (CyLII/KINOP). Content in Greek.
+
+data_types:
+  - legislation
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+
+api:
+  type: "html_scraping"
+  base_url: "https://www.cylaw.org"
+  endpoints:
+    legislation_index: "/nomoi/enop/non-ind/"
+    legislation_full: "/nomoi/enop/non-ind/{law_id}/full.html"
+    case_law_index: "/apofaseis/aad/index_{year}.html"
+    case_law_doc: "/cgi-bin/open.pl?file={path}"
+
+data_model:
+  type: "mixed"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: 9
+  key_fields:
+    - name: "doc_id"
+      description: "Document identifier (law chapter or case reference)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title (Greek)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the document"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Document date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "URL to source document"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "Open Access"
+  url: "https://cylii.org/terms"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Non-profit, free access legal information; terms require attribution to CyLaw/CyLII"

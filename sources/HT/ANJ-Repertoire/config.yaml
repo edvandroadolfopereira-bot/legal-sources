@@ -1,0 +1,59 @@
+# HT/ANJ-Repertoire Configuration
+# Haiti — Assemblée Nationale de la Jeunesse — Répertoire des Lois
+
+source_id: HT/ANJ-Repertoire
+country: HT
+name: "Assemblée Nationale de la Jeunesse — Répertoire des Lois"
+description: >
+  Curated collection of ~40 key Haitian legal documents from the Assemblée
+  Nationale de la Jeunesse. Covers constitutions (1801-1987), major laws,
+  decrees, codes (penal, customs, labour), and foundational historical
+  documents including the 1804 Act of Independence. Full text in French.
+
+base_url: https://www.assembleenationaledelajeunesse.com
+
+data_types:
+  - legislation
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+schema:
+  key_fields:
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: url
+      type: string
+      required: true
+  secondary_fields:
+    - name: category
+      type: string
+      required: false
+    - name: document_type
+      type: string
+      required: false
+
+data_model:
+  update_strategy: upsert
+  dedup_key:
+    - _id
+
+license:
+  name: "Public Domain / Open Access"
+  url: "https://www.assembleenationaledelajeunesse.com/repertoire-des-lois-de-la-republique-d-haiti"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Publicly published Haitian legislation and historical documents"

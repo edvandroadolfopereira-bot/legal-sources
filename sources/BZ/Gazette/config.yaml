@@ -1,0 +1,51 @@
+source:
+  id: "BZ/Gazette"
+  country: "BZ"
+  name: "Belize Government Gazette (Statutory Instruments)"
+  url: "https://www.nationalassembly.gov.bz/statutory-instruments/"
+  description: |
+    Statutory Instruments (subsidiary legislation, regulations, orders) published
+    in the Belize Government Gazette, mirrored on the National Assembly website.
+    The www.gazette.gov.bz domain does not currently resolve; the National
+    Assembly SI archive (2017–present) is the authoritative public source.
+    ~150 SIs per year, available as PDFs with extractable text.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.67
+  burst: 2
+
+api:
+  base_url: "https://www.nationalassembly.gov.bz"
+  endpoints:
+    year_page: "/statutory-instruments-{year}/"
+  format: "html"
+  method: "GET"
+  notes: |
+    Each year has a page listing SIs with PDF download links.
+    PDFs stored at /wp-content/uploads/{year}/{month}/SI-No.-X-of-YYYY-*.pdf.
+    Parse year pages for <a href="...pdf"> links matching "SI No. X".
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - text
+    - date
+    - url
+    - si_number
+    - year
+
+license:
+  name: "Public Domain (Government of Belize)"
+  url: "https://www.nationalassembly.gov.bz/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government legislation published for public access"

@@ -1,0 +1,53 @@
+rate_limit:
+  burst: 2
+  requests_per_second: 0.5
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: url
+    required: true
+    type: string
+  - name: _type
+    required: false
+    type: string
+  - name: _source
+    required: false
+    type: string
+  - name: _fetched_at
+    required: false
+    type: string
+  - name: category
+    required: false
+    type: string
+source:
+  auth: none
+  country: AI
+  data_types:
+  - legislation
+  description: >
+    Financial services legislation from the Anguilla Financial Services Commission
+    (FSC). Covers banking, insurance, trusts, companies, mutual funds, AML/CFT,
+    digital assets, and utility tokens. ~64 legislative documents as PDFs.
+  id: AI/FSCLegislation
+  language: en
+  name: Anguilla Financial Services Commission — Legislation
+  url: https://fsc.org.ai/legislation.php
+license:
+  name: "Government of Anguilla (open access)"
+  url: "https://fsc.org.ai/legislation.php"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government legislation published for public access"

@@ -1,0 +1,116 @@
+# ===================================================================
+# MG/CPC-TaxGuidance -- Madagascar DGI tax administrative doctrine
+# ===================================================================
+# Direction Générale des Impôts (DGI) of Madagascar publishes its
+# regulatory texts on the portal https://portal.impots.mg/textes/.
+# This source collects the *administrative doctrine* documents — notes,
+# circulaires, instructions, décisions, avis, communiqués and filazana
+# (Malagasy notices) — that explain and apply the tax codes. Pure
+# legislation on the same portal (Code Général des Impôts, Code des
+# Procédures Fiscales, lois de finances, décrets, arrêtés) is excluded
+# from this doctrine source.
+# ===================================================================
+
+source:
+  id: "MG/CPC-TaxGuidance"
+  country: "MG"
+  name: "Madagascar Tax Policy Center — Guidance"
+  url: "https://portal.impots.mg/textes/"
+  description: |
+    Administrative tax doctrine of Madagascar's Direction Générale des
+    Impôts (DGI): notes, circulaires, instructions, décisions, avis,
+    communiqués and filazana published on the official "Textes
+    Réglementaires" portal. These documents interpret and apply the tax
+    codes (CGI / CPF) and fiscal procedures. Full text extracted from
+    born-digital PDFs; scanned image-only documents without a text layer
+    are skipped.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+  max_workers: 3
+
+api:
+  type: "html_scrape"
+  base_url: "https://portal.impots.mg/textes"
+  selectors:
+    list_page: "https://portal.impots.mg/textes/"
+    item_selector: "table tbody tr"
+
+data_model:
+  type: "doctrine"
+  source_nature: "bulk_archive"
+  primary_key: "ref"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "ref"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier (MG-DGI-{ref})"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title, e.g. 'Circulaire n° 3140-2025-MEF/SG/DGI'"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the document, extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "ref"
+      description: "Portal reference code (stable per document)"
+      type: "string"
+      role: "reference"
+      required: true
+  secondary_fields:
+    - name: "doc_type"
+      description: "Document type (Note, Circulaire, Instruction, Décision, Avis, Communiqué, Filazana)"
+    - name: "summary"
+      description: "Short object/summary of the document"
+    - name: "url"
+      description: "Document detail page URL"
+    - name: "pdf_url"
+      description: "Direct PDF URL"
+  probably_ignorable: []
+
+# ── License ──────────────────────────────────────────────────────
+license:
+  id: "ogd"
+  name: "Open Government Data (official tax texts)"
+  url: "https://portal.impots.mg/textes/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: |
+    Official administrative tax texts published by the Madagascar DGI for
+    public use ("Publique" visibility). No explicit open license is stated;
+    treated as open government data (official government texts).
+
+notes: |
+  - Doctrine only: notes, circulaires, instructions, décisions, avis,
+    communiqués, filazana. Legislation (CGI/CPF/lois/décrets/arrêtés) on
+    the same portal is excluded.
+  - Portal serves a single HTML table listing all ~328 texts; each row has
+    a type (data-status), date, title, summary and a PDF link.
+  - Documents in French and Malagasy. Born-digital PDFs extract cleanly;
+    scanned image-only documents (no text layer) are skipped.
+  - Host uses an incomplete TLS chain; requests use verify=False.

@@ -1,0 +1,550 @@
+"""
+Legal Data Hunter - Turkish Court of Accounts (Sayıştay) Scraper
+
+Fetches case law from all three decision bodies of Sayıştay:
+  - Daire (Chamber decisions) — ~22K decisions
+  - Temyiz Kurulu (Appeals Board) — ~29K decisions
+  - Genel Kurul (General Assembly) — ~1K decisions
+Method: DataTables server-side API + HTML detail page scraping
+Coverage: All published decisions with full text
+"""
+
+import re
+import sys
+import json
+import logging
+import time
+from pathlib import Path
+from datetime import datetime, timezone
+from typing import Generator, Optional
+from html import unescape
+
+# Add project root to path
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(PROJECT_ROOT))
+
+from common.base_scraper import BaseScraper
+from common.http_client import HttpClient
+
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+)
+logger = logging.getLogger("TR/Sayistay")
+
+BASE_URL = "https://www.sayistay.gov.tr"
+
+# Decision body configurations
+DECISION_BODIES = {
+    "daire": {
+        "name": "Daire",
+        "label": "Sayıştay Dairesi",
+        "page_url": "/KararlarDaire",
+        "list_url": "/KararlarDaire/DataTablesList",
+        "detail_url": "/KararlarDaire/Detay/{id}/",
+        "form_prefix": "KararlarDaireAra",
+        "form_fields": [
+            "YARGILAMADAIRESI", "KARARTRHBaslangic", "KARARTRHBitis",
+            "ILAMNO", "KAMUIDARESITURU", "HESAPYILI",
+            "WEBKARARKONUSU", "WEBKARARMETNI",
+        ],
+        "columns": [
+            ("YARGILAMADAIRESI", True),
+            ("KARARTRH", True),
+            ("KARARNO", True),
+            ("YARGILAMADAIRESI", True),
+            ("WEBKARARMETNI", False),
+            ("", False),
+        ],
+        "date_field": "KARARTRH",
+        "order_column": 1,
+    },
+    "temyiz": {
+        "name": "Temyiz",
+        "label": "Temyiz Kurulu",
+        "page_url": "/KararlarTemyiz",
+        "list_url": "/KararlarTemyiz/DataTablesList",
+        "detail_url": "/KararlarTemyiz/Detay/{id}/",
+        "form_prefix": "KararlarTemyizAra",
+        "form_fields": [
+            "ILAMDAIRESI", "YILI", "KARARTRHBaslangic", "KARARTRHBitis",
+            "KAMUIDARESITURU", "ILAMNO", "DOSYANO",
+            "TEMYIZTUTANAKNO", "TEMYIZKARAR", "WEBKARARKONUSU",
+        ],
+        "columns": [
+            ("TEMYIZTUTANAKTARIHI", False),
+            ("TEMYIZTUTANAKTARIHI", True),
+            ("ILAMDAIRESI", True),
+            ("TEMYIZKARAR", False),
+            ("", False),
+        ],
+        "date_field": "TEMYIZTUTANAKTARIHI",
+        "order_column": 1,
+    },
+    "genel_kurul": {
+        "name": "GenelKurul",
+        "label": "Genel Kurul",
+        "page_url": "/KararlarGenelKurul",
+        "list_url": "/KararlarGenelKurul/DataTablesList",
+        "detail_url": "/KararlarGenelKurul/Detay/{id}/",
+        "form_prefix": "KararlarGenelKurulAra",
+        "form_fields": [
+            "KARARNO", "KARAREK", "KARARTARIHBaslangic",
+            "KARARTARIHBitis", "KARARTAMAMI",
+        ],
+        "columns": [
+            ("KARARNO", False),
+            ("KARARNO", True),
+            ("KARARTARIH", True),
+            ("KARAROZETI", False),
+            ("", False),
+        ],
+        "date_field": "KARARTARIH",
+        "order_column": 2,
+    },
+}
+
+
+class SayistayScraper(BaseScraper):
+    """
+    Scraper for: Turkish Court of Accounts (Sayıştay)
+    Country: TR
+    URL: https://www.sayistay.gov.tr
+
+    Data types: case_law
+    Auth: none
+
+    Uses DataTables server-side processing API to list decisions,
+    then fetches individual detail pages for full text.
+    """
+
+    def __init__(self):
+        source_dir = Path(__file__).parent
+        super().__init__(source_dir)
+
+        self.client = HttpClient(
+            base_url=BASE_URL,
+            headers={
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                              "AppleWebKit/537.36 (KHTML, like Gecko) "
+                              "Chrome/120.0.0.0 Safari/537.36",
+                "Accept-Language": "tr-TR,tr;q=0.9,en;q=0.8",
+            },
+        )
+        # Cache for CSRF tokens per decision body
+        self._csrf_tokens = {}
+        self._session_cookies = {}
+
+    def _get_csrf_token(self, body_key: str) -> str:
+        """Get a CSRF token for a decision body by loading its page."""
+        body = DECISION_BODIES[body_key]
+        page_url = body["page_url"]
+
+        self.rate_limiter.wait()
+        resp = self.client.get(page_url)
+        html = resp.text
+
+        # Extract anti-forgery token
+        m = re.search(
+            r'name="__RequestVerificationToken"\s+type="hidden"\s+value="([^"]+)"',
+            html,
+        )
+        if not m:
+            raise ValueError(f"Could not find CSRF token on {page_url}")
+
+        token = m.group(1)
+
+        # Store cookies from the response
+        if hasattr(resp, "cookies"):
+            self._session_cookies[body_key] = dict(resp.cookies)
+
+        logger.info(f"Got CSRF token for {body['name']}")
+        return token
+
+    def _build_datatables_request(self, body_key: str, start: int, length: int) -> dict:
+        """Build the DataTables POST parameters for a decision body."""
+        body = DECISION_BODIES[body_key]
+
+        if body_key not in self._csrf_tokens:
+            self._csrf_tokens[body_key] = self._get_csrf_token(body_key)
+
+        data = {
+            "__RequestVerificationToken": self._csrf_tokens[body_key],
+            "draw": "1",
+            "start": str(start),
+            "length": str(length),
+            f"order[0][column]": str(body["order_column"]),
+            "order[0][dir]": "desc",
+            "search[value]": "",
+            "search[regex]": "false",
+        }
+
+        # Add form fields (empty = no filter)
+        prefix = body["form_prefix"]
+        for field in body["form_fields"]:
+            data[f"{prefix}[{field}]"] = ""
+
+        # Add column definitions
+        for i, (col_data, orderable) in enumerate(body["columns"]):
+            data[f"columns[{i}][data]"] = col_data
+            data[f"columns[{i}][name]"] = ""
+            data[f"columns[{i}][searchable]"] = "true"
+            data[f"columns[{i}][orderable]"] = "true" if orderable else "false"
+            data[f"columns[{i}][search][value]"] = ""
+            data[f"columns[{i}][search][regex]"] = "false"
+
+        return data
+
+    def _fetch_list_page(self, body_key: str, start: int, length: int = 100) -> dict:
+        """Fetch a page of decisions from the DataTables API."""
+        body = DECISION_BODIES[body_key]
+        data = self._build_datatables_request(body_key, start, length)
+
+        self.rate_limiter.wait()
+        resp = self.client.post(
+            body["list_url"],
+            data=data,
+            headers={
+                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+                "X-Requested-With": "XMLHttpRequest",
+                "Accept": "application/json, text/javascript, */*; q=0.01",
+                "Referer": f"{BASE_URL}{body['page_url']}",
+                "Origin": BASE_URL,
+            },
+        )
+
+        if resp.status_code == 500:
+            # CSRF token may have expired — refresh and retry once
+            logger.warning(f"Got 500 from {body['name']} list, refreshing CSRF token")
+            self._csrf_tokens[body_key] = self._get_csrf_token(body_key)
+            data = self._build_datatables_request(body_key, start, length)
+            self.rate_limiter.wait()
+            resp = self.client.post(
+                body["list_url"],
+                data=data,
+                headers={
+                    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+                    "X-Requested-With": "XMLHttpRequest",
+                    "Accept": "application/json, text/javascript, */*; q=0.01",
+                    "Referer": f"{BASE_URL}{body['page_url']}",
+                    "Origin": BASE_URL,
+                },
+            )
+
+        if resp.status_code != 200:
+            raise RuntimeError(
+                f"DataTables API returned {resp.status_code} for {body['name']}"
+            )
+
+        ct = resp.headers.get("Content-Type", "")
+        if "json" not in ct:
+            raise RuntimeError(
+                f"Expected JSON from {body['name']} but got {ct}"
+            )
+
+        return resp.json()
+
+    def _fetch_detail_text(self, body_key: str, record_id: int) -> str:
+        """Fetch the full decision text from a detail page."""
+        body = DECISION_BODIES[body_key]
+        url = body["detail_url"].format(id=record_id)
+
+        self.rate_limiter.wait()
+        resp = self.client.get(url)
+
+        if resp.status_code != 200:
+            logger.warning(f"Detail page {url} returned {resp.status_code}")
+            return ""
+
+        html = resp.text
+
+        # Find the text div (id="metin")
+        idx = html.find('id="metin"')
+        if idx < 0:
+            logger.warning(f"No metin div found for {body['name']} ID {record_id}")
+            return ""
+
+        start = html.find(">", idx) + 1
+        depth = 1
+        pos = start
+        while depth > 0 and pos < len(html):
+            open_tag = html.find("<div", pos)
+            close_tag = html.find("</div>", pos)
+            if close_tag == -1:
+                break
+            if open_tag != -1 and open_tag < close_tag:
+                depth += 1
+                pos = open_tag + 4
+            else:
+                depth -= 1
+                if depth == 0:
+                    content = html[start:close_tag]
+                    break
+                pos = close_tag + 6
+        else:
+            content = html[start:start + 50000]
+
+        # Clean HTML
+        text = re.sub(r"<br\s*/?>", "\n", content)
+        text = re.sub(r"<[^>]+>", " ", text)
+        text = unescape(text)
+        text = re.sub(r"[ \t]+", " ", text)
+        text = re.sub(r"\n\s*\n\s*\n+", "\n\n", text)
+        text = text.strip()
+
+        return text
+
+    def _extract_metadata(self, body_key: str, detail_html: str) -> dict:
+        """Extract metadata fields from a detail page."""
+        meta = {}
+        # Look for label-value pairs in col-3/col-9 structure
+        pairs = re.findall(
+            r'class="col-3[^"]*">\s*<b>([^<]+)</b>\s*</div>\s*<div\s+class="col-9[^"]*">\s*([^<]+)',
+            detail_html,
+        )
+        for label, value in pairs:
+            label = unescape(label).strip()
+            value = unescape(value).strip()
+            if label == "Daire":
+                meta["chamber"] = value
+            elif label == "Karar Tarihi":
+                meta["decision_date"] = value
+            elif label in ("Karar No", "Karar Numarası"):
+                meta["decision_number"] = value
+            elif label == "İlam No":
+                meta["ilam_number"] = value
+            elif label == "Konu":
+                meta["subject"] = value
+            elif label == "Hesap Yılı":
+                meta["fiscal_year"] = value
+            elif label == "Kamu İdaresi Türü":
+                meta["institution_type"] = value
+            elif label == "Tutanak Tarihi":
+                meta["decision_date"] = value
+        return meta
+
+    def _parse_date(self, date_str: str) -> Optional[str]:
+        """Parse Turkish date format (dd.MM.yyyy) to ISO 8601."""
+        if not date_str:
+            return None
+        date_str = date_str.strip()
+        for fmt in ("%d.%m.%Y", "%d/%m/%Y", "%Y-%m-%d"):
+            try:
+                dt = datetime.strptime(date_str, fmt)
+                return dt.strftime("%Y-%m-%d")
+            except ValueError:
+                continue
+        return None
+
+    def _fetch_body_decisions(
+        self, body_key: str, sample: bool = False
+    ) -> Generator[dict, None, None]:
+        """Fetch all decisions for a specific decision body."""
+        body = DECISION_BODIES[body_key]
+        page_size = 100
+        start = 0
+        total = None
+        fetched = 0
+        max_records = 6 if sample else None
+
+        logger.info(f"Starting {body['name']} decision fetch...")
+
+        while True:
+            try:
+                result = self._fetch_list_page(body_key, start, page_size)
+            except Exception as e:
+                logger.error(f"Failed to fetch {body['name']} page at offset {start}: {e}")
+                break
+
+            if total is None:
+                total = result.get("recordsTotal", 0)
+                logger.info(f"{body['name']}: {total} total decisions")
+
+            records = result.get("data", [])
+            if not records:
+                break
+
+            for rec in records:
+                rec_id = rec.get("Id")
+                if not rec_id:
+                    continue
+
+                try:
+                    # Fetch full text from detail page
+                    full_text = self._fetch_detail_text(body_key, rec_id)
+
+                    if not full_text or len(full_text) < 50:
+                        logger.warning(
+                            f"Insufficient text for {body['name']} ID {rec_id} "
+                            f"({len(full_text)} chars), skipping"
+                        )
+                        continue
+
+                    # Build raw record
+                    raw = {
+                        "_body_key": body_key,
+                        "id": rec_id,
+                        "full_text": full_text,
+                        "date_field": rec.get(body["date_field"], ""),
+                    }
+                    # Copy all fields from list API
+                    raw.update(rec)
+
+                    yield raw
+                    fetched += 1
+
+                    if max_records and fetched >= max_records:
+                        logger.info(
+                            f"Sample limit reached for {body['name']} ({fetched} records)"
+                        )
+                        return
+
+                except Exception as e:
+                    logger.warning(f"Failed to process {body['name']} ID {rec_id}: {e}")
+
+            start += page_size
+
+            if start >= (total or 0):
+                break
+
+        logger.info(f"Fetched {fetched} {body['name']} decisions")
+
+    def fetch_all(self) -> Generator[dict, None, None]:
+        """Yield all decisions from all three decision bodies."""
+        for body_key in DECISION_BODIES:
+            try:
+                yield from self._fetch_body_decisions(body_key)
+            except Exception as e:
+                logger.error(f"Failed to fetch {body_key}: {e}")
+
+    def fetch_updates(self, since: datetime) -> Generator[dict, None, None]:
+        """Yield decisions published since the given datetime."""
+        logger.info(f"Fetching updates since {since.isoformat()}")
+        for doc in self.fetch_all():
+            date_str = self._parse_date(doc.get("date_field", ""))
+            if date_str:
+                try:
+                    doc_date = datetime.strptime(date_str, "%Y-%m-%d").replace(
+                        tzinfo=timezone.utc
+                    )
+                    if doc_date >= since:
+                        yield doc
+                    else:
+                        break
+                except ValueError:
+                    yield doc
+            else:
+                yield doc
+
+    def normalize(self, raw: dict) -> dict:
+        """Transform a raw record into the standard schema."""
+        body_key = raw.get("_body_key", "daire")
+        body = DECISION_BODIES[body_key]
+        rec_id = raw.get("Id") or raw.get("id")
+        full_text = raw.get("full_text", "")
+
+        # Parse date
+        date_raw = raw.get("date_field", "")
+        date_iso = self._parse_date(date_raw)
+
+        # Build title from available fields
+        subject = raw.get("WEBKARARKONUSU", "")
+        decision_no = (
+            raw.get("KARARNO", "") or raw.get("KARARNO", "")
+        )
+        if isinstance(decision_no, str):
+            decision_no = decision_no.strip()
+
+        if subject:
+            title = f"Sayıştay {body['label']} Kararı — {subject}"
+        else:
+            # Use first line of text as title
+            first_line = full_text[:200].split("\n")[0].strip()
+            title = f"Sayıştay {body['label']} — {first_line}"
+
+        if len(title) > 250:
+            title = title[:247] + "..."
+
+        detail_url = f"{BASE_URL}{body['detail_url'].format(id=rec_id)}"
+
+        # Chamber info
+        chamber = None
+        chamber_raw = raw.get("YARGILAMADAIRESI") or raw.get("ILAMDAIRESI")
+        if chamber_raw:
+            chamber = f"{chamber_raw}. Daire"
+
+        return {
+            "_id": f"TR/Sayistay/{body['name']}-{rec_id}",
+            "_source": "TR/Sayistay",
+            "_type": "case_law",
+            "_fetched_at": datetime.now(timezone.utc).isoformat(),
+            "title": title,
+            "text": full_text,
+            "date": date_iso,
+            "url": detail_url,
+            "decision_body": body["label"],
+            "chamber": chamber,
+            "decision_number": decision_no if decision_no else None,
+            "ilam_number": str(raw.get("ILAMNO", "")).strip() or None,
+            "subject": subject or None,
+            "institution_type": raw.get("KAMUIDARESITURU"),
+            "fiscal_year": raw.get("HESAPYILI"),
+        }
+
+
+# ── CLI entry point ─────────────────────────────────────────────────
+
+if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(description="TR/Sayistay scraper")
+    parser.add_argument("command", choices=["bootstrap", "update"])
+    parser.add_argument("--sample", action="store_true", help="Fetch only sample records")
+    parser.add_argument("--full", action="store_true", help="Fetch all records")
+    args = parser.parse_args()
+
+    scraper = SayistayScraper()
+
+    if args.command == "bootstrap":
+        sample_dir = Path(__file__).parent / "sample"
+        sample_dir.mkdir(exist_ok=True)
+
+        count = 0
+
+        if args.sample:
+            # In sample mode, fetch a few from each body
+            for body_key in DECISION_BODIES:
+                try:
+                    for raw in scraper._fetch_body_decisions(body_key, sample=True):
+                        normalized = scraper.normalize(raw)
+                        out_path = sample_dir / f"{normalized['_id'].replace('/', '_')}.json"
+                        with open(out_path, "w", encoding="utf-8") as f:
+                            json.dump(normalized, f, ensure_ascii=False, indent=2)
+                        count += 1
+                        text_len = len(normalized.get("text", ""))
+                        logger.info(
+                            f"[{count}] {normalized['_id']} — "
+                            f"{text_len} chars — {normalized.get('date', 'no date')}"
+                        )
+                except Exception as e:
+                    logger.error(f"Failed {body_key}: {e}")
+        else:
+            for raw in scraper.fetch_all():
+                normalized = scraper.normalize(raw)
+                if args.full:
+                    out_path = sample_dir / f"{normalized['_id'].replace('/', '_')}.json"
+                    with open(out_path, "w", encoding="utf-8") as f:
+                        json.dump(normalized, f, ensure_ascii=False, indent=2)
+                count += 1
+                if count % 100 == 0:
+                    logger.info(f"Processed {count} records...")
+
+        logger.info(f"Bootstrap complete: {count} records")
+    elif args.command == "update":
+        since = datetime.now(timezone.utc).replace(day=1)
+        count = 0
+        for raw in scraper.fetch_updates(since):
+            normalized = scraper.normalize(raw)
+            count += 1
+        logger.info(f"Update complete: {count} new records")

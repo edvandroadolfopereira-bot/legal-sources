@@ -1,0 +1,78 @@
+# ===================================================================
+# TT/TATT-Decisions -- Trinidad & Tobago Telecommunications Authority
+# ===================================================================
+# Regulatory decisions, determinations, frameworks, and consultation
+# documents from the Telecommunications Authority of Trinidad and
+# Tobago (TATT). Content accessed via WordPress REST API with full
+# text extracted from linked PDFs.
+# ===================================================================
+
+source:
+  id: "TT/TATT-Decisions"
+  country: "TT"
+  name: "Trinidad & Tobago Telecommunications Authority — Regulatory Decisions"
+  url: "https://tatt.org.tt/"
+  description: |
+    Regulatory determinations, frameworks, spectrum plans, court decisions,
+    interconnection agreements, and consultation documents from TATT.
+    Published on WordPress behind a Sucuri WAF, accessed via WP REST API
+    (media endpoint) with Sucuri cookie bypass and PDF full text extraction.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+  notes: "WordPress site behind Sucuri/Cloudproxy WAF."
+
+api:
+  type: "rest"
+  base_url: "https://tatt.org.tt"
+  endpoints:
+    regulatory_framework: "/wp-json/wp/v2/regulatory_framework?per_page=100&page={page}"
+    consultation: "/wp-json/wp/v2/consultation?per_page=100&page={page}"
+    media: "/wp-json/wp/v2/media?per_page=100&media_type=application&page={page}"
+  response_format: "json"
+  notes: "Sucuri WAF requires JavaScript cookie challenge; cookie can be computed from challenge page."
+
+schema:
+  total_fields: 9
+  key_fields:
+    - name: "_id"
+      description: "WordPress media item ID"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Upload/publication date"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "url"
+      description: "URL to original PDF document"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "Public Domain (Government of Trinidad & Tobago)"
+  url: "https://tatt.org.tt/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Government regulatory documents published for public access."

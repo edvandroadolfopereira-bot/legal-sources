@@ -1,0 +1,46 @@
+fetcher:
+  base_url: https://www.seczambia.org.zm
+  rate_limit: 2.0
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: doc_type
+    required: false
+    type: string
+  - name: url
+    required: true
+    type: string
+source:
+  auth: none
+  country: ZM
+  data_types:
+  - legislation
+  description: >
+    Capital markets directives, rules, guidelines, circulars, guidance notes,
+    and tribunal decisions from the Securities and Exchange Commission of
+    Zambia. WordPress REST API for discovery, PDFs for full text.
+    ~65 regulatory instruments.
+  format: pdf
+  id: ZM/SEC-Directives
+  language: en
+  name: Zambia Securities and Exchange Commission — Directives & Guidelines
+  url: https://www.seczambia.org.zm/laws-and-regulations/
+license:
+  name: "Government open access"
+  url: "https://www.seczambia.org.zm/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official capital markets regulations published by SEC Zambia for public access."

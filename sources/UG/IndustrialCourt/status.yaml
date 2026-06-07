@@ -1,0 +1,28 @@
+last_bootstrap: null
+last_error: '525 Server Error: <none> for url: https://industrialcourt.go.ug/wp-json/wp/v2/media?media_type=application&per_page=100&page=1'
+last_run: '2026-05-30T18:24:00.774734+00:00'
+run_history:
+- error_message: 'HTTPSConnectionPool(host=''industrialcourt.go.ug'', port=443): Read
+    timed out. (read timeout=30)'
+  errors: 0
+  finished_at: '2026-05-30T18:18:33.506094+00:00'
+  records_fetched: 0
+  records_new: 0
+  records_skipped: 0
+  records_updated: 0
+  sample_records_saved: 0
+  skip_exception: 0
+  skip_normalize_none: 0
+  started_at: '2026-05-30T18:18:03.235950+00:00'
+- error_message: '525 Server Error: <none> for url: https://industrialcourt.go.ug/wp-json/wp/v2/media?media_type=application&per_page=100&page=1'
+  errors: 0
+  finished_at: '2026-05-30T18:24:00.774734+00:00'
+  records_fetched: 0
+  records_new: 0
+  records_skipped: 0
+  records_updated: 0
+  sample_records_saved: 0
+  skip_exception: 0
+  skip_normalize_none: 0
+  started_at: '2026-05-30T18:18:50.199293+00:00'
+total_records: 0

@@ -1,0 +1,57 @@
+source:
+  id: BS/Gazette
+  name: Bahamas Official Gazette
+  country: BS
+  url: https://laws.bahamas.gov.bs/cms/gazettes/gazettes-by-year.html
+  description: >
+    Official Gazette of the Bahamas from laws.bahamas.gov.bs.
+    Contains government proclamations, notices, appointments, price controls,
+    and other official announcements published since 2021.
+    PDFs with extractable text, organized by year.
+
+data_model:
+  types:
+    - legislation
+  update_strategy: upsert
+  dedup_key:
+    - doc_id
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 2
+  burst: 3
+
+schema:
+  required_fields:
+    - _id
+    - _source
+    - _type
+    - _fetched_at
+    - title
+    - text
+    - url
+  key_fields:
+    - name: doc_id
+      type: string
+      required: true
+    - name: gazette_number
+      type: string
+      required: false
+    - name: year
+      type: string
+      required: false
+
+license:
+  name: Public domain (government)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official government publications of the Bahamas
+
+schedule:
+  full_refresh: monthly
+  update_check: weekly

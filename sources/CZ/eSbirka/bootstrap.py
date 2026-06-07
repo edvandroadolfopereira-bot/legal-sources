@@ -1,467 +1,275 @@
 #!/usr/bin/env python3
 """
-Czech e-Sbírka (Collection of Laws) Data Fetcher
+Czech e-Sbírka (Collection of Laws) Data Fetcher — SPARQL edition
 
 Official open data from the Czech Ministry of Interior
 https://www.e-sbirka.cz / https://zakony.gov.cz
 
-This fetcher uses bulk download files from opendata.eselpoint.cz:
-- 002PravniAkt.json.gz: Legal act metadata (5MB)
-- 004PravniAktFragment.json.gz: Text fragments with content (503MB)
+Uses the SPARQL endpoint at opendata.eselpoint.gov.cz to fetch legal acts
+and their full text fragment-by-fragment.  No bulk downloads, no OOM.
 
-The text fragments are assembled to create complete document text.
-
-NOTE: Initial download of the fragments file takes 5-10 minutes.
-Files are cached locally after first download.
+92,000+ acts available.  CC BY 4.0.
 """
 
-import gc
-import gzip
 import json
 import logging
 import os
 import re
 import sys
 import time
-import sqlite3
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, Any, Iterator, Optional
+from typing import Any, Dict, Iterator, List, Optional
+from urllib.parse import quote
 
 import requests
 
-# Check for ijson at import time - required for this scraper
-try:
-    import ijson
-except ImportError:
-    print("ERROR: ijson is required for CZ/eSbirka (500MB+ fragment file)")
-    print("Install it with: pip install ijson>=3.2.0")
-    print("Without ijson, parsing the fragment file would cause OOM.")
-    sys.exit(1)
-
-# Setup logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
-# Constants
-OPENDATA_BASE = "https://opendata.eselpoint.cz/datove-sady-esbirka"
-ACTS_URL = f"{OPENDATA_BASE}/002PravniAkt.json.gz"
-FRAGMENTS_URL = f"{OPENDATA_BASE}/004PravniAktFragment.json.gz"
+SPARQL_ENDPOINT = "https://opendata.eselpoint.gov.cz/sparql"
+ESBIRKA_BASE = "https://e-sbirka.gov.cz"
+PREFIX_ACT = "https://slovník.gov.cz/datový/sbírka/pojem/"
+SOURCE_ID = "CZ/eSbirka"
+SAMPLE_DIR = Path(__file__).parent / "sample"
 
-# Cache directory for downloaded files
-CACHE_DIR = Path(__file__).parent / '.cache'
+HEADERS = {
+    "Accept": "application/json",
+    "User-Agent": "LegalDataHunter/1.0 (legal-data research project)",
+}
+
+# ───────────────────────── SPARQL helpers ─────────────────────────
 
 
-class ESbirkaFetcher:
-    """Fetcher for Czech e-Sbírka legislation data"""
-
-    def __init__(self):
-        self.session = requests.Session()
-        self.session.headers.update({
-            'User-Agent': 'Legal-Data-Hunter/1.0 (https://github.com/ZachLaik/LegalDataHunter)'
-        })
-        # Disable SSL verification (their cert sometimes has issues)
-        self.session.verify = False
-        # Suppress InsecureRequestWarning
-        import urllib3
-        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
-        # Ensure cache directory exists
-        CACHE_DIR.mkdir(exist_ok=True)
-
-        # Cache for loaded data
-        self._acts_cache: Optional[Dict[str, Dict]] = None
-        self._fragments_cache: Optional[Dict[int, Dict]] = None
-
-    def _get_cached_or_download(self, url: str, cache_name: str) -> Dict:
-        """Download JSON file with caching"""
-        cache_path = CACHE_DIR / f"{cache_name}.json"
-
-        # Check if cache exists and is recent (less than 1 day old)
-        if cache_path.exists():
-            cache_age = time.time() - cache_path.stat().st_mtime
-            if cache_age < 86400:  # 24 hours
-                logger.info(f"Loading from cache: {cache_path}")
-                with open(cache_path, 'r', encoding='utf-8') as f:
-                    return json.load(f)
-                logger.info(f"Cache is {cache_age/3600:.1f}h old, using cached version")
-
-        # Download fresh
-        logger.info(f"Downloading {url}...")
-        logger.info("NOTE: This may take 5-10 minutes for large files.")
-        start = time.time()
-
-        response = self.session.get(url, timeout=600, stream=True)
-        response.raise_for_status()
-
-        # Download with progress
-        total_size = int(response.headers.get('content-length', 0))
-        downloaded = 0
-        chunks = []
-
-        for chunk in response.iter_content(chunk_size=1024*1024):  # 1MB chunks
-            chunks.append(chunk)
-            downloaded += len(chunk)
-            if total_size:
-                pct = downloaded * 100 / total_size
-                logger.info(f"Downloading: {downloaded/1024/1024:.1f}MB / {total_size/1024/1024:.1f}MB ({pct:.1f}%)")
-
-        content_gzipped = b''.join(chunks)
-
-        # Decompress and parse JSON
-        logger.info("Decompressing...")
-        content = gzip.decompress(content_gzipped)
-        data = json.loads(content.decode('utf-8'))
-
-        elapsed = time.time() - start
-        size_mb = len(content_gzipped) / (1024 * 1024)
-        logger.info(f"Downloaded and parsed {size_mb:.1f}MB in {elapsed:.1f}s")
-
-        # Save to cache
-        logger.info(f"Saving to cache: {cache_path}")
-        with open(cache_path, 'w', encoding='utf-8') as f:
-            json.dump(data, f, ensure_ascii=False)
-
-        return data
-
-    def _load_acts(self) -> Dict[str, Dict]:
-        """Load legal acts metadata, cached"""
-        if self._acts_cache is None:
-            data = self._get_cached_or_download(ACTS_URL, "acts")
-            # Index by act code (akt-kód)
-            self._acts_cache = {}
-            for item in data.get('položky', []):
-                code = item.get('akt-kód')
-                if code:
-                    self._acts_cache[code] = item
-            logger.info(f"Indexed {len(self._acts_cache)} acts")
-        return self._acts_cache
-
-    def _get_fragments_db_path(self) -> Path:
-        """Get path to SQLite fragments database"""
-        return CACHE_DIR / "fragments.db"
-
-    def _init_fragments_db(self) -> sqlite3.Connection:
-        """Initialize or open SQLite fragments database"""
-        db_path = self._get_fragments_db_path()
-        conn = sqlite3.connect(str(db_path))
-        conn.execute("""
-            CREATE TABLE IF NOT EXISTS fragments (
-                frag_id INTEGER PRIMARY KEY,
-                base_id INTEGER,
-                iri TEXT,
-                text TEXT
-            )
-        """)
-        conn.execute("CREATE INDEX IF NOT EXISTS idx_iri ON fragments(iri)")
-        conn.commit()
-        return conn
-
-    def _is_fragments_db_ready(self) -> bool:
-        """Check if fragments DB exists and has data"""
-        db_path = self._get_fragments_db_path()
-        if not db_path.exists():
-            return False
+def _sparql(query: str, timeout: int = 120) -> List[dict]:
+    """Execute a SPARQL SELECT and return the list of bindings."""
+    for attempt in range(3):
         try:
-            conn = sqlite3.connect(str(db_path))
-            count = conn.execute("SELECT COUNT(*) FROM fragments").fetchone()[0]
-            conn.close()
-            return count > 0
-        except:
-            return False
-
-    def _stream_fragments_to_db(self):
-        """
-        Stream download and parse fragments directly to SQLite.
-        This avoids loading the entire 500MB+ JSON into memory.
-        """
-        db_path = self._get_fragments_db_path()
-        gz_path = CACHE_DIR / "fragments.json.gz"
-
-        # Download gzip file if not cached
-        if not gz_path.exists():
-            logger.info(f"Downloading fragments to {gz_path}...")
-            logger.info("NOTE: This is a ~500MB file. Be patient!")
-            start = time.time()
-
-            response = self.session.get(FRAGMENTS_URL, timeout=1800, stream=True)
-            response.raise_for_status()
-
-            total_size = int(response.headers.get('content-length', 0))
-            downloaded = 0
-
-            with open(gz_path, 'wb') as f:
-                for chunk in response.iter_content(chunk_size=1024*1024):
-                    f.write(chunk)
-                    downloaded += len(chunk)
-                    if total_size:
-                        pct = downloaded * 100 / total_size
-                        if pct % 10 < 1:  # Log every ~10%
-                            logger.info(f"Downloading: {downloaded/1024/1024:.1f}MB / {total_size/1024/1024:.1f}MB ({pct:.1f}%)")
-
-            elapsed = time.time() - start
-            logger.info(f"Downloaded {downloaded/1024/1024:.1f}MB in {elapsed:.1f}s")
-
-        # Stream parse and insert into SQLite
-        logger.info("Streaming fragments to SQLite database...")
-        conn = self._init_fragments_db()
-
-        # Use WAL mode for better performance with batched writes
-        conn.execute("PRAGMA journal_mode=WAL")
-        conn.execute("PRAGMA synchronous=NORMAL")
-        conn.execute("PRAGMA cache_size=-32000")  # 32MB cache
-        conn.execute("PRAGMA temp_store=MEMORY")
-
-        conn.execute("DELETE FROM fragments")  # Clear existing
-        conn.commit()
-
-        start = time.time()
-        count = 0
-        batch = []
-        batch_size = 5000  # Reduced from 10000 to lower memory usage
-
-        # ijson is already imported at module level (required dependency)
-        logger.info("Using ijson for streaming parse")
-
-        with gzip.open(gz_path, 'rb') as f:
-            for item in ijson.items(f, 'položky.item'):
-                frag_id = item.get('fragment-id')
-                if frag_id:
-                    batch.append((
-                        frag_id,
-                        item.get('fragment-base-id', frag_id),
-                        item.get('iri', ''),
-                        item.get('fragment-text', '')
-                    ))
-
-                    if len(batch) >= batch_size:
-                        conn.executemany(
-                            "INSERT OR REPLACE INTO fragments (frag_id, base_id, iri, text) VALUES (?, ?, ?, ?)",
-                            batch
-                        )
-                        conn.commit()
-                        count += len(batch)
-                        batch = []  # Clear batch immediately after commit
-                        gc.collect()  # Force garbage collection to free memory
-
-                        if count % 50000 == 0:
-                            logger.info(f"Indexed {count} fragments...")
-
-        # Insert remaining batch
-        if batch:
-            conn.executemany(
-                "INSERT OR REPLACE INTO fragments (frag_id, base_id, iri, text) VALUES (?, ?, ?, ?)",
-                batch
+            r = requests.get(
+                SPARQL_ENDPOINT,
+                params={"default-graph-uri": "", "query": query},
+                headers=HEADERS,
+                timeout=timeout,
             )
-            conn.commit()
-            count += len(batch)
+            r.raise_for_status()
+            return r.json()["results"]["bindings"]
+        except Exception as e:
+            logger.warning("SPARQL attempt %d failed: %s", attempt + 1, e)
+            time.sleep(2 * (attempt + 1))
+    return []
 
-        elapsed = time.time() - start
-        logger.info(f"Indexed {count} fragments in {elapsed:.1f}s")
-        conn.close()
-        gc.collect()  # Final garbage collection
 
-    def _load_fragments(self) -> sqlite3.Connection:
-        """
-        Return a SQLite connection for fragment queries.
-        Initializes the database from download if not already done.
-        """
-        if not self._is_fragments_db_ready():
-            self._stream_fragments_to_db()
-        return self._init_fragments_db()
+def _val(binding: dict, key: str) -> Optional[str]:
+    """Extract value from a SPARQL binding."""
+    b = binding.get(key)
+    return b["value"] if b else None
 
-    def _build_act_text(self, act: Dict, fragments_db: sqlite3.Connection) -> str:
-        """Build complete text for an act from fragments using SQLite queries"""
-        act_iri = act.get('iri', '')
 
-        # Extract the ELI path (e.g., "eli/cz/sb/1918/8")
-        if 'eli/' not in act_iri:
-            return ""
+# ───────────────────────── Discovery ─────────────────────────
 
-        eli_path = act_iri.split('eli/')[-1]
-        eli_pattern = f'%eli/{eli_path}%'
 
-        # Query matching fragments ordered by base_id
-        cursor = fragments_db.execute(
-            """
-            SELECT base_id, text FROM fragments
-            WHERE iri LIKE ? AND text IS NOT NULL AND text != ''
-            ORDER BY base_id
-            """,
-            (eli_pattern,)
-        )
+def list_acts(offset: int = 0, limit: int = 1000) -> List[dict]:
+    """Get a page of legal acts with their citation, year, and number."""
+    q = f"""
+    SELECT ?act ?citation ?year ?number WHERE {{
+      ?act a <{PREFIX_ACT}právní-akt> ;
+           <{PREFIX_ACT}citace-právního-aktu> ?citation ;
+           <{PREFIX_ACT}rok-předpisu> ?year ;
+           <{PREFIX_ACT}číslo-předpisu> ?number .
+    }}
+    ORDER BY DESC(?year) DESC(?number)
+    OFFSET {offset} LIMIT {limit}
+    """
+    return _sparql(q)
 
-        # Assemble text from query results
-        texts = [row[1] for row in cursor]
-        full_text = '\n'.join(texts)
 
-        # Clean HTML tags like <var>
-        full_text = re.sub(r'<[^>]+>', '', full_text)
-        # Normalize whitespace
-        full_text = re.sub(r'\n{3,}', '\n\n', full_text)
-        full_text = re.sub(r' {2,}', ' ', full_text)
+def get_latest_version(act_uri: str) -> Optional[str]:
+    """Get the URI of the latest version of a legal act."""
+    q = f"""
+    SELECT ?ver WHERE {{
+      <{act_uri}> <{PREFIX_ACT}má-poslední-znění> ?ver .
+    }} LIMIT 1
+    """
+    rows = _sparql(q)
+    return _val(rows[0], "ver") if rows else None
 
-        return full_text.strip()
 
-    def fetch_all(self, limit: int = None) -> Iterator[Dict[str, Any]]:
-        """
-        Fetch all documents with full text.
+def get_full_text(version_uri: str) -> str:
+    """Get the full text of a law version by fetching all ordered fragments."""
+    q = f"""
+    SELECT ?text ?order WHERE {{
+      <{version_uri}> <{PREFIX_ACT}má-fragment-znění> ?frag .
+      ?frag <{PREFIX_ACT}obsahuje-fragment> ?innerFrag .
+      ?frag <{PREFIX_ACT}pořadí-fragmentu-znění-právního-aktu> ?order .
+      ?innerFrag <{PREFIX_ACT}text-fragmentu> ?text .
+    }}
+    ORDER BY ?order
+    """
+    rows = _sparql(q, timeout=180)
+    if not rows:
+        return ""
+    parts = []
+    for r in rows:
+        txt = _val(r, "text") or ""
+        txt = _clean_html(txt)
+        if txt:
+            parts.append(txt)
+    return "\n".join(parts)
 
-        Args:
-            limit: Maximum number of documents to fetch (None for all)
 
-        Yields:
-            Raw document dictionaries with full text
-        """
-        # Load data
-        logger.info("Loading acts metadata...")
-        acts = self._load_acts()
+def _clean_html(text: str) -> str:
+    """Remove HTML tags and decode entities from fragment text."""
+    import html as html_mod
 
-        logger.info("Loading fragments (this may take a while on first run)...")
-        fragments_db = self._load_fragments()
+    text = re.sub(r"</?var>", "", text)
+    text = re.sub(r'<a[^>]*class="ext_odkaz"[^>]*>([^<]*)</a>', r"\1", text)
+    text = re.sub(r'<a[^>]*class="lz_plna"[^>]*>([^<]*)</a>', r"\1", text)
+    text = re.sub(r"<a[^>]*>([^<]*)</a>", r"\1", text)
+    text = re.sub(r"<[^>]+>", "", text)
+    text = html_mod.unescape(text)
+    return text.strip()
 
-        # Sort by year descending (most recent first)
-        sorted_acts = sorted(
-            acts.items(),
-            key=lambda x: (x[1].get('akt-rok-předpisu', 0), x[1].get('akt-číslo-předpisu', 0)),
-            reverse=True
-        )
 
-        count = 0
-        checked = 0
+# ───────────────────────── Normalization ─────────────────────────
 
-        try:
-            for act_code, act in sorted_acts:
-                if limit and count >= limit:
-                    break
 
-                checked += 1
+def normalize(act_uri: str, citation: str, year: str, number: str, text: str) -> Dict[str, Any]:
+    """Normalize a Czech legal act into the standard schema."""
+    eli_path = act_uri.split("/esel-esb/")[-1] if "/esel-esb/" in act_uri else ""
+    return {
+        "_id": f"CZ-{year}-{number}",
+        "_source": SOURCE_ID,
+        "_type": "legislation",
+        "_fetched_at": datetime.now(timezone.utc).isoformat(),
+        "title": citation,
+        "text": text,
+        "date": f"{year}-01-01",
+        "url": f"{ESBIRKA_BASE}/{eli_path}" if eli_path else ESBIRKA_BASE,
+        "citation": citation,
+        "year": int(year),
+        "number": int(number),
+        "language": "cs",
+        "eli_uri": act_uri,
+    }
 
-                # Build full text from fragments using SQLite
-                text = self._build_act_text(act, fragments_db)
 
-                # Only yield if we have actual text
-                if text and len(text) > 100:
-                    yield {
-                        'code': act_code,
-                        'citation': act.get('akt-citace', ''),
-                        'title': act.get('akt-název-vyhlášený', ''),
-                        'year': act.get('akt-rok-předpisu'),
-                        'number': act.get('akt-číslo-předpisu'),
-                        'collection': act.get('akt-sbírka-kód', 'sb'),
-                        'iri': act.get('iri', ''),
-                        'text': text,
-                        'raw': act
-                    }
-                    count += 1
+# ───────────────────────── Fetcher interface ─────────────────────────
 
-                    if count % 10 == 0:
-                        logger.info(f"Found {count} documents with text (checked {checked} acts)...")
-        finally:
-            fragments_db.close()
 
-        logger.info(f"Total: {count} documents with text out of {checked} checked")
+def fetch_all() -> Iterator[Dict[str, Any]]:
+    """Yield all legal acts with full text."""
+    offset = 0
+    page_size = 500
+    total = 0
+    while True:
+        acts = list_acts(offset=offset, limit=page_size)
+        if not acts:
+            break
+        for act in acts:
+            act_uri = _val(act, "act")
+            citation = _val(act, "citation") or ""
+            year = _val(act, "year") or ""
+            number = _val(act, "number") or ""
+            if not act_uri:
+                continue
 
-    def fetch_updates(self, since: datetime) -> Iterator[Dict[str, Any]]:
-        """Fetch documents updated since a given date."""
-        yield from self.fetch_all()
+            version_uri = get_latest_version(act_uri)
+            if not version_uri:
+                logger.debug("No version for %s, skipping", citation)
+                continue
 
-    def normalize(self, raw_doc: Dict[str, Any]) -> Dict[str, Any]:
-        """Normalize document to standard schema."""
-        collection = raw_doc.get('collection', 'sb')
-        year = raw_doc.get('year', '')
-        number = raw_doc.get('number', '')
+            text = get_full_text(version_uri)
+            if not text:
+                logger.debug("No text for %s, skipping", citation)
+                continue
 
-        if year and number:
-            url = f"https://www.e-sbirka.cz/{collection}/{year}/{number}"
-        else:
-            url = "https://www.e-sbirka.cz"
+            total += 1
+            yield normalize(act_uri, citation, year, number, text)
 
-        date = f"{year}-01-01" if year else None
+            if total % 100 == 0:
+                logger.info("Fetched %d acts so far", total)
+            time.sleep(1)  # rate limit
 
-        return {
-            '_id': raw_doc['code'],
-            '_source': 'CZ/eSbirka',
-            '_type': 'legislation',
-            '_fetched_at': datetime.now().isoformat(),
-            'title': raw_doc.get('title', ''),
-            'citation': raw_doc.get('citation', ''),
-            'text': raw_doc.get('text', ''),
-            'year': raw_doc.get('year'),
-            'number': raw_doc.get('number'),
-            'collection': raw_doc.get('collection', 'sb'),
-            'date': date,
-            'url': url,
-            'language': 'cs'
-        }
+        offset += page_size
+
+    logger.info("Total acts fetched: %d", total)
+
+
+def fetch_updates(since: str) -> Iterator[Dict[str, Any]]:
+    """Yield acts updated since a given date (not yet implemented)."""
+    logger.warning("fetch_updates not yet implemented for SPARQL approach")
+    return iter([])
+
+
+# ───────────────────────── CLI ─────────────────────────
+
+
+def bootstrap_sample(count: int = 12):
+    """Fetch a small sample of recent acts for validation."""
+    SAMPLE_DIR.mkdir(parents=True, exist_ok=True)
+
+    # Get recent acts (last few years)
+    acts = list_acts(offset=0, limit=count * 2)
+    if not acts:
+        logger.error("No acts found")
+        sys.exit(1)
+
+    saved = 0
+    for act in acts:
+        if saved >= count:
+            break
+
+        act_uri = _val(act, "act")
+        citation = _val(act, "citation") or ""
+        year = _val(act, "year") or ""
+        number = _val(act, "number") or ""
+        if not act_uri:
+            continue
+
+        logger.info("Fetching [%d/%d] %s ...", saved + 1, count, citation)
+
+        version_uri = get_latest_version(act_uri)
+        if not version_uri:
+            logger.warning("  No version, skipping")
+            continue
+
+        text = get_full_text(version_uri)
+        if not text or len(text) < 100:
+            logger.warning("  Text too short (%d chars), skipping", len(text))
+            continue
+
+        record = normalize(act_uri, citation, year, number, text)
+        fname = SAMPLE_DIR / f"{year}_{number}.json"
+        with open(fname, "w", encoding="utf-8") as f:
+            json.dump(record, f, ensure_ascii=False, indent=2)
+
+        logger.info("  Saved %s (%d chars)", fname.name, len(text))
+        saved += 1
+        time.sleep(2)  # be polite
+
+    logger.info("Saved %d sample records to %s", saved, SAMPLE_DIR)
+    return saved
 
 
 def main():
-    """Main entry point for testing and bootstrap"""
+    import argparse
 
-    if len(sys.argv) > 1 and sys.argv[1] == 'bootstrap':
-        fetcher = ESbirkaFetcher()
-        sample_dir = Path(__file__).parent / 'sample'
-        sample_dir.mkdir(exist_ok=True)
+    parser = argparse.ArgumentParser(description="CZ/eSbirka bootstrap (SPARQL)")
+    parser.add_argument("command", choices=["bootstrap"], help="Command to run")
+    parser.add_argument("--sample", action="store_true", help="Fetch sample data only")
+    parser.add_argument("--count", type=int, default=12, help="Number of sample records")
+    args = parser.parse_args()
 
-        logger.info("Starting bootstrap...")
-        logger.info("NOTE: First run requires downloading ~500MB of data. Be patient!")
-
-        sample_count = 0
-        target_count = 10 if '--sample' in sys.argv else 100
-
-        for raw_doc in fetcher.fetch_all(limit=target_count):
-            if sample_count >= target_count:
-                break
-
-            normalized = fetcher.normalize(raw_doc)
-            text_len = len(normalized.get('text', ''))
-
-            if text_len < 100:
-                continue
-
-            # Save to sample directory
-            filename = f"{normalized['_id'].replace('/', '_')}.json"
-            filepath = sample_dir / filename
-
-            with open(filepath, 'w', encoding='utf-8') as f:
-                json.dump(normalized, f, indent=2, ensure_ascii=False)
-
-            logger.info(f"Saved [{sample_count+1}/{target_count}]: {normalized['citation']} ({text_len} chars)")
-            sample_count += 1
-
-        logger.info(f"Bootstrap complete. Saved {sample_count} documents to {sample_dir}")
-
-        # Print summary
-        files = list(sample_dir.glob('*.json'))
-        total_chars = 0
-        for f in files:
-            with open(f, 'r', encoding='utf-8') as fp:
-                data = json.load(fp)
-                total_chars += len(data.get('text', ''))
-
-        print(f"\n=== SUMMARY ===")
-        print(f"Sample files: {len(files)}")
-        print(f"Total text chars: {total_chars:,}")
-        print(f"Average chars/doc: {total_chars // max(len(files), 1):,}")
-
-    else:
-        # Test mode
-        fetcher = ESbirkaFetcher()
-        print("Testing e-Sbírka fetcher...")
-
-        count = 0
-        for raw_doc in fetcher.fetch_all(limit=3):
-            normalized = fetcher.normalize(raw_doc)
-            print(f"\n--- Document {count + 1} ---")
-            print(f"ID: {normalized['_id']}")
-            print(f"Citation: {normalized['citation']}")
-            print(f"Title: {normalized['title'][:80]}")
-            print(f"Year: {normalized['year']}")
-            print(f"Text length: {len(normalized.get('text', ''))}")
-            print(f"Text preview: {normalized.get('text', '')[:300]}...")
-            count += 1
+    if args.command == "bootstrap":
+        if args.sample:
+            n = bootstrap_sample(count=args.count)
+            if n < 10:
+                logger.error("Only %d samples (need 10+). Check SPARQL endpoint.", n)
+                sys.exit(1)
+        else:
+            for record in fetch_all():
+                print(json.dumps(record, ensure_ascii=False))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

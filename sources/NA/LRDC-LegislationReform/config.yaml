@@ -1,0 +1,71 @@
+source:
+  id: NA/LRDC-LegislationReform
+  name: Namibia Law Reform & Development Commission — Reports
+  country: NA
+  url: https://www.lawreform.gov.na/
+  data_types:
+    - doctrine
+  description: |
+    Reports, discussion papers, working papers and concept papers of the Law
+    Reform and Development Commission (LRDC) of Namibia, the statutory body
+    that examines and recommends reform of Namibian law. Each publication is
+    numbered in the "LRDC N" series (ISSN 1026-8405). The complete born-digital
+    PDF set is hosted in an open directory index by the Legal Assistance Centre
+    (lac.org.na); NamibLII (the LRDC's own LII project) mirrors the same
+    documents but its pages sit behind a Cloudflare challenge. Full text is
+    extracted from the PDFs with pdfplumber. Content in English. Free access,
+    no authentication required.
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: html_scraping
+  base_url: https://www.lac.org.na
+  format: pdf
+  notes: >
+    The Apache directory index at /laws/LRDC/ is listed for *.pdf files; each
+    report is downloaded and parsed with pdfplumber. Titles are derived from
+    the descriptive filenames; the publication date and "LRDC N" series number
+    are parsed from the PDF cover text. Image-only scans are dropped by a
+    Latin-text quality filter.
+
+schema:
+  key_fields:
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: language
+      type: string
+      required: true
+    - name: url
+      type: string
+      required: true
+    - name: series_number
+      type: string
+      required: false
+    - name: publisher
+      type: string
+      required: false
+
+license:
+  name: Public Domain (Government of Namibia)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: >
+    Official publications of the Law Reform and Development Commission, a
+    statutory body of the Republic of Namibia, issued for public access.
+    Mirror hosting by the Legal Assistance Centre (lac.org.na).

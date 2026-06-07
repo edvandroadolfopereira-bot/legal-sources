@@ -1,0 +1,32 @@
+auth:
+  type: none
+base_url: https://eproc2g.trf6.jus.br/eproc/
+country: BR
+data_types:
+- case_law
+description: >
+  Court decisions from the Tribunal Regional Federal da 6ª Região via the eproc2g
+  jurisprudence portal. TRF-6 covers Minas Gerais (MG), created in 2022 from TRF-1.
+  Full text fetched from the download_inteiro_teor endpoint. ~77K decisions available.
+language: pt
+license:
+  name: Brazilian Public Domain (Government Acts)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Brazilian judicial decisions are public domain under Brazilian law.
+name: TRF-6 Federal Regional Court (6th Region — MG)
+rate_limit:
+  burst: 2
+  requests_per_second: 0.5
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: process_number
+    required: false
+    type: string
+source_id: BR/TRF6
