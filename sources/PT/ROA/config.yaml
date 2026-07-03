@@ -1,0 +1,48 @@
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: url
+    required: true
+    type: string
+  - name: author
+    required: false
+    type: string
+  - name: section
+    required: false
+    type: string
+  - name: volume
+    required: false
+    type: string
+source:
+  auth: none
+  country: PT
+  data_types:
+  - doctrine
+  description: >
+    Legal doctrine articles from Revista da Ordem dos Advogados (ROA),
+    the official journal of the Portuguese Bar Association. Free PDF access.
+    Archive from 1941 to present. ~10-15 articles per issue, 2 issues/year.
+    Covers legal theory, annotated case law, and institutional information.
+  id: PT/ROA
+  name: Revista da Ordem dos Advogados
+  schedule: quarterly
+  url: https://portal.oa.pt/publicacoes/revista-da-ordem-dos-advogados/
+license:
+  name: "Open Access (Ordem dos Advogados)"
+  url: "https://portal.oa.pt/publicacoes/revista-da-ordem-dos-advogados/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Free online access stated on journal pages"

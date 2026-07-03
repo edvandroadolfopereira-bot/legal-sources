@@ -1,16 +1,18 @@
 source:
   id: "INTL/Legislationline"
   country: "INTL"
-  name: "OSCE Legislationline — Human Rights & Rule of Law Legislation Database"
-  url: "https://legislationline.org/"
+  name: "OSCE/ODIHR Legal Opinions & Comments (formerly Legislationline)"
+  url: "https://odihr.osce.org/odihr/legal-opinions-and-comments"
   description: |
-    OSCE/ODIHR legislative database covering 57 OSCE participating states.
-    Human rights, rule of law, elections, and governance legislation.
-    English translations and original language texts. ~14,000 documents,
-    ~7,000 with inline full text via Drupal JSON:API.
+    OSCE/ODIHR legal opinions and comments — expert legal reviews of draft and
+    enacted laws across OSCE participating states (elections, political party
+    financing, judiciary, anti-discrimination, assembly, etc.). Each document has
+    an introductory summary plus a full-text PDF opinion. Migrated from the
+    decommissioned legislationline.org Drupal JSON:API (the legacy national-
+    legislation corpus was not carried over). ~220 documents, all with full text.
 
 data_types:
-  - legislation
+  - doctrine
 
 auth:
   type: "none"
@@ -20,25 +22,26 @@ rate_limit:
   burst: 3
 
 api:
-  type: "rest"
-  base_url: "https://legislationline.org/jsonapi"
+  type: "html"
+  base_url: "https://odihr.osce.org"
   endpoints:
-    list: "/taxonomy_term/files?page[limit]=50&page[offset]={offset}"
+    list: "/odihr/legal-opinions-and-comments"
+    document: "/odihr/{node_id}"
 
 data_model:
-  type: "legislation"
+  type: "doctrine"
   source_nature: "consolidated"
-  primary_key: "drupal_internal__tid"
+  primary_key: "_id"
   update_strategy: "upsert"
   versioning: "none"
   dedup_key:
-    - "drupal_internal__tid"
+    - "_id"
 
 schema:
-  total_fields: 14
+  total_fields: 13
   key_fields:
     - name: "_id"
-      description: "Unique identifier (legislationline-{tid})"
+      description: "Unique identifier (odihr-opinion-{node_id})"
       type: "string"
       role: "primary_key"
       required: true
@@ -48,37 +51,37 @@ schema:
       role: "content"
       required: true
     - name: "text"
-      description: "Full text of the legislation (HTML stripped)"
+      description: "Full text of the legal opinion (PDF extracted)"
       type: "string"
       role: "content"
       required: true
     - name: "date"
-      description: "Publication date"
+      description: "Publication date (ISO 8601)"
       type: "date"
       role: "temporal_key"
       required: false
     - name: "country"
-      description: "ISO 3166-1 alpha-2 country code"
+      description: "ISO 3166-1 alpha-2 country code (from title prefix)"
       type: "string"
       role: "reference"
       required: false
-    - name: "topics"
-      description: "Thematic topics (e.g., Elections, Fair Trial)"
-      type: "array"
-      role: "content"
-      required: false
-    - name: "document_type"
-      description: "Document category (Constitutions, Legislation, etc.)"
+    - name: "summary"
+      description: "Introductory summary from the node page"
       type: "string"
       role: "content"
+      required: false
+    - name: "pdf_url"
+      description: "URL of the source PDF opinion"
+      type: "string"
+      role: "reference"
       required: false
 
 license:
   id: "custom-terms"
   name: "OSCE/ODIHR Custom Terms"
-  url: "https://legislationline.org/disclaimer"
+  url: "https://www.osce.org/copyright"
   commercial_use: true
   attribution_required: true
   share_alike: false
   no_derivatives: false
-  notes: "Legislation texts are public domain. OSCE analysis/commentary has no explicit license; disclaimer does not restrict reuse."
+  notes: "OSCE/ODIHR content is freely reproducible with attribution; no explicit reuse restriction."

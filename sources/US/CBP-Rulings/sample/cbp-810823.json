@@ -1,0 +1,21 @@
+{
+  "_id": "cbp-810823",
+  "_source": "US/CBP-Rulings",
+  "_type": "doctrine",
+  "_fetched_at": "2026-06-20T19:10:30Z",
+  "title": "The tariff classification of Probucol from Spain and     Propofol from Switzerland.",
+  "text": "NY 810823\n\n                           May 30, 1995\n\nCLA-2-29:S:N:N7:239 810823  \n\nCATEGORY:  Classification\n\nTARIFF NO.: 2930.90.2800, 2907.19.8000  \n\nMs. Joan von Doehren\nInterchem Corporation\n120 Route 17 North\nSuite 115\nParamus, NJ  07652\n\nRE:  The tariff classification of Probucol from Spain and\n     Propofol from Switzerland.\n\nDear Ms. von Doehren:\n\n     In your letter dated May 1, 1995, you requested a tariff\nclassification ruling.\n\n     The applicable subheading for probucol will be 2930.90.2900,\nHarmonized Tariff Schedule of the United States (HTS), which\nprovides for organo-sulfur compounds:  other.  The applicable\nsubheading for propofol will be 2907.19.8000, Harmonized Tariff\nSchedule of the United States (HTS), which provides for phenols;\nphenol-alcohols:  other.  Pursuant to General Note 13 to the\nHarmonized Tariff Schedule, these products are duty free.    \n\n     This ruling is being issued under the provisions of Section\n177 of the Customs Regulations (19 C.F.R. 177).\n\n     A copy of this ruling letter should be attached to the entry\ndocuments filed at the time this merchandise is imported.  If the\ndocuments have been filed without a copy, this ruling should be\nbrought to the attention of the Customs officer handling the\ntransaction.\n\n                                        Sincerely,\n\n  \n                                        Jean F. Maguire\n                                        Area Director\n                                        New York Seaport",
+  "date": "1995-05-30",
+  "url": "https://rulings.cbp.gov/ruling/810823",
+  "ruling_number": "810823",
+  "categories": "Classification",
+  "collection": "ny",
+  "tariffs": [
+    "2930.90.2800",
+    "2907.19.8000"
+  ],
+  "related_rulings": [],
+  "is_usmca": false,
+  "is_nafta": false,
+  "operationally_revoked": false
+}

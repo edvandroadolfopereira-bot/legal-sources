@@ -1,0 +1,25 @@
+{
+  "_id": "INTL-IEA-IRENA-3",
+  "_source": "INTL/IEA-IRENA-PolicyDB",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-20T14:20:36.668358+00:00",
+  "title": "THE 13TH FIVE-YEAR PLAN FOR ECONOMIC AND SOCIAL DEVELOPMENT OF THE PEOPLE'S REPUBLIC OF CHINA (2016-2020)",
+  "text": "Comprised of 20 Parts, the 13th five-year plan is divided into 20 sections, of which the following relate to energy: \nNEW SYSTEMS FOR DEVELOPMENT DEVELOPMENT\nAGRICULTURAL MODERNIZATION\nAN OPTIMIZED MODERN INDUSTRIAL SYSTEM\nMODERN INFRASTRUCTURE NETWORKS NETWORKS\nNEW URBANIZATION\nDEVELOPMENT COORDINATED BETWEEN REGIONS\nECOSYSTEMS AND THE ENVIRONMENT\nRelevant to energy efficiency are various measures, including:\n\"100, 1,000, 10,000\" energy conservation initiative to the top 100 energy consuming enterprises and top 1,000 energy consuming enterprises on the provincial government level and other high energy consuming sectors to reduce energy consumption facilitate energy management;\nWater conservation to supress usage below 670 billion cubic centimeters and encourage alternative water sources with the promotion of water label efficiency schemes;\nMineral resource and land conservation; \nEconomic Circular Resource Initiatives; \nPollution Prevention: A 25% reduction in the number of days of heavy air pollution registered in the air pollution monitoring system, achieved primarily through environmental protection standards for vehicles, watercraft, and fuel oil.\n\nStatus: Ended\nJurisdiction: National",
+  "date": "2016-03-16",
+  "url": "http://www.npc.gov.cn/wxzl/gongbao/2016-07/08/content_1993756.htm",
+  "language": "English",
+  "policy_id": "3",
+  "status": "Ended",
+  "year": 2016,
+  "countries": [
+    "People's Republic of China"
+  ],
+  "country_codes": [
+    "CHN"
+  ],
+  "jurisdiction": "National",
+  "technologies": [],
+  "topics": [],
+  "policy_types": [],
+  "date_modified": "2021-04-15T22:00:00.000Z"
+}

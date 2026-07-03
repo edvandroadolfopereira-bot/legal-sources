@@ -324,25 +324,45 @@ def main():
         sys.exit(0 if ok else 1)
 
     elif command in ("bootstrap", "bootstrap-fast"):
-        sample_dir = Path(__file__).parent / "sample"
-        sample_dir.mkdir(exist_ok=True)
+        if sample:
+            sample_dir = Path(__file__).parent / "sample"
+            sample_dir.mkdir(exist_ok=True)
 
-        count = 0
-        total_text = 0
-        for record in scraper.fetch_all(sample=sample):
-            text_len = len(record.get("text", ""))
-            total_text += text_len
-            count += 1
+            count = 0
+            total_text = 0
+            for record in scraper.fetch_all(sample=True):
+                text_len = len(record.get("text", ""))
+                total_text += text_len
+                count += 1
 
-            # Save sample
-            fname = re.sub(r"[^\w\-.]", "_", record["_id"]) + ".json"
-            with open(sample_dir / fname, "w", encoding="utf-8") as f:
-                json.dump(record, f, ensure_ascii=False, indent=2)
+                # Save sample
+                fname = re.sub(r"[^\w\-.]", "_", record["_id"]) + ".json"
+                with open(sample_dir / fname, "w", encoding="utf-8") as f:
+                    json.dump(record, f, ensure_ascii=False, indent=2)
 
-            logger.info(f"  Saved: {fname} ({text_len:,} chars)")
+                logger.info(f"  Saved: {fname} ({text_len:,} chars)")
 
-        avg = total_text // count if count else 0
-        logger.info(f"Done: {count} records, avg text {avg:,} chars")
+            avg = total_text // count if count else 0
+            logger.info(f"Done: {count} records, avg text {avg:,} chars")
+        else:
+            # Full fetch -- stream every record to data/records.jsonl so the
+            # ingest pipeline picks up the whole corpus (not just samples).
+            data_dir = Path(__file__).parent / "data"
+            data_dir.mkdir(parents=True, exist_ok=True)
+            jsonl_path = data_dir / "records.jsonl"
+
+            count = 0
+            total_text = 0
+            with open(jsonl_path, "w", encoding="utf-8") as f:
+                for record in scraper.fetch_all(sample=False):
+                    f.write(json.dumps(record, ensure_ascii=False) + "\n")
+                    total_text += len(record.get("text", ""))
+                    count += 1
+                    if count % 25 == 0:
+                        logger.info(f"  Written {count} records -> {jsonl_path}")
+
+            avg = total_text // count if count else 0
+            logger.info(f"Done: {count} records written to {jsonl_path}, avg text {avg:,} chars")
 
     elif command == "update":
         for record in scraper.fetch_updates(""):

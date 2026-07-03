@@ -1,0 +1,43 @@
+{
+  "_id": "INTL-IEA-IRENA-12",
+  "_source": "INTL/IEA-IRENA-PolicyDB",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-20T14:20:43.448165+00:00",
+  "title": "Microgeneration Strategy 2006",
+  "text": "In 2005, the UK Department of Trade and Industry commissioned an independent report: \"Potential for Microgeneration Study and Analysis to scope the feasibility of the implementing policy using various generation technologies and estimate market development out to 2050\". On 28 March 2006, the Government launched its Microgeneration Strategy, aiming to create conditions under which microgeneration becomes a realistic alternative or supplementary energy generation source for the householder, communities and small businesses. The government provides grant funding for installation of microgeneration technologies under the Low Carbon Buildings Programme (LCBP). This replaces Clear Skies and the Major PV Demonstration Programme and is currently structured in two phases: Phase 1 was launched in April 2006. GBP 29.5 million was made available to support projects in households, community organisations, housing associations, public sector and private businesses. This phase was opened for private sector applications under the Low Carbon Building Programme. Phase 2 takes forward the Chancellor of the Exchequer's 2006 Budget commitment of an additional GBP 50m of capital grant funding for the installation of microgeneration technologies in the public and charity sectors (social housing, libraries, hospitals, schools etc). The UK government has completed the majority of actions under the Microgeneration Strategy and reported on its implementation in June 2008. 21 out of 25 actions have been completed, three have been superseded by other activities and one has not been completed. It does not represent a picture of current government policy.\n\nStatus: Ended\nJurisdiction: National",
+  "date": "2006-01-01",
+  "url": "https://webarchive.nationalarchives.gov.uk/20121217233213/http://www.decc.gov.uk/assets/decc/what%20we%20do/uk%20energy%20supply/energy%20mix/renewable%20energy/explained/microgen/file27575.pdf",
+  "language": "English",
+  "policy_id": "12",
+  "status": "Ended",
+  "year": 2006,
+  "countries": [
+    "United Kingdom"
+  ],
+  "country_codes": [
+    "GBR"
+  ],
+  "jurisdiction": "National",
+  "technologies": [
+    "Biomass and renewable waste",
+    "Biogas",
+    "Gas and CCGTs",
+    "Electric air-source heat pumps",
+    "Solar thermal electricity",
+    "Space, water and process heating technologies",
+    "Natural gas fuel cells",
+    "Electric ground-source heat pumps",
+    "Fuel cells",
+    "Heat pumps",
+    "Combined heat and power (CHP)",
+    "PV installation types",
+    "Heating, cooling and climate control technologies",
+    "Wind",
+    "Solar PV",
+    "Distributed PV",
+    "Electricity generation and CHP technologies"
+  ],
+  "topics": [],
+  "policy_types": [],
+  "date_modified": "2021-08-23T22:00:00.000Z"
+}

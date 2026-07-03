@@ -268,6 +268,10 @@ class AFTScraper(BaseScraper):
                     page_text = page.extract_text()
                     if page_text:
                         text_parts.append(page_text)
+                    try:
+                        page.flush_cache(); page.get_textmap.cache_clear()
+                    except Exception:
+                        pass
 
             full_text = "\n\n".join(text_parts)
             if len(full_text.strip()) > 100:

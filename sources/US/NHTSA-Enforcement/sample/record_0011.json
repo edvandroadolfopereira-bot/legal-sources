@@ -1,0 +1,18 @@
+{
+  "_id": "RQ26002",
+  "_source": "US/NHTSA-Enforcement",
+  "_type": "case_law",
+  "_fetched_at": "2026-06-08T19:10:01.056043+00:00",
+  "title": "NHTSA Recall Query RQ26002: Momentary increase in steering effort after recall remedy",
+  "text": "The Office of Defects Investigation (ODI) has received 26 complaints and several Early Warning Reporting (EWR) Field Reports alleging intermittent and brief increases in steering effort (described as “sticky steering”) during the drive cycle in model year (MY) 2024 CX-90 vehicles manufactured by Mazda North American Operations (Mazda) subject to Recall 24V2022. In each complaint, the vehicle had the recall remedy completed prior to the reported incident. \n\nRecall 24V022 addresses a sudden and unexpected change of steering effort while driving caused by excessive worm gear friction force. \n\nAfter receiving the recall 24V022 remedy, consumers report sudden increases of steering effort while driving. Sudden and unexpected change of steering effort while driving may increase the risk of a crash.\n\nODI is opening this Recall Query (RQ) to assess the adequacy of the remedy for Recall 24V022 and to identify the cause(s) of the conditions leading to the post-remedy reports. To review the ODI reports cited in the Opening Resume ODI Report Identification Number document, go to NHTSA.gov.",
+  "date": "2026-01-26",
+  "url": "https://www.nhtsa.gov/vehicle/RQ26002",
+  "investigation_number": "002",
+  "investigation_type": "Recall Query",
+  "investigation_type_code": "RQ",
+  "status": "Open",
+  "status_code": "O",
+  "subject": "Momentary increase in steering effort after recall remedy",
+  "nhtsa_id": "RQ26002",
+  "latest_activity_date": "2026-01-26T18:28:38Z"
+}

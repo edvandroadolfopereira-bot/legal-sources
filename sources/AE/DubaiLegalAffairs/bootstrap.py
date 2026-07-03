@@ -109,6 +109,10 @@ def _extract_pdf_text(pdf_bytes: bytes) -> str:
                 page_text = page.extract_text()
                 if page_text:
                     text_parts.append(page_text)
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
     except Exception as e:
         logger.warning(f"PDF extraction error: {e}")
         return ""
@@ -120,6 +124,10 @@ class DubaiLegalAffairsScraper(BaseScraper):
     """Scraper for Dubai Official Gazette PDFs."""
 
     def __init__(self):
+        # Initialize BaseScraper (loads config, sets source_dir/storage/status).
+        # Without this the generic VPS runner crashes accessing self.config
+        # (see issue #863).
+        super().__init__()
         self.http = HttpClient(
             headers={"User-Agent": UA},
             timeout=60,

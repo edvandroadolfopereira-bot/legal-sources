@@ -74,7 +74,12 @@ def _clean_text(text: str) -> str:
 class ArcticCouncilDocsScraper(BaseScraper):
     SOURCE_ID = SOURCE_ID
 
-    def __init__(self):
+    def __init__(self, source_dir=None):
+        # BaseScraper.__init__ sets self.config / rate_limiter / storage /
+        # validator. Skipping it (the old code only set self.http) caused
+        # AttributeError: 'ArcticCouncilDocsScraper' object has no attribute
+        # 'config' on the VPS bootstrap-fast path (issue #957).
+        super().__init__(source_dir)
         self.http = HttpClient(headers=HEADERS)
 
     def _api_get(self, endpoint: str, params: dict = None) -> Optional[dict]:
@@ -157,6 +162,10 @@ class ArcticCouncilDocsScraper(BaseScraper):
                     text = page.extract_text()
                     if text:
                         pages.append(text)
+                    try:
+                        page.flush_cache(); page.get_textmap.cache_clear()
+                    except Exception:
+                        pass
             return _clean_text("\n\n".join(pages))
         except ImportError:
             logger.warning("pdfplumber not available, skipping PDF extraction")
@@ -271,10 +280,14 @@ class ArcticCouncilDocsScraper(BaseScraper):
                     logger.info(f"Skipping {uuid} ({meta['title'][:50]}): insufficient text ({len(text)} chars)")
                     continue
 
-                record = self.normalize({
+                # Yield RAW per the BaseScraper contract — the framework
+                # (bootstrap / bootstrap_fast) calls self.normalize() itself.
+                # Previously this yielded self.normalize(...), so records got
+                # double-normalized.
+                record = {
                     **meta,
                     "text": text,
-                })
+                }
 
                 total_yielded += 1
                 logger.info(
@@ -335,7 +348,10 @@ class ArcticCouncilDocsScraper(BaseScraper):
 def main():
     import argparse
     parser = argparse.ArgumentParser(description="INTL/ArcticCouncil-Docs bootstrap")
-    parser.add_argument("command", choices=["bootstrap", "update", "test"])
+    parser.add_argument(
+        "command",
+        choices=["bootstrap", "bootstrap-fast", "update", "test"],
+    )
     parser.add_argument("--sample", action="store_true", help="Fetch only sample records")
     parser.add_argument("--full", action="store_true", help="Fetch all records")
     args = parser.parse_args()
@@ -351,13 +367,22 @@ def main():
             sys.exit(1)
         return
 
+    # Full bootstrap (incl. the VPS bootstrap-fast path) streams to
+    # data/records.jsonl via BaseScraper; only sample mode writes to sample/.
+    if args.command == "bootstrap-fast" or (args.command == "bootstrap" and args.full):
+        stats = scraper.bootstrap_fast()
+        print(f"\nDone: {stats.get('records_new', 0)} new records "
+              f"({stats.get('records_fetched', 0)} fetched).")
+        return
+
     sample_dir = Path(__file__).parent / "sample"
     sample_dir.mkdir(exist_ok=True)
 
     is_sample = args.sample or (args.command == "bootstrap" and not args.full)
     count = 0
 
-    for record in scraper.fetch_all(sample=is_sample):
+    for raw in scraper.fetch_all(sample=is_sample):
+        record = scraper.normalize(raw)
         out_path = sample_dir / f"{count:04d}.json"
         with open(out_path, "w", encoding="utf-8") as f:
             json.dump(record, f, ensure_ascii=False, indent=2)

@@ -1,0 +1,48 @@
+fetch:
+  method: wp_ajax_post
+  ajax_url: https://jurisprudenciaylegislacion.fgr.gob.sv/wp-admin/admin-ajax.php
+  pdf_extraction: pdfplumber
+  rate_limit_seconds: 1.5
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: category
+    required: false
+    type: string
+  - name: data_type
+    required: false
+    type: string
+source:
+  auth: none
+  country: SV
+  data_types:
+  - legislation
+  - case_law
+  description: >
+    Legislation and jurisprudence from El Salvador's Attorney General (Fiscalía
+    General de la República). Covers international instruments, national legislation,
+    internal regulations, and court rulings organized by prosecutorial subject areas.
+    Full text extracted from PDFs via WordPress AJAX API.
+  id: SV/FGR-Jurisprudencia
+  language: es
+  name: El Salvador FGR — Legislation & Jurisprudence Portal
+  url: https://jurisprudenciaylegislacion.fgr.gob.sv/
+license:
+  name: Open Government Data
+  url: https://jurisprudenciaylegislacion.fgr.gob.sv/
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: Published by El Salvador Attorney General's Office for public access.

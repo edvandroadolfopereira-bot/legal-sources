@@ -194,6 +194,10 @@ class VUParliamentScraper(BaseScraper):
                 t = page.extract_text()
                 if t:
                     text_parts.append(t)
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
             pdf.close()
 
             text = "\n".join(text_parts)

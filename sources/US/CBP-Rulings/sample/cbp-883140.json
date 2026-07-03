@@ -1,0 +1,21 @@
+{
+  "_id": "cbp-883140",
+  "_source": "US/CBP-Rulings",
+  "_type": "doctrine",
+  "_fetched_at": "2026-06-20T19:10:16Z",
+  "title": "The tariff classification of a hibachi and table top grill from Taiwan",
+  "text": "DD 883140\n                                    March 24, 1993\n\nDAB C23  \n\nCATEGORY:  Classification\n\nTARIFF NO.: 7321.13.0020; 7321.13.0040\n\nJ. F. Moran, Inc.\n\nRE:  The tariff classification of a hibachi and table top grill from Taiwan\n\n     DATE OF INQUIRY   :    February 19, 1993\n\n     ON BEHALF OF      :    Atico, Ltd.\n\n     DESCRIPTION OF\n     MERCHANDISE       :    stamped steel hibachi, kettle grill",
+  "date": "1993-03-24",
+  "url": "https://rulings.cbp.gov/ruling/883140",
+  "ruling_number": "883140",
+  "categories": "Classification",
+  "collection": "ny",
+  "tariffs": [
+    "7321.13.0020",
+    "7321.13.0040"
+  ],
+  "related_rulings": [],
+  "is_usmca": false,
+  "is_nafta": false,
+  "operationally_revoked": false
+}

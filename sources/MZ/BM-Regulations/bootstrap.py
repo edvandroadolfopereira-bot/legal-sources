@@ -256,7 +256,10 @@ class BMScraper(BaseScraper):
                     "doc_type": doc.get("doc_type", "outro"),
                 }
 
-                yield self.normalize(record)
+                # Yield RAW record; the framework calls normalize() once.
+                # (Do NOT normalize here — double-normalize drops pdf_url and
+                #  raises KeyError on the framework's second pass. See #996.)
+                yield record
                 doc_count += 1
                 logger.info("Yielded doc %d: %s (%d chars)", doc_count, doc["title"][:50], len(text))
 
@@ -302,7 +305,8 @@ def main():
         sample_dir.mkdir(exist_ok=True)
 
         count = 0
-        for record in scraper.fetch_all(sample=sample):
+        for raw in scraper.fetch_all(sample=sample):
+            record = scraper.normalize(raw)
             count += 1
             if sample:
                 out = sample_dir / f"{count:03d}.json"

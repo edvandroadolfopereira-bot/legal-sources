@@ -1,0 +1,44 @@
+source_id: CA/AsyLex
+name: AsyLex — Canadian Refugee Status Decisions (HuggingFace)
+country: CA
+url: https://huggingface.co/datasets/clairebarale/AsyLex
+description: |
+  59,112 Canadian refugee status determination decisions (1996-2022) from the
+  Immigration and Refugee Board (IRB/RPD) via CanLII. Full anonymized text.
+  Streamed from HuggingFace Parquet files (raw_documents config).
+
+data_types:
+  - case_law
+
+license:
+  name: "CC BY-NC-SA 4.0"
+  url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+  commercial_use: false
+  attribution_required: true
+  share_alike: true
+  no_derivatives: false
+  notes: "Non-commercial use only. Data sourced from CanLII, preprocessed by Claire Barale et al. (ACL 2023)."
+
+language: en,fr
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 5
+  burst: 10
+
+update_frequency: static
+
+schema:
+  key_fields:
+    - name: canlii_id
+      required: true
+      type: string
+    - name: title
+      required: true
+      type: string
+  date_field: date
+  text_field: text
+  title_field: title
+  url_field: url

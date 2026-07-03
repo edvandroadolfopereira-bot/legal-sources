@@ -359,6 +359,13 @@ class EAEULegalPortalScraper(BaseScraper):
                         t = page.extract_text()
                         if t:
                             pages_text.append(t)
+                        # Release per-page layout + cached textmap to avoid
+                        # multi-GB peak RSS on large PDFs (OOM exit 137, #930).
+                        page.flush_cache()
+                        try:
+                            page.get_textmap.cache_clear()
+                        except AttributeError:
+                            pass
                     text = "\n\n".join(pages_text)
                     if text.strip():
                         return text
@@ -375,6 +382,7 @@ class EAEULegalPortalScraper(BaseScraper):
                     t = page.get_text()
                     if t:
                         pages_text.append(t)
+                doc.close()
                 text = "\n\n".join(pages_text)
                 if text.strip():
                     return text

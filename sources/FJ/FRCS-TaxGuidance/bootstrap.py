@@ -256,7 +256,9 @@ if __name__ == "__main__":
         for raw in scraper._fetch_docs(max_records=limit):
             record = scraper.normalize(raw)
             out_file = sample_dir / f"{record['_id']}.json"
-            out_file.write_text(json.dumps(record, indent=2, ensure_ascii=False))
+            out_file.write_text(
+                json.dumps(record, indent=2, ensure_ascii=False), encoding="utf-8"
+            )
             count += 1
             logger.info(f"Saved [{count}]: {record['title'][:70]}")
 

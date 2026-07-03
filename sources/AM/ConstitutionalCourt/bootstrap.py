@@ -349,31 +349,41 @@ def main():
     parser = argparse.ArgumentParser(description="Fetch Armenian Constitutional Court decisions")
     subparsers = parser.add_subparsers(dest="command", required=True)
     
-    # Bootstrap command
+    # Bootstrap command (bootstrap-fast is the VPS pipeline alias)
     bootstrap_parser = subparsers.add_parser("bootstrap", help="Fetch decisions")
     bootstrap_parser.add_argument("--sample", action="store_true", help="Fetch only sample records")
-    
+    fast_parser = subparsers.add_parser("bootstrap-fast", help="Fetch decisions (VPS pipeline alias)")
+    fast_parser.add_argument("--sample", action="store_true", help="Fetch only sample records")
+
     # Updates command
     updates_parser = subparsers.add_parser("updates", help="Fetch updates since date")
     updates_parser.add_argument("--since", required=True, help="ISO date (e.g., 2024-01-01)")
     updates_parser.add_argument("--full", action="store_true", help="Fetch all records")
-    
+
     args = parser.parse_args()
-    
+
     script_dir = Path(__file__).parent
     sample_dir = script_dir / "sample"
-    
-    if args.command == "bootstrap":
-        records = list(fetch_all(sample=args.sample))
-        print(f"\nFetched {len(records)} records", file=sys.stderr)
-        
+    data_dir = script_dir / "data"
+
+    if args.command in ("bootstrap", "bootstrap-fast"):
         if args.sample:
+            records = list(fetch_all(sample=True))
+            print(f"\nFetched {len(records)} records", file=sys.stderr)
             save_sample(records, sample_dir)
         else:
-            # Output to stdout for piping
-            for record in records:
-                print(json.dumps(record, ensure_ascii=False))
-                
+            # Stream full records to data/records.jsonl for the VPS ingest pipeline
+            data_dir.mkdir(parents=True, exist_ok=True)
+            jsonl_path = data_dir / "records.jsonl"
+            count = 0
+            with open(jsonl_path, "w", encoding="utf-8") as f:
+                for record in fetch_all(sample=False):
+                    f.write(json.dumps(record, ensure_ascii=False) + "\n")
+                    count += 1
+                    if count % 50 == 0:
+                        print(f"Progress: {count} records written", file=sys.stderr)
+            print(f"Full bootstrap complete: {count} records -> {jsonl_path}", file=sys.stderr)
+
     elif args.command == "updates":
         for record in fetch_updates(args.since):
             print(json.dumps(record, ensure_ascii=False))

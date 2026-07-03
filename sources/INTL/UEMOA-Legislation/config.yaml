@@ -1,0 +1,48 @@
+source_id: INTL/UEMOA-Legislation
+name: UEMOA Legal Instruments (Règlements, Directives, Décisions)
+country: INTL
+url: https://e-docucenter.uemoa.int/
+description: >
+  Legal instruments of the West African Economic and Monetary Union (UEMOA):
+  règlements, directives, décisions, actes additionnels, protocoles additionnels.
+  8 member states (BJ, BF, CI, GW, ML, NE, SN, TG). French. Full text scraped
+  from the e-docucenter portal (Drupal site with sitemap).
+data_types:
+  - legislation
+auth:
+  type: none
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+data_model:
+  update_strategy: append_only
+  dedup_key:
+    - _id
+schema:
+  key_fields:
+    - name: _id
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: url
+      type: string
+      required: true
+    - name: instrument_type
+      type: string
+      required: false
+license:
+  name: "UEMOA official publications"
+  url: "https://e-docucenter.uemoa.int/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official legal instruments of an international organization, published for open public access"

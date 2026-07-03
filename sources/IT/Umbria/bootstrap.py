@@ -227,7 +227,7 @@ class UmbriaScraper(BaseScraper):
 
                 misses = 0
                 found_any = True
-                yield self.normalize(raw)
+                yield raw
                 time.sleep(1.0)
             logger.info("Year %d done", year)
 
@@ -284,7 +284,8 @@ if __name__ == "__main__":
         # In sample mode, start from a recent year so we capture rich,
         # in-force consolidated texts rather than short abrogated stubs.
         years = range(2023, LAST_YEAR + 1) if sample_mode else range(FIRST_YEAR, LAST_YEAR + 1)
-        for record in scraper._iter_years(years):
+        for raw in scraper._iter_years(years):
+            record = scraper.normalize(raw)
             out_path = sample_dir / f"{count:04d}.json"
             with open(out_path, "w", encoding="utf-8") as f:
                 json.dump(record, f, ensure_ascii=False, indent=2)
@@ -298,7 +299,8 @@ if __name__ == "__main__":
     elif command == "update":
         since = sys.argv[2] if len(sys.argv) > 2 else str(LAST_YEAR - 1)
         count = 0
-        for record in scraper.fetch_updates(since):
+        for raw in scraper.fetch_updates(since):
+            record = scraper.normalize(raw)
             count += 1
             logger.info("[%d] %s", count, record["law_number"])
         logger.info("Update done: %d records", count)

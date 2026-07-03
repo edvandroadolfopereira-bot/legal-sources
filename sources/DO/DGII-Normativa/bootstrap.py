@@ -99,6 +99,13 @@ def extract_pdf_text(content: bytes) -> str:
                 t = page.extract_text()
                 if t:
                     pages.append(t)
+                # Release per-page layout + cached textmap to cap peak RSS
+                # on large PDFs (prevents OOM exit 137 on the fleet).
+                page.flush_cache()
+                try:
+                    page.get_textmap.cache_clear()
+                except AttributeError:
+                    pass
         return "\n\n".join(pages)
     except Exception as e:
         logger.warning(f"PDF extraction failed: {e}")

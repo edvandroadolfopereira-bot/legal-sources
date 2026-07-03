@@ -1,0 +1,51 @@
+source_id: BQ/Courts
+name: Caribbean Netherlands Court Decisions (BES — Bonaire, Sint Eustatius, Saba)
+country: BQ
+url: https://uitspraken.rechtspraak.nl/
+data_url: https://data.rechtspraak.nl/uitspraken/zoeken
+description: |
+  First-instance court decisions for the Caribbean Netherlands (Bonaire, Sint
+  Eustatius, and Saba) via the Dutch Rechtspraak Open Data API. Covers the
+  Gerecht in eerste aanleg van Bonaire, Sint Eustatius en Saba (BES trial court,
+  ECLI:NL:OGEABES:*) and the legacy Gerecht in Eerste Aanleg Bonaire. The shared
+  appellate court (Gemeenschappelijk Hof) and joint boards are covered by
+  CW/Courts; this source targets the BES-specific trial courts.
+
+data_types:
+  - case_law
+
+license: "Public domain (Dutch Open Data)"
+language: nl
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 2
+  burst: 5
+
+update_frequency: daily
+
+schema:
+  key_fields:
+    - name: ecli
+      required: true
+      type: string
+  date_field: date
+  text_field: text
+  title_field: title
+  url_field: url
+
+license:
+  name: "Public Domain (Dutch Open Data)"
+  url: "https://uitspraken.rechtspraak.nl/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Dutch judiciary publishes decisions as open data; no usage restrictions."
+
+notes: |
+  Uses the rechtspraak.nl Open Data API filtered by BES court creator URIs
+  (psi.rechtspraak.nl/GEABES, psi.rechtspraak.nl/GiEAB). Full text in XML with
+  structured ECLI metadata.

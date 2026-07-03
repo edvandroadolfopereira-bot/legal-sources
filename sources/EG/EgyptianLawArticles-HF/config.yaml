@@ -1,0 +1,40 @@
+source_id: EG/EgyptianLawArticles-HF
+name: Egyptian Civil Law Articles (HuggingFace TawasulAI)
+country: EG
+url: https://huggingface.co/datasets/TawasulAI/egyptian-law-articles
+description: |
+  1,105 articles from the Egyptian Civil Code with full text in Arabic and English.
+  Streamed via HuggingFace datasets library.
+
+data_types:
+  - legislation
+
+license:
+  name: "Unverified"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "HuggingFace dataset by TawasulAI. Egyptian Civil Code is public law."
+
+language: ar
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 5
+  burst: 10
+
+update_frequency: unknown
+
+schema:
+  key_fields:
+    - name: article_number
+      required: true
+      type: string
+  date_field: date
+  text_field: text
+  title_field: title
+  url_field: url

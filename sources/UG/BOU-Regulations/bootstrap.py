@@ -190,6 +190,15 @@ class BOURegulationsScraper(BaseScraper):
                 text = pg.extract_text()
                 if text:
                     pages_text.append(text)
+                # Release per-page cached objects/textmap before moving on.
+                # pdfplumber otherwise retains every visited page's parsed layout,
+                # so a single large statute PDF (e.g. the FI Act) can grow to
+                # multiple GB and OOM-kill the VPS (exit 137, issue #938).
+                try:
+                    pg.flush_cache()
+                    pg.get_textmap.cache_clear()
+                except Exception:
+                    pass
             pdf.close()
             full_text = "\n\n".join(pages_text)
             full_text = _clean_text(full_text)

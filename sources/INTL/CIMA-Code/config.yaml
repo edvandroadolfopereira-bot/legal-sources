@@ -1,0 +1,64 @@
+# ===================================================================
+# INTL/CIMA-Code -- CIMA Insurance Code (Code des Assurances)
+# ===================================================================
+# Consolidated regional insurance legislation of the Conference
+# Interafricaine des Marches d'Assurances (CIMA), the supranational
+# insurance regulator for 14 francophone African states.
+# Full text published as HTML (HelpNDoc export) at cima-afrique.org.
+# French language. No authentication required.
+# ===================================================================
+
+source:
+  id: "INTL/CIMA-Code"
+  country: "INTL"
+  name: "CIMA Insurance Code (Code des Assurances des Etats membres de la CIMA)"
+  url: "https://cima-afrique.org/code-cima/"
+  description: |
+    The CIMA Insurance Code (Code des Assurances) is the single,
+    directly-applicable insurance law of the 14 member states of the
+    Conference Interafricaine des Marches d'Assurances (CIMA): Benin,
+    Burkina Faso, Cameroon, Central African Republic, Chad, Comoros,
+    Congo, Cote d'Ivoire, Gabon, Equatorial Guinea, Mali, Niger,
+    Senegal and Togo. It is supplemented by the CIMA Treaty,
+    the Reglements of the Council of Ministers and annexes.
+    Published in full text as HTML at cima-afrique.org. French language.
+    No authentication required.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 2
+  burst: 3
+
+data_model:
+  type: "legislation"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  key_fields:
+    - _id
+    - _source
+    - _type
+    - title
+    - text
+    - url
+
+license:
+  name: "CIMA official legal instruments"
+  url: "https://cima-afrique.org/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: >
+    Official regional treaty legislation enacted by an intergovernmental
+    organisation; published by CIMA for public access. Treated as open
+    official legal text, consistent with other INTL legislation sources
+    (e.g. UEMOA, CEMAC, IGAD).

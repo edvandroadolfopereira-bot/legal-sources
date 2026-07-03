@@ -1,0 +1,53 @@
+source:
+  id: RW/WIPOLex
+  country: RW
+  name: "Rwanda Legislation (WIPO Lex)"
+  url: https://www.wipo.int/wipolex/en/members/profile/RW
+  data_types:
+    - legislation
+  language: en
+license:
+  name: "Public domain (national legislation)"
+  url: https://www.wipo.int/wipolex/en/disclaimer
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: >
+    The documents are official legislative texts of the Republic of Rwanda
+    (laws, orders and subsidiary regulations), which are not subject to
+    copyright. WIPO Lex republishes them free of charge as a public gateway. No
+    usage restriction is placed on the underlying legal texts.
+fetcher:
+  type: html_profile_pdf
+  rate_limit: 1.5
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: title
+      required: true
+      type: string
+    - name: text
+      required: true
+      type: string
+  date_fields:
+    - _fetched_at
+    - date
+  text_fields:
+    - text
+    - title
+data_model:
+  update_strategy: upsert
+  dedup_key:
+    - _id
+notes: >
+  Rwanda legislation (copyright and related rights, patents, trademarks,
+  industrial designs, plant breeders' rights, competition and consumer
+  protection, their subsidiary regulations and related commercial statutes) from
+  the WIPO Lex database. The member profile is server-rendered HTML listing each
+  text with adoption date + detail-page link; each detail page exposes a
+  CloudFront-signed PDF URL (signed query string required). Full text extracted
+  from PDFs (English preferred, French fallback). Complements INTL/WIPOLex, which
+  captures only inline-HTML texts and skips PDF-only laws.

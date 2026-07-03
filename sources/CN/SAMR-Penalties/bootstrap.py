@@ -117,12 +117,20 @@ def _extract_pdf_text(pdf_bytes: bytes) -> str:
             text = ""
             for page in pdf.pages:
                 text += (page.extract_text() or "") + "\n"
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
             return text.strip()
     elif PdfReader:
         reader = PdfReader(io.BytesIO(pdf_bytes))
         text = ""
         for page in reader.pages:
             text += (page.extract_text() or "") + "\n"
+            try:
+                page.flush_cache(); page.get_textmap.cache_clear()
+            except Exception:
+                pass
         return text.strip()
     else:
         return ""

@@ -1,0 +1,20 @@
+{
+  "_id": "cbp-889466",
+  "_source": "US/CBP-Rulings",
+  "_type": "doctrine",
+  "_fetched_at": "2026-06-20T19:10:21Z",
+  "title": "Supplement to Ruling No. NY 889466 on the tariff                  classification of \"white moulding\"",
+  "text": "NY 889466\n                         Supplement No. 1\n\n                         October 25, 1993\n\nCLA-2-19:S:N:N7:228\n\nCATEGORY:  Classification\n\nTARIFF NO.:   1901.90.9095\n\nMs. Kathleen Crawford\nBDP International, Inc.\n1017 4th Avenue\nLester, PA  19029-1813\n\nRE:  Supplement to Ruling No. NY 889466 on the tariff             \n     classification of \"white moulding\"\n\nDear Ms. Crawford:\n\n     This is a supplement to Customs Ruling No. NY 889466 dated\nSeptember 2, 1993.\n\n     The ruling incorrectly stated the applicable tariff subheading for the\nmerchandise, at the heading line for the \"Tariff No.,\" and in the body of\nthe letter.  The correct tariff subheading for the white moulding is\n1901.90.9095, HTS.  The verbal description for the articles provided for\nin this subheading, as stated in the penultimate paragraph on page one, is\ncorrect.   \n\n     This supplement should be presented whenever Ruling No. NY 889466 is\npresented.\n      \n\n                                   Sincerely,\n\n                                   \n  \n                                   Jean F. Maguire\n                                   Area Director\n                                   New York Seaport",
+  "date": "1993-10-25",
+  "url": "https://rulings.cbp.gov/ruling/889466",
+  "ruling_number": "889466",
+  "categories": "Classification",
+  "collection": "ny",
+  "tariffs": [
+    "1901.90.9095"
+  ],
+  "related_rulings": [],
+  "is_usmca": false,
+  "is_nafta": false,
+  "operationally_revoked": false
+}

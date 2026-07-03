@@ -83,6 +83,10 @@ class BTJudiciaryScraper(BaseScraper):
                     text = page.extract_text()
                     if text:
                         pages_text.append(text)
+                    try:
+                        page.flush_cache(); page.get_textmap.cache_clear()
+                    except Exception:
+                        pass
             full_text = "\n\n".join(pages_text)
             full_text = re.sub(r"\n{3,}", "\n\n", full_text)
             full_text = re.sub(r" {2,}", " ", full_text)

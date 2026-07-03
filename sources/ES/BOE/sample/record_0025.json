@@ -1,0 +1,22 @@
+{
+  "_id": "BOE-A-2012-5043:dd",
+  "_source": "ES/BOE",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-08T01:51:55.458554+00:00",
+  "title": "Disposición derogatoria única — Real Decreto 662/2012, de 13 de abril, por el que se establece el marco para la implantación de los sistemas inteligentes de transporte (SIT) en el sector del transporte por carretera y para las interfaces con otros modos de transporte.",
+  "text": "Disposición derogatoria única. Derogación normativa.\nQuedan derogadas cuantas disposiciones de igual o inferior rango se opongan a lo dispuesto en este real decreto.",
+  "date": "2012-04-13",
+  "url": "https://www.boe.es/eli/es/rd/2012/04/13/662",
+  "identifier": "BOE-A-2012-5043:dd",
+  "parent_identifier": "BOE-A-2012-5043",
+  "parent_title": "Real Decreto 662/2012, de 13 de abril, por el que se establece el marco para la implantación de los sistemas inteligentes de transporte (SIT) en el sector del transporte por carretera y para las interfaces con otros modos de transporte.",
+  "article_id": "dd",
+  "article_title": "Disposición derogatoria única",
+  "chapter": "",
+  "rango": "Real Decreto",
+  "publication_date": "2012-04-14",
+  "effective_date": "2012-04-15",
+  "url_eli": "https://www.boe.es/eli/es/rd/2012/04/13/662",
+  "language": "es",
+  "granularity": "article"
+}

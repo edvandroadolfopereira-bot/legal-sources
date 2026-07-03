@@ -1,0 +1,28 @@
+source_id: CU/ParlamentoCubano
+name: Cuba National Assembly — Laws & Decree-Laws
+country: CU
+url: https://www.parlamentocubano.gob.cu/labor-legislativa
+data_types:
+  - legislation
+language: es
+auth:
+  type: none
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - text
+    - date
+    - url
+    - law_number
+    - law_type
+
+license:
+  name: Open Government Data (Cuba)
+  url: https://www.parlamentocubano.gob.cu/
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official Cuban National Assembly — public legislation texts

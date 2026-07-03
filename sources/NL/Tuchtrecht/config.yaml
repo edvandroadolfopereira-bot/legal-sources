@@ -1,0 +1,116 @@
+# ═══════════════════════════════════════════════════════════════════
+# Legal Data Hunter — NL/Tuchtrecht Configuration
+# ═══════════════════════════════════════════════════════════════════
+
+# ── Source Identity ───────────────────────────────────────────────
+source:
+  id: "NL/Tuchtrecht"
+  country: "NL"
+  name: "Dutch Professional Disciplinary Tribunals (tuchtrecht.overheid.nl)"
+  url: "https://tuchtrecht.overheid.nl"
+  description: |
+    Tuchtrecht is the official Dutch government collection of professional
+    disciplinary case law. It aggregates decisions of the disciplinary
+    tribunals (tuchtcolleges) and their appellate bodies for the regulated
+    professions: advocaten (lawyers, incl. the Hof van Discipline),
+    gezondheidszorg (healthcare, Regionaal/Centraal Tuchtcollege),
+    notarissen, gerechtsdeurwaarders, accountants (Accountantskamer/CBb),
+    diergeneeskundigen (veterinarians) and scheepvaart (maritime discipline).
+
+    Every decision is ECLI-indexed and carries the full reasoning text.
+    Data is accessed via the KOOP SRU 2.0 open-data API
+    (repository.overheid.nl/sru, product-area "tuchtrecht"); each record
+    exposes a direct XML manifestation containing the full decision body
+    (<uitspraaktekst>) and headnote (<inhoudsindicatie>).
+
+    Coverage: ~47,600 decisions, 2010–present.
+
+# ── Data Types ────────────────────────────────────────────────────
+data_types:
+  - case_law
+
+# ── Authentication ────────────────────────────────────────────────
+auth:
+  type: "none"
+
+# ── Rate Limiting ─────────────────────────────────────────────────
+rate_limit:
+  requests_per_second: 2
+  burst: 5
+  max_workers: 4
+
+# ── API Configuration ─────────────────────────────────────────────
+api:
+  type: "sru"
+  base_url: "https://repository.overheid.nl/sru"
+  product_area: "tuchtrecht"
+  page_size: 100
+  document_format: "xml"
+
+# ── Data Model ────────────────────────────────────────────────────
+data_model:
+  type: "case_law"
+  primary_key: "ecli"
+  update_strategy: "append_only"
+  versioning: "ecli"
+  dedup_key:
+    - "ecli"
+
+# ── Schema ────────────────────────────────────────────────────────
+schema:
+  total_fields: 18
+  key_fields:
+    - name: "ecli"
+      description: "European Case Law Identifier (unique per decision)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Decision title (ECLI + tribunal + date + case number)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full decision text (headnote + reasoning body)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision date (uitspraakdatum) in ISO 8601"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "court"
+      description: "Tribunal / instantie that issued the decision"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "url"
+      description: "Public detail page on tuchtrecht.overheid.nl"
+      type: "string"
+      role: "reference"
+      required: true
+
+# ── License ───────────────────────────────────────────────────────
+license:
+  name: "Public Domain (Dutch official documents)"
+  url: "https://www.overheid.nl/help/algemeen/copyright"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: |
+    Under Art. 11 of the Dutch Copyright Act (Auteurswet), there is no
+    copyright on judicial decisions and laws issued by public authority.
+    Decisions published on tuchtrecht.overheid.nl are official government
+    documents in the public domain. Personal data is pseudonymized by the
+    publisher before publication.
+
+# ── Notes ─────────────────────────────────────────────────────────
+notes: |
+  - Language: Dutch (UTF-8)
+  - API: KOOP SRU 2.0 (repository.overheid.nl/sru), product-area "tuchtrecht"
+  - Linear startRecord pagination works to the end of the collection (~47.6K)
+  - Full text from XML <uitspraaktekst>; headnote from <inhoudsindicatie>
+  - Complements NL/Rechtspraak (courts) — this is the professional-discipline layer
+  - Append-only model: decisions are immutable once published (keyed by ECLI)

@@ -1,0 +1,25 @@
+source_id: SS/NRA-TaxLaws
+name: South Sudan National Revenue Authority — Tax Laws
+country: SS
+url: https://nra.gov.ss/resources
+data_types:
+  - legislation
+auth:
+  type: none
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - date
+    - text
+    - url
+
+license:
+  name: "Public Domain (government legislation)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official tax legislation of South Sudan published by the National Revenue Authority via Strapi CMS."

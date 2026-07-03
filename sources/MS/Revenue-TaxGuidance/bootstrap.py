@@ -191,6 +191,24 @@ class MSRevenueTaxGuidanceScraper(BaseScraper):
             return years[-1]
         return None
 
+    def _extract_date(self, url: str, title: str) -> Optional[str]:
+        """Derive an ISO date for the document.
+
+        Most revised-act titles carry no year, but gov.ms serves every PDF
+        from a /wp-content/uploads/YYYY/MM/ path that records the upload date.
+        Use that first, then fall back to a year found in the title.
+        """
+        m = re.search(r"/uploads/(19\d{2}|20[0-2]\d)/(0[1-9]|1[0-2])/", url)
+        if m:
+            return f"{m.group(1)}-{m.group(2)}-01"
+        m = re.search(r"/uploads/(19\d{2}|20[0-2]\d)/", url)
+        if m:
+            return f"{m.group(1)}-01-01"
+        year = self._extract_year(title)
+        if year:
+            return f"{year}-01-01"
+        return None
+
     def fetch_all(self) -> Generator[dict, None, None]:
         """Yield all tax guidance documents with full text."""
         pdfs = self._collect_pdf_links()
@@ -241,8 +259,7 @@ class MSRevenueTaxGuidanceScraper(BaseScraper):
         if not text:
             return None
 
-        year = raw.get("year")
-        date_iso = f"{year}-01-01" if year else None
+        date_iso = self._extract_date(raw.get("url", ""), raw.get("title", ""))
 
         return {
             "_id": f"MS/Revenue-TaxGuidance/{raw.get('doc_id', '')}",
@@ -267,7 +284,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     cmd = sys.argv[1]
-    if cmd == "bootstrap":
+    if cmd in ("bootstrap", "bootstrap-fast"):
         sample = "--sample" in sys.argv
         result = scraper.bootstrap(sample_mode=sample, sample_size=12)
         print(json.dumps(result, indent=2, default=str))

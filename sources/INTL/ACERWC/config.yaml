@@ -1,0 +1,76 @@
+# ===================================================================
+# INTL/ACERWC -- African Committee of Experts on the Rights and
+# Welfare of the Child — Decisions and General Comments
+# ===================================================================
+# Communications (case_law) and General Comments (doctrine) from the
+# ACERWC, the AU treaty body under the African Charter on the Rights
+# and Welfare of the Child. HTML listing scrape + PDF text extraction.
+# ===================================================================
+
+source:
+  id: "INTL/ACERWC"
+  country: "INTL"
+  name: "African Committee of Experts on the Rights and Welfare of the Child"
+  url: "https://www.acerwc.africa/en/communications/list"
+  description: |
+    Decisions on Communications and General Comments from the African
+    Committee of Experts on the Rights and Welfare of the Child (ACERWC).
+    The ACERWC is the AU treaty body that monitors implementation of the
+    African Charter on the Rights and Welfare of the Child (ACRWC).
+    Communications are quasi-judicial complaints; General Comments are
+    interpretive guidance documents. Full text extracted from PDFs hosted
+    on acerwc.africa.
+
+data_types:
+  - case_law
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+api:
+  type: "html_scrape_pdf"
+  listing_url: "https://www.acerwc.africa/en/communications/list"
+  base_url: "https://www.acerwc.africa"
+
+data_model:
+  type: "mixed"
+  primary_key: "case_number"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "title"
+      description: "Communication/GC title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from decision/GC PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "case_number"
+      description: "ACERWC case number (e.g. 002/Com/002/2009) or GC number"
+      type: "string"
+      role: "identifier"
+      required: true
+    - name: "date"
+      description: "Decision/adoption date (ISO 8601) when parseable"
+      type: "date"
+      role: "temporal_key"
+      required: false
+
+license:
+  name: "African Union institutional publication"
+  url: "https://www.acerwc.africa/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "International treaty body decisions and general comments"

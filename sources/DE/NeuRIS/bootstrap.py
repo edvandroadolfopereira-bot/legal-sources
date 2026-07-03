@@ -248,26 +248,46 @@ class NEURISFetcher:
 
 def bootstrap(sample: bool = False):
     fetcher = NEURISFetcher()
-    sample_dir = Path(__file__).parent / "sample"
-    sample_dir.mkdir(exist_ok=True)
-
-    limit = 12 if sample else 0
+    base = Path(__file__).parent
     count = 0
 
-    for rec in fetcher.fetch_all(limit=limit):
-        count += 1
-        if sample:
+    if sample:
+        sample_dir = base / "sample"
+        sample_dir.mkdir(exist_ok=True)
+        for rec in fetcher.fetch_all(limit=12):
+            count += 1
             path = sample_dir / f"{count:04d}.json"
             path.write_text(json.dumps(rec, ensure_ascii=False, indent=2), encoding="utf-8")
             logger.info(f"Sample {count}: {rec['_type']} | {rec['title'][:60]}... | text={len(rec.get('text',''))} chars")
-        else:
-            print(json.dumps(rec, ensure_ascii=False))
+    else:
+        data_dir = base / "data"
+        data_dir.mkdir(exist_ok=True)
+        out_path = data_dir / "records.jsonl"
+        with open(out_path, "w", encoding="utf-8") as f:
+            for rec in fetcher.fetch_all(limit=0):
+                f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+                count += 1
+        logger.info(f"Wrote {count} records to {out_path}")
 
     logger.info(f"Done. Total records: {count}")
     return count
 
 
+def main():
+    import argparse
+
+    parser = argparse.ArgumentParser(description="DE/NeuRIS bootstrap (REST API)")
+    parser.add_argument("command", nargs="?", default="bootstrap",
+                        choices=["bootstrap", "bootstrap-fast"], help="Command to run")
+    parser.add_argument("--sample", action="store_true", help="Fetch sample data only")
+    parser.add_argument("--full", action="store_true", help="Full pull (default for non-sample)")
+    args, _unknown = parser.parse_known_args()
+
+    n = bootstrap(sample=args.sample)
+    if args.sample and n < 10:
+        logger.error(f"Only {n} samples (need 10+). Check the NeuRIS API.")
+        sys.exit(1)
+
+
 if __name__ == "__main__":
-    args = sys.argv[1:]
-    is_sample = "--sample" in args or "bootstrap" in args
-    bootstrap(sample=is_sample)
+    main()

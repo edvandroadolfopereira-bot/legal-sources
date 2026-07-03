@@ -185,11 +185,17 @@ class CorteSupremaScraper(BaseScraper):
             return m.group(1)
         return ""
 
-    def normalize(self, raw: Dict[str, Any]) -> Dict[str, Any]:
+    def normalize(self, raw: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         doc_id = raw.get("id", "")
         text = self._clean_html_text(
             raw.get("texto_sentencia", "") or raw.get("texto_sentencia_anon", "")
         )
+        # Skip stubs without usable full text. Returning None lets both the
+        # base bootstrap() and bootstrap_fast() framework paths treat this as a
+        # clean skip (counted under skip_normalize_none) rather than writing an
+        # empty record. This is the single source of truth for the text filter.
+        if not text or len(text) < 50:
+            return None
         title = raw.get("caratulado_s", "") or f"ROL {raw.get('rol_era_sup_s', 'unknown')}"
         date = self._parse_date(raw.get("fec_sentencia_sup_dt", ""))
         case_number = raw.get("rol_era_sup_s", "")
@@ -225,7 +231,15 @@ class CorteSupremaScraper(BaseScraper):
         }
 
     def fetch_all(self, max_records: int = None) -> Generator[Dict[str, Any], None, None]:
-        """Fetch all Corte Suprema decisions."""
+        """Yield RAW Solr decision documents.
+
+        Per the BaseScraper contract, fetch_all() must yield raw records and the
+        framework (bootstrap / bootstrap_fast) calls normalize() exactly once.
+        Yielding already-normalized records here caused double-normalization in
+        bootstrap_fast — every field came up empty (_id="", text="",
+        title="ROL unknown"), producing unusable stubs on the VPS (issue #850).
+        Filtering of stubs now lives in normalize() (returns None).
+        """
         offset = 0
         count = 0
         total = None
@@ -258,21 +272,12 @@ class CorteSupremaScraper(BaseScraper):
             for doc in docs:
                 if max_records and count >= max_records:
                     return
-
-                normalized = self.normalize(doc)
-                if not normalized["text"] or len(normalized["text"]) < 50:
-                    logger.warning(
-                        f"Insufficient text for {normalized['_id']}: "
-                        f"{len(normalized.get('text', ''))} chars"
-                    )
-                    continue
-
                 count += 1
-                yield normalized
+                yield doc
 
             offset += PAGE_SIZE
 
-        logger.info(f"Completed: {count} decisions fetched")
+        logger.info(f"Completed: {count} raw documents fetched")
 
     def fetch_updates(self, since: str = None) -> Generator[Dict[str, Any], None, None]:
         """Fetch recent decisions (most recent 50)."""
@@ -323,7 +328,7 @@ def main():
     parser = argparse.ArgumentParser(description="CL/CorteSuprema data fetcher")
     parser.add_argument(
         "command",
-        choices=["bootstrap", "update", "test"],
+        choices=["bootstrap", "bootstrap-fast", "update", "test"],
         help="Command to run",
     )
     parser.add_argument(
@@ -340,14 +345,28 @@ def main():
         success = scraper.test()
         sys.exit(0 if success else 1)
 
+    elif args.command == "bootstrap-fast" or (args.command == "bootstrap" and not args.sample):
+        # Full run: stream to data/records.jsonl via the framework, which calls
+        # normalize() exactly once per raw doc (the VPS pipeline path).
+        stats = scraper.bootstrap_fast()
+        logger.info(
+            f"Bootstrap-fast complete: {stats.get('records_new', 0)} new, "
+            f"{stats.get('records_fetched', 0)} fetched, "
+            f"{stats.get('errors', 0)} skipped/errors"
+        )
+
     elif args.command == "bootstrap":
+        # Sample mode: fetch raw docs, normalize here (fetch_all yields raw),
+        # skip stubs (normalize -> None), keep going until we have enough.
         sample_dir = Path(__file__).parent / "sample"
         sample_dir.mkdir(exist_ok=True)
 
         count = 0
-        max_records = 15 if args.sample else None
-
-        for record in scraper.fetch_all(max_records=max_records):
+        target = 15
+        for raw in scraper.fetch_all():
+            record = scraper.normalize(raw)
+            if not record:
+                continue
             out_path = sample_dir / f"record_{count:04d}.json"
             with open(out_path, "w", encoding="utf-8") as f:
                 json.dump(record, f, ensure_ascii=False, indent=2)
@@ -357,6 +376,8 @@ def main():
                 f"{record.get('title', '?')[:60]} ({text_len:,} chars)"
             )
             count += 1
+            if count >= target:
+                break
 
         logger.info(f"Bootstrap complete: {count} records saved to sample/")
 
@@ -364,7 +385,10 @@ def main():
         sample_dir = Path(__file__).parent / "sample"
         sample_dir.mkdir(exist_ok=True)
         count = 0
-        for record in scraper.fetch_updates():
+        for raw in scraper.fetch_updates():
+            record = scraper.normalize(raw)
+            if not record:
+                continue
             out_path = sample_dir / f"update_{count:04d}.json"
             with open(out_path, "w", encoding="utf-8") as f:
                 json.dump(record, f, ensure_ascii=False, indent=2)

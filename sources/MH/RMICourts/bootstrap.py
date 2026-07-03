@@ -123,6 +123,10 @@ class RMICourtsScraper(BaseScraper):
                     t = page.extract_text()
                     if t:
                         parts.append(t.strip())
+                    try:
+                        page.flush_cache(); page.get_textmap.cache_clear()
+                    except Exception:
+                        pass
                 text = "\n\n".join(parts)
                 if len(text) >= 50:
                     return text
@@ -138,6 +142,10 @@ class RMICourtsScraper(BaseScraper):
                 t = page.extract_text()
                 if t:
                     parts.append(t.strip())
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
             text = "\n\n".join(parts)
             if len(text) >= 50:
                 return text

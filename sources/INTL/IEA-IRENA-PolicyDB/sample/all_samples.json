@@ -1,0 +1,447 @@
+[
+  {
+    "_id": "INTL-IEA-IRENA-1",
+    "_source": "INTL/IEA-IRENA-PolicyDB",
+    "_type": "legislation",
+    "_fetched_at": "2026-06-20T14:20:36.668131+00:00",
+    "title": "Law 47-09 on Energy Efficiency",
+    "text": "Law 47-09, or the \"Law on Energy Efficiency\" aims to increase energy efficiency in the use of energy sources, to avoid waste, to reduce the energy costs on the national economy, and to enhance sustainable development. The law includes a range of measures such as mandatory energy audits, minimum energy performances standards for appliances and preferential tariffs (known as super-peak tariffs) for industries that voluntarily shift their energy consumption away from peak periods.\nThis law sets the criteria of minimum energy performance for appliances and electrical equipment powered by natural gas, liquid or gaseous petroleum products, coal and renewable energies. It makes mandatory energy audits for companies and institutions in the production, transmission and distribution of energy, as well as the performance of an energy impact study for new construction and urban projects. It also defines the role of energy services and facilities, and establishes technical control.\n\nStatus: In force\nJurisdiction: National",
+    "date": "2011-01-01",
+    "url": "http://www.muat.gov.ma/sites/default/files/Reglementation/Loi-n-47-09-efficacite-energ%C3%A9tique-fr.pdf",
+    "language": "en",
+    "policy_id": "1",
+    "status": "In force",
+    "year": 2011,
+    "countries": [
+      "Morocco"
+    ],
+    "country_codes": [
+      "MAR"
+    ],
+    "jurisdiction": "National",
+    "technologies": [],
+    "topics": [],
+    "policy_types": [],
+    "date_modified": "2021-11-15T13:29:35.000Z"
+  },
+  {
+    "_id": "INTL-IEA-IRENA-2",
+    "_source": "INTL/IEA-IRENA-PolicyDB",
+    "_type": "legislation",
+    "_fetched_at": "2026-06-20T14:20:36.668244+00:00",
+    "title": "Smart Farming Initiative",
+    "text": "The Smart Farming programme focuses on eight key areas that have the highest costs on farms, or offer the greatest savings to farmers, including energy efficiency. The programme offers free audits for farmers from expert advisers who are able to offer tailored advice to participants on ways to save money and take practical actions to improve resource management.\n\nStatus: In force\nJurisdiction: National",
+    "date": "2016-01-01",
+    "url": "https://smartfarming.ie/",
+    "language": "English",
+    "policy_id": "2",
+    "status": "In force",
+    "year": 2016,
+    "countries": [
+      "Ireland"
+    ],
+    "country_codes": [
+      "IRL"
+    ],
+    "jurisdiction": "National",
+    "technologies": [],
+    "topics": [],
+    "policy_types": [],
+    "date_modified": "2021-04-21T09:22:27.000Z"
+  },
+  {
+    "_id": "INTL-IEA-IRENA-3",
+    "_source": "INTL/IEA-IRENA-PolicyDB",
+    "_type": "legislation",
+    "_fetched_at": "2026-06-20T14:20:36.668358+00:00",
+    "title": "THE 13TH FIVE-YEAR PLAN FOR ECONOMIC AND SOCIAL DEVELOPMENT OF THE PEOPLE'S REPUBLIC OF CHINA (2016-2020)",
+    "text": "Comprised of 20 Parts, the 13th five-year plan is divided into 20 sections, of which the following relate to energy: \nNEW SYSTEMS FOR DEVELOPMENT DEVELOPMENT\nAGRICULTURAL MODERNIZATION\nAN OPTIMIZED MODERN INDUSTRIAL SYSTEM\nMODERN INFRASTRUCTURE NETWORKS NETWORKS\nNEW URBANIZATION\nDEVELOPMENT COORDINATED BETWEEN REGIONS\nECOSYSTEMS AND THE ENVIRONMENT\nRelevant to energy efficiency are various measures, including:\n\"100, 1,000, 10,000\" energy conservation initiative to the top 100 energy consuming enterprises and top 1,000 energy consuming enterprises on the provincial government level and other high energy consuming sectors to reduce energy consumption facilitate energy management;\nWater conservation to supress usage below 670 billion cubic centimeters and encourage alternative water sources with the promotion of water label efficiency schemes;\nMineral resource and land conservation; \nEconomic Circular Resource Initiatives; \nPollution Prevention: A 25% reduction in the number of days of heavy air pollution registered in the air pollution monitoring system, achieved primarily through environmental protection standards for vehicles, watercraft, and fuel oil.\n\nStatus: Ended\nJurisdiction: National",
+    "date": "2016-03-16",
+    "url": "http://www.npc.gov.cn/wxzl/gongbao/2016-07/08/content_1993756.htm",
+    "language": "English",
+    "policy_id": "3",
+    "status": "Ended",
+    "year": 2016,
+    "countries": [
+      "People's Republic of China"
+    ],
+    "country_codes": [
+      "CHN"
+    ],
+    "jurisdiction": "National",
+    "technologies": [],
+    "topics": [],
+    "policy_types": [],
+    "date_modified": "2021-04-15T22:00:00.000Z"
+  },
+  {
+    "_id": "INTL-IEA-IRENA-5",
+    "_source": "INTL/IEA-IRENA-PolicyDB",
+    "_type": "legislation",
+    "_fetched_at": "2026-06-20T14:20:36.668423+00:00",
+    "title": "Energy Efficiency Obligation Program",
+    "text": "To comply with Article 7 of the EU Energy Efficiency Directive, in January 2017, Greece implemented an energy efficiency obligation programme, which aims to provide 10% (332.7 ktoe) of the required energy savings by 2020. The programme requires energy suppliers to obtain savings in line with an annual target, which is identified based on the market share of the obligated entity.\n\nStatus: Ended\nJurisdiction: National",
+    "date": "2017-01-01",
+    "url": "https://www.iea.org/policies?policyId=5",
+    "language": "en",
+    "policy_id": "5",
+    "status": "Ended",
+    "year": 2017,
+    "countries": [
+      "Greece"
+    ],
+    "country_codes": [
+      "GRC"
+    ],
+    "jurisdiction": "National",
+    "technologies": [
+      "Transport technologies"
+    ],
+    "topics": [],
+    "policy_types": [],
+    "date_modified": "2021-02-22T15:16:05.000Z"
+  },
+  {
+    "_id": "INTL-IEA-IRENA-6",
+    "_source": "INTL/IEA-IRENA-PolicyDB",
+    "_type": "legislation",
+    "_fetched_at": "2026-06-20T14:20:36.668512+00:00",
+    "title": "Mandatory Energy Audits",
+    "text": "In compliance with Article 8 of the EU Energy Efficiency Directive (EED), Greece implemented in December 2016 a requirement for large industry to either conduct an energy audit every four years, or implement an energy or environmental management system. Small to medium-sized enterprises will also have access to quality energy audits due to these policies.\nThe EED has been formally transposed into the Greek legislative framework with Law 4342/2015. The law provides a framework to promote energy efficiency measures, and sets the institutional framework for carrying out energy audits. According to Article 14 of this law, energy audits are designed to identify potential energy efficiency improvement measures and are applied independently to all final consumers, including domestic, commercial customers and small industrial customers. \nA Joint Ministerial Decision (JMD) defines the procedures, requirements and guidelines of energy inspection on the premises and spaces of an industrial or building complex in order to guarantee effective and high quality services. Energy audits\nunder schemes based on voluntary agreements between interested bodies and public organisations are carried out in accordance with the above requirements.\n\nStatus: In force\nJurisdiction: National",
+    "date": "2016-01-01",
+    "url": "http://www.et.gr/idocs-nph/search/pdfViewerForm.html?args=5C7QrtC22wE4q6ggiv8WTXdtvSoClrL86BYA0d1yFht5MXD0LzQTLWPU9yLzB8V68knBzLCmTXKaO6fpVZ6Lx3UnKl3nP8NxdnJ5r9cmWyJWelDvWS_18kAEhATUkJb0x1LIdQ163nV9K--td6SIuQpuAYsfWnZnOjEVWl0sgT4NCgtlEtCJDePk6QIHe_RU",
+    "language": "Greek",
+    "policy_id": "6",
+    "status": "In force",
+    "year": 2016,
+    "countries": [
+      "Greece"
+    ],
+    "country_codes": [
+      "GRC"
+    ],
+    "jurisdiction": "National",
+    "technologies": [],
+    "topics": [],
+    "policy_types": [],
+    "date_modified": "2019-12-08T14:05:58.000Z"
+  },
+  {
+    "_id": "INTL-IEA-IRENA-7",
+    "_source": "INTL/IEA-IRENA-PolicyDB",
+    "_type": "legislation",
+    "_fetched_at": "2026-06-20T14:20:37.816560+00:00",
+    "title": "Energy Efficiency Fund",
+    "text": "The Department of Communications, Climate Action and Environment launched Ireland's first ever National Energy Efficiency Fund in March 2014. The fund was to act as a catalyst to develop energy efficiency projects in the Irish market. The fund will also enhance the level of finance available to support the clear cost saving opportunity that exists for public and commercial sector organisations. The Fund provides finance to two main types of energy efficiency projects in public and commercial sectors, Energy Performance Contracts (EPCs) where funding is loaned to an Energy Services Company (\"ESCO\") and direct lending to the client company.\n\nStatus: In force\nJurisdiction: National",
+    "date": "2014-01-01",
+    "url": "https://www.dccae.gov.ie/en-ie/energy/topics/Energy-Efficiency/business/business-support-programmes/Pages/Energy-Efficiency-Fund.aspx",
+    "language": "English",
+    "policy_id": "7",
+    "status": "In force",
+    "year": 2014,
+    "countries": [
+      "Ireland"
+    ],
+    "country_codes": [
+      "IRL"
+    ],
+    "jurisdiction": "National",
+    "technologies": [],
+    "topics": [],
+    "policy_types": [],
+    "date_modified": "2020-09-13T22:00:00.000Z"
+  },
+  {
+    "_id": "INTL-IEA-IRENA-8",
+    "_source": "INTL/IEA-IRENA-PolicyDB",
+    "_type": "legislation",
+    "_fetched_at": "2026-06-20T14:20:38.964263+00:00",
+    "title": "Federal flagship industrial development plan (P+B)",
+    "text": "Launched in April 2016, Brazil's federal flagship industrial development Plan (P+B) is led by the Ministry of Development, Industries and Commerce (MDIC), and focuses on enhancing the productiveness of industrial small and medium enterprises (SMEs). \r\nBy the end of 2017, the programme had met its goal of serving three thousand companies. In 2018 and 2019, the programme plans to serve 600 additional companies, 300 each year.\r\nIn 2017, MDIC announced a new phase of the programme, focusing specifically on enhancing energy efficiency in production, digitalisation and connectivity. The two fronts work in parallel, with MDIC dedicating different sets of budget to run pilot programmes and full-scale implementation through different delivery partners. MDIC allocated R$ 1 million over 2016 and 2017 to test a methodology of specialist advice and support delivered by the Brazilian Micro and Small Business Support Service (SEBRAE) to a pilot group of 48 SMEs. From mid-2017, MDIC intends to scale-up the support to 400 SMEs, at the cost of R$ 8 million to be shared between the Agency for Industrial Development (ABDI) and the PROCEL programme. \r\nOn the technology front, the pilot phase focused on the digital enhancement of SME processes and was delivered by the National Confederation of Industry (CNI) technical delivery arm the National Service of Industrial Training (SENAI) at a cost of R$ 2 million between 2016 and 2017 (MDIC, 2017). From January 2018, this front is scaling up to include 30 new companies with an anticipated budget of R$ 150 thousand per participant.\n\nStatus: In force\nJurisdiction: National",
+    "date": "2016-01-01",
+    "url": "http://www.brasilmaisprodutivo.gov.br/",
+    "language": "Portuguese",
+    "policy_id": "8",
+    "status": "In force",
+    "year": 2016,
+    "countries": [
+      "Brazil"
+    ],
+    "country_codes": [
+      "BRA"
+    ],
+    "jurisdiction": "National",
+    "technologies": [
+      "Other digital technologies and systems",
+      "Industry sector-specific processes and technologies",
+      "Digital technologies and systems"
+    ],
+    "topics": [],
+    "policy_types": [],
+    "date_modified": "2021-08-23T22:00:00.000Z"
+  },
+  {
+    "_id": "INTL-IEA-IRENA-9",
+    "_source": "INTL/IEA-IRENA-PolicyDB",
+    "_type": "legislation",
+    "_fetched_at": "2026-06-20T14:20:40.107127+00:00",
+    "title": "Amendment 13 - Energy Efficiency Regulations",
+    "text": "Published on December 28, 2016, Amendment 13 to Canada's Energy Efficiency Regulations aims to deliver energy, greenhouse gas and air pollutant reductions as part of Canada's Clean Air Regulatory Agenda. The amendment will increase the stringency and/or scope of existing minimum energy performance standards (MEPS) for 20 product categories to align with requirements in force or soon to be in force in the U.S. Affected products Residential clothes dryers (Division 1, subdivision A) clothes washers (two U.S. standards: 2015 and 2018) (Division 1, subdivision B) integrated washer-dryers (Division 1, subdivision C) dishwashers (Division 1, subdivision D) refrigerators (Division 1, subdivision E) freezers (Division 1, subdivision F) room air conditioners (Division 2, subdivision A) central air conditioners and heat pumps (Division 2, subdivision D and F. Division 3, subdivision E and G) gas-fired storage water heaters (align all sizes of tanks in Canada with the standard in the U.S. that applies only to tanks with rated storage volumes less than 208 litres) (Division 6, subdivision B) oil-fired storage water heaters (Division 6, subdivision C) Commercial and industrial residential-style commercial clothes washers (two U.S. standards: 2013 and 2018) (Division 1, subdivision B) packaged terminal air conditioners and heat pumps (Division 2, subdivision C) chillers (Division 2, subdivision H) commercial refrigeration (self-contained) (Division 10, subdivision A) refrigerated beverage vending machines (Division 10, subdivision B) commercial ice-makers (Division 10, subdivision C) electric motors (Division 12) Lighting general service incandescent reflector lamps (Division 7, subdivision D) general service fluorescent lamps (two U.S. standards: 2012 and 2018) (Division 7, subdivision E) fluorescent lamp ballasts (Division 7, subdivision F) Other repeal regulated requirements for digital television adapters make minor updates to scope, reporting and compliance requirements for 8 currently regulated product categories to reflect updated requirements both in the U.S. and Canada:electric ranges (Division 1, subdivision G) large commercial air conditioners (Division 2, subdivision B) and heat pumps (Division 3, subdivision C) gas furnaces (Division 4, subdivision A) gas fireplaces (Division 4, subdivision C) general service lamps (Division 7, subdivision B and C) exit signs (Division 8, subdivision D) televisions (Division 9, subdivision C) external power supplies (Division 9, subdivision D) repeal and replace the Regulations with a new format that organizes products by divisions and subdivisions. update some standards that are incorporated by reference.\n\nStatus: In force\nJurisdiction: National",
+    "date": "2016-01-01",
+    "url": "http://www.nrcan.gc.ca/energy/regulations-codes-standards/18419",
+    "language": "English",
+    "policy_id": "9",
+    "status": "In force",
+    "year": 2016,
+    "countries": [
+      "Canada"
+    ],
+    "country_codes": [
+      "CAN"
+    ],
+    "jurisdiction": "National",
+    "technologies": [
+      "Portable room ACs",
+      "Refrigerators (incl. combined refrigerators-freezers)",
+      "Plug loads",
+      "Lighting technologies",
+      "Space cooling",
+      "Dishwashers",
+      "Appliances",
+      "Centralised AC system",
+      "Gas instantaneous (domestic)",
+      "Television",
+      "Space, water and process heating technologies",
+      "Heating, cooling and climate control technologies",
+      "Washing machines"
+    ],
+    "topics": [],
+    "policy_types": [],
+    "date_modified": "2019-04-01T14:03:37.000Z"
+  },
+  {
+    "_id": "INTL-IEA-IRENA-10",
+    "_source": "INTL/IEA-IRENA-PolicyDB",
+    "_type": "legislation",
+    "_fetched_at": "2026-06-20T14:20:41.206976+00:00",
+    "title": "Swiss Energy Strategy 2050",
+    "text": "Swiss Energy Strategy 2050\nThe Swiss Energy Strategy for 2050 aims to reduce the country's dependency on fossil fuels, by developing renewable energy supply. \nThe strategy has been revised in May 2017, and has identified the following major actions:\nreduce energy consumption,increase energy efficiency,promote renewables,prohibit the construction of new nuclear power plants,upgrade the electricity grids.\n\nStatus: In force\nJurisdiction: National",
+    "date": "2018-01-01",
+    "url": "https://www.uvek.admin.ch/uvek/de/home/energie/energiestrategie-2050.html",
+    "language": "German",
+    "policy_id": "10",
+    "status": "In force",
+    "year": 2017,
+    "countries": [
+      "Switzerland"
+    ],
+    "country_codes": [
+      "CHE"
+    ],
+    "jurisdiction": "National",
+    "technologies": [
+      "Road vehicles",
+      "Commercial vehicles",
+      "Nuclear",
+      "Transport technologies"
+    ],
+    "topics": [
+      "Economy-wide"
+    ],
+    "policy_types": [
+      "Master Energy Plan"
+    ],
+    "date_modified": "2024-04-10T16:13:18.191Z"
+  },
+  {
+    "_id": "INTL-IEA-IRENA-11",
+    "_source": "INTL/IEA-IRENA-PolicyDB",
+    "_type": "legislation",
+    "_fetched_at": "2026-06-20T14:20:42.340427+00:00",
+    "title": "Government Vehicle Procurement Directives",
+    "text": "Since 2005, state authorities have been given directives on procurement of environmentally friendly cars (Ordinance on state authorities' purchasing and leasing of green cars. (SFS 2004:1364)) In 2005, half of all cars purchased had to be classified as environmentally friendly; this proportion increased to 75% in 2006 and to 85% in 2007.\nSince February 2009, all vehicles procured by state authorities must be classified as environmentally friendly, i.e. include those powered by electricity, biogas or ethanol (E85).\nSince 2006, gasoline and diesel cars with less than 120gCO2/km of emissions are also classified as environmentally friendly.\nAs of February 2009, the previous measure was superseded by a new Ordinance (SFS 2009:1) on environmental and traffic safety requirements for government vehicles and trips. The new ordinance included procurement requirements for light trucks, limiting procurement to those emitting less than 230gCO2/km. The new regulations also stated that at least 50% of emergency vehicles must also be classified as environmentally friendly, compared to 25% in 2008. State authorities must report on vehicles purchased and leased during the calendar year to the National Road Administration, including on how many cars are defined as environmentally friendly according to statute.\nIn 2011, the new Act came into force, replacing/superseding this measure. See entry on: \"Environmental requirements in the procurement of vehicles.\n\nStatus: Ended\nJurisdiction: National",
+    "date": "2005-01-01",
+    "url": "http://www.trafikverket.se",
+    "language": "Swedish",
+    "policy_id": "11",
+    "status": "Ended",
+    "year": 2005,
+    "countries": [
+      "Sweden"
+    ],
+    "country_codes": [
+      "SWE"
+    ],
+    "jurisdiction": "National",
+    "technologies": [
+      "Road vehicles",
+      "Medium duty vehicles, small trucks and minibuses",
+      "Commercial vehicles",
+      "Transport technologies"
+    ],
+    "topics": [
+      "Transport"
+    ],
+    "policy_types": [
+      "Sales ban",
+      "Low-emissions and efficient transport spending programmes"
+    ],
+    "date_modified": "2025-09-05T08:57:02.234Z"
+  },
+  {
+    "_id": "INTL-IEA-IRENA-12",
+    "_source": "INTL/IEA-IRENA-PolicyDB",
+    "_type": "legislation",
+    "_fetched_at": "2026-06-20T14:20:43.448165+00:00",
+    "title": "Microgeneration Strategy 2006",
+    "text": "In 2005, the UK Department of Trade and Industry commissioned an independent report: \"Potential for Microgeneration Study and Analysis to scope the feasibility of the implementing policy using various generation technologies and estimate market development out to 2050\". On 28 March 2006, the Government launched its Microgeneration Strategy, aiming to create conditions under which microgeneration becomes a realistic alternative or supplementary energy generation source for the householder, communities and small businesses. The government provides grant funding for installation of microgeneration technologies under the Low Carbon Buildings Programme (LCBP). This replaces Clear Skies and the Major PV Demonstration Programme and is currently structured in two phases: Phase 1 was launched in April 2006. GBP 29.5 million was made available to support projects in households, community organisations, housing associations, public sector and private businesses. This phase was opened for private sector applications under the Low Carbon Building Programme. Phase 2 takes forward the Chancellor of the Exchequer's 2006 Budget commitment of an additional GBP 50m of capital grant funding for the installation of microgeneration technologies in the public and charity sectors (social housing, libraries, hospitals, schools etc). The UK government has completed the majority of actions under the Microgeneration Strategy and reported on its implementation in June 2008. 21 out of 25 actions have been completed, three have been superseded by other activities and one has not been completed. It does not represent a picture of current government policy.\n\nStatus: Ended\nJurisdiction: National",
+    "date": "2006-01-01",
+    "url": "https://webarchive.nationalarchives.gov.uk/20121217233213/http://www.decc.gov.uk/assets/decc/what%20we%20do/uk%20energy%20supply/energy%20mix/renewable%20energy/explained/microgen/file27575.pdf",
+    "language": "English",
+    "policy_id": "12",
+    "status": "Ended",
+    "year": 2006,
+    "countries": [
+      "United Kingdom"
+    ],
+    "country_codes": [
+      "GBR"
+    ],
+    "jurisdiction": "National",
+    "technologies": [
+      "Biomass and renewable waste",
+      "Biogas",
+      "Gas and CCGTs",
+      "Electric air-source heat pumps",
+      "Solar thermal electricity",
+      "Space, water and process heating technologies",
+      "Natural gas fuel cells",
+      "Electric ground-source heat pumps",
+      "Fuel cells",
+      "Heat pumps",
+      "Combined heat and power (CHP)",
+      "PV installation types",
+      "Heating, cooling and climate control technologies",
+      "Wind",
+      "Solar PV",
+      "Distributed PV",
+      "Electricity generation and CHP technologies"
+    ],
+    "topics": [],
+    "policy_types": [],
+    "date_modified": "2021-08-23T22:00:00.000Z"
+  },
+  {
+    "_id": "INTL-IEA-IRENA-13",
+    "_source": "INTL/IEA-IRENA-PolicyDB",
+    "_type": "legislation",
+    "_fetched_at": "2026-06-20T14:20:44.586968+00:00",
+    "title": "Solar Decathlon",
+    "text": "The US Solar Decathlon is a competition in which teams of college and university students compete to design, build, and operate the most attractive, effective, and energy-efficient solar powered house. Since 2002, the Solar Decathlon has challenged over 25,000 students from more than 900 university teams across 40 countries. The goals of the Decathlon are to:1) educate the student participants - the \"decathletes\" - about the benefits of energy efficiency, renewable energy and green building technologies;2) raise awareness among the general public about renewable energy and energy efficiency and how solar energy technologies can reduce energy use;3) help solar energy technologies enter the marketplace faster;4) foster collaboration among students from different academic disciplines;5) promote an integrated or \"whole building design\" approach to new construction; and6) demonstrate to the public the potential of zero-energy homes, which produce as much energy from renewable sources, such as the sun and wind, as they consume.In FY2016, EERE is moving the Solar Decathalon from the Building Technologies Office to the Strategic Programs Office's Technology-to-Markets subprogram, where it can be better coordinated with the Strategic Programs Office's workforce development and communications resources.\n\nStatus: In force\nJurisdiction: International",
+    "date": "2002-01-01",
+    "url": "http://www.solardecathlon.gov",
+    "language": "English",
+    "policy_id": "13",
+    "status": "In force",
+    "year": 2002,
+    "countries": [
+      "United States"
+    ],
+    "country_codes": [
+      "USA"
+    ],
+    "jurisdiction": "International",
+    "technologies": [
+      "Solar thermal heaters",
+      "Space, water and process heating technologies",
+      "Electricity generation and CHP technologies",
+      "Building design (incl. passive cooling and heating)",
+      "Building envelope technologies",
+      "Heating, cooling and climate control technologies",
+      "Solar PV"
+    ],
+    "topics": [
+      "Technology R&D and innovation"
+    ],
+    "policy_types": [
+      "Awards",
+      "Education and training"
+    ],
+    "date_modified": "2021-08-23T22:00:00.000Z"
+  },
+  {
+    "_id": "INTL-IEA-IRENA-15",
+    "_source": "INTL/IEA-IRENA-PolicyDB",
+    "_type": "legislation",
+    "_fetched_at": "2026-06-20T14:20:45.736027+00:00",
+    "title": "Low Carbon City Act (Eco-City Act)",
+    "text": "The Low Carbon City Act‚ aims to encourage cross-sectoral emission reductions in communities through low-carbon urban development.The Act requires local government to develop Low-Carbon Development Plans plans and facilitate actions to integrate various urban functions, to promote the use of public transportation, to enhance efficiency of energy use, to preserve urban green areas, and to promote urban greening.The Act offers tax breaks for certified energy efficient buildings (exceeding an energy efficiency standard, with other‚ low-carbon measures, water saving measures, use of sustainable building materials).\n\nStatus: In force\nJurisdiction: National",
+    "date": "2012-01-01",
+    "url": "http://www.mlit.go.jp/toshi/city_plan/eco-city-3.html",
+    "language": "English",
+    "policy_id": "15",
+    "status": "In force",
+    "year": 2012,
+    "countries": [
+      "Japan"
+    ],
+    "country_codes": [
+      "JPN"
+    ],
+    "jurisdiction": "National",
+    "technologies": [],
+    "topics": [],
+    "policy_types": [],
+    "date_modified": "2017-11-05T09:08:15.000Z"
+  },
+  {
+    "_id": "INTL-IEA-IRENA-17",
+    "_source": "INTL/IEA-IRENA-PolicyDB",
+    "_type": "legislation",
+    "_fetched_at": "2026-06-20T14:20:46.776973+00:00",
+    "title": "Austrian Energy Efficiency Law",
+    "text": "In Austria, the EED is implemented by the Austrian Energy Efficiency Act. Within this act, Austria is increasing its energy efficiency efforts aiming to a final energy consumption of 1050 PJ by 2020. Furthermore, until 2020 cumulative energy savings of 310 PJ have to be achieved. These targets have to be reached by an obligation scheme for energy distributors (with a sales volume of more than 25 GWh to final energy consumers) contributing with energy efficiency measures up to (cumulative) 159 PJ and by so-called strategic measures by public authorities with up to (cumulative) 151 PJ till 2020. Strategic measures include energy taxes, corporate environmental protection subsidy schemes, refurbishment activities/vouchers, housing and energy subsidies. Large enterprises have to conduct an energy audit every four years.\n\nStatus: In force\nJurisdiction: National",
+    "date": "2014-01-01",
+    "url": "https://www.monitoringstelle.at/",
+    "language": "German",
+    "policy_id": "17",
+    "status": "In force",
+    "year": 2014,
+    "countries": [
+      "Austria"
+    ],
+    "country_codes": [
+      "AUT"
+    ],
+    "jurisdiction": "National",
+    "technologies": [],
+    "topics": [],
+    "policy_types": [],
+    "date_modified": "2025-06-25T08:38:14.213Z"
+  },
+  {
+    "_id": "INTL-IEA-IRENA-19",
+    "_source": "INTL/IEA-IRENA-PolicyDB",
+    "_type": "legislation",
+    "_fetched_at": "2026-06-20T14:20:47.864476+00:00",
+    "title": "National Guidelines for Energy Certification Scheme of buildings",
+    "text": "In the framework of the on-going transposition of the European Directive EPBD 2002/91/CE, the decree implements the energy performance certificate provisions of Directive in all Regions through a homogeneous framework, with a package of instruments to harmonise government and regional legislation. The guidelines apply to Regions that have not as yet implemented provisions under the EPBD for building certification, and applies until any regional legislation takes effect. Regions will need to harmonise their implementation of the Directive with the guidelines. The guidelines specify in an Annex: The information that needs to be contained in the certificate; technical reference standards, developed nationally and at the European level; methodologies for calculating the energy performance of buildings. The specify the validity limits for certificates (10 years), and that these must be updated following significant interventions that either improve or deteriorate energy performance (e.g. renovation of at least 25% of building envelope; replace air conditionng and hot water systems). The Decree establishes a discussion and coordination forum between central government ministries, regions, provinces, and communes, supported by various agencies and bodies. The forum is designed to facilitate monitoring implementation of the legislation, sharing information and best-practice, formulating legislative proposals, assessing costs and conditions of access to certification, and ensuring the harmonisation of regional instruments.\n\nStatus: In force\nJurisdiction: National",
+    "date": "2009-01-01",
+    "url": "http://www.gazzettaufficiale.it/eli/id/2012/12/13/12A12945/sg",
+    "language": "Italian",
+    "policy_id": "19",
+    "status": "In force",
+    "year": 2009,
+    "countries": [
+      "Italy"
+    ],
+    "country_codes": [
+      "ITA"
+    ],
+    "jurisdiction": "National",
+    "technologies": [],
+    "topics": [],
+    "policy_types": [],
+    "date_modified": "2017-11-05T09:08:15.000Z"
+  }
+]

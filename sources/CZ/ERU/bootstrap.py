@@ -50,6 +50,10 @@ def extract_pdf_text(pdf_bytes: bytes) -> str:
                 text = page.extract_text()
                 if text:
                     pages.append(text)
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
             return "\n\n".join(pages)
     elif HAS_PYPDF2:
         reader = PyPDF2.PdfReader(io.BytesIO(pdf_bytes))
@@ -58,6 +62,10 @@ def extract_pdf_text(pdf_bytes: bytes) -> str:
             text = page.extract_text()
             if text:
                 pages.append(text)
+            try:
+                page.flush_cache(); page.get_textmap.cache_clear()
+            except Exception:
+                pass
         return "\n\n".join(pages)
     else:
         raise RuntimeError("No PDF library available (install pdfplumber or PyPDF2)")

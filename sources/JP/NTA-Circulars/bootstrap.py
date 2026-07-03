@@ -131,6 +131,7 @@ class NTACirculars(BaseScraper):
     SOURCE_ID = "JP/NTA-Circulars"
 
     def __init__(self):
+        super().__init__()
         self.http = HttpClient(base_url=BASE_URL)
         self.visited: Set[str] = set()
 

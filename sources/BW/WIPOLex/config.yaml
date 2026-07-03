@@ -1,0 +1,53 @@
+source:
+  id: BW/WIPOLex
+  country: BW
+  name: "Botswana Legislation (WIPO Lex)"
+  url: https://www.wipo.int/wipolex/en/members/profile/BW
+  data_types:
+    - legislation
+  language: en
+license:
+  name: "Public domain (national legislation)"
+  url: https://www.wipo.int/wipolex/en/disclaimer
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: >
+    The documents are official legislative texts of Botswana (acts, statutory
+    instruments, codes), which are not subject to copyright. WIPO Lex
+    republishes them free of charge as a public gateway. No usage restriction
+    is placed on the underlying legal texts.
+fetcher:
+  type: html_profile_pdf
+  rate_limit: 1.5
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: title
+      required: true
+      type: string
+    - name: text
+      required: true
+      type: string
+  date_fields:
+    - _fetched_at
+    - date
+  text_fields:
+    - text
+    - title
+data_model:
+  update_strategy: upsert
+  dedup_key:
+    - _id
+notes: >
+  Botswana legislation (Constitution, Industrial Property Act, Copyright and
+  Neighbouring Rights Act, Companies Act, Trade Marks Act and related statutes)
+  from the WIPO Lex database. The WIPO Lex Botswana member profile is
+  server-rendered HTML listing each text with its adoption date and a
+  detail-page link; each detail page exposes a CloudFront-signed PDF download
+  URL (the signed query string is required). Full text is extracted from the
+  PDFs (English). A few older originals are scanned image-only PDFs with no
+  text layer and are skipped.

@@ -74,6 +74,7 @@ class SkatVejledning(BaseScraper):
     SOURCE_ID = "DK/Skattestyrelsen-Vejledning"
 
     def __init__(self):
+        super().__init__()
         self.http = HttpClient(base_url="https://info.skat.dk")
         self.visited: Set[str] = set()
 

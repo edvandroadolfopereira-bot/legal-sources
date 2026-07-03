@@ -42,13 +42,20 @@ class BaseScraper(ABC):
     deduplication, storage, and status tracking.
     """
 
-    def __init__(self, source_dir: str):
+    def __init__(self, source_dir: Optional[str] = None):
         """
         Initialize the scraper from a source directory.
 
         Args:
-            source_dir: Path to the source directory (e.g., sources/FR/legifrance/)
+            source_dir: Path to the source directory (e.g., sources/FR/legifrance/).
+                If omitted, it is resolved to the directory containing the
+                subclass's module file (its bootstrap.py). This lets callers
+                that instantiate a scraper class by introspection — e.g. the
+                VPS bootstrap-fast wrapper doing ``ScraperClass()`` — work
+                without knowing the source path (see issue #857).
         """
+        if source_dir is None:
+            source_dir = self._resolve_source_dir()
         self.source_dir = Path(source_dir)
         self.config = self._load_config()
         self.status = self._load_status()
@@ -60,13 +67,60 @@ class BaseScraper(ABC):
         self.validator = SchemaValidator(self.config.get("schema", {}))
         self._auth_headers = self._setup_auth()
 
+    def _resolve_source_dir(self) -> str:
+        """Resolve the source directory from the subclass's module file.
+
+        Used when no source_dir is passed to __init__ (e.g. a wrapper that
+        instantiates the scraper class by introspection). Falls back to the
+        current working directory if the module file cannot be located.
+        """
+        import inspect
+
+        try:
+            module_file = inspect.getfile(type(self))
+            return str(Path(module_file).resolve().parent)
+        except (TypeError, OSError):
+            return os.getcwd()
+
     def _load_config(self) -> dict:
-        """Load config.yaml for this source."""
-        config_path = self.source_dir / "config.yaml"
-        if not config_path.exists():
-            raise FileNotFoundError(f"No config.yaml found in {self.source_dir}")
-        with open(config_path, "r") as f:
-            return yaml.safe_load(f)
+        """Load config.yaml for this source.
+
+        Resolution order:
+          1. ``self.source_dir / config.yaml``
+          2. The directory containing the subclass's module file. This rescues
+             generic VPS wrappers that import/exec a scraper from a working
+             directory (e.g. ``/tmp/legal-bootstrap``) where ``source_dir`` was
+             mis-resolved to the CWD (see issue #863).
+
+        If config.yaml cannot be found in any location, fall back to safe
+        defaults (an empty dict) with a warning rather than crashing. Every
+        config consumer in this class reads keys via ``.get(..., default)``,
+        so a missing config degrades gracefully instead of aborting the run.
+        """
+        candidates = [self.source_dir / "config.yaml"]
+
+        import inspect
+        try:
+            module_dir = Path(inspect.getfile(type(self))).resolve().parent
+            module_config = module_dir / "config.yaml"
+            if module_config not in candidates:
+                candidates.append(module_config)
+        except (TypeError, OSError):
+            pass
+
+        for config_path in candidates:
+            if config_path.exists():
+                if config_path.parent != self.source_dir:
+                    # Keep storage/status alongside the real config.
+                    self.source_dir = config_path.parent
+                with open(config_path, "r") as f:
+                    return yaml.safe_load(f) or {}
+
+        logging.getLogger("legal-data-hunter").warning(
+            "No config.yaml found in %s; falling back to default config.",
+            " or ".join(str(c.parent) for c in candidates),
+        )
+        return {}
 
     def _load_status(self) -> dict:
         """Load or initialize status.yaml for this source."""

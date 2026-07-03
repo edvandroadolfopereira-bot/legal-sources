@@ -570,6 +570,68 @@ class BGHFetcher:
         """Fetch recent decisions (RSS feed only)"""
         yield from self.fetch_all(use_rss=True)
 
+    # BGH Senate → legal domain mapping
+    # Roman numeral + letter code in Aktenzeichen identifies the Senate and its domain
+    SENATE_DOMAIN_MAP = {
+        'I': 'Gewerblicher Rechtsschutz / Wettbewerbsrecht',
+        'II': 'Gesellschaftsrecht',
+        'III': 'Staatshaftungsrecht / Öffentliches Recht',
+        'IV': 'Versicherungsrecht',
+        'V': 'Sachenrecht / Grundstücksrecht',
+        'VI': 'Deliktsrecht / Schadensersatzrecht',
+        'VIa': 'Deliktsrecht / Dieselabgas',
+        'VII': 'Baurecht / Werkvertragsrecht',
+        'VIII': 'Mietrecht / Kaufrecht',
+        'IX': 'Insolvenzrecht / Anwaltsrecht',
+        'X': 'Patentrecht',
+        'Xa': 'Patentrecht',
+        'XI': 'Bankrecht / Kapitalmarktrecht',
+        'XII': 'Familienrecht / Erbrecht',
+        'XIII': 'Abschiebungshaft',
+    }
+
+    # Civil senates: Roman numeral (optional 'a' suffix) + space + Z + letter
+    CIVIL_SENATE_PATTERN = re.compile(
+        r'^(I{1,3}|IV|VI{0,3}a?|IX|Xa?|XI{0,2}|XIII?)\s+Z[RBAE]'
+    )
+    # Criminal senates: Arabic numeral + space + St + letter
+    CRIMINAL_SENATE_PATTERN = re.compile(r'^(\d+)\s+St[RBES]')
+
+    def _parse_legal_domain(self, aktenzeichen: str) -> str:
+        """Derive legal domain from Aktenzeichen (case number) Senate prefix"""
+        if not aktenzeichen:
+            return ''
+        az = aktenzeichen.strip()
+        # Check criminal senates first
+        if self.CRIMINAL_SENATE_PATTERN.match(az):
+            return 'Strafrecht'
+        # Check civil senates
+        m = self.CIVIL_SENATE_PATTERN.match(az)
+        if m:
+            senate = m.group(1)  # e.g. "IV", "VIa"
+            return self.SENATE_DOMAIN_MAP.get(senate, '')
+        # Special senates / specialized jurisdictions
+        for prefix, domain in [
+            ('GSZ', 'Großer Senat für Zivilsachen'),
+            ('GSSt', 'Großer Senat für Strafsachen'),
+            ('AnwZ', 'Anwaltsrecht'), ('AnwSt', 'Anwaltsrecht'),
+            ('RiZ', 'Richterdienstrecht'), ('RiSt', 'Richterdienstrecht'),
+            ('NotZ', 'Notarrecht'), ('NotSt', 'Notarrecht'),
+            ('StbSt', 'Steuerberaterrecht'),
+            ('WpSt', 'Wirtschaftsprüferrecht'),
+            ('PatAnwZ', 'Patentanwaltsrecht'), ('PatAnwSt', 'Patentanwaltsrecht'),
+            ('KVR', 'Kartellrecht'), ('KVZ', 'Kartellrecht'),
+            ('KZR', 'Kartellrecht'), ('KZB', 'Kartellrecht'),
+            ('EnVR', 'Energierecht'), ('EnVZ', 'Energierecht'),
+            ('EnZR', 'Energierecht'), ('EnZB', 'Energierecht'),
+            ('LwZR', 'Landwirtschaftsrecht'), ('LwZB', 'Landwirtschaftsrecht'),
+            ('BLw', 'Landwirtschaftsrecht'),
+            ('ARs', 'Anfrageverfahren'),
+        ]:
+            if az.startswith(prefix):
+                return domain
+        return ''
+
     def normalize(self, raw_doc: Dict[str, Any]) -> Dict[str, Any]:
         """Normalize document to standard schema"""
         # Support both HTML-based doc_id and XML-based doknr
@@ -602,6 +664,9 @@ class BGHFetcher:
                 parts.append(aktenzeichen)
             title = ', '.join(parts) if parts else doc_id
 
+        aktenzeichen = raw_doc.get('aktenzeichen', '')
+        legal_domain = self._parse_legal_domain(aktenzeichen)
+
         return {
             '_id': doc_id,
             '_source': 'DE/BGH',
@@ -612,11 +677,12 @@ class BGHFetcher:
             'date': date,
             'url': url,
             'ecli': raw_doc.get('ecli', ''),
-            'aktenzeichen': raw_doc.get('aktenzeichen', ''),
+            'aktenzeichen': aktenzeichen,
             'court': raw_doc.get('gertyp') or raw_doc.get('court', 'BGH'),
             'chamber': raw_doc.get('spruchkoerper', ''),
             'decision_type': raw_doc.get('doktyp') or raw_doc.get('decision_type', ''),
             'norms': raw_doc.get('norm') or raw_doc.get('norms', ''),
+            'legal_domain': legal_domain,
             'headnote': raw_doc.get('leitsatz', ''),
             'tenor': raw_doc.get('tenor', ''),
             'summary': raw_doc.get('rss_description', ''),

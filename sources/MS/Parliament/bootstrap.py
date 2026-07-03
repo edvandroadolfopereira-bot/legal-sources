@@ -176,6 +176,10 @@ class MSParliamentScraper(BaseScraper):
                 text = p.extract_text()
                 if text:
                     parts.append(text)
+                try:
+                    p.flush_cache(); p.get_textmap.cache_clear()
+                except Exception:
+                    pass
             pdf.close()
             return "\n\n".join(parts).strip()
         except Exception as e:

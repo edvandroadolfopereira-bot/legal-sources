@@ -1,0 +1,25 @@
+source:
+  id: EU/Eurojust
+  name: "Eurojust — Case Law Analysis & Judicial Cooperation Reports"
+  url: "https://www.eurojust.europa.eu/term/case-law-analysis"
+  country: EU
+  data_types:
+    - doctrine
+  auth: none
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - date
+    - url
+    - text
+
+license:
+  name: "Eurojust Reuse Policy (Commission Decision 2011/833/EU)"
+  url: "https://www.eurojust.europa.eu/disclaimer"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "EU agency publications are reusable under Commission Decision 2011/833/EU unless otherwise stated."

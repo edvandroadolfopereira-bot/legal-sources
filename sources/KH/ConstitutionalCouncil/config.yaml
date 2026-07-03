@@ -1,0 +1,90 @@
+# ===================================================================
+# KH/ConstitutionalCouncil -- Constitutional Council of Cambodia
+# ===================================================================
+# The Constitutional Council is Cambodia's supreme judicial body for
+# constitutional review, established 1998 under the 1993 Constitution.
+# Decisions (2003-2020) available in English as PDF on ccc.gov.kh.
+# ===================================================================
+
+source:
+  id: "KH/ConstitutionalCouncil"
+  country: "KH"
+  name: "Constitutional Council of Cambodia — Decisions"
+  url: "https://www.ccc.gov.kh/"
+  description: |
+    Decisions of Cambodia's Constitutional Council, the body responsible
+    for interpreting the Constitution and reviewing the constitutionality
+    of laws. ~108 decisions available in English (2003-2020) as PDF files.
+    Full text extracted from born-digital PDFs.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "html_scrape"
+  base_url: "https://www.ccc.gov.kh"
+
+data_model:
+  type: "case_law"
+  source_nature: "bulk_archive"
+  primary_key: "decision_id"
+  update_strategy: "append_only"
+  versioning: "none"
+  dedup_key:
+    - "decision_id"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier (KH-CC-{txtID})"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Decision title with number and date"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the decision, extracted from PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "decision_id"
+      description: "Decision number, e.g. '092/003/2007'"
+      type: "string"
+      role: "reference"
+      required: true
+  secondary_fields:
+    - name: "url"
+      description: "Decision detail page URL"
+    - name: "pdf_url"
+      description: "Direct URL to the PDF file"
+    - name: "summary"
+      description: "Brief description of the decision subject"
+
+license:
+  id: "pd-gov"
+  name: "Public Domain — Official Government Decisions"
+  url: "https://www.ccc.gov.kh/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: |
+    Constitutional Council decisions are official judicial acts of a
+    sovereign government body. Published openly on ccc.gov.kh without
+    access restrictions or copyright notice on decisions.

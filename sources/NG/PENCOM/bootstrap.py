@@ -182,6 +182,10 @@ class PENCOMScraper(BaseScraper):
                 text = page.extract_text()
                 if text:
                     pages_text.append(text)
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
             pdf.close()
             full_text = _clean_text("\n\n".join(pages_text))
             return full_text if len(full_text) >= 100 else None
@@ -259,10 +263,10 @@ class PENCOMScraper(BaseScraper):
                 logger.warning(f"Skipped (no text): {doc['title'][:70]}")
                 continue
             doc["text"] = text
-            normalized = self.normalize(doc)
-            if normalized:
-                yielded += 1
-                yield normalized
+            # Yield RAW per BaseScraper contract; the framework calls normalize().
+            # (Previously yielded self.normalize(...) → double-normalize → 0 records.)
+            yielded += 1
+            yield doc
             time.sleep(1.5)
 
         logger.info(f"Done. Yielded: {yielded}, Skipped: {skipped}")
@@ -352,7 +356,12 @@ if __name__ == "__main__":
 
         gen = scraper.fetch_all() if command == "bootstrap" else scraper.fetch_updates()
 
-        for record in gen:
+        for raw in gen:
+            # fetch_all() yields RAW docs; normalize here to match the VPS
+            # bootstrap_fast() path and write proper sample records.
+            record = scraper.normalize(raw)
+            if not record:
+                continue
             count += 1
             if sample_mode:
                 outpath = sample_dir / f"{count:04d}.json"

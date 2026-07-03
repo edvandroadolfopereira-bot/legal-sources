@@ -175,6 +175,12 @@ class LoiDiCIScraper(BaseScraper):
         count = 0
         page = 1
         total_pages = None
+        # Track post IDs already seen. The loidici.com WP REST endpoint was
+        # observed to silently ignore the `page` param and keep returning
+        # page 1, so the loop re-fetched the same 100 posts until `page`
+        # crossed X-WP-TotalPages — thousands of duplicates, only 100 new
+        # (issue #970). Break as soon as a page contributes no new IDs.
+        seen_ids = set()
 
         while True:
             url = f"{API_URL}/posts?per_page=100&page={page}&_fields=id,date,modified,slug,link,title,content,categories"
@@ -192,7 +198,21 @@ class LoiDiCIScraper(BaseScraper):
                 total_posts = int(headers.get("X-WP-Total", 0))
                 logger.info(f"Total: {total_posts} posts across {total_pages} pages")
 
+            page_ids = [p.get("id") for p in data if p.get("id") is not None]
+            new_ids = [i for i in page_ids if i not in seen_ids]
+            if not new_ids:
+                logger.warning(
+                    f"Page {page} returned 0 new post IDs (all {len(page_ids)} "
+                    f"already seen) — server is repeating results, stopping "
+                    f"pagination."
+                )
+                break
+            seen_ids.update(new_ids)
+            new_id_set = set(new_ids)
+
             for post in data:
+                if post.get("id") not in new_id_set:
+                    continue
                 raw = self._post_to_raw(post)
                 if raw:
                     count += 1

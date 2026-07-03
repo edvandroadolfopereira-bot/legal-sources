@@ -20,10 +20,22 @@ html5lib>=1.1
 # PDF text extraction
 # Primary: opendataloader-pdf — structured markdown output (requires Java 11+ on host).
 # Fallbacks: pdfplumber, pypdf (flat text) — used automatically when Java is absent.
-# All three are orchestrated by common/pdf_extract.py.
-opendataloader-pdf>=0.1.0
+# These are orchestrated by common/pdf_extract.py.
+opendataloader-pdf==2.4.7
 pypdf>=4.0.0
 pdfplumber>=0.10.0
+# PyMuPDF (fitz) — preferred fast/accurate extractor for a few scrapers
+# (BD/SCOB, PK/IHC, KH/HuskyPartners). These fall back to the pdfplumber/pypdf
+# chain above when fitz is absent, so it is not strictly required — but
+# installing it gives better text quality. See issue #816.
+pymupdf>=1.23.0
+# Image-OCR fallback for scanned/image-only PDFs (no text layer). When the
+# text-layer backends above return ~0 chars, common/pdf_extract.py rasterizes
+# pages with PyMuPDF and runs tesseract via pytesseract. Requires the
+# `tesseract` system binary (apt: tesseract-ocr, brew: tesseract) and Pillow.
+# Falls back gracefully (OCR skipped) when any of these are absent. Issue #856.
+pytesseract>=0.3.10
+Pillow>=9.0.0
 
 # Neon Postgres client — used by common/pdf_extract.preload_existing_ids()
 # for idempotent skip-if-already-in-Neon checks.
@@ -41,6 +53,13 @@ playwright>=1.40.0
 
 # RTF text extraction (US/IA-Legislation)
 striprtf>=0.0.26
+
+# Word document text extraction (INTL/CAN-Gacetas Andean gazettes: .docx + legacy
+# .doc). python-docx reads .docx; olefile recovers text from binary .doc. Both
+# scrapers fall back to a pure-stdlib parser when these are absent (issue #880),
+# so they are preferred-but-not-required, but installing them gives cleaner text.
+python-docx>=1.1.0
+olefile>=0.46
 
 # Excel file parsing (LU/Parliament and similar XLSX data sources)
 openpyxl>=3.1.0

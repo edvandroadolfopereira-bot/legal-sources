@@ -292,6 +292,10 @@ class ECOWASLegalDocsScraper(BaseScraper):
                 page_text = page.extract_text()
                 if page_text:
                     text_parts.append(page_text)
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
 
         full_text = "\n\n".join(text_parts)
         full_text = re.sub(r"\n{3,}", "\n\n", full_text)

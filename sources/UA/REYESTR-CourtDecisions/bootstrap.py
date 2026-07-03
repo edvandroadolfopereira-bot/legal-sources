@@ -155,6 +155,12 @@ class UACourtDecisionsScraper(BaseScraper):
 
     def _iter_documents_from_zip(self, zip_path: str, limit: Optional[int] = None):
         """Iterate document rows from a downloaded ZIP file."""
+        if not zipfile.is_zipfile(zip_path):
+            logger.error(
+                "Downloaded file is not a valid ZIP archive (likely an HTML error/block page). "
+                "Server may be blocking datacenter IPs."
+            )
+            return
         with zipfile.ZipFile(zip_path) as zf:
             self._courts = self._load_courts_from_zip(zf)
             logger.info("Loaded %d court mappings", len(self._courts))

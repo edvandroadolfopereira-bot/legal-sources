@@ -113,8 +113,13 @@ class IEAIRENAPolicyScraper(BaseScraper):
         logger.info("Received %d policies", len(data))
         return data
 
-    def normalize(self, doc: dict) -> dict:
-        """Transform an API record into the standard schema."""
+    def normalize(self, doc: dict) -> Optional[dict]:
+        """Transform a RAW API record into the standard schema.
+
+        Returns None for records with insufficient text (framework skips them).
+        NOTE: fetch_all() yields RAW docs; the framework calls this once. Do not
+        call normalize() inside fetch_all() or records get double-normalized.
+        """
         policy_id = str(doc.get("policyId", ""))
         title = doc.get("title", "").strip()
         description = strip_html(doc.get("description", ""))
@@ -146,6 +151,9 @@ class IEAIRENAPolicyScraper(BaseScraper):
         if not url:
             url = f"https://www.iea.org/policies?policyId={policy_id}"
 
+        if len(text) < 30:
+            return None
+
         return {
             "_id": f"INTL-IEA-IRENA-{policy_id}",
             "_source": SOURCE_ID,
@@ -171,37 +179,23 @@ class IEAIRENAPolicyScraper(BaseScraper):
             "date_modified": doc.get("dateModified", ""),
         }
 
-    def fetch_all(self, sample: bool = False) -> Generator[dict, None, None]:
-        """Fetch all IEA/IRENA policies."""
+    def fetch_all(self) -> Generator[dict, None, None]:
+        """Yield all IEA/IRENA policies as RAW docs (framework normalizes)."""
         policies = self._fetch_policies()
-        count = 0
-        sample_limit = 15 if sample else len(policies)
-
         for doc in policies:
-            if count >= sample_limit:
-                return
-            record = self.normalize(doc)
-            if len(record["text"]) < 30:
-                continue
-            yield record
-            count += 1
-
-        logger.info("Total records yielded: %d", count)
+            yield doc
+        logger.info("Total raw policies yielded: %d", len(policies))
 
     def fetch_updates(self, since: str) -> Generator[dict, None, None]:
-        """Fetch policies modified since a date (filters client-side)."""
+        """Yield RAW policies modified since a date (filters client-side)."""
         policies = self._fetch_policies()
         count = 0
-
         for doc in policies:
             modified = doc.get("dateModified", "")
             if modified and modified[:10] >= since:
-                record = self.normalize(doc)
-                if len(record["text"]) >= 30:
-                    yield record
-                    count += 1
-
-        logger.info("Update complete: %d records since %s", count, since)
+                yield doc
+                count += 1
+        logger.info("Update complete: %d raw records since %s", count, since)
 
 
 def main():
@@ -228,8 +222,12 @@ def main():
 
     if command in ("bootstrap", "bootstrap-fast"):
         SAMPLE_DIR.mkdir(parents=True, exist_ok=True)
+        limit = 15 if sample else None
         count = 0
-        for record in scraper.fetch_all(sample=sample):
+        for doc in scraper.fetch_all():
+            record = scraper.normalize(doc)
+            if record is None:
+                continue
             count += 1
             safe_id = record["_id"].replace("/", "_")[:100]
             fname = SAMPLE_DIR / f"{safe_id}.json"
@@ -237,6 +235,8 @@ def main():
                 json.dump(record, f, ensure_ascii=False, indent=2)
             if count % 500 == 0:
                 logger.info("Saved %d records...", count)
+            if limit and count >= limit:
+                break
         logger.info("Bootstrap complete: %d records saved to %s",
                      count, SAMPLE_DIR)
 

@@ -93,6 +93,7 @@ class ARPCEScraper(BaseScraper):
     SOURCE_ID = SOURCE_ID
 
     def __init__(self):
+        super().__init__()
         self.http = HttpClient(
             verify=False,
         )
@@ -127,6 +128,10 @@ class ARPCEScraper(BaseScraper):
                     text = page.extract_text()
                     if text:
                         pages_text.append(text)
+                    try:
+                        page.flush_cache(); page.get_textmap.cache_clear()
+                    except Exception:
+                        pass
             return "\n\n".join(pages_text)
         except Exception as e:
             logger.warning(f"PDF extraction failed: {e}")

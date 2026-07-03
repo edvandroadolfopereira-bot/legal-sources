@@ -1,0 +1,18 @@
+{
+  "_id": "PE26002",
+  "_source": "US/NHTSA-Enforcement",
+  "_type": "case_law",
+  "_fetched_at": "2026-06-08T19:10:01.055212+00:00",
+  "title": "NHTSA Preliminary Evaluation PE26002: Loss of Power Steering Assist",
+  "text": "The Office of Defects Investigation (ODI) has received 19 Vehicle Owner Questionnaires (VOQs) alleging an intermittent or complete failure of the power steering assist system in certain Model Year (MY) 2022-2023 RAM ProMaster 1500, 2500, and 3500 vehicles. Failure of the power steering assist system can result in increased steering effort required to control the vehicle. An increase in steering effort can potentially lead to a loss of directional control of the vehicle. Several received reports allege failures of the steering rack with specific reports citing water intrusion into the electrical connectors of the electric power steering control module.\n\nODI is opening this Preliminary Evaluation (PE) to assess the scope and root cause of potential defects in 2022-2023 RAM ProMaster steering systems. To review the ODI reports cited in the Opening Resume ODI Report Identification Number document, go to NHTSA.gov.",
+  "date": "2026-03-02",
+  "url": "https://www.nhtsa.gov/vehicle/PE26002",
+  "investigation_number": "002",
+  "investigation_type": "Preliminary Evaluation",
+  "investigation_type_code": "PE",
+  "status": "Open",
+  "status_code": "O",
+  "subject": "Loss of Power Steering Assist",
+  "nhtsa_id": "PE26002",
+  "latest_activity_date": "2026-03-02T13:28:57Z"
+}

@@ -1,0 +1,80 @@
+source:
+  id: "INTL/WTO-Disputes"
+  country: "INTL"
+  name: "WTO Dispute Settlement — Panel & Appellate Body Reports (1995-present)"
+  url: "https://www.wto.org/english/tratop_e/dispu_e/dispu_status_e.htm"
+  description: |
+    Full text of adopted WTO panel reports, Appellate Body reports,
+    compliance (Article 21.5) reports and arbitration awards for modern
+    disputes DS1-present (1995-onwards). Distinct from INTL/GATT-Disputes
+    (1947-1995). Documents are listed via the WTO Documents Online XML API
+    (GetXMLResults.aspx, query @Symbol=WT/DS{N}/*) and the unrestricted /
+    de-restricted report PDFs are downloaded from ExportFile.aspx and
+    extracted with pdfplumber. The Secretariat's narrative dispute summary
+    from the per-case page is prepended for context.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.6
+  burst: 2
+  max_workers: 2
+
+api:
+  type: "xml_api+pdf"
+  base_url: "https://docs.wto.org"
+
+data_model:
+  type: "case_law"
+  source_nature: "consolidated"
+  primary_key: "dispute_number"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "_id"
+
+license:
+  name: "WTO Copyright / Terms of Use"
+  url: "https://www.wto.org/english/res_e/booksp_e/terms_of_use_e.htm"
+  commercial_use: false
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: >
+    WTO documents are publicly available; reproduction for commercial purposes
+    requires WTO permission. Flagged commercial-restricted.
+
+schema:
+  total_fields: 9
+  key_fields:
+    - name: "_id"
+      description: "Unique dispute identifier (e.g. WT-DS8)"
+      type: "string"
+    - name: "_source"
+      description: "Source identifier (INTL/WTO-Disputes)"
+      type: "string"
+    - name: "_type"
+      description: "case_law"
+      type: "string"
+    - name: "title"
+      description: "Dispute title (e.g. Japan — Taxes on Alcoholic Beverages)"
+      type: "string"
+    - name: "text"
+      description: "Full text: Secretariat summary + panel/AB/compliance reports"
+      type: "string"
+    - name: "date"
+      description: "Latest report circulation date (ISO 8601)"
+      type: "string"
+    - name: "url"
+      description: "Link to the dispute's case page on wto.org"
+      type: "string"
+    - name: "report_symbols"
+      description: "WTO document symbols of the reports included (e.g. WT/DS8/R)"
+      type: "array"
+    - name: "report_count"
+      description: "Number of report documents with extracted full text"
+      type: "integer"

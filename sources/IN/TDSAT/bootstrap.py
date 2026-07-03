@@ -158,6 +158,10 @@ class TDSATScraper:
                     text = page.extract_text()
                     if text:
                         pages.append(text)
+                    try:
+                        page.flush_cache(); page.get_textmap.cache_clear()
+                    except Exception:
+                        pass
                 pdf.close()
                 full_text = "\n\n".join(pages)
                 if len(full_text) > 100:
@@ -173,6 +177,10 @@ class TDSATScraper:
                     text = page.extract_text()
                     if text:
                         pages.append(text)
+                    try:
+                        page.flush_cache(); page.get_textmap.cache_clear()
+                    except Exception:
+                        pass
                 full_text = "\n\n".join(pages)
                 if len(full_text) > 100:
                     return full_text

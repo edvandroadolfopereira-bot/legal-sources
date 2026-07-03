@@ -307,6 +307,10 @@ class ANJRepertoireScraper(BaseScraper):
                 page_text = page.extract_text()
                 if page_text:
                     pages_text.append(page_text)
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
             pdf.close()
             return '\n'.join(pages_text)
         except Exception as e:

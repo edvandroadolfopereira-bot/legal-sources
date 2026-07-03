@@ -78,6 +78,12 @@ def download_pdf_text(url: str, session: requests.Session) -> Optional[str]:
                     page_text = page.extract_text()
                     if page_text:
                         pages_text.append(page_text)
+                    # Release per-page cache to avoid pdfplumber OOM (exit 137, #988)
+                    try:
+                        page.flush_cache()
+                        page.get_textmap.cache_clear()
+                    except Exception:
+                        pass
                 return "\n\n".join(pages_text) if pages_text else None
         finally:
             os.unlink(tmp_path)

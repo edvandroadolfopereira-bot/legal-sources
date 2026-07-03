@@ -197,8 +197,13 @@ class TRF5Scraper(BaseScraper):
                     if not text or len(clean_text(text)) < 50:
                         continue
 
-                    record = self.normalize(doc)
-                    yield record
+                    # BaseScraper contract: yield RAW; the framework
+                    # bootstrap_fast() calls normalize(). Yielding an already
+                    # normalized record made it re-normalize, and the second
+                    # pass read `text` instead of the raw `texto` field, so
+                    # every record came out with empty text -> 0 written
+                    # (issue #916).
+                    yield doc
                     count += 1
 
                     if count % 50 == 0:
@@ -254,7 +259,9 @@ def main():
         SAMPLE_DIR.mkdir(parents=True, exist_ok=True)
         count = 0
         try:
-            for record in scraper.fetch_all(sample=sample):
+            for raw in scraper.fetch_all(sample=sample):
+                # fetch_all yields RAW now; normalize here for sample output.
+                record = scraper.normalize(raw)
                 count += 1
                 safe_id = record["_id"].replace("/", "_")[:100]
                 fname = SAMPLE_DIR / f"{safe_id}.json"

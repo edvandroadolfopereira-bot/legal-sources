@@ -116,6 +116,12 @@ def extract_pdf_text(content: bytes) -> str:
                 t = page.extract_text()
                 if t:
                     pages.append(t)
+                # Release per-page cache to avoid pdfplumber OOM (exit 137, #987)
+                try:
+                    page.flush_cache()
+                    page.get_textmap.cache_clear()
+                except Exception:
+                    pass
         return "\n\n".join(pages)
     except Exception as e:
         logger.warning(f"PDF extraction failed: {e}")

@@ -32,6 +32,7 @@ logger = logging.getLogger(__name__)
 BASE_URL = "https://maqam.najah.edu"
 SOURCE_ID = "PS/Maqam"
 SAMPLE_DIR = Path(__file__).parent / "sample"
+DATA_DIR = Path(__file__).parent / "data"
 
 MIN_TEXT_LENGTH = 200
 
@@ -485,12 +486,12 @@ def bootstrap_sample():
 
 def main():
     parser = argparse.ArgumentParser(description="PS/Maqam Palestine Laws & Court Judgments")
-    parser.add_argument("command", choices=["bootstrap", "fetch_all", "fetch_updates"])
+    parser.add_argument("command", choices=["bootstrap", "bootstrap-fast", "fetch_all", "fetch_updates"])
     parser.add_argument("--sample", action="store_true", help="Fetch sample data only")
     parser.add_argument("--since", type=str, help="Fetch updates since date (ISO 8601)")
     args = parser.parse_args()
 
-    if args.command == "bootstrap":
+    if args.command in ("bootstrap", "bootstrap-fast"):
         if args.sample:
             count = bootstrap_sample()
             if count < 10:
@@ -498,10 +499,16 @@ def main():
                 sys.exit(1)
         else:
             fetcher = MaqamFetcher()
+            DATA_DIR.mkdir(parents=True, exist_ok=True)
+            jsonl_path = DATA_DIR / "records.jsonl"
             count = 0
-            for record in fetcher.fetch_all():
-                count += 1
-            logger.info("Full bootstrap complete: %d records", count)
+            with open(jsonl_path, "w", encoding="utf-8") as f:
+                for record in fetcher.fetch_all():
+                    f.write(json.dumps(record, ensure_ascii=False) + "\n")
+                    count += 1
+                    if count % 100 == 0:
+                        logger.info("Progress: %d records written", count)
+            logger.info("Full bootstrap complete: %d records -> %s", count, jsonl_path)
     elif args.command == "fetch_updates":
         if not args.since:
             logger.error("--since required for fetch_updates")

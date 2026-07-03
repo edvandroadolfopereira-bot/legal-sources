@@ -334,40 +334,67 @@ def fetch_all(sample: bool = False) -> Iterator[Dict[str, Any]]:
 
 
 def bootstrap(sample: bool = False):
-    """Run bootstrap: fetch records and save to sample/."""
+    """Run bootstrap.
+
+    Sample mode: write per-record JSON files into sample/ for validation.
+    Full mode: stream one JSON object per line into data/records.jsonl
+               (valid JSONL — the ingest loader reads it line-by-line).
+    """
     src_dir = Path(__file__).parent
-    sample_dir = src_dir / "sample"
-    sample_dir.mkdir(exist_ok=True)
+
+    if sample:
+        sample_dir = src_dir / "sample"
+        sample_dir.mkdir(exist_ok=True)
+
+        count = 0
+        all_records = []
+        for record in fetch_all(sample=True):
+            count += 1
+            fname = sample_dir / f"record_{count:04d}.json"
+            with open(fname, "w", encoding="utf-8") as f:
+                json.dump(record, f, ensure_ascii=False, indent=2)
+            all_records.append(record)
+            logger.info(f"  Saved {fname.name}: {record['case_number']}")
+
+        if all_records:
+            combined = sample_dir / "all_samples.json"
+            with open(combined, "w", encoding="utf-8") as f:
+                json.dump(all_records, f, ensure_ascii=False, indent=2)
+
+        logger.info(f"Bootstrap (sample) complete: {count} records saved to {sample_dir}")
+
+        texts = [r.get("text", "") for r in all_records]
+        non_empty = sum(1 for t in texts if len(t) > 100)
+        logger.info(f"Validation: {non_empty}/{count} records have substantial text (>100 chars)")
+        return count
+
+    # Full mode: stream to data/records.jsonl as proper JSONL (one object per line).
+    data_dir = src_dir / "data"
+    data_dir.mkdir(exist_ok=True)
+    jsonl_path = data_dir / "records.jsonl"
 
     count = 0
-    all_records = []
-    for record in fetch_all(sample=sample):
-        count += 1
-        fname = sample_dir / f"record_{count:04d}.json"
-        with open(fname, "w", encoding="utf-8") as f:
-            json.dump(record, f, ensure_ascii=False, indent=2)
-        all_records.append(record)
-        logger.info(f"  Saved {fname.name}: {record['case_number']}")
+    seen_ids = set()
+    with open(jsonl_path, "w", encoding="utf-8") as f:
+        for record in fetch_all(sample=False):
+            rid = record.get("_id")
+            if rid in seen_ids:
+                continue
+            seen_ids.add(rid)
+            f.write(json.dumps(record, ensure_ascii=False) + "\n")
+            count += 1
+            if count % 100 == 0:
+                logger.info(f"Progress: {count} records written")
 
-    if all_records:
-        combined = sample_dir / "all_samples.json"
-        with open(combined, "w", encoding="utf-8") as f:
-            json.dump(all_records, f, ensure_ascii=False, indent=2)
-
-    logger.info(f"Bootstrap complete: {count} records saved to {sample_dir}")
-
-    texts = [r.get("text", "") for r in all_records]
-    non_empty = sum(1 for t in texts if len(t) > 100)
-    logger.info(f"Validation: {non_empty}/{count} records have substantial text (>100 chars)")
-
+    logger.info(f"Bootstrap (full) complete: {count} unique records -> {jsonl_path}")
     return count
 
 
 if __name__ == "__main__":
     args = sys.argv[1:]
-    if not args or args[0] == "bootstrap":
+    if not args or args[0] in ("bootstrap", "bootstrap-fast"):
         sample_flag = "--sample" in args
         bootstrap(sample=sample_flag)
     else:
-        print("Usage: python3 bootstrap.py bootstrap [--sample]")
+        print("Usage: python3 bootstrap.py bootstrap|bootstrap-fast [--sample]")
         sys.exit(1)

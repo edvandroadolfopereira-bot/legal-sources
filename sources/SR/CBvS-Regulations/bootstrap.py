@@ -92,6 +92,10 @@ def _extract_text_pdfplumber(pdf_bytes: bytes) -> str:
             t = page.extract_text()
             if t:
                 parts.append(t)
+            try:
+                page.flush_cache(); page.get_textmap.cache_clear()
+            except Exception:
+                pass
     return "\n\n".join(parts)
 
 
@@ -244,7 +248,7 @@ class CBvSRegulationsScraper(BaseScraper):
                 logger.warning(f"Skipping (no text): {doc['title'][:80]}")
                 continue
             doc["text"] = text
-            yield self.normalize(doc)
+            yield doc
             time.sleep(1)
 
     def fetch_updates(self, since: str = None) -> Generator[dict, None, None]:
@@ -272,7 +276,8 @@ def main():
         count = 0
         limit = 15 if args.sample else None
 
-        for record in scraper.fetch_all():
+        for raw in scraper.fetch_all():
+            record = scraper.normalize(raw)
             count += 1
             text_len = len(record.get("text", ""))
             logger.info(

@@ -244,6 +244,10 @@ class ParlamentoScraper(BaseScraper):
                         t = page.extract_text() or ""
                         if t:
                             pages_text.append(t)
+                        try:
+                            page.flush_cache(); page.get_textmap.cache_clear()
+                        except Exception:
+                            pass
                     if pages_text:
                         return "\n\n".join(pages_text)
                 except ImportError:
@@ -256,6 +260,10 @@ class ParlamentoScraper(BaseScraper):
                         t = page.extract_text() or ""
                         if t:
                             pages_text.append(t)
+                        try:
+                            page.flush_cache(); page.get_textmap.cache_clear()
+                        except Exception:
+                            pass
                     pdf.close()
                     if pages_text:
                         return "\n\n".join(pages_text)

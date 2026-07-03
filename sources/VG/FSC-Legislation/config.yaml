@@ -1,0 +1,66 @@
+source:
+  id: VG/FSC-Legislation
+  name: BVI Financial Services Legislation
+  country: VG
+  url: https://www.bvifsc.vg/library/legislation
+  description: >
+    Consolidated full text of the principal British Virgin Islands
+    financial-services and corporate statutes, published as revised-edition
+    PDFs by the BVI Financial Services Commission. Covers the core offshore /
+    investigations corpus: BVI Business Companies Act, Insolvency Act,
+    Securities and Investment Business Act, Financial Services Commission Act,
+    the Regulatory Code, the Beneficial Ownership Secure Search System (BOSS)
+    Act, AML regulations and code, Proceeds of Criminal Conduct Act, trusts,
+    partnership, banking and insurance legislation. Full text extracted from
+    the official PDFs. Language: English.
+
+data_model:
+  types:
+    - legislation
+  update_strategy: upsert
+  dedup_key:
+    - doc_id
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+  max_workers: 4
+
+license:
+  name: "Crown Copyright (British Virgin Islands)"
+  url: "https://www.bvifsc.vg/library/legislation"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: >
+    Official BVI legislation published by the Financial Services Commission for
+    free public access. Crown Copyright (BVI); statute text is freely
+    reproducible as official law. No formal open licence specified.
+
+schema:
+  required_fields:
+    - _id
+    - _source
+    - _type
+    - _fetched_at
+    - title
+    - text
+    - url
+  key_fields:
+    - name: doc_id
+      type: string
+      required: true
+    - name: jurisdiction
+      type: string
+      required: false
+    - name: publisher
+      type: string
+      required: false
+
+schedule:
+  full_refresh: quarterly
+  update_check: monthly

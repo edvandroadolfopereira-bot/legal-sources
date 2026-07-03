@@ -1,0 +1,18 @@
+{
+  "_id": "PE26001",
+  "_source": "US/NHTSA-Enforcement",
+  "_type": "case_law",
+  "_fetched_at": "2026-06-08T19:10:01.055868+00:00",
+  "title": "NHTSA Preliminary Evaluation PE26001: Waymo AV  striking a child in the area of a school.",
+  "text": "On January 23, 2026, Waymo LCC (Waymo) reported to the Office of Defects Investigation (ODI) that a Waymo Automated Vehicle (AV) had struck a child near an elementary school earlier that day. Waymo provided its required report under SGO 2021-01 on January 28, 2026.\n\nNHTSA is aware that the incident occurred within two blocks of a Santa Monica, CA elementary school during normal school drop off hours; that there were other children, a crossing guard, and several double-parked vehicles in the vicinity; and that the child ran across the street from behind a double parked SUV towards the school and was struck by the Waymo AV. Waymo reported that the child sustained minor injuries. \n\nAt the time of the incident, the Waymo AV was operated by Waymo’s 5th Generation Automated Driving System (ADS). No safety operator was present in the vehicle.\n\nODI has opened this Preliminary Evaluation to investigate whether the Waymo AV exercised appropriate caution given, among other things, its proximity to the elementary school during drop off hours, and the presence of young pedestrians and other potential vulnerable road users. ODI expects that its investigation will examine the ADS’s intended behavior in school zones and neighboring areas, especially during normal school pick up/drop off times, including but not limited to its adherence to posted speed limits. ODI will also investigate Waymo's post-impact response.",
+  "date": "2026-01-29",
+  "url": "https://www.nhtsa.gov/vehicle/PE26001",
+  "investigation_number": "001",
+  "investigation_type": "Preliminary Evaluation",
+  "investigation_type_code": "PE",
+  "status": "Open",
+  "status_code": "O",
+  "subject": "Waymo AV  striking a child in the area of a school.",
+  "nhtsa_id": "PE26001",
+  "latest_activity_date": "2026-01-29T00:20:41Z"
+}

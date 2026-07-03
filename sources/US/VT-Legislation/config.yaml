@@ -1,0 +1,46 @@
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: url
+    required: true
+    type: string
+  - name: jurisdiction
+    required: false
+    type: string
+  - name: title_number
+    required: false
+    type: string
+  - name: chapter_number
+    required: false
+    type: string
+source:
+  auth: none
+  country: US
+  data_types:
+  - legislation
+  description: >
+    Vermont Statutes Annotated from the official Vermont General Assembly website.
+    Covers all titles of Vermont law. Each record is one chapter with full section text.
+  id: US/VT-Legislation
+  name: Vermont Statutes Online
+  schedule: quarterly
+  url: https://legislature.vermont.gov/statutes/
+license:
+  name: "Public Domain (17 U.S.C. § 105)"
+  url: "https://www.law.cornell.edu/uscode/text/17/105"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "U.S. state legislation is generally in the public domain"

@@ -278,58 +278,72 @@ class RozhodnutiFetcher:
         }
 
 
-def main():
-    if len(sys.argv) > 1 and sys.argv[1] == "bootstrap":
-        fetcher = RozhodnutiFetcher()
-        sample_dir = Path(__file__).parent / "sample"
-        sample_dir.mkdir(exist_ok=True)
+def _bootstrap_sample(fetcher, target: int = 15) -> int:
+    """Write `target` decisions to the sample/ directory for inspection."""
+    sample_dir = Path(__file__).parent / "sample"
+    sample_dir.mkdir(exist_ok=True)
 
-        logger.info("Starting bootstrap of CZ/RozhodnutiJustice...")
+    sample_count = 0
+    for raw_doc in fetcher.fetch_all(limit=target * 4):
+        if sample_count >= target:
+            break
+        normalized = fetcher.normalize(raw_doc)
+        text_len = len(normalized.get("text", ""))
+        if text_len < 200:
+            logger.debug(f"Skipping short decision ({text_len} chars)")
+            continue
+        doc_id = normalized["_id"].replace(":", "_").replace("/", "_")
+        with open(sample_dir / f"{doc_id}.json", "w", encoding="utf-8") as f:
+            json.dump(normalized, f, indent=2, ensure_ascii=False)
+        sample_count += 1
+        logger.info(
+            f"Saved [{sample_count}/{target}]: {normalized.get('case_number', doc_id)} "
+            f"({text_len:,} chars) — {normalized.get('court', '?')}"
+        )
+    logger.info(f"Sample bootstrap complete. {sample_count} decisions saved to {sample_dir}")
+    return sample_count
 
-        sample_count = 0
-        target = 15 if "--sample" in sys.argv else 50
 
-        for raw_doc in fetcher.fetch_all(limit=target * 2):
-            if sample_count >= target:
-                break
+def _bootstrap_full(fetcher) -> int:
+    """Stream all decisions to data/records.jsonl (one JSON object per line)."""
+    data_dir = Path(__file__).parent / "data"
+    data_dir.mkdir(exist_ok=True)
+    out_path = data_dir / "records.jsonl"
 
+    count = 0
+    with open(out_path, "w", encoding="utf-8") as f:
+        for raw_doc in fetcher.fetch_all():
             normalized = fetcher.normalize(raw_doc)
-            text_len = len(normalized.get("text", ""))
-
-            if text_len < 200:
-                logger.debug(f"Skipping short decision ({text_len} chars)")
+            if len(normalized.get("text", "")) < 200:
                 continue
+            f.write(json.dumps(normalized, ensure_ascii=False) + "\n")
+            count += 1
+            if count % 100 == 0:
+                logger.info(f"Wrote {count} decisions...")
+    logger.info(f"Wrote {count} records to {out_path}")
+    return count
 
-            doc_id = normalized["_id"].replace(":", "_").replace("/", "_")
-            filepath = sample_dir / f"{doc_id}.json"
 
-            with open(filepath, "w", encoding="utf-8") as f:
-                json.dump(normalized, f, indent=2, ensure_ascii=False)
+def main():
+    import argparse
 
-            sample_count += 1
-            logger.info(
-                f"Saved [{sample_count}/{target}]: {normalized.get('case_number', doc_id)} "
-                f"({text_len:,} chars) — {normalized.get('court', '?')}"
-            )
+    parser = argparse.ArgumentParser(description="CZ/RozhodnutiJustice bootstrap")
+    parser.add_argument("command", nargs="?", default="bootstrap",
+                        choices=["bootstrap", "bootstrap-fast"])
+    parser.add_argument("--sample", action="store_true", help="Fetch sample decisions only")
+    parser.add_argument("--full", action="store_true", help="Full pull (default for non-sample)")
+    args, _unknown = parser.parse_known_args()
 
-        logger.info(f"Bootstrap complete. {sample_count} decisions saved to {sample_dir}")
+    fetcher = RozhodnutiFetcher()
+    logger.info("Starting bootstrap of CZ/RozhodnutiJustice...")
 
-        # Summary
-        files = list(sample_dir.glob("*.json"))
-        total_chars = 0
-        for fp in files:
-            with open(fp, encoding="utf-8") as f:
-                doc = json.load(f)
-            total_chars += len(doc.get("text", ""))
-
-        logger.info(f"Summary: {len(files)} files, {total_chars:,} total text chars")
-        if files:
-            logger.info(f"Average: {total_chars // len(files):,} chars/decision")
-
+    if args.sample:
+        n = _bootstrap_sample(fetcher, target=15)
+        if n < 10:
+            logger.error(f"Only {n} samples (need 10+).")
+            sys.exit(1)
     else:
-        print("Usage: python bootstrap.py bootstrap [--sample]")
-        print("  bootstrap         Fetch 50 sample decisions")
-        print("  bootstrap --sample  Fetch 15 sample decisions")
+        _bootstrap_full(fetcher)
 
 
 if __name__ == "__main__":

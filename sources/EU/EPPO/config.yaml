@@ -1,0 +1,41 @@
+auth:
+  type: none
+fetch:
+  base_url: https://www.eppo.europa.eu
+  news_path: /en/news
+  rate_limit_seconds: 2.0
+  timeout_seconds: 60
+  items_per_page: 10
+schema:
+  key_fields:
+  - name: slug
+    required: true
+    type: string
+  optional_fields:
+  - country_mentioned
+  required_fields:
+  - _id
+  - _source
+  - _type
+  - _fetched_at
+  - title
+  - text
+  - date
+  - url
+source:
+  country: EU
+  data_types:
+  - case_law
+  description: European Public Prosecutor's Office — case information, investigation
+    updates, indictments and conviction notices for crimes against the EU budget
+  id: EU/EPPO
+  name: European Public Prosecutor's Office — Case Information
+  url: https://www.eppo.europa.eu/en/news
+license:
+  name: "EUR-Lex Reuse Notice"
+  url: "https://eur-lex.europa.eu/content/legal-notice/legal-notice.html"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "EPPO is an EU body; publications reusable under EU institutional reuse policy"

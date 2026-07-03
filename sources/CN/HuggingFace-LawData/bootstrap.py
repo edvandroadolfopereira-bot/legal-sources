@@ -56,16 +56,36 @@ HEADERS = {
 BATCH_SIZE = 100
 
 
-def _request_with_retry(url, params=None, retries=3, backoff=5):
+def _request_with_retry(url, params=None, retries=6, backoff=5):
+    # datasets-server.huggingface.co throttles /rows with HTTP 429 (and 503
+    # while a dataset is being (re)built). The previous version only retried
+    # ConnectionError/Timeout, so a single mid-run 429 raised HTTPError and
+    # silently truncated fetch_all at ~3,400/22,552 rows (#974; same class as
+    # the #890 CN/CAIL2018 fix). Back off on 429/503 too, honoring Retry-After.
     for attempt in range(retries):
         try:
             resp = requests.get(url, params=params, headers=HEADERS, timeout=30)
+            if resp.status_code in (429, 503):
+                raise requests.exceptions.HTTPError(
+                    f"{resp.status_code} throttle", response=resp)
             resp.raise_for_status()
             return resp
-        except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
+        except (requests.exceptions.ConnectionError,
+                requests.exceptions.Timeout,
+                requests.exceptions.HTTPError) as e:
+            status = getattr(getattr(e, "response", None), "status_code", None)
+            # Don't retry genuine client errors other than 429.
+            if status is not None and status not in (429, 503):
+                raise
             if attempt < retries - 1:
-                wait = backoff * (attempt + 1)
-                logger.warning(f"Retry {attempt+1}/{retries}... waiting {wait}s")
+                retry_after = None
+                if getattr(e, "response", None) is not None:
+                    retry_after = e.response.headers.get("Retry-After")
+                if retry_after and str(retry_after).isdigit():
+                    wait = min(int(retry_after), 120)
+                else:
+                    wait = min(backoff * (2 ** attempt), 120)
+                logger.warning(f"Retry {attempt+1}/{retries} ({e})... waiting {wait}s")
                 time.sleep(wait)
             else:
                 raise

@@ -1,0 +1,35 @@
+source_id: "US/PCAOB-Enforcement"
+name: "PCAOB Enforcement Actions"
+country: US
+url: "https://pcaobus.org/oversight/enforcement/enforcement-actions"
+description: >
+  Enforcement actions by the Public Company Accounting Oversight Board (PCAOB)
+  against registered audit firms and associated persons. Includes settled
+  disciplinary orders, adjudicated disciplinary orders, and termination of bars.
+  Full text extracted from official PDF orders via HawkSearch API.
+
+data_types:
+  - case_law
+
+auth: none
+
+schedule:
+  frequency: monthly
+  mode: full
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - date
+    - enforcement_type
+    - text
+
+license:
+  name: "US Public Domain"
+  url: "https://www.law.cornell.edu/uscode/text/17/105"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "PCAOB is a nonprofit created by Congress under SOX; enforcement orders are public government records."

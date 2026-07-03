@@ -90,6 +90,10 @@ def extract_pdf_text(pdf_path: str) -> str:
                     text = re.sub(r'\(cid:\d+\)', ' ', text)
                     text = re.sub(r' {2,}', ' ', text)
                     parts.append(text.strip())
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
             return "\n\n".join(parts)
     except Exception as e:
         logger.warning("PDF extraction failed for %s: %s", pdf_path, e)

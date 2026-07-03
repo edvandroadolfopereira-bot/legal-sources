@@ -1,0 +1,18 @@
+{
+  "_id": "DP26001",
+  "_source": "US/NHTSA-Enforcement",
+  "_type": "case_law",
+  "_fetched_at": "2026-06-08T19:10:01.055071+00:00",
+  "title": "NHTSA DP DP26001: All wheel drive allegation",
+  "text": "The Office of Defects Investigation (ODI) received a Petition dated January 9, 2026, requesting an investigation into the loss of the optional all-wheel drive capability in model year (MY) 2021-2023 Acura TLX and MY 2022-2023 Acura MDX vehicles. The Petition contends that the interfacing splines between the transmission and the rear wheel drive power take off unit are failing. Failure of these splines prevents the transfer of drive power to the rear axle, making the vehicle front wheel drive only. The Petition further alleges that this failure results in a reduction of vehicle directional control.\n\n \n\nThe Petitioner cites 48 complaints received by ODI alleging the same failure. ODI will evaluate these complaints to determine if they are related to the failure cited in the Petition and will conduct a technical review under 49 CFR Part 552.\n\n \n\nThis Defect Petition is being opened to evaluate whether to grant or deny the Petition. The Petition can be viewed at NHTSA.gov under NHTSA Number 11712885.\n\n \n\nThe VOQ numbers referenced in the Petition are listed below.\n\n11615217, 11619288, 11633510, 11634618, 11634979, 11636677, 11637484, 11638577, 11638902, 11640757, 11642028, 11642839, 11644661, 11652130, 11652239, 11654456, 11664265, 11662805, 11662895, 11664344, 11664848, 11665162, 11665179, 11665477, 11666444, 11667007, 11667060, 11681206, 11689393, 11693166, 11693788, 11696489, 11696739, 11702530, 11557993, 11551829, 11635395, 11644548, 11647519, 11647996, 11661340, 11671314, 11682637, 11691842, 11693280, 11700591, 11700964, 11702881,",
+  "date": "2026-03-06",
+  "url": "https://www.nhtsa.gov/vehicle/DP26001",
+  "investigation_number": "001",
+  "investigation_type": "DP",
+  "investigation_type_code": "DP",
+  "status": "Open",
+  "status_code": "O",
+  "subject": "All wheel drive allegation",
+  "nhtsa_id": "DP26001",
+  "latest_activity_date": "2026-03-06T13:39:31Z"
+}

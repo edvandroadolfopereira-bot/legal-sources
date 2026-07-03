@@ -448,6 +448,11 @@ def main():
     bootstrap_parser.add_argument("--sample", action="store_true", help="Fetch sample only")
     bootstrap_parser.add_argument("--full", action="store_true", help="Fetch all titles")
 
+    # VPS wrapper compatibility: bootstrap-fast == bootstrap --full
+    fast_parser = subparsers.add_parser("bootstrap-fast", help="Full fetch (VPS wrapper alias)")
+    fast_parser.add_argument("--sample", action="store_true", help="Fetch sample only")
+    fast_parser.add_argument("--full", action="store_true", help="Fetch all titles")
+
     updates_parser = subparsers.add_parser("updates", help="Fetch updates")
     updates_parser.add_argument("--since", required=True, help="Date (YYYY-MM-DD)")
     updates_parser.add_argument("--full", action="store_true", help="Fetch all records")
@@ -464,7 +469,10 @@ def main():
         valid = validate_samples(SAMPLE_DIR)
         sys.exit(0 if valid else 1)
 
-    if args.command == "bootstrap":
+    if args.command in ("bootstrap", "bootstrap-fast"):
+        # bootstrap-fast defaults to a full fetch when neither flag is given
+        if args.command == "bootstrap-fast" and not args.sample:
+            args.full = True
         if args.sample:
             print("Fetching US Code samples...")
             client = USCodeClient()
@@ -487,12 +495,16 @@ def main():
 
         elif args.full:
             print("Starting full US Code fetch...")
+            DATA_DIR.mkdir(parents=True, exist_ok=True)
+            jsonl_path = DATA_DIR / "records.jsonl"
             count = 0
-            for record in fetch_all(sample=False):
-                count += 1
-                if count % 100 == 0:
-                    print(f"  Fetched {count} sections...")
-            print(f"\nTotal: {count} sections fetched")
+            with open(jsonl_path, "w", encoding="utf-8") as f:
+                for record in fetch_all(sample=False):
+                    f.write(json.dumps(record, ensure_ascii=False) + "\n")
+                    count += 1
+                    if count % 100 == 0:
+                        print(f"  Written {count} sections...")
+            print(f"\nTotal: {count} sections written -> {jsonl_path}")
             sys.exit(0)
         else:
             print("Use --sample or --full")

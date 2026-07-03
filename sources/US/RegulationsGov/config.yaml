@@ -1,11 +1,12 @@
-auth: api_key
+auth: none
 country: US
 data_types:
 - legislation
+- doctrine
 fetch:
-  delay: 1.0
-  page_size: 25
-  regulations_gov_api: https://api.regulations.gov/v4
+  delay: 0.3
+  page_size: 1000
+  window_days: 5
   federal_register_api: https://www.federalregister.gov/api/v1
 name: Regulations.gov — Federal Rulemaking Documents
 schema:
@@ -22,18 +23,12 @@ schema:
   - name: text
     required: true
     type: string
-  - name: agency_id
-    required: false
-    type: string
   - name: document_type
     required: false
     type: string
-  - name: docket_id
+  - name: agencies
     required: false
-    type: string
-  - name: fr_doc_num
-    required: false
-    type: string
+    type: array
 source_id: US/RegulationsGov
 url: https://www.regulations.gov/
 license:

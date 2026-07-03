@@ -1,0 +1,18 @@
+{
+  "_id": "D00028959",
+  "_source": "UK/NominetDRS",
+  "_type": "case_law",
+  "_fetched_at": "2026-06-10T03:24:42.261679+00:00",
+  "title": "Nominet DRS D00028959 (webhostingbuzz.co.uk) — World Host Group US Inc. v Joel Roach",
+  "text": "DISPUTE RESOLUTION SERVICE\nD00028959\nDecision of Independent Expert\n(Summary Decision)\nWorld Host Group US Inc.\nand\nJoel Roach\n1. The Parties:\nComplainant: World Host Group US Inc.\n1201 North Market Street Suite 111-N98\nWilmington\nDelaware\n19801\nUnited States\nRespondent: Joel Roach\nUnited Kingdom\n2. The Domain Name:\n<webhostingbuzz.co.uk>\n3. Notification of Complaint\nI hereby certify that I am satisfied that Nominet has sent the complaint to the\nRespondent in accordance with section 3 and 6 of the Policy.\n✓ Yes  No\n4. Rights\nThe Complainant has, to my reasonable satisfaction, shown rights in respect of a\nname or mark which is identical or similar to the domain name.\n✓ Yes  No\n5. Abusive Registration\n1\n\nThe Complainant has, to my reasonable satisfaction, shown that the domain name\nwebhostingbuzz.co.uk is an abusive registration.\n✓ Yes  No\n6. Other Factors\nI am satisfied that no other factors apply which would make a summary decision\nunconscionable in all the circumstances.\n✓ Yes  No\n8. Decision\nI grant the Complainant’s application for a summary decision. In accordance with\nsection 12 of the Policy, the domain name will therefore be transferred to the\nComplainant.\nDavid Taylor\n4 June 2026\n2",
+  "date": "2026-06-04",
+  "url": "https://secure.nominet.org.uk/drs/search-disputes.html",
+  "case_number": "D00028959",
+  "domain_name": "webhostingbuzz.co.uk",
+  "complainant": "World Host Group US Inc.",
+  "respondent": "Joel Roach",
+  "decision_type": "Summary Decision",
+  "outcome": "Transfer",
+  "court": "Nominet Dispute Resolution Service",
+  "jurisdiction": "GB"
+}

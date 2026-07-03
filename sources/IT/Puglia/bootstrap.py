@@ -353,15 +353,20 @@ class PugliaScraper(BaseScraper):
                     try:
                         detail = self._fetch_law_text(entry["doc_id"])
                         entry["detail"] = detail
-                        record = self.normalize(entry)
-                        if len(record.get("text", "")) < 50:
+                        # Yield the RAW entry (with detail attached); the framework
+                        # calls normalize() itself. Yielding the normalized record
+                        # here double-normalized on the ingest host — normalize then
+                        # read the absent "detail" key, so every record's text was
+                        # empty (issue #933).
+                        text = (detail or {}).get("text", "")
+                        if len(text) < 50:
                             logger.warning(
                                 "Short text for %s (%d chars), skipping",
                                 entry["doc_id"],
-                                len(record.get("text", "")),
+                                len(text),
                             )
                             continue
-                        yield record
+                        yield entry
                     except Exception as e:
                         logger.error("Failed to fetch doc %s: %s", entry["doc_id"], e)
 
@@ -386,9 +391,8 @@ class PugliaScraper(BaseScraper):
                     try:
                         detail = self._fetch_law_text(entry["doc_id"])
                         entry["detail"] = detail
-                        record = self.normalize(entry)
-                        if len(record.get("text", "")) >= 50:
-                            yield record
+                        if len((detail or {}).get("text", "")) >= 50:
+                            yield entry  # RAW — framework normalizes
                     except Exception as e:
                         logger.error("Failed to fetch doc %s: %s", entry["doc_id"], e)
 
@@ -417,7 +421,7 @@ if __name__ == "__main__":
         print("OK" if ok else "FAIL")
         sys.exit(0 if ok else 1)
 
-    elif command == "bootstrap":
+    elif command in ("bootstrap", "bootstrap-fast"):
         sample_dir = Path(__file__).parent / "sample"
         sample_dir.mkdir(exist_ok=True)
         count = 0
@@ -460,20 +464,30 @@ if __name__ == "__main__":
                         except Exception as e:
                             logger.error("Failed doc %s: %s", entry["doc_id"], e)
         else:
-            for record in scraper.fetch_all():
-                out_path = sample_dir / f"{count:04d}.json"
-                with open(out_path, "w", encoding="utf-8") as f:
-                    json.dump(record, f, ensure_ascii=False, indent=2)
-                count += 1
-                if count % 100 == 0:
-                    logger.info("Progress: %d records saved", count)
+            # Full run: stream normalized records to data/records.jsonl so the
+            # ingest pipeline persists them (previously dumped to sample/ only).
+            data_dir = Path(__file__).parent / "data"
+            data_dir.mkdir(exist_ok=True)
+            jsonl_path = data_dir / "records.jsonl"
+            with open(jsonl_path, "w", encoding="utf-8") as f:
+                for entry in scraper.fetch_all():
+                    record = scraper.normalize(entry)
+                    if not record.get("_id") or len(record.get("text", "")) < 50:
+                        continue
+                    f.write(json.dumps(record, ensure_ascii=False) + "\n")
+                    count += 1
+                    if count % 100 == 0:
+                        logger.info("Progress: %d records written", count)
+            logger.info("Done: %d records -> %s", count, jsonl_path)
 
-        logger.info("Done: %d records saved to %s", count, sample_dir)
+        if sample_mode:
+            logger.info("Done: %d records saved to %s", count, sample_dir)
 
     elif command == "update":
         since = sys.argv[2] if len(sys.argv) > 2 else str(CURRENT_YEAR - 1)
         count = 0
-        for record in scraper.fetch_updates(since):
+        for entry in scraper.fetch_updates(since):
+            record = scraper.normalize(entry)
             count += 1
             logger.info("[%d] %s", count, record.get("law_number", record["_id"]))
         logger.info("Update done: %d records", count)

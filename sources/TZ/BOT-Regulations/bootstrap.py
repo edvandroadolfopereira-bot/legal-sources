@@ -72,6 +72,10 @@ def _extract_text_pdfplumber(pdf_bytes: bytes) -> str:
             t = page.extract_text()
             if t:
                 parts.append(t)
+            try:
+                page.flush_cache(); page.get_textmap.cache_clear()
+            except Exception:
+                pass
     return "\n\n".join(parts)
 
 
@@ -223,6 +227,11 @@ class BOTRegulationsScraper(BaseScraper):
         }
 
     def fetch_all(self) -> Generator[dict, None, None]:
+        # Yield RAW doc dicts; BaseScraper.bootstrap_fast()/update() call
+        # self.normalize() on each. Previously this yielded normalized records,
+        # so the framework double-normalized them — normalize() reads raw["pdf_url"]
+        # which the normalized record lacks (it has "url"), raising KeyError for
+        # every record → "0 fetched, N errors" on the VPS (issue #960).
         pdf_docs = self._collect_pdfs()
         for i, doc in enumerate(pdf_docs):
             logger.info(f"[{i+1}/{len(pdf_docs)}] Downloading: {doc['title'][:80]}")
@@ -230,7 +239,7 @@ class BOTRegulationsScraper(BaseScraper):
             if not text:
                 continue
             doc["text"] = text
-            yield self.normalize(doc)
+            yield doc
             time.sleep(1)
 
     def fetch_updates(self, since: str = None) -> Generator[dict, None, None]:
@@ -257,7 +266,10 @@ def main():
         count = 0
         limit = 15 if args.sample else None
 
-        for record in scraper.fetch_all():
+        # fetch_all() yields RAW docs (per BaseScraper contract); normalize here
+        # to match the VPS bootstrap_fast() path and write proper sample records.
+        for raw in scraper.fetch_all():
+            record = scraper.normalize(raw)
             count += 1
             text_len = len(record.get("text", ""))
             logger.info(

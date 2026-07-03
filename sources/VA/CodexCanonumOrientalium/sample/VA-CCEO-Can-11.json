@@ -1,0 +1,13 @@
+{
+  "_id": "VA-CCEO-Can-11",
+  "_source": "VA/CodexCanonumOrientalium",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-18T21:48:39.064293+00:00",
+  "title": "Canon 11 (CCEO)",
+  "text": "Inter christifideles omnes ex eorum quidem in Christo regeneratione viget vera circa dignitatem et actionem aequalitas, qua cuncti secundum suam cuiusque condicionem et munus ad aedificationem Corporis Christi cooperantur.",
+  "canon_number": 11,
+  "code": "Codex Canonum Ecclesiarum Orientalium",
+  "date": "1990-10-18",
+  "url": "https://www.vatican.va/content/john-paul-ii/la/apost_constitutions/documents/hf_jp-ii_apc_19901018_codex-can-eccl-orient-1.html",
+  "language": "la"
+}

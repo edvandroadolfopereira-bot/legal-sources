@@ -1,0 +1,93 @@
+# ===================================================================
+# SC/Judiciary -- Judiciary of Seychelles Court Decisions (judiciary.sc)
+# ===================================================================
+# Official full-text judgments of the Court of Appeal, Constitutional
+# Court, and Supreme Court (criminal & civil), published as PDFs with
+# structured metadata on the "Decisions from the Courts" page.
+# Distinct from SeyLII (blocked, infrastructure_blocked).
+# ===================================================================
+
+source:
+  id: "SC/Judiciary"
+  country: "SC"
+  name: "Judiciary of Seychelles Court Decisions"
+  url: "https://www.judiciary.sc/resources/court-decisions/"
+  description: |
+    Official court decisions published by the Judiciary of Seychelles.
+    Covers the Court of Appeal, Constitutional Court, and Supreme Court
+    (criminal and civil). Each judgment is a downloadable PDF with case
+    name, case number, media-neutral citation, decision date, presiding
+    judges, decision type, and a keyword summary.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+
+api:
+  type: "html_scraping"
+  base_url: "https://www.judiciary.sc"
+  listing_url: "/resources/court-decisions/"
+
+data_model:
+  type: "case_law"
+  primary_key: "neutral_citation"
+  update_strategy: "upsert"
+  dedup_key:
+    - "neutral_citation"
+    - "url"
+
+schema:
+  total_fields: 11
+  key_fields:
+    - name: "neutral_citation"
+      description: "Media-neutral citation (e.g., [2026] SCCC 1)"
+      type: "string"
+      role: "primary_key"
+      required: false
+    - name: "title"
+      description: "Parties / case name"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the judgment"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision date (ISO 8601)"
+      type: "string"
+      role: "temporal_key"
+      required: false
+    - name: "court"
+      description: "Issuing court"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "url"
+      description: "URL to the judgment PDF"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "Public access (Crown Copyright, Seychelles)"
+  url: "https://www.judiciary.sc/resources/court-decisions/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Court decisions are public judicial acts published free of charge by the Judiciary of Seychelles."
+
+notes: |
+  - Full text from judiciary.sc/wp-content/uploads/{year}/{month}/*.pdf
+  - Discovery: per-court tables on the court-decisions page
+  - Fields: neutral_citation, case_number, date, court, decision_type, keywords
+  - Courts: Court of Appeal, Constitutional Court, Supreme Court (criminal/civil)
+  - Official judiciary source; distinct from SeyLII (blocked)

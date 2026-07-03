@@ -54,6 +54,7 @@ class BHNBRScraper(BaseScraper):
     SOURCE_ID = "BH/NBR-TaxGuidance"
 
     def __init__(self):
+        super().__init__()
         self.cookie_jar = CookieJar()
         self.opener = build_opener(HTTPCookieProcessor(self.cookie_jar))
         self._set_english()

@@ -1,0 +1,36 @@
+source:
+  id: NE/CourtsJuricaf
+  country: NE
+  name: "Niger All Courts Decisions (Juricaf)"
+  url: https://juricaf.org/recherche/+/facet_pays:Niger
+  data_types:
+    - case_law
+  language: fr
+license:
+  name: "ODbL 1.0 (Juricaf/AHJUCAF)"
+  url: https://opendatacommons.org/licenses/odbl/1-0/
+  commercial_use: true
+  attribution_required: true
+  share_alike: true
+  no_derivatives: false
+  notes: "Niger court decisions published on Juricaf by AHJUCAF. Covers all courts: Cour suprême, Cour de cassation, Cour d'appel, Tribunal de première instance, Cour d'état, Cour constitutionnelle."
+fetcher:
+  type: api_json
+  pagination: page_number
+  rate_limit: 2.0
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+  date_fields:
+    - date
+    - _fetched_at
+  text_fields:
+    - text
+    - title
+notes: >
+  Niger all-courts decisions via Juricaf (AHJUCAF francophone court decisions database).
+  ~820 decisions across Cour suprême (466), Cour de cassation (275), Cour d'appel (56),
+  Tribunal de première instance (12), etc. Full text in French. ODbL 1.0.
+  Overlaps with NE/CourDeCassation (275 Cour de cassation decisions); DB dedup handles this.

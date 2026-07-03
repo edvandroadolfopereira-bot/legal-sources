@@ -195,7 +195,14 @@ class QueretaroLegScraper(BaseScraper):
         }
 
     def fetch_all(self, sample: bool = False) -> Generator[dict, None, None]:
-        """Yield all Querétaro laws with full text."""
+        """Yield all Querétaro laws as RAW dicts (full text included).
+
+        Per the BaseScraper contract, fetch_all yields RAW records and the
+        framework (bootstrap_fast) calls normalize() on each. Yielding already
+        normalized records here caused a double-normalize on the VPS — the
+        second normalize() hit KeyError 'doc_id' on every record, so all ~131
+        documents were counted as errors and 0 were written (#942).
+        """
         laws = self._get_law_list()
 
         if sample:
@@ -207,8 +214,7 @@ class QueretaroLegScraper(BaseScraper):
             logger.info(f"[{i+1}/{len(laws)}] Downloading: {law['title'][:60]}...")
             raw = self._fetch_law(law)
             if raw:
-                record = self.normalize(raw)
-                yield record
+                yield raw
                 total += 1
                 logger.info(f"  OK: {len(raw['text'])} chars")
             else:
@@ -249,7 +255,8 @@ if __name__ == "__main__":
     elif command == "bootstrap":
         SAMPLE_DIR.mkdir(exist_ok=True)
         count = 0
-        for record in scraper.fetch_all(sample=sample):
+        for raw in scraper.fetch_all(sample=sample):
+            record = scraper.normalize(raw)
             if sample:
                 fname = SAMPLE_DIR / f"{record['_id']}.json"
                 with open(fname, "w", encoding="utf-8") as f:
@@ -259,7 +266,7 @@ if __name__ == "__main__":
 
     elif command == "update":
         count = 0
-        for record in scraper.fetch_updates():
+        for raw in scraper.fetch_updates():
             count += 1
         logger.info(f"Update complete: {count} records")
 

@@ -1,0 +1,103 @@
+# ═══════════════════════════════════════════════════════════════════
+# DK/KlagenaevnetUdbud — Danish Complaints Board for Public Procurement
+# ═══════════════════════════════════════════════════════════════════
+
+source:
+  id: "DK/KlagenaevnetUdbud"
+  country: "DK"
+  name: "Klagenævnet for Udbud (Complaints Board for Public Procurement)"
+  url: "https://klfu.naevneneshus.dk/"
+  description: |
+    Klagenævnet for Udbud is the Danish administrative tribunal that decides
+    complaints about public procurement (tenders). It publishes, as a matter
+    of principle, all of its final decisions (kendelser) from 1995 to present.
+    Language: Danish. ~1,695 board rulings, with full decision text.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+  max_workers: 2
+
+api:
+  type: "rest"
+  base_url: "https://klfu.naevneneshus.dk/api"
+  endpoints:
+    list: "/search"   # POST {query, types:[ruling], skip, size, sort}
+
+data_model:
+  type: "case_law"
+  source_nature: "consolidated"
+  primary_key: "_id"
+  update_strategy: "append_only"
+  versioning: "none"
+  dedup_key:
+    - "_id"
+
+schema:
+  total_fields: 15
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier (KLFU-<journal number>)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Case title (claimant mod defendant)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the decision (kendelse)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "case_number"
+      description: "Journal number (J.nr.), e.g. 25/09277"
+      type: "string"
+      role: "reference"
+      required: false
+  secondary_fields:
+    - name: "category"
+      description: "Decision category (Materielle kendelser, Erstatningskendelser, ...)"
+    - name: "authority"
+      description: "Issuing body (Klagenævnet for Udbud)"
+    - name: "is_brought_to_court"
+      description: "Whether the decision was appealed to the ordinary courts"
+    - name: "published_date"
+      description: "Date the decision was published online"
+  probably_ignorable:
+    - name: "abstract"
+      description: "Short abstract; usually empty in the API"
+
+license:
+  id: "pd-gov"
+  name: "Public domain — Danish Copyright Act § 9"
+  url: "https://www.retsinformation.dk/eli/lta/2014/1144"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: |
+    Danish Copyright Act (Ophavsretsloven) § 9 excludes laws, administrative
+    regulations, court judgments and similar decisions of public authorities
+    from copyright protection. Decisions of Klagenævnet for Udbud are such
+    public-authority decisions and are therefore in the public domain.
+
+notes: |
+  - Source language: Danish.
+  - Access via the search portal's JSON API (POST /api/search). Each result
+    record already contains the full decision text in the `body` field as
+    HTML; no PDF extraction or per-document fetch is needed.
+  - Pagination via skip/size; ~1,695 board rulings (types=["ruling"]).
+  - Full-text HTML is cleaned to plain text (tags stripped, entities decoded).

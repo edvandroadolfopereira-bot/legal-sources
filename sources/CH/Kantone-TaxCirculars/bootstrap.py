@@ -294,7 +294,11 @@ class CHKantoneScraper(BaseScraper):
                 logger.warning(f"Skipping {pdf['title'][:50]}: insufficient text ({len(text) if text else 0} chars)")
                 continue
 
-            yield self.normalize({
+            # Yield the RAW dict; the framework (bootstrap/bootstrap_fast) calls
+            # normalize() exactly once. Do NOT normalize here, or the framework's
+            # second normalize() hits raw["doc_id"] (absent post-normalize) and
+            # raises on every record — issue #867.
+            yield {
                 "doc_id": doc_id,
                 "title": pdf["title"],
                 "text": text,
@@ -303,7 +307,7 @@ class CHKantoneScraper(BaseScraper):
                 "canton": canton,
                 "reference": ref,
                 "category": pdf.get("section", ""),
-            })
+            }
 
     def fetch_updates(self, since: str) -> Generator[Dict[str, Any], None, None]:
         """Fetch all (no date-based filtering available for these static pages)."""
@@ -352,7 +356,8 @@ def main():
     count = 0
     limit = 15 if args.sample else 9999
 
-    for record in scraper.fetch_all():
+    for raw in scraper.fetch_all():
+        record = scraper.normalize(raw)
         count += 1
         fname = re.sub(r'[^\w\-]', '_', record["_id"])[:80] + ".json"
         with open(sample_dir / fname, "w", encoding="utf-8") as f:

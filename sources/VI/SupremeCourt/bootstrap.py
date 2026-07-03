@@ -246,6 +246,10 @@ def extract_text_from_pdf(pdf_bytes: bytes) -> Optional[str]:
                 t = page.extract_text()
                 if t:
                     pages.append(t)
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
         text = "\n\n".join(pages)
         if len(text.strip()) > 100:
             return text.strip()

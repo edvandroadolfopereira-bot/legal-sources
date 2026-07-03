@@ -1,0 +1,18 @@
+{
+  "_id": "ESMA-SN-14895",
+  "_source": "EU/ESMA-Sanctions",
+  "_type": "case_law",
+  "_fetched_at": "2026-06-08T11:09:03.253655",
+  "sanction_id": "14895",
+  "entity_name": "",
+  "title": "Sanction (MiFID) — FRANCE",
+  "text": "Décision de la commission des sanctions sur le site Internet de l'AMF : http://www.amf-france.org, sous la rubrique décisions et transactions",
+  "date": "2026-04-01",
+  "url": "https://registers.esma.europa.eu/publication/details?core=esma_registers_sanctions&docId=sn14895",
+  "legal_framework": "MiFID",
+  "nature": "Administrative sanction and measure",
+  "country": "FRANCE",
+  "nca": "Autorité des Marchés Financiers (AMF)",
+  "lei": "",
+  "language": "French"
+}

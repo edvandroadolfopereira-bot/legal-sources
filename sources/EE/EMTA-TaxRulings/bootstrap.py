@@ -103,6 +103,7 @@ class EMTATaxRulings(BaseScraper):
     SOURCE_ID = "EE/EMTA-TaxRulings"
 
     def __init__(self):
+        super().__init__()
         self.http = HttpClient(
             base_url=BASE_URL,
             headers={

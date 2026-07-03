@@ -1,0 +1,24 @@
+source_id: "US/OFAC-Enforcement"
+name: "OFAC Sanctions Enforcement Actions"
+country: US
+data_types:
+  - doctrine
+url: "https://ofac.treasury.gov/civil-penalties-and-enforcement-information"
+auth: none
+schedule: monthly
+schema:
+  key_fields:
+    - _id
+    - title
+    - date
+    - text
+    - penalty_amount
+    - entity_name
+license:
+  name: "U.S. Public Domain"
+  url: "https://www.law.cornell.edu/uscode/text/17/105"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "U.S. government works are public domain under 17 U.S.C. § 105"

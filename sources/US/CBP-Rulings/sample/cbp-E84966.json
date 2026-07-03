@@ -1,0 +1,20 @@
+{
+  "_id": "cbp-E84966",
+  "_source": "US/CBP-Rulings",
+  "_type": "doctrine",
+  "_fetched_at": "2026-06-20T19:10:20Z",
+  "title": "CBP Ruling E84966",
+  "text": "NY E84966\n\nAugust 25, 1999\n\nCLA-2-61:RR:NC:TA:359 E84966  \n\nCATEGORY:\tClassification\n\nTARIFF NO.: \t6110.20.2075\n\nMr. Alan Woodruff",
+  "date": "1999-08-25",
+  "url": "https://rulings.cbp.gov/ruling/E84966",
+  "ruling_number": "E84966",
+  "categories": "Classification",
+  "collection": "ny",
+  "tariffs": [
+    "6110.20.2075"
+  ],
+  "related_rulings": [],
+  "is_usmca": false,
+  "is_nafta": false,
+  "operationally_revoked": false
+}

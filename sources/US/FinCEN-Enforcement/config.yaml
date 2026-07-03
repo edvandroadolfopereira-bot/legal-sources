@@ -1,0 +1,40 @@
+auth: none
+country: US
+data_types:
+- doctrine
+fetch:
+  delay: 2.0
+  listing_urls:
+  - https://www.fincen.gov/news/enforcement-actions
+  - https://www.fincen.gov/enforcement-actions-failure-register-money-services-business
+name: FinCEN Enforcement Actions
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: text
+    required: true
+    type: string
+  - name: matter_number
+    required: false
+    type: string
+  - name: institution_type
+    required: false
+    type: string
+source_id: US/FinCEN-Enforcement
+url: https://www.fincen.gov/news/enforcement-actions
+license:
+  name: "U.S. Public Domain"
+  url: "https://www.law.cornell.edu/uscode/text/17/105"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "U.S. government work — public domain under 17 U.S.C. § 105"

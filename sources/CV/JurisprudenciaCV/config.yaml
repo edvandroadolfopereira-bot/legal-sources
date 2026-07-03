@@ -1,0 +1,27 @@
+source_id: CV/JurisprudenciaCV
+name: Cabo Verde Jurisprudence (CSMJ ECLI Portal)
+country: CV
+url: https://jurisprudencia.cv/
+data_types:
+  - case_law
+
+schedule:
+  frequency: monthly
+  mode: full
+
+schema:
+  key_fields:
+    - _id
+    - ecli
+    - court
+    - year
+    - date
+
+license:
+  name: "Public Domain (Official Court Decisions)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official judicial decisions of the Republic of Cabo Verde, published by the Conselho Superior da Magistratura Judicial (CSMJ) ECLI jurisprudence portal."

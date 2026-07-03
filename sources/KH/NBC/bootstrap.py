@@ -167,6 +167,13 @@ class NBCScraper(BaseScraper):
                 text = page.extract_text()
                 if text:
                     pages_text.append(text)
+                # Release per-page layout + cached textmap to cap peak RSS
+                # on large PDFs (prevents OOM exit 137 on the fleet).
+                page.flush_cache()
+                try:
+                    page.get_textmap.cache_clear()
+                except AttributeError:
+                    pass
             pdf.close()
             full_text = "\n\n".join(pages_text)
             return full_text if len(full_text) >= 50 else None

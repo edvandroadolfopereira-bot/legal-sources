@@ -1,0 +1,39 @@
+{
+  "_id": "INTL-IEA-IRENA-9",
+  "_source": "INTL/IEA-IRENA-PolicyDB",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-20T14:20:40.107127+00:00",
+  "title": "Amendment 13 - Energy Efficiency Regulations",
+  "text": "Published on December 28, 2016, Amendment 13 to Canada's Energy Efficiency Regulations aims to deliver energy, greenhouse gas and air pollutant reductions as part of Canada's Clean Air Regulatory Agenda. The amendment will increase the stringency and/or scope of existing minimum energy performance standards (MEPS) for 20 product categories to align with requirements in force or soon to be in force in the U.S. Affected products Residential clothes dryers (Division 1, subdivision A) clothes washers (two U.S. standards: 2015 and 2018) (Division 1, subdivision B) integrated washer-dryers (Division 1, subdivision C) dishwashers (Division 1, subdivision D) refrigerators (Division 1, subdivision E) freezers (Division 1, subdivision F) room air conditioners (Division 2, subdivision A) central air conditioners and heat pumps (Division 2, subdivision D and F. Division 3, subdivision E and G) gas-fired storage water heaters (align all sizes of tanks in Canada with the standard in the U.S. that applies only to tanks with rated storage volumes less than 208 litres) (Division 6, subdivision B) oil-fired storage water heaters (Division 6, subdivision C) Commercial and industrial residential-style commercial clothes washers (two U.S. standards: 2013 and 2018) (Division 1, subdivision B) packaged terminal air conditioners and heat pumps (Division 2, subdivision C) chillers (Division 2, subdivision H) commercial refrigeration (self-contained) (Division 10, subdivision A) refrigerated beverage vending machines (Division 10, subdivision B) commercial ice-makers (Division 10, subdivision C) electric motors (Division 12) Lighting general service incandescent reflector lamps (Division 7, subdivision D) general service fluorescent lamps (two U.S. standards: 2012 and 2018) (Division 7, subdivision E) fluorescent lamp ballasts (Division 7, subdivision F) Other repeal regulated requirements for digital television adapters make minor updates to scope, reporting and compliance requirements for 8 currently regulated product categories to reflect updated requirements both in the U.S. and Canada:electric ranges (Division 1, subdivision G) large commercial air conditioners (Division 2, subdivision B) and heat pumps (Division 3, subdivision C) gas furnaces (Division 4, subdivision A) gas fireplaces (Division 4, subdivision C) general service lamps (Division 7, subdivision B and C) exit signs (Division 8, subdivision D) televisions (Division 9, subdivision C) external power supplies (Division 9, subdivision D) repeal and replace the Regulations with a new format that organizes products by divisions and subdivisions. update some standards that are incorporated by reference.\n\nStatus: In force\nJurisdiction: National",
+  "date": "2016-01-01",
+  "url": "http://www.nrcan.gc.ca/energy/regulations-codes-standards/18419",
+  "language": "English",
+  "policy_id": "9",
+  "status": "In force",
+  "year": 2016,
+  "countries": [
+    "Canada"
+  ],
+  "country_codes": [
+    "CAN"
+  ],
+  "jurisdiction": "National",
+  "technologies": [
+    "Portable room ACs",
+    "Refrigerators (incl. combined refrigerators-freezers)",
+    "Plug loads",
+    "Lighting technologies",
+    "Space cooling",
+    "Dishwashers",
+    "Appliances",
+    "Centralised AC system",
+    "Gas instantaneous (domestic)",
+    "Television",
+    "Space, water and process heating technologies",
+    "Heating, cooling and climate control technologies",
+    "Washing machines"
+  ],
+  "topics": [],
+  "policy_types": [],
+  "date_modified": "2019-04-01T14:03:37.000Z"
+}

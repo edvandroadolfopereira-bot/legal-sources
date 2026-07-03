@@ -1,0 +1,48 @@
+source_id: INTL/IGAD-Legal
+name: IGAD Legal Instruments (Communiqués, Protocols & Decisions)
+country: INTL
+url: https://igad.int/
+description: >
+  Official communiqués, summit decisions, and ministerial declarations of the
+  Intergovernmental Authority on Development (IGAD). 8 member states:
+  Djibouti, Eritrea, Ethiopia, Kenya, Somalia, South Sudan, Sudan, Uganda.
+  Fetched via WordPress REST API (category: communiqué). Open access.
+data_types:
+  - legislation
+auth:
+  type: none
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+data_model:
+  update_strategy: append_only
+  dedup_key:
+    - _id
+schema:
+  key_fields:
+    - name: _id
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: url
+      type: string
+      required: true
+    - name: instrument_type
+      type: string
+      required: false
+license:
+  name: "IGAD official publications"
+  url: "https://igad.int/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official legal instruments and communiqués of an international organization, published for public access"

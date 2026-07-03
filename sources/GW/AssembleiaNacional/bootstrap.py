@@ -277,6 +277,10 @@ def extract_text_from_pdf(pdf_bytes: bytes) -> str:
                 text = page.extract_text()
                 if text:
                     pages_text.append(text)
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
             return '\n\n'.join(pages_text)
     except Exception as e:
         print(f"    pdfplumber failed: {e}")
@@ -488,7 +492,7 @@ def bootstrap_sample(max_records: int = 15) -> List[Dict]:
 
 def main():
     parser = argparse.ArgumentParser(description='GW/AssembleiaNacional Data Fetcher')
-    parser.add_argument('command', choices=['bootstrap', 'fetch', 'updates'])
+    parser.add_argument('command', choices=['bootstrap', 'bootstrap-fast', 'fetch', 'updates'])
     parser.add_argument('--sample', action='store_true')
     parser.add_argument('--since', type=str)
     parser.add_argument('--output', type=str)
@@ -497,6 +501,24 @@ def main():
 
     output_dir = args.output or str(Path(__file__).parent / 'sample')
     os.makedirs(output_dir, exist_ok=True)
+
+    # bootstrap-fast (VPS pipeline alias) and `bootstrap --full` stream every
+    # record to data/records.jsonl so the ingest pipeline picks up the full
+    # corpus, not just the pre-existing sample/ files.
+    if args.command == 'bootstrap-fast' or (args.command == 'bootstrap' and args.full):
+        data_dir = Path(__file__).parent / 'data'
+        data_dir.mkdir(parents=True, exist_ok=True)
+        jsonl_path = data_dir / 'records.jsonl'
+        count = 0
+        with open(jsonl_path, 'w', encoding='utf-8') as f:
+            for record in fetch_all():
+                f.write(json.dumps(record, ensure_ascii=False) + '\n')
+                count += 1
+                if count % 25 == 0:
+                    print(f"Progress: {count} records written")
+        print(f"\n=== Summary ===")
+        print(f"Records written: {count} -> {jsonl_path}")
+        return
 
     if args.command == 'bootstrap':
         records = bootstrap_sample() if args.sample else list(fetch_all())

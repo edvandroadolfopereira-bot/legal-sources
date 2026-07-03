@@ -1,22 +1,33 @@
 #!/usr/bin/env python3
 """
-US/RegulationsGov -- Federal Rulemaking Documents from Regulations.gov
+US/RegulationsGov -- Federal Rulemaking Documents from the Federal Register
 
-Fetches federal rules, proposed rules, and notices via the Regulations.gov API v4,
-then retrieves full text from the Federal Register API (free, no key needed).
+Fetches the full text of every federal Rule, Proposed Rule, and Notice published
+in the Federal Register via the free Federal Register API v1 (no API key required).
 
-Document counts: ~98K rules, ~49K proposed rules, ~383K notices.
+Previously this source listed documents through the Regulations.gov API v4, which
+under the shared DEMO_KEY is capped at ~25 requests/hour — so a full run only ever
+pulled the first page (25 records, see issue #944). The full text of every
+rulemaking document already lives in the Federal Register, whose API is free,
+unauthenticated, and covers the complete digital archive back to 1994. Listing and
+full-text retrieval are now both done against the Federal Register, removing the
+rate-limit bottleneck entirely.
+
+Document counts (Federal Register): ~230K rules, ~120K proposed rules, ~600K+
+notices since 1994.
 
 Data access:
-  - Regulations.gov API v4: /v4/documents (listing, metadata, docket info)
-    Uses DEMO_KEY by default; set REGULATIONS_GOV_API_KEY env var for higher limits.
-  - Federal Register API: /api/v1/documents/{fr_doc_num}.json (full text URLs)
-  - Federal Register full text: HTML body at body_html_url
+  - Federal Register API: /api/v1/documents.json
+      Paginated listing filtered by document type and publication-date window.
+      No key needed. Deep pagination is capped at 2,000 results per query, so we
+      iterate in short date windows that stay well under that cap.
+  - Full text: each document exposes raw_text_url (preferred) and body_html_url.
 
 Usage:
-  python bootstrap.py bootstrap          # Full initial pull
-  python bootstrap.py bootstrap --sample # Fetch 10+ sample records
-  python bootstrap.py update             # Incremental (newest first)
+  python bootstrap.py bootstrap          # Full pull (newest-first, back to 1994)
+  python bootstrap.py bootstrap --sample # Fetch 15 sample records
+  python bootstrap.py bootstrap-fast     # Full pull, stream to data/records.jsonl
+  python bootstrap.py update --since DATE # Incremental (newest first)
   python bootstrap.py test               # Quick connectivity test
 """
 
@@ -27,9 +38,8 @@ import os
 import re
 import time
 from pathlib import Path
-from datetime import datetime, timezone
-from typing import Generator, Optional, Dict, Any, List
-from urllib.parse import quote
+from datetime import datetime, timezone, date, timedelta
+from typing import Generator, Optional, Dict, Any
 
 import requests
 
@@ -46,17 +56,25 @@ logging.basicConfig(
 logger = logging.getLogger("legal-data-hunter.US.RegulationsGov")
 
 SOURCE_ID = "US/RegulationsGov"
-REGULATIONS_API = "https://api.regulations.gov/v4"
 FR_API = "https://www.federalregister.gov/api/v1"
-DELAY = 1.0
-PAGE_SIZE = 25
-MAX_PAGES_SAMPLE = 3
-# Document types that appear in the Federal Register with full text
-DOC_TYPES = ["Rule", "Proposed Rule", "Notice"]
+DELAY = 0.3
+PAGE_SIZE = 1000
+WINDOW_DAYS = 5          # short enough to stay under the 2,000-result page cap
+ARCHIVE_START = date(1994, 1, 1)   # Federal Register digital full-text archive start
 
-
-def get_api_key() -> str:
-    return os.environ.get("REGULATIONS_GOV_API_KEY", "DEMO_KEY")
+# Federal Register document types -> our normalized _type.
+# Rules and proposed rules are regulations (legislation); notices and presidential
+# documents are official state writing that is not itself binding law (doctrine).
+FR_TYPES = {
+    "RULE": "legislation",
+    "PRORULE": "legislation",
+    "NOTICE": "doctrine",
+    "PRESDOCU": "doctrine",
+}
+LIST_FIELDS = [
+    "document_number", "title", "type", "publication_date", "html_url",
+    "raw_text_url", "body_html_url", "agencies", "abstract",
+]
 
 
 def get_session() -> requests.Session:
@@ -90,21 +108,19 @@ class RegulationsGovScraper:
 
     def __init__(self):
         self.session = get_session()
-        self.api_key = get_api_key()
 
-    def _get(self, url: str, params: Optional[Dict] = None, timeout: int = 30) -> Optional[requests.Response]:
-        for attempt in range(3):
+    def _get(self, url: str, params: Optional[Dict] = None, timeout: int = 60) -> Optional[requests.Response]:
+        for attempt in range(4):
             try:
                 resp = self.session.get(url, params=params, timeout=timeout)
                 if resp.status_code == 200:
                     return resp
-                if resp.status_code == 429:
-                    wait = 30 * (attempt + 1)
-                    logger.warning("Rate limited, waiting %ds...", wait)
+                if resp.status_code in (429, 503):
+                    wait = 10 * (attempt + 1)
+                    logger.warning("HTTP %d, waiting %ds...", resp.status_code, wait)
                     time.sleep(wait)
                     continue
-                if resp.status_code == 403:
-                    logger.warning("403 Forbidden for %s", url)
+                if resp.status_code == 404:
                     return None
                 logger.warning("HTTP %d for %s", resp.status_code, url)
                 return None
@@ -113,250 +129,187 @@ class RegulationsGovScraper:
                 time.sleep(5)
         return None
 
-    def list_documents(self, doc_type: str, page_number: int = 1,
-                       page_size: int = PAGE_SIZE, sort: str = "-postedDate") -> Dict[str, Any]:
-        """List documents from Regulations.gov API."""
+    def list_window(self, start: date, end: date, page: int) -> Dict[str, Any]:
+        """List documents published within [start, end] (inclusive), one page."""
         params = {
-            "filter[documentType]": doc_type,
-            "api_key": self.api_key,
-            "page[size]": page_size,
-            "page[number]": page_number,
-            "sort": sort,
+            "per_page": PAGE_SIZE,
+            "page": page,
+            "order": "newest",
+            "conditions[type][]": list(FR_TYPES.keys()),
+            "conditions[publication_date][gte]": start.isoformat(),
+            "conditions[publication_date][lte]": end.isoformat(),
+            "fields[]": LIST_FIELDS,
         }
-        resp = self._get(f"{REGULATIONS_API}/documents", params=params)
+        resp = self._get(f"{FR_API}/documents.json", params=params)
         if not resp:
-            return {"data": [], "meta": {}}
-        return resp.json()
+            return {"results": [], "total_pages": 0, "count": 0}
+        try:
+            return resp.json()
+        except ValueError:
+            return {"results": [], "total_pages": 0, "count": 0}
 
-    def get_document_detail(self, doc_id: str) -> Optional[Dict[str, Any]]:
-        """Get document detail from Regulations.gov API."""
-        params = {"api_key": self.api_key}
-        resp = self._get(f"{REGULATIONS_API}/documents/{doc_id}", params=params)
-        if not resp:
-            return None
-        return resp.json().get("data", {}).get("attributes", {})
-
-    def get_fr_full_text(self, fr_doc_num: str) -> Optional[str]:
-        """Fetch full text from Federal Register API using FR document number."""
-        if not fr_doc_num:
-            return None
-
-        # Get the document metadata from FR API to find full text URLs
-        fields = "body_html_url,raw_text_url,full_text_xml_url,title,abstract"
-        resp = self._get(
-            f"{FR_API}/documents/{fr_doc_num}.json",
-            params={"fields[]": fields.split(",")},
-        )
-        if not resp:
-            return None
-
-        data = resp.json()
-        body_html_url = data.get("body_html_url")
-        raw_text_url = data.get("raw_text_url")
-
-        # Prefer HTML body (structured), fall back to raw text
-        if body_html_url:
-            time.sleep(0.5)
-            html_resp = self._get(body_html_url, timeout=60)
-            if html_resp:
-                text = clean_html(html_resp.text)
+    def get_full_text(self, doc: Dict[str, Any]) -> Optional[str]:
+        """Fetch full text for a document, preferring raw text over HTML body."""
+        raw_url = doc.get("raw_text_url")
+        if raw_url:
+            resp = self._get(raw_url, timeout=120)
+            if resp:
+                text = clean_html(resp.text)
                 if len(text) > 100:
                     return text
 
-        if raw_text_url:
-            time.sleep(0.5)
-            txt_resp = self._get(raw_text_url, timeout=60)
-            if txt_resp:
-                text = txt_resp.text.strip()
+        html_url = doc.get("body_html_url")
+        if html_url:
+            time.sleep(DELAY)
+            resp = self._get(html_url, timeout=120)
+            if resp:
+                text = clean_html(resp.text)
                 if len(text) > 100:
                     return text
 
         return None
 
-    def normalize(self, listing: Dict[str, Any], detail: Optional[Dict[str, Any]],
-                  full_text: str) -> Dict[str, Any]:
-        """Normalize a Regulations.gov document into standard schema."""
-        attrs = listing.get("attributes", {})
-        doc_id = listing.get("id", "")
+    def normalize(self, doc: Dict[str, Any], full_text: str) -> Dict[str, Any]:
+        """Normalize a Federal Register document into the standard schema."""
+        doc_num = doc.get("document_number", "")
+        fr_type = (doc.get("type") or "").strip()
+        # Map the human-readable type back to our taxonomy bucket.
+        type_code = {
+            "Rule": "RULE", "Proposed Rule": "PRORULE",
+            "Notice": "NOTICE", "Presidential Document": "PRESDOCU",
+        }.get(fr_type, "NOTICE")
 
-        posted_date = attrs.get("postedDate", "")
-        if posted_date:
-            try:
-                posted_date = posted_date[:10]  # YYYY-MM-DD
-            except (IndexError, TypeError):
-                posted_date = None
+        agencies = [
+            a.get("name") for a in (doc.get("agencies") or []) if a.get("name")
+        ]
 
-        # Get additional metadata from detail if available
-        fr_doc_num = attrs.get("frDocNum", "")
-        agency_id = attrs.get("agencyId", "")
-        docket_id = attrs.get("docketId", "")
-        doc_type = attrs.get("documentType", "")
-        subtype = attrs.get("subtype", "")
+        pub_date = doc.get("publication_date") or None
 
-        # Build URL
-        url = f"https://www.regulations.gov/document/{doc_id}"
-
-        record = {
-            "_id": doc_id,
+        return {
+            "_id": doc_num,
             "_source": SOURCE_ID,
-            "_type": "legislation",
+            "_type": FR_TYPES.get(type_code, "doctrine"),
             "_fetched_at": datetime.now(timezone.utc).isoformat(),
-            "title": attrs.get("title", ""),
+            "title": doc.get("title", ""),
             "text": full_text,
-            "date": posted_date,
-            "url": url,
-            "agency_id": agency_id,
-            "document_type": doc_type,
-            "subtype": subtype or None,
-            "docket_id": docket_id,
-            "fr_doc_num": fr_doc_num or None,
-            "comment_end_date": attrs.get("commentEndDate"),
-            "open_for_comment": attrs.get("openForComment", False),
+            "date": pub_date,
+            "url": doc.get("html_url") or f"https://www.federalregister.gov/d/{doc_num}",
+            "document_type": fr_type,
+            "agencies": agencies or None,
+            "abstract": doc.get("abstract") or None,
         }
 
-        # Add detail fields if available
-        if detail:
-            record["abstract"] = detail.get("docAbstract") or None
-            record["cfr_part"] = detail.get("cfrPart") or None
-            record["effective_date"] = detail.get("effectiveDate") or None
-            record["authors"] = detail.get("authors") or None
-
-        return record
+    def _iter_windows(self, until: date) -> Generator[tuple, None, None]:
+        """Yield (start, end) date windows from today back to `until`, newest first."""
+        end = datetime.now(timezone.utc).date()
+        while end >= until:
+            start = end - timedelta(days=WINDOW_DAYS - 1)
+            if start < until:
+                start = until
+            yield start, end
+            end = start - timedelta(days=1)
 
     def fetch_all(self, sample: bool = False) -> Generator[Dict[str, Any], None, None]:
-        """Yield all documents with full text."""
-        max_pages = MAX_PAGES_SAMPLE if sample else 10000
-        records_yielded = 0
+        """Yield all documents with full text, newest first, back to 1994."""
         target = 15 if sample else float("inf")
+        until = ARCHIVE_START
+        yielded = 0
 
-        for doc_type in DOC_TYPES:
-            if records_yielded >= target:
+        for start, end in self._iter_windows(until):
+            if yielded >= target:
                 break
-
-            logger.info("Fetching %s documents...", doc_type)
             page = 1
-
-            while page <= max_pages and records_yielded < target:
+            while yielded < target:
                 time.sleep(DELAY)
-                result = self.list_documents(doc_type, page_number=page)
-                docs = result.get("data", [])
-                meta = result.get("meta", {})
-
+                result = self.list_window(start, end, page)
+                docs = result.get("results", [])
+                total_pages = result.get("total_pages", 0) or 0
                 if not docs:
-                    logger.info("No more %s documents at page %d", doc_type, page)
                     break
 
                 for doc in docs:
-                    if records_yielded >= target:
+                    if yielded >= target:
                         break
-
-                    doc_id = doc.get("id", "")
-                    fr_doc_num = doc.get("attributes", {}).get("frDocNum")
-
-                    if not fr_doc_num:
-                        logger.debug("Skipping %s (no FR doc number)", doc_id)
+                    doc_num = doc.get("document_number")
+                    if not doc_num:
                         continue
-
-                    # Fetch full text from Federal Register
                     time.sleep(DELAY)
-                    full_text = self.get_fr_full_text(fr_doc_num)
-
+                    full_text = self.get_full_text(doc)
                     if not full_text or len(full_text) < 100:
-                        logger.warning("No full text for %s (FR: %s)", doc_id, fr_doc_num)
+                        logger.debug("No full text for %s", doc_num)
                         continue
-
-                    # Get detail for extra metadata (skip in sample to save API calls)
-                    detail = None
-                    if not sample:
-                        time.sleep(DELAY)
-                        detail = self.get_document_detail(doc_id)
-
-                    record = self.normalize(doc, detail, full_text)
-                    records_yielded += 1
+                    record = self.normalize(doc, full_text)
+                    yielded += 1
                     logger.info(
-                        "[%d] %s: %s (%d chars)",
-                        records_yielded, doc_id,
-                        record["title"][:60], len(full_text),
+                        "[%d] %s %s: %s (%d chars)",
+                        yielded, doc.get("type", ""), doc_num,
+                        (record["title"] or "")[:50], len(full_text),
                     )
                     yield record
 
-                has_next = meta.get("hasNextPage", False)
-                if not has_next:
+                if page >= total_pages:
                     break
                 page += 1
 
-        logger.info("Total records yielded: %d", records_yielded)
+        logger.info("Total records yielded: %d", yielded)
 
     def fetch_updates(self, since: str) -> Generator[Dict[str, Any], None, None]:
-        """Yield documents modified since a date."""
-        for doc_type in DOC_TYPES:
-            logger.info("Fetching %s updates since %s...", doc_type, since)
+        """Yield documents published on or after `since` (YYYY-MM-DD)."""
+        try:
+            until = datetime.strptime(since, "%Y-%m-%d").date()
+        except ValueError:
+            until = datetime.now(timezone.utc).date() - timedelta(days=30)
+
+        for start, end in self._iter_windows(until):
             page = 1
             while True:
                 time.sleep(DELAY)
-                result = self.list_documents(doc_type, page_number=page)
-                docs = result.get("data", [])
-                meta = result.get("meta", {})
-
+                result = self.list_window(start, end, page)
+                docs = result.get("results", [])
+                total_pages = result.get("total_pages", 0) or 0
                 if not docs:
                     break
-
                 for doc in docs:
-                    posted = doc.get("attributes", {}).get("postedDate", "")
-                    if posted and posted[:10] < since:
-                        return
-
-                    fr_doc_num = doc.get("attributes", {}).get("frDocNum")
-                    if not fr_doc_num:
+                    pub = doc.get("publication_date") or ""
+                    if pub and pub < since:
                         continue
-
+                    doc_num = doc.get("document_number")
+                    if not doc_num:
+                        continue
                     time.sleep(DELAY)
-                    full_text = self.get_fr_full_text(fr_doc_num)
+                    full_text = self.get_full_text(doc)
                     if not full_text or len(full_text) < 100:
                         continue
-
-                    time.sleep(DELAY)
-                    detail = self.get_document_detail(doc.get("id", ""))
-                    yield self.normalize(doc, detail, full_text)
-
-                if not meta.get("hasNextPage", False):
+                    yield self.normalize(doc, full_text)
+                if page >= total_pages:
                     break
                 page += 1
 
     def test(self) -> bool:
         """Quick connectivity test."""
-        logger.info("Testing Regulations.gov API...")
-        result = self.list_documents("Rule", page_size=5)
-        docs = result.get("data", [])
+        logger.info("Testing Federal Register API...")
+        today = datetime.now(timezone.utc).date()
+        result = self.list_window(today - timedelta(days=14), today, 1)
+        docs = result.get("results", [])
         if not docs:
-            logger.error("No documents returned from API")
+            logger.error("No documents returned from Federal Register API")
             return False
-
-        logger.info("API OK: %d rules returned", len(docs))
-
-        # Test FR API cross-reference
-        fr_num = docs[0].get("attributes", {}).get("frDocNum")
-        if fr_num:
-            logger.info("Testing Federal Register API with FR# %s...", fr_num)
-            text = self.get_fr_full_text(fr_num)
-            if text and len(text) > 100:
-                logger.info("FR API OK: %d chars of full text", len(text))
-                return True
-            else:
-                logger.error("Failed to get full text from Federal Register")
-                return False
-        else:
-            logger.warning("First document has no FR doc number")
-            return False
+        logger.info("API OK: %d documents in window (count=%s)", len(docs), result.get("count"))
+        text = self.get_full_text(docs[0])
+        if text and len(text) > 100:
+            logger.info("Full text OK: %d chars from %s", len(text), docs[0].get("document_number"))
+            return True
+        logger.error("Failed to get full text")
+        return False
 
 
 def main():
     import argparse
     parser = argparse.ArgumentParser(description="US/RegulationsGov data fetcher")
-    parser.add_argument("command", choices=["bootstrap", "update", "test"],
+    parser.add_argument("command", choices=["bootstrap", "bootstrap-fast", "update", "test"],
                         help="Command to run")
     parser.add_argument("--sample", action="store_true",
-                        help="Fetch only 10-15 sample records")
+                        help="Fetch only ~15 sample records")
     parser.add_argument("--since", type=str, default=None,
                         help="ISO date for incremental updates (YYYY-MM-DD)")
     parser.add_argument("--output", type=str, default=None,
@@ -366,48 +319,43 @@ def main():
     scraper = RegulationsGovScraper()
 
     if args.command == "test":
-        ok = scraper.test()
-        sys.exit(0 if ok else 1)
+        sys.exit(0 if scraper.test() else 1)
 
-    sample_dir = Path(__file__).parent / "sample"
+    base = Path(__file__).parent
+    sample_dir = base / "sample"
     sample_dir.mkdir(exist_ok=True)
 
-    if args.command == "bootstrap":
-        records = scraper.fetch_all(sample=args.sample)
-    elif args.command == "update":
+    if args.command == "update":
         since = args.since or "2024-01-01"
         records = scraper.fetch_updates(since)
+        outfile = open(args.output, "w") if args.output else None
     else:
-        parser.print_help()
-        sys.exit(1)
-
-    output_path = args.output
-    if output_path:
-        outfile = open(output_path, "w")
-    else:
-        outfile = None
+        # bootstrap / bootstrap-fast
+        records = scraper.fetch_all(sample=args.sample)
+        if args.command == "bootstrap-fast":
+            data_dir = base / "data"
+            data_dir.mkdir(exist_ok=True)
+            outfile = open(args.output or (data_dir / "records.jsonl"), "w", encoding="utf-8")
+        else:
+            outfile = open(args.output, "w", encoding="utf-8") if args.output else None
 
     count = 0
     for record in records:
         count += 1
-
-        # Save to sample directory
         if args.sample or count <= 15:
             safe_id = re.sub(r"[^a-zA-Z0-9_-]", "_", record["_id"])
-            sample_path = sample_dir / f"{safe_id}.json"
-            with open(sample_path, "w", encoding="utf-8") as f:
+            with open(sample_dir / f"{safe_id}.json", "w", encoding="utf-8") as f:
                 json.dump(record, f, indent=2, ensure_ascii=False)
-
-        # Write to JSONL if output specified
         if outfile:
             outfile.write(json.dumps(record, ensure_ascii=False) + "\n")
+            outfile.flush()
 
     if outfile:
         outfile.close()
 
     logger.info("Done. %d records processed.", count)
     if count == 0:
-        logger.error("No records fetched — check API connectivity and rate limits")
+        logger.error("No records fetched — check Federal Register API connectivity")
         sys.exit(1)
 
 

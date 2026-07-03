@@ -356,6 +356,10 @@ class GibraltarIncomeTaxScraper(BaseScraper):
                 text = page.extract_text()
                 if text:
                     pages.append(text)
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
         return "\n\n".join(pages)
 
     def _extract_with_pypdf(self, pdf_url: str) -> Optional[str]:
@@ -373,6 +377,10 @@ class GibraltarIncomeTaxScraper(BaseScraper):
             text = page.extract_text()
             if text:
                 pages.append(text)
+            try:
+                page.flush_cache(); page.get_textmap.cache_clear()
+            except Exception:
+                pass
         return "\n\n".join(pages)
 
     def test(self) -> bool:

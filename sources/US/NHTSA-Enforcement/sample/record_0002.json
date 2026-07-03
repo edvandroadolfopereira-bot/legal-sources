@@ -1,0 +1,18 @@
+{
+  "_id": "EA26003",
+  "_source": "US/NHTSA-Enforcement",
+  "_type": "case_law",
+  "_fetched_at": "2026-06-08T19:10:01.054062+00:00",
+  "title": "NHTSA Engineering Analysis EA26003: Front Steering Knuckle Fractures",
+  "text": "The Office of Defects Investigation (ODI) is upgrading its Preliminary Evaluation (PE25006) of front steering knuckle fractures on model year (MY) 2014 through 2017 Range Rover Sport vehicles to an Engineering Analysis. ODI opened PE25006 on June 27, 2025, after receiving 12 Vehicle Owner's Questionnaire (VOQ) reports of the front aluminum steering knuckles fracturing in these vehicles. The reports describe the fractures occurring at the joint where the steering knuckle attaches to the upper control arm ball joint in one or both steering knuckles. Fracture of the front suspension knuckle can lead to detachment of the upper suspension arm. Detachment of the upper suspension arm results in the driver’s inability to control the vehicle, increasing the risk of a crash.\n\n \n\nODI reviewed information supplied by Jaguar Land Rover (JLR) in response to Information Request letters as well as reviewed the data with JLR on numerous occasions. ODI further reviewed relevant data on a peer vehicle with a significantly similar steering knuckle design, the MY 2014 through 2017 Range Rover. Much of the information is contradictory and requires a deeper analysis that is available in an Engineering Analysis.\n\n \n\nOn August 5, 2025, Jaguar Land Rover (JLR) filed safety recall 25V514. This recall covers certain MY 2014 and all MY 2015-2017 Range Rover and Range Rover Sport vehicles. The remedy for recall 25V514 addresses knuckles with and without a visible fracture. Knuckles that have developed a visible fracture will be replaced with a new knuckle of a substantially similar design. Knuckles with no fracture visibly present will have a brace attached to the upper portion of the front steering knuckle. JLR states that the purpose of the brace is to prevent the component from completely separating should a fracture develop.\n\n \n\nNHTSA continues to receive allegations of fractures occurring in the front steering knuckles of Range Rover and Range Rover Sport vehicles. Two of the most recent VOQs received by ODI involve front steering knuckle fractures occurring on MY 2020 and MY 2021 Range Rover L405 vehicles. ODI will continue to investigate the component design and assess the potential safety risk as part of this Engineering Analysis and evaluate the recall remedies for Recall 25V514. Further, the scope of this Engineering Analysis will be expanded to include MY 2018-2022 Range Rover and Range Rover Sport vehicles as they have a substantially similar component design.\n\n \n\nTo review the ODI reports cited in the Opening Resume ODI Report Identification Number document, go to NHTSA.gov.",
+  "date": "2026-04-24",
+  "url": "https://www.nhtsa.gov/vehicle/EA26003",
+  "investigation_number": "003",
+  "investigation_type": "Engineering Analysis",
+  "investigation_type_code": "EA",
+  "status": "Open",
+  "status_code": "O",
+  "subject": "Front Steering Knuckle Fractures",
+  "nhtsa_id": "EA26003",
+  "latest_activity_date": "2026-04-24T13:22:49Z"
+}

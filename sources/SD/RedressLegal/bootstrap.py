@@ -116,6 +116,10 @@ def extract_pdf_text(pdf_bytes):
                 text = page.extract_text() or ""
                 if text.strip():
                     texts.append(text.strip())
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
             return "\n\n".join(texts)
     except Exception as e:
         logger.error(f"PDF extraction error: {e}")

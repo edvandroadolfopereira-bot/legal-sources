@@ -1,0 +1,55 @@
+fetcher:
+  base_url: https://www.peshawarhighcourt.gov.pk
+  search_path: /PHCCMS/reportedJudgments.php?action=search
+  method: POST
+  filters: year, category, judge
+  rate_limit_seconds: 1.5
+  type: html_scraping
+  user_agent: LegalDataHunter/1.0 (research project; +https://github.com/ZachLaik/LegalDataHunter)
+  years: 2010-present
+license:
+  name: Public Domain (Government)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: >-
+    Judgments of the Peshawar High Court are public judicial records of the
+    Government of Pakistan / Province of Khyber Pakhtunkhwa. No formal open
+    licence is published; standard government-publication public-domain
+    treatment applies.
+schema:
+  date_field: date
+  text_field: text
+  dedup_key:
+  - _id
+  key_fields:
+  - name: case_number
+    required: false
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: category
+    required: false
+    type: string
+  - name: court
+    required: false
+    type: string
+source:
+  auth: none
+  country: PK
+  data_types:
+  - case_law
+  id: PK/PHC
+  license: Public Domain (Government)
+  name: Peshawar High Court — Reported Judgments
+  update_frequency: weekly
+  url: https://www.peshawarhighcourt.gov.pk/PHCCMS/reportedJudgments.php
+  description: |
+    Reported judgments of the Peshawar High Court (constitutional High Court
+    for Khyber Pakhtunkhwa province, Pakistan), served from the official Case
+    Flow Management System (PHCCMS). Full text extracted from judgment PDFs.
+    Covers Criminal, Civil, Revenue, Constitutional, Service and Corporate
+    matters, 2010-present. Language: English.

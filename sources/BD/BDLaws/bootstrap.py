@@ -251,16 +251,44 @@ def bootstrap_sample(sample_dir: Path, count: int = 15):
     return saved
 
 
+def bootstrap_full(data_dir: Path) -> int:
+    """Fetch every act and stream each as a JSON line to data/records.jsonl."""
+    data_dir.mkdir(parents=True, exist_ok=True)
+    jsonl_path = data_dir / "records.jsonl"
+    fetcher = BdLawsFetcher()
+
+    count = 0
+    with open(jsonl_path, "w", encoding="utf-8") as f:
+        for doc in fetcher.fetch_all():
+            f.write(json.dumps(doc, ensure_ascii=False) + "\n")
+            count += 1
+            if count % 25 == 0:
+                logger.info(f"  Written {count} acts -> {jsonl_path}")
+    logger.info(f"Full bootstrap complete: {count} acts written -> {jsonl_path}")
+    return count
+
+
 if __name__ == "__main__":
     source_dir = Path(__file__).parent
     sample_dir = source_dir / "sample"
+    data_dir = source_dir / "data"
 
-    if len(sys.argv) > 1 and sys.argv[1] == "bootstrap":
-        sample_flag = "--sample" in sys.argv
+    cmd = sys.argv[1] if len(sys.argv) > 1 else ""
+    sample_flag = "--sample" in sys.argv
+    full_flag = "--full" in sys.argv
+
+    if cmd == "bootstrap" and not full_flag:
         count = 15 if sample_flag else 50
         saved = bootstrap_sample(sample_dir, count)
         if saved < 10:
             logger.error(f"Only {saved} documents saved, expected at least 10")
             sys.exit(1)
+    elif cmd == "bootstrap-fast" or (cmd == "bootstrap" and full_flag):
+        # bootstrap-fast / bootstrap --full: persist the full corpus to JSONL
+        written = bootstrap_full(data_dir)
+        if written < 1:
+            logger.error("No records written")
+            sys.exit(1)
     else:
-        print("Usage: python3 bootstrap.py bootstrap [--sample]")
+        print("Usage: python3 bootstrap.py bootstrap [--sample|--full]")
+        print("       python3 bootstrap.py bootstrap-fast   # full corpus -> data/records.jsonl")

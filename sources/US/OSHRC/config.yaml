@@ -1,0 +1,27 @@
+source_id: "US/OSHRC"
+name: "Occupational Safety & Health Review Commission Decisions"
+country: US
+url: "https://www.oshrc.gov/decisions/"
+data_types:
+  - case_law
+auth: none
+schedule: weekly
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - docket_number
+    - date
+    - decision_type
+    - text
+    - url
+
+license:
+  name: "U.S. Public Domain"
+  url: "https://www.law.cornell.edu/uscode/text/17/105"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "U.S. federal government work — not subject to copyright"

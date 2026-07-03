@@ -1,0 +1,30 @@
+source_id: MM/MyanmarTradePortal
+name: Myanmar National Trade Portal — Legal Documents
+country: MM
+url: https://www.myanmartradeportal.gov.mm/en/legals
+data_types:
+  - legislation
+auth:
+  type: none
+
+schema:
+  key_fields:
+    - name: _id
+      required: true
+    - name: title
+      required: true
+    - name: text
+      required: true
+    - name: date
+      required: false
+    - name: url
+      required: true
+
+license:
+  name: "Myanmar Government Open Data"
+  url: "https://www.myanmartradeportal.gov.mm/en/about"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Government trade portal with publicly accessible legal documents"

@@ -161,6 +161,7 @@ class ATInformacoesVinculativas(BaseScraper):
     SOURCE_ID = "PT/AT-InformacoesVinculativas"
 
     def __init__(self):
+        super().__init__()
         self.http = HttpClient(
             base_url=BASE_URL,
             headers={

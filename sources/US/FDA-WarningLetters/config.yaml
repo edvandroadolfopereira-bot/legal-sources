@@ -1,0 +1,48 @@
+auth: none
+country: US
+data_types:
+- doctrine
+fetch:
+  delay: 2.0
+  page_size: 100
+  listing_url: https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/compliance-actions-and-activities/warning-letters
+name: FDA Warning Letters
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: text
+    required: true
+    type: string
+  - name: issuing_office
+    required: false
+    type: string
+  - name: subject
+    required: false
+    type: string
+  - name: recipient
+    required: false
+    type: string
+  - name: delivery_method
+    required: false
+    type: string
+  - name: product_type
+    required: false
+    type: string
+source_id: US/FDA-WarningLetters
+url: https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/compliance-actions-and-activities/warning-letters
+license:
+  name: "U.S. Public Domain"
+  url: "https://www.law.cornell.edu/uscode/text/17/105"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "U.S. government work — public domain under 17 U.S.C. § 105"

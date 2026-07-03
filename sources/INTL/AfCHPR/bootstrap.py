@@ -79,14 +79,14 @@ class AfCHPRScraper(BaseScraper):
             logger.info(f"Page {page} returned 404 — end of listing")
             return []
         r.raise_for_status()
-        html = r.text
+        page_html = r.text
 
         entries = []
         # Extract judgment links and titles
         # Pattern: href="/en/akn/aa-au/judgment/afchpr/YEAR/NUM/eng@DATE"
         links = re.findall(
             r'href="(/en/akn/aa-au/judgment/afchpr/\d{4}/\d+/eng@[\d-]+)"[^>]*>\s*([^<]+)<',
-            html,
+            page_html,
         )
 
         seen = set()

@@ -10,11 +10,31 @@ schedule: monthly
 
 schema:
   key_fields:
-    - _id
-    - title
-    - date
-    - text
-    - document_type
+    - name: "_id"
+      description: "Unique document identifier"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text content"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "document_type"
+      description: "Document category"
+      type: "string"
+      role: "reference"
+      required: false
 
 license:
   name: "Custom Terms (Government)"

@@ -1,0 +1,18 @@
+{
+  "_id": "ESMA-SN-14937",
+  "_source": "EU/ESMA-Sanctions",
+  "_type": "case_law",
+  "_fetched_at": "2026-06-08T11:09:03.255520",
+  "sanction_id": "14937",
+  "entity_name": "Familiam Asset Management Oy",
+  "title": "Sanction against Familiam Asset Management Oy (MiFID) — FINLAND",
+  "text": "Yhtiö oli jättänyt raportoimatta Finanssivalvonnalle määräajassa 8.9.2021–31.8.2023 eli lähes kahden vuoden ajalta yhteensä 2 867 liiketoimea.\n\nYhtiö ei myöskään toimittanut määräajassa Finanssivalvonnalle FINREP- ja IF-tiedonkeruukehikkojen mukaisia säännöllisesti toimitettavia neljännesvuosittaisia valvontatietoja kolmelta vuoden 2024 viitepäivämäärältä. Valvontatietojen toimittamisen viivästykset vaihtelivat noin neljästä päivästä kahteen viikkoon. \n\nUseasta laiminlyönnistä on määrätty yhtiölle yhteinen seuraamusmaksu, joka maksetaan valtiolle. Yhteisen seuraamusmaksun määrä on perustunut kokonaisarviointiin, jossa on otettu huomioon erityisesti laiminlyöntien laatu, laajuus ja kestoaika. Muun ohella laiminlyöntien myöntäminen eli yhteistyö Finanssivalvonnan kanssa asian selvittämiseksi on otettu huomioon yhteisen seuraamusmaksun määrää alentavana seikkana.",
+  "date": "2026-03-25",
+  "url": "https://registers.esma.europa.eu/publication/details?core=esma_registers_sanctions&docId=sn14937",
+  "legal_framework": "MiFID",
+  "nature": "Administrative sanction and measure",
+  "country": "FINLAND",
+  "nca": "Finanssivalvonta (FSA)",
+  "lei": "",
+  "language": "Finnish"
+}

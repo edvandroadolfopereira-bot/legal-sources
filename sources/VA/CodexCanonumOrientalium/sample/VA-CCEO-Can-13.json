@@ -1,0 +1,13 @@
+{
+  "_id": "VA-CCEO-Can-13",
+  "_source": "VA/CodexCanonumOrientalium",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-18T21:48:39.064559+00:00",
+  "title": "Canon 13 (CCEO)",
+  "text": "Omnes christifideles secundum suam cuiusque condicionem ad sanctam vitam ducendam atque ad Ecclesiae incrementum eiusque iugem sanctificationem promovendam vires suas conferre debent.",
+  "canon_number": 13,
+  "code": "Codex Canonum Ecclesiarum Orientalium",
+  "date": "1990-10-18",
+  "url": "https://www.vatican.va/content/john-paul-ii/la/apost_constitutions/documents/hf_jp-ii_apc_19901018_codex-can-eccl-orient-1.html",
+  "language": "la"
+}

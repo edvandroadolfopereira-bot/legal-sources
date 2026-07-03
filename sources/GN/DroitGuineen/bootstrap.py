@@ -195,7 +195,10 @@ class DroitGuineenScraper(BaseScraper):
             "text": text,
         }
 
-        yield self.normalize(record)
+        # Yield the RAW record; BaseScraper.bootstrap_fast() calls normalize().
+        # (Do NOT normalize here — double-normalization raises KeyError on
+        #  raw["id"] since a normalized record uses "_id".)
+        yield record
 
     def normalize(self, raw: Dict[str, Any]) -> Dict[str, Any]:
         """Normalize a raw record into standard schema."""
@@ -237,7 +240,8 @@ def _run_bootstrap(sample: bool = False):
     count = 0
     max_records = 15 if sample else 999999
 
-    for record in scraper.fetch_all():
+    for raw in scraper.fetch_all():
+        record = scraper.normalize(raw)
         count += 1
         text_len = len(record.get("text", ""))
         logger.info(

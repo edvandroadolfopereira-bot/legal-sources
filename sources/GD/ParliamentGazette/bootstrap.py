@@ -157,6 +157,10 @@ class GDParliamentGazetteScraper(BaseScraper):
                 text = page.extract_text()
                 if text:
                     parts.append(text)
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
             pdf.close()
             return "\n\n".join(parts).strip()
         except Exception as e:
@@ -271,11 +275,14 @@ def main():
     parser = argparse.ArgumentParser(description="GD/ParliamentGazette data fetcher")
     parser.add_argument(
         "command",
-        choices=["bootstrap", "update", "test"],
+        choices=["bootstrap", "bootstrap-fast", "update", "test"],
         help="Command to run",
     )
     parser.add_argument("--sample", action="store_true", help="Fetch sample only")
+    parser.add_argument("--sample-size", type=int, default=15)
     parser.add_argument("--full", action="store_true", help="Fetch all records")
+    parser.add_argument("--workers", type=int, default=5, help="Workers for bootstrap-fast")
+    parser.add_argument("--batch-size", type=int, default=100, help="Batch size for bootstrap-fast")
     args = parser.parse_args()
 
     scraper = GDParliamentGazetteScraper()
@@ -285,35 +292,26 @@ def main():
         sys.exit(0 if success else 1)
 
     elif args.command == "bootstrap":
-        sample_dir = Path(__file__).parent / "sample"
-        sample_dir.mkdir(exist_ok=True)
+        # Route through the framework so records are normalized (correct _id/
+        # _source/_type/_fetched_at shape) and persisted to data/records.jsonl.
+        if args.sample:
+            stats = scraper.run_sample(n=args.sample_size)
+            print(f"\nSample complete: {stats.get('sample_records_saved', 0)} records saved")
+        else:
+            stats = scraper.bootstrap()
+            print(f"\nBootstrap complete: {stats['records_new']} new, "
+                  f"{stats['records_updated']} updated, {stats['errors']} errors")
 
-        count = 0
-        max_records = 15 if args.sample else None
-
-        for record in scraper.fetch_all(max_records=max_records):
-            out_path = sample_dir / f"record_{count:04d}.json"
-            with open(out_path, "w", encoding="utf-8") as f:
-                json.dump(record, f, ensure_ascii=False, indent=2)
-            text_len = len(record.get("text", ""))
-            logger.info(
-                f"[{count + 1}] {record.get('title', '?')[:80]} "
-                f"({text_len:,} chars)"
-            )
-            count += 1
-
-        logger.info(f"Bootstrap complete: {count} records saved to sample/")
+    elif args.command == "bootstrap-fast":
+        stats = scraper.bootstrap_fast(
+            max_workers=args.workers,
+            batch_size=args.batch_size,
+        )
+        print(json.dumps(stats, indent=2, default=str))
 
     elif args.command == "update":
-        sample_dir = Path(__file__).parent / "sample"
-        sample_dir.mkdir(exist_ok=True)
-        count = 0
-        for record in scraper.fetch_updates():
-            out_path = sample_dir / f"update_{count:04d}.json"
-            with open(out_path, "w", encoding="utf-8") as f:
-                json.dump(record, f, ensure_ascii=False, indent=2)
-            count += 1
-        logger.info(f"Update complete: {count} records")
+        stats = scraper.update()
+        print(f"\nUpdate: {stats['records_new']} new, {stats['records_updated']} updated")
 
 
 if __name__ == "__main__":

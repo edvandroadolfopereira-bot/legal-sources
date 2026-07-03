@@ -1,0 +1,65 @@
+rate_limit:
+  burst: 2
+  requests_per_second: 1
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: url
+    required: true
+    type: string
+  - name: _type
+    required: false
+    type: string
+  - name: _source
+    required: false
+    type: string
+  - name: _fetched_at
+    required: false
+    type: string
+  - name: bill_number
+    required: false
+    type: string
+  - name: status
+    required: false
+    type: string
+  - name: proponent
+    required: false
+    type: string
+  - name: authors
+    required: false
+    type: string
+  - name: parliamentary_group
+    required: false
+    type: string
+source:
+  auth: none
+  country: PE
+  data_types:
+  - legislation
+  description: >
+    Peru Congress bills and legislative proposals (proyectos de ley) from the
+    SPLEY portal. Covers 14,000+ bills from the 2021-2026 parliamentary period.
+    Full text extracted from PDF documents via the SPLEY REST API.
+  id: PE/CongresoProyectos
+  language: es
+  name: Peru Congress — Bills and Legislative Proposals (SPLEY)
+  url: https://wb2server.congreso.gob.pe/spley-portal/
+license:
+  name: "Official Peruvian legislation — public domain"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Legislative proposals are official government documents freely accessible via the Congress API"

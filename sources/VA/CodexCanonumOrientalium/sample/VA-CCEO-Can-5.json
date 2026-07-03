@@ -1,0 +1,13 @@
+{
+  "_id": "VA-CCEO-Can-5",
+  "_source": "VA/CodexCanonumOrientalium",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-18T21:48:39.063426+00:00",
+  "title": "Canon 5 (CCEO)",
+  "text": "Iura quaesita itemque privilegia, quae a Sede Apostolica ad haec usque tempora personis physicis vel iuridicis concessa in usu sunt nec revocata, integra manent, nisi Codicis canonibus expresse revocantur.",
+  "canon_number": 5,
+  "code": "Codex Canonum Ecclesiarum Orientalium",
+  "date": "1990-10-18",
+  "url": "https://www.vatican.va/content/john-paul-ii/la/apost_constitutions/documents/hf_jp-ii_apc_19901018_codex-can-eccl-orient-1.html",
+  "language": "la"
+}

@@ -1,0 +1,42 @@
+auth: none
+country: US
+data_types:
+- case_law
+fetch:
+  delay: 1.5
+  page_size: 10
+  listing_url: https://www.flra.gov/decisions/authority-decisions
+name: Federal Labor Relations Authority Decisions
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: text
+    required: true
+    type: string
+  - name: citation
+    required: false
+    type: string
+  - name: case_number
+    required: false
+    type: string
+  - name: arbitrator
+    required: false
+    type: string
+source_id: US/FLRA
+url: https://www.flra.gov/decisions/authority-decisions
+license:
+  name: "U.S. Public Domain"
+  url: "https://www.law.cornell.edu/uscode/text/17/105"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "U.S. government work — public domain under 17 U.S.C. § 105"

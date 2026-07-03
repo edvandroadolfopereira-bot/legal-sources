@@ -200,6 +200,10 @@ class KTScraper(BaseScraper):
                         t = page.extract_text()
                         if t:
                             pages_text.append(t)
+                        try:
+                            page.flush_cache(); page.get_textmap.cache_clear()
+                        except Exception:
+                            pass
                     return "\n\n".join(pages_text) if pages_text else None
         except Exception as e:
             logger.warning(f"PDF extraction failed for {pdf_url}: {e}")

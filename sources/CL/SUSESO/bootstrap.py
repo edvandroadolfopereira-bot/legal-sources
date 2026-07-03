@@ -40,6 +40,7 @@ except ImportError:
 SOURCE_ID = "CL/SUSESO"
 SOURCE_DIR = Path(__file__).parent
 SAMPLE_DIR = SOURCE_DIR / "sample"
+DATA_DIR = SOURCE_DIR / "data"
 
 logging.basicConfig(
     level=logging.INFO,
@@ -251,7 +252,7 @@ def test_api():
 
 def main():
     parser = argparse.ArgumentParser(description="CL/SUSESO bootstrap")
-    parser.add_argument("command", choices=["bootstrap", "test-api"])
+    parser.add_argument("command", choices=["bootstrap", "bootstrap-fast", "test-api"])
     parser.add_argument("--sample", action="store_true", help="Fetch sample only (~15 records)")
     args = parser.parse_args()
 
@@ -259,18 +260,32 @@ def main():
         success = test_api()
         sys.exit(0 if success else 1)
 
-    SAMPLE_DIR.mkdir(parents=True, exist_ok=True)
     is_sample = args.sample
     count = 0
 
-    for record in fetch_all(sample=is_sample):
-        if is_sample:
+    if is_sample:
+        SAMPLE_DIR.mkdir(parents=True, exist_ok=True)
+        for record in fetch_all(sample=True):
             out_path = SAMPLE_DIR / f"{record['_id']}.json"
             out_path.write_text(json.dumps(record, ensure_ascii=False, indent=2), encoding="utf-8")
             logger.info("Saved %s (%d chars text)", out_path.name, len(record.get("text", "")))
-        count += 1
-
-    logger.info("Done — %d records %s", count, "sampled" if is_sample else "fetched")
+            count += 1
+        logger.info("Done — %d records sampled", count)
+    else:
+        # Full mode: stream every record to data/records.jsonl (one JSON per line)
+        # so the ingest loader reads the full dataset, not just the sample subset.
+        DATA_DIR.mkdir(parents=True, exist_ok=True)
+        jsonl_path = DATA_DIR / "records.jsonl"
+        seen = set()
+        with open(jsonl_path, "w", encoding="utf-8") as f:
+            for record in fetch_all(sample=False):
+                rid = record.get("_id")
+                if rid in seen:
+                    continue
+                seen.add(rid)
+                f.write(json.dumps(record, ensure_ascii=False) + "\n")
+                count += 1
+        logger.info("Done — %d records fetched -> %s", count, jsonl_path)
 
 
 if __name__ == "__main__":

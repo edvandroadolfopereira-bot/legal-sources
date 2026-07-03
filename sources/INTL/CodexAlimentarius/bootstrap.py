@@ -279,7 +279,7 @@ def main():
     )
     parser.add_argument(
         "command",
-        choices=["bootstrap", "update", "test"],
+        choices=["bootstrap", "bootstrap-fast", "update", "test"],
         help="Command to run",
     )
     parser.add_argument(
@@ -312,6 +312,11 @@ def main():
         logger.info(f"Parsed {len(docs)} standards from page")
         if docs:
             logger.info(f"First: {docs[0]['reference']} — {docs[0]['title']}")
+        return
+
+    if args.command == "bootstrap-fast":
+        stats = scraper.bootstrap_fast()
+        logger.info(f"Bootstrap-fast complete: {json.dumps(stats, indent=2)}")
         return
 
     if args.command == "bootstrap":

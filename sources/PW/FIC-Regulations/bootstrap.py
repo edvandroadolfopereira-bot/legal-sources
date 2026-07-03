@@ -27,6 +27,7 @@ SOURCE_ID = "PW/FIC-Regulations"
 BASE_URL = "https://ropfic.org"
 LAWS_PAGE = f"{BASE_URL}/laws-regulations/"
 SAMPLE_DIR = Path(__file__).parent / "sample"
+DATA_DIR = Path(__file__).parent / "data"
 
 HEADERS = {
     "User-Agent": "LegalDataHunter/1.0 (legal-data-research)",
@@ -47,7 +48,7 @@ def discover_documents():
     """Scrape the laws-regulations page and yield document metadata."""
     resp = session.get(LAWS_PAGE, timeout=30)
     resp.raise_for_status()
-    html = resp.text
+    page_html = resp.text
 
     # Find all PDF links on the page
     pdf_pattern = re.compile(
@@ -57,10 +58,10 @@ def discover_documents():
 
     # Also find section headers to determine category
     section_pattern = re.compile(r'<h[2-4][^>]*>([^<]+)</h[2-4]>', re.IGNORECASE)
-    sections = [(m.start(), m.group(1).strip()) for m in section_pattern.finditer(html)]
+    sections = [(m.start(), m.group(1).strip()) for m in section_pattern.finditer(page_html)]
 
     seen_urls = set()
-    for match in pdf_pattern.finditer(html):
+    for match in pdf_pattern.finditer(page_html):
         pdf_url = match.group(1).strip()
         link_text = match.group(2).strip()
 
@@ -153,6 +154,21 @@ def bootstrap_sample(limit: int = 15):
     return count
 
 
+def bootstrap_full():
+    """Stream all records to data/records.jsonl for VPS ingest."""
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    jsonl_path = DATA_DIR / "records.jsonl"
+    count = 0
+    with open(jsonl_path, "w", encoding="utf-8") as f:
+        for record in fetch_all():
+            f.write(json.dumps(record, ensure_ascii=False) + "\n")
+            count += 1
+            if count % 10 == 0:
+                print(f"  Progress: {count} records written", file=sys.stderr)
+    print(f"\nFull bootstrap complete: {count} records -> {jsonl_path}")
+    return count
+
+
 def main():
     parser = argparse.ArgumentParser(description="PW/FIC-Regulations bootstrap")
     sub = parser.add_subparsers(dest="command")
@@ -162,17 +178,20 @@ def main():
     boot.add_argument("--limit", type=int, default=15, help="Sample limit")
     boot.add_argument("--full", action="store_true", help="Full fetch")
 
+    fast = sub.add_parser("bootstrap-fast", help="Full fetch streamed to data/records.jsonl")
+
     args = parser.parse_args()
 
-    if args.command == "bootstrap":
-        if args.sample or not args.full:
+    if args.command == "bootstrap-fast":
+        bootstrap_full()
+    elif args.command == "bootstrap":
+        if args.full:
+            bootstrap_full()
+        else:
             count = bootstrap_sample(args.limit)
             if count < 10:
                 print(f"WARNING: Only {count} samples collected", file=sys.stderr)
                 sys.exit(1)
-        else:
-            for record in fetch_all():
-                print(json.dumps(record, ensure_ascii=False))
     else:
         parser.print_help()
 

@@ -39,7 +39,10 @@ from datetime import datetime, timezone, timedelta
 from typing import Generator, Optional, Dict, Any, List, Set
 
 import requests
-import fitz  # PyMuPDF
+try:
+    import fitz  # PyMuPDF — optional; falls back to shared extractor if absent (issue #816)
+except ImportError:
+    fitz = None
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(PROJECT_ROOT))
@@ -74,18 +77,35 @@ SAMPLE_KEYWORDS = [
 
 
 def extract_pdf_text(pdf_bytes: bytes) -> str:
-    """Extract text from PDF using PyMuPDF."""
+    """Extract text from a PDF.
+
+    Prefers PyMuPDF (fitz) when installed; otherwise falls back to the shared
+    pdfplumber/pypdf extractor in common.pdf_extract, so the scraper still runs
+    on hosts without PyMuPDF (issue #816).
+    """
+    if fitz is not None:
+        try:
+            doc = fitz.open(stream=pdf_bytes, filetype="pdf")
+            parts = []
+            for page in doc:
+                text = page.get_text()
+                if text:
+                    parts.append(text.strip())
+            doc.close()
+            joined = "\n\n".join(parts)
+            if joined.strip():
+                return joined
+        except Exception as e:
+            logger.warning(f"PyMuPDF extraction failed: {e}")
+    # Fallback: shared extractor (pdfplumber/pypdf — always in requirements.txt)
     try:
-        doc = fitz.open(stream=pdf_bytes, filetype="pdf")
-        parts = []
-        for page in doc:
-            text = page.get_text()
-            if text:
-                parts.append(text.strip())
-        doc.close()
-        return "\n\n".join(parts)
+        from common.pdf_extract import extract_pdf_markdown
+        text = extract_pdf_markdown(
+            source="PK/IHC", source_id="_pdf", pdf_bytes=pdf_bytes, force=True
+        )
+        return text or ""
     except Exception as e:
-        logger.warning(f"PyMuPDF extraction failed: {e}")
+        logger.warning(f"pdf_extract fallback failed: {e}")
         return ""
 
 
@@ -126,6 +146,34 @@ class PKIHCScraper(BaseScraper):
         self.session = requests.Session()
         self.session.headers.update(HEADERS)
         self._seen_ids: Set[int] = set()
+        # Checkpoint of fully-processed date strings, so a torn-down /
+        # re-launched run resumes instead of re-fetching the whole corpus
+        # from scratch (issue #961). The day-by-day full-corpus scan is the
+        # slow part; skipping completed days makes a re-run pick up where the
+        # previous one stopped.
+        self._checkpoint_path = self.source_dir / "data" / "ihc_checkpoint.json"
+        self._completed_dates: Set[str] = self._load_checkpoint()
+
+    def _load_checkpoint(self) -> Set[str]:
+        """Load the set of date strings already fully processed."""
+        try:
+            with open(self._checkpoint_path) as f:
+                data = json.load(f)
+            dates = set(data.get("completed_dates", []))
+            if dates:
+                logger.info(f"Resuming from checkpoint: {len(dates)} dates already done")
+            return dates
+        except (FileNotFoundError, json.JSONDecodeError, OSError):
+            return set()
+
+    def _save_checkpoint(self) -> None:
+        """Persist the set of fully-processed date strings."""
+        try:
+            self._checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
+            with open(self._checkpoint_path, "w") as f:
+                json.dump({"completed_dates": sorted(self._completed_dates)}, f)
+        except OSError as e:
+            logger.warning(f"Could not write checkpoint: {e}")
 
     def _search_by_keyword(self, keyword: str, year: str) -> List[Dict]:
         """Search judgments by keyword and year."""
@@ -254,15 +302,28 @@ class PKIHCScraper(BaseScraper):
                         break
                     date_str = dt.strftime("%d-%b-%Y").upper()
 
-                    results = self._search_by_date(date_str)
-                    if not results:
+                    # Resume support: skip dates fully processed by a prior run
+                    if date_str in self._completed_dates:
                         continue
 
-                    logger.info(f"  {date_str}: {len(results)} judgments")
-                    for rec in results:
-                        processed = self._process_record(rec)
-                        if processed:
-                            yield processed
+                    results = self._search_by_date(date_str)
+                    if results:
+                        logger.info(f"  {date_str}: {len(results)} judgments")
+                        for rec in results:
+                            processed = self._process_record(rec)
+                            if processed:
+                                yield processed
+
+                    # Mark the date done only after all its records are yielded,
+                    # checkpointing every ~25 dates to bound disk writes. A crash
+                    # mid-date simply re-fetches that date next run (the loader
+                    # dedups on case_id with ON CONFLICT DO NOTHING).
+                    self._completed_dates.add(date_str)
+                    if len(self._completed_dates) % 25 == 0:
+                        self._save_checkpoint()
+
+            # Flush checkpoint at each year boundary too.
+            self._save_checkpoint()
 
     def fetch_updates(self, since: datetime) -> Generator[dict, None, None]:
         """Fetch recent judgments by date."""

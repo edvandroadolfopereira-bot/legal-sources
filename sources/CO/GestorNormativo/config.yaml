@@ -1,0 +1,97 @@
+# ===================================================================
+# CO/GestorNormativo -- Colombia Gestor Normativo (Función Pública)
+# ===================================================================
+# Full text of Colombian norms: laws, decrees, sentencias, resolutions,
+# conceptos, and more via Función Pública's Gestor Normativo.
+# Sequential numeric IDs: norma.php?i={id}
+# Search API: funajax.php?t=ejecuta_busqueda_avanzada2&tipdoc={type_id}
+# ===================================================================
+
+source:
+  id: "CO/GestorNormativo"
+  country: "CO"
+  name: "Colombia Gestor Normativo — Funcion Publica"
+  url: "https://www.funcionpublica.gov.co/eva/gestornormativo/"
+  description: |
+    Comprehensive repository of Colombian norms from Función Pública.
+    Covers laws, decrees, sentencias, resolutions, circulars, conceptos,
+    and other regulatory instruments. Full HTML text with cross-references.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+  notes: "Polite scraping of government site"
+
+api:
+  type: "html_scraping"
+  base_url: "https://www.funcionpublica.gov.co/eva/gestornormativo"
+  endpoints:
+    norm_page: "/norma.php?i={id}"
+    search: "/gestion/funphp/funajax.php?t=ejecuta_busqueda_avanzada2"
+  response_format: "html"
+
+data_model:
+  type: "legislation"
+  primary_key: "norm_id"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 9
+  key_fields:
+    - name: "norm_id"
+      description: "Gestor Normativo numeric ID"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Norm title (e.g., Ley 87 de 1993)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the norm"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "norm_type"
+      description: "Document type (Ley, Decreto, Sentencia, etc.)"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "date"
+      description: "Publication or modification date"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "description"
+      description: "Brief description/summary"
+      type: "string"
+      role: "content"
+      required: false
+    - name: "url"
+      description: "URL to norm page"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "Open Government Data (Colombia)"
+  url: "https://www.funcionpublica.gov.co/eva/gestornormativo/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Colombian government legal data, publicly accessible"
+
+notes: |
+  - Search API enumerates norm IDs by document type
+  - ~41K norms total across all types (Ley, Decreto, Sentencia, etc.)
+  - Full HTML text extracted and cleaned from norma.php pages
+  - Language: Spanish
+  - Complements CO/SecretariaSenado with broader norm coverage

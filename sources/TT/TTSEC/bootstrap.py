@@ -3,36 +3,30 @@
 TT/TTSEC -- Trinidad & Tobago Securities Exchange Commission
 
 Fetches enforcement orders, regulatory notices, guidelines, circulars,
-and investor alerts from the TTSEC website.
+bye-laws, and investor alerts from the TTSEC website with full text.
 
-Strategy:
-  - Enumerate posts via WP REST API by category
-  - Extract PDF URLs from post content
-  - Download PDFs and extract full text via common/pdf_extract
-  - Fall back to HTML content when no PDF is available
+Strategy (2026-06 rewrite):
+  The WordPress REST API (/wp-json/wp/v2/posts) is now restricted by the
+  site's "Kadence Security" settings — it returns HTTP 401
+  (itsec_rest_api_access_restricted) for all clients. We therefore
+  enumerate posts from the public XML sitemaps instead:
 
-Endpoints:
-  - Posts: https://www.ttsec.org.tt/wp-json/wp/v2/posts?categories={cats}&per_page=100
+  - Collect every post permalink from /post-sitemap*.xml (paginated, 1000/file)
+  - Keep only regulatory documents (slug keyword filter — orders, notices,
+    guidelines, bye-laws, rules, circulars, hearings, contraventions, etc.)
+  - Fetch each post's HTML page
+  - Extract the attached PDF (/wp-content/uploads/*.pdf) and pull full text
+    via common/pdf_extract; fall back to the post's HTML body text
+  - Title from og:title, date from the JSON-LD datePublished / og meta
 
-Key categories:
-  9   = Orders (parent: contravention, admin fines, settlement, delisting)
-  37  = Notices
-  126 = Notices of Hearing
-  175 = Investor Alerts
-  381 = Decisions/Settlements
-  1202 = Acts
-  122  = Legislation
-  1203 = Bye-Laws
-  81   = Rules
-  289  = Guidelines
-  102  = Circulars
-  1194 = Exemption Orders
-  1193 = Delegated Orders
+The public HTML site and sitemaps remain fully accessible; only the JSON
+REST API is gated.
 
 Usage:
-  python bootstrap.py bootstrap          # Full initial pull
-  python bootstrap.py bootstrap --sample # Fetch 15 sample records
-  python bootstrap.py test               # Quick connectivity test
+  python bootstrap.py bootstrap            # Full initial pull
+  python bootstrap.py bootstrap --sample   # Fetch 15 sample records
+  python bootstrap.py bootstrap-fast --full
+  python bootstrap.py test                 # Quick connectivity test
 """
 
 import sys
@@ -43,13 +37,14 @@ import time
 import html as html_mod
 from pathlib import Path
 from datetime import datetime, timezone
-from typing import Generator, Optional, Any
+from typing import Generator, Optional, List
+
+import requests
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from common.base_scraper import BaseScraper
-from common.http_client import HttpClient
 from common.pdf_extract import extract_pdf_markdown
 
 logging.basicConfig(
@@ -59,27 +54,23 @@ logging.basicConfig(
 logger = logging.getLogger("legal-data-hunter.TT.TTSEC")
 
 BASE_URL = "https://www.ttsec.org.tt"
-POSTS_URL = f"{BASE_URL}/wp-json/wp/v2/posts"
+SITEMAP_INDEX = f"{BASE_URL}/wp-sitemap.xml"
 
-# Categories grouped by document type
-ENFORCEMENT_CATS = [9, 37, 126, 175, 381]   # Orders, Notices, Hearings, Alerts, Decisions
-LEGISLATION_CATS = [1202, 122, 1203, 81, 1194, 1193]  # Acts, Legislation, Bye-Laws, Rules, Orders
-DOCTRINE_CATS = [289, 102]  # Guidelines, Circulars
-
-ALL_CATS = ENFORCEMENT_CATS + LEGISLATION_CATS + DOCTRINE_CATS
-
-# Map category IDs to document types
-CAT_TYPE_MAP = {}
-for c in ENFORCEMENT_CATS:
-    CAT_TYPE_MAP[c] = "doctrine"  # enforcement actions classified as doctrine
-for c in LEGISLATION_CATS:
-    CAT_TYPE_MAP[c] = "doctrine"
-for c in DOCTRINE_CATS:
-    CAT_TYPE_MAP[c] = "doctrine"
+# Slug keywords that identify a regulatory/legal document (vs. news, team
+# bios, events, etc.). Matched case-insensitively against the post permalink.
+DOC_KEYWORDS = [
+    "order", "exemption", "by-law", "bye-law", "byelaw", "notice",
+    "guideline", "circular", "rule", "decision", "hearing", "contravention",
+    "settlement", "de-list", "delist", "deregistration", "directive",
+    "market-guidance", "take-over", "takeover", "moratorium", "policy",
+    "framework", "amendment", "registration", "prospectus", "securities-",
+    "sanction", "fine", "advisory", "alert",
+]
 
 
 def _strip_html(text: str) -> str:
     """Remove HTML tags and decode entities."""
+    text = re.sub(r"<(script|style)[^>]*>.*?</\1>", " ", text, flags=re.S | re.I)
     text = re.sub(r"<[^>]+>", " ", text)
     text = html_mod.unescape(text)
     text = re.sub(r"\s+", " ", text).strip()
@@ -92,206 +83,182 @@ class TTSECScraper(BaseScraper):
     def __init__(self):
         source_dir = Path(__file__).parent
         super().__init__(source_dir)
-        self.http = HttpClient(
-            base_url=BASE_URL,
-            headers={
-                "User-Agent": "Legal-Data-Hunter/1.0 (https://github.com/ZachLaik/LegalDataHunter)",
-                "Accept": "application/json",
-            },
-            timeout=60,
-        )
+        self.session = requests.Session()
+        self.session.headers.update({
+            "User-Agent": ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                           "AppleWebKit/537.36 (KHTML, like Gecko) "
+                           "Chrome/125.0.0.0 Safari/537.36"),
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.9",
+        })
+        self._last_request = 0.0
 
-    def _get_json(self, url: str, params: dict = None) -> Optional[Any]:
-        """GET JSON from WP API with retry."""
+    def _get(self, url: str) -> Optional[str]:
+        """Rate-limited GET returning response text, with retry."""
+        elapsed = time.time() - self._last_request
+        if elapsed < 1.0:
+            time.sleep(1.0 - elapsed)
+        self._last_request = time.time()
         for attempt in range(3):
             try:
-                resp = self.http.session.get(url, params=params, timeout=60)
-                if resp.status_code == 400:
-                    return None  # past last page
+                resp = self.session.get(url, timeout=60)
+                if resp.status_code == 404:
+                    return None
                 resp.raise_for_status()
-                return resp.json()
+                return resp.text
             except Exception as e:
                 logger.warning(f"Attempt {attempt+1} failed for {url}: {e}")
                 if attempt < 2:
                     time.sleep(5)
         return None
 
-    def _extract_pdf_urls(self, html_content: str) -> list[str]:
-        """Extract PDF URLs from post HTML content."""
-        patterns = [
-            r'file=([^"&]+\.pdf)',
-            r'href="([^"]+\.pdf[^"]*)"',
-            r'src="([^"]+\.pdf[^"]*)"',
-        ]
-        urls = []
-        for pat in patterns:
-            for m in re.finditer(pat, html_content):
-                url = m.group(1).split('"')[0]  # clean trailing chars
-                if not url.startswith("http"):
-                    url = BASE_URL + url
-                if url not in urls:
-                    urls.append(url)
-        return urls
+    # ── Sitemap enumeration ──────────────────────────────────────────
 
-    def _extract_pdf_text(self, url: str, doc_id: str) -> Optional[str]:
-        """Download a PDF and extract text."""
-        try:
-            text = extract_pdf_markdown(
-                "TT/TTSEC",
-                doc_id,
-                pdf_url=url,
-                table="doctrine",
-                force=True,
-            )
-            if text and len(text.strip()) > 100:
-                return text.strip()
+    def _post_sitemaps(self) -> List[str]:
+        """Return the list of post-sitemap*.xml URLs from the sitemap index."""
+        text = self._get(SITEMAP_INDEX)
+        if not text:
+            return []
+        sitemaps = re.findall(r"<loc>([^<]+post-sitemap[^<]*\.xml)</loc>", text)
+        return sitemaps
+
+    def _iter_post_urls(self) -> Generator[str, None, None]:
+        """Yield every regulatory post permalink from the post sitemaps."""
+        seen = set()
+        for sm in self._post_sitemaps():
+            text = self._get(sm)
+            if not text:
+                continue
+            for url in re.findall(r"<loc>([^<]+)</loc>", text):
+                low = url.lower()
+                if not any(kw in low for kw in DOC_KEYWORDS):
+                    continue
+                if url in seen:
+                    continue
+                seen.add(url)
+                yield url
+
+    # ── Post page parsing ────────────────────────────────────────────
+
+    def _parse_post(self, url: str) -> Optional[dict]:
+        """Fetch a post page and extract title, date, PDF URL, and body."""
+        html_text = self._get(url)
+        if not html_text:
             return None
-        except Exception as e:
-            logger.warning(f"PDF extraction failed for {url}: {e}")
-            return None
 
-    def _classify_post(self, post: dict) -> str:
-        """Classify post as doctrine (all TTSEC docs are regulatory doctrine)."""
-        return "doctrine"
+        # Title from og:title (strip the trailing " - TTSEC | ..." site suffix)
+        title = ""
+        m = re.search(r'property=["\']og:title["\']\s+content=["\']([^"\']+)["\']',
+                      html_text)
+        if m:
+            title = html_mod.unescape(m.group(1))
+        else:
+            m = re.search(r"<title>(.*?)</title>", html_text, re.S)
+            if m:
+                title = html_mod.unescape(m.group(1).strip())
+        title = re.split(r"\s+-\s+TTSEC\b", title)[0].strip()
 
-    def _fetch_category_posts(self, cats: list[int]) -> Generator[dict, None, None]:
-        """Fetch all posts for given category IDs."""
-        cats_str = ",".join(str(c) for c in cats)
-        page = 1
-        while True:
-            data = self._get_json(POSTS_URL, params={
-                "per_page": 50,
-                "categories": cats_str,
-                "page": page,
-                "_fields": "id,title,date,link,content,categories,slug",
-            })
-            if not data:
-                break
-            for post in data:
-                yield post
-            if len(data) < 50:
-                break
-            page += 1
-            time.sleep(1)
+        # Publication date (ISO) from JSON-LD or og meta
+        date = None
+        m = (re.search(r'"datePublished"\s*:\s*"([^"]+)"', html_text)
+             or re.search(r'property=["\']article:published_time["\']\s+content=["\']([^"\']+)["\']',
+                          html_text))
+        if m:
+            date = m.group(1)
+
+        # PDF attachment (uploads dir), preferring an English/non-thumbnail file
+        pdf_urls = re.findall(r'href=["\']([^"\']+/wp-content/uploads/[^"\']+\.pdf)["\']',
+                              html_text, re.I)
+        if not pdf_urls:
+            pdf_urls = re.findall(r'href=["\']([^"\']+\.pdf)["\']', html_text, re.I)
+        pdf_url = None
+        if pdf_urls:
+            pdf_url = pdf_urls[0]
+            if not pdf_url.startswith("http"):
+                pdf_url = BASE_URL + (pdf_url if pdf_url.startswith("/") else "/" + pdf_url)
+
+        # HTML body fallback (entry content area, cut at footer/comments)
+        body = ""
+        cm = re.search(r'class=["\'][^"\']*entry-content[^"\']*["\'][^>]*>(.*?)</article>',
+                       html_text, re.S)
+        if not cm:
+            cm = re.search(r'class=["\'][^"\']*entry-content[^"\']*["\'][^>]*>(.*?)<footer',
+                           html_text, re.S)
+        if cm:
+            body = _strip_html(cm.group(1))[:200000]
+
+        return {
+            "url": url,
+            "title": title,
+            "date": date,
+            "pdf_url": pdf_url,
+            "html_body": body,
+        }
 
     def fetch_all(self) -> Generator[dict, None, None]:
-        """Yield all enforcement and regulatory documents with full text."""
-        seen_ids = set()
-
-        logger.info("Fetching posts from enforcement & regulatory categories...")
+        """Yield all regulatory documents with full text."""
         total = 0
-
-        for post in self._fetch_category_posts(ALL_CATS):
-            post_id = str(post.get("id", ""))
-            if post_id in seen_ids:
+        for url in self._iter_post_urls():
+            post = self._parse_post(url)
+            if not post:
                 continue
-            seen_ids.add(post_id)
 
-            title = _strip_html(post.get("title", {}).get("rendered", ""))
-            content_html = post.get("content", {}).get("rendered", "")
-            date_str = post.get("date", "")
-            link = post.get("link", "")
-
-            # Try PDF extraction first
+            doc_id = url.rstrip("/").split("/")[-1]
             text = None
-            pdf_urls = self._extract_pdf_urls(content_html)
-            pdf_url = None
-            for purl in pdf_urls:
-                logger.info(f"Downloading PDF for: {title}")
-                text = self._extract_pdf_text(purl, post_id)
-                if text:
-                    pdf_url = purl
-                    break
-                time.sleep(1)
 
-            # Fall back to HTML content
-            if not text:
-                html_text = _strip_html(content_html)
-                if len(html_text) >= 200:
-                    text = html_text
+            if post.get("pdf_url"):
+                try:
+                    pdf_text = extract_pdf_markdown(
+                        "TT/TTSEC", doc_id,
+                        pdf_url=post["pdf_url"], table="doctrine", force=True,
+                    )
+                    if pdf_text and len(pdf_text.strip()) > 100:
+                        text = pdf_text.strip()
+                except Exception as e:
+                    logger.warning(f"PDF extract failed for {post['pdf_url']}: {e}")
+
+            if not text and post.get("html_body") and len(post["html_body"]) >= 200:
+                text = post["html_body"]
 
             if not text:
-                logger.debug(f"Skipping post with no substantial content: {title}")
+                logger.debug(f"Skipping post with no full text: {url}")
                 continue
 
             total += 1
             yield {
-                "id": post_id,
-                "title": title,
+                "id": doc_id,
+                "title": post["title"],
                 "text": text,
-                "date": date_str,
-                "url": pdf_url or link,
-                "link": link,
-                "categories": post.get("categories", []),
+                "date": post["date"],
+                "url": post["pdf_url"] or url,
+                "link": url,
             }
-            time.sleep(1)
 
         logger.info(f"Total: {total} documents with full text")
 
     def fetch_updates(self, since: datetime) -> Generator[dict, None, None]:
-        """Yield documents modified since the given date."""
-        since_iso = since.strftime("%Y-%m-%dT%H:%M:%S")
-        cats_str = ",".join(str(c) for c in ALL_CATS)
-        page = 1
-        seen_ids = set()
-        while True:
-            data = self._get_json(POSTS_URL, params={
-                "per_page": 50,
-                "categories": cats_str,
-                "after": since_iso,
-                "orderby": "date",
-                "order": "desc",
-                "page": page,
-                "_fields": "id,title,date,link,content,categories,slug",
-            })
-            if not data:
-                break
-            for post in data:
-                post_id = str(post.get("id", ""))
-                if post_id in seen_ids:
-                    continue
-                seen_ids.add(post_id)
-
-                title = _strip_html(post.get("title", {}).get("rendered", ""))
-                content_html = post.get("content", {}).get("rendered", "")
-                text = None
-                pdf_urls = self._extract_pdf_urls(content_html)
-                pdf_url = None
-                for purl in pdf_urls:
-                    text = self._extract_pdf_text(purl, post_id)
-                    if text:
-                        pdf_url = purl
-                        break
-                    time.sleep(1)
-                if not text:
-                    html_text = _strip_html(content_html)
-                    if len(html_text) >= 200:
-                        text = html_text
-                if not text:
-                    continue
-                yield {
-                    "id": post_id,
-                    "title": title,
-                    "text": text,
-                    "date": post.get("date", ""),
-                    "url": pdf_url or post.get("link", ""),
-                    "link": post.get("link", ""),
-                    "categories": post.get("categories", []),
-                }
-                time.sleep(1)
-            if len(data) < 50:
-                break
-            page += 1
+        """Yield documents published since the given date (best-effort by date)."""
+        for raw in self.fetch_all():
+            ds = raw.get("date")
+            if not ds:
+                yield raw
+                continue
+            try:
+                dt = datetime.fromisoformat(ds.replace("Z", "+00:00"))
+                if dt >= since:
+                    yield raw
+            except (ValueError, TypeError):
+                yield raw
 
     def normalize(self, raw: dict) -> dict:
         """Transform raw document into standard schema."""
-        date_str = raw.get("date", "")
+        date_str = raw.get("date", "") or ""
         if date_str:
             try:
                 dt = datetime.fromisoformat(date_str.replace("Z", "+00:00"))
                 date_str = dt.strftime("%Y-%m-%d")
             except (ValueError, TypeError):
-                pass
+                date_str = ""
 
         return {
             "_id": raw.get("id", ""),
@@ -312,29 +279,37 @@ if __name__ == "__main__":
     scraper = TTSECScraper()
 
     if len(sys.argv) < 2:
-        print("Usage: python bootstrap.py [bootstrap|test] [--sample]")
+        print("Usage: python bootstrap.py [bootstrap|bootstrap-fast|update|test] [--sample] [--full]")
         sys.exit(1)
 
     command = sys.argv[1]
 
     if command == "test":
-        logger.info("Testing connectivity to TTSEC WP API...")
-        data = scraper._get_json(POSTS_URL, params={"per_page": 1})
-        if data:
-            logger.info(f"OK — got {len(data)} post(s)")
-            print("Test passed: WP REST API accessible")
+        logger.info("Testing TTSEC sitemap access...")
+        sms = scraper._post_sitemaps()
+        logger.info(f"Found {len(sms)} post sitemaps")
+        n = 0
+        for url in scraper._iter_post_urls():
+            logger.info(f"  {url}")
+            n += 1
+            if n >= 5:
+                break
+        if n:
+            post = scraper._parse_post(url)
+            logger.info(f"sample post: title={post['title'][:50]!r} "
+                        f"pdf={bool(post['pdf_url'])} date={post['date']}")
+            print("Test passed: sitemap + post pages accessible")
         else:
-            logger.error("Failed to reach WP REST API")
+            logger.error("No regulatory posts found")
             sys.exit(1)
 
-    elif command == "bootstrap":
+    elif command in ("bootstrap", "bootstrap-fast"):
         sample = "--sample" in sys.argv
         result = scraper.bootstrap(sample_mode=sample, sample_size=15)
         print(json.dumps(result, indent=2, default=str))
 
     elif command == "update":
         from datetime import timedelta
-        since = datetime.now(timezone.utc) - timedelta(days=30)
         result = scraper.bootstrap(sample_mode=False)
         print(json.dumps(result, indent=2, default=str))
 

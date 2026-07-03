@@ -192,9 +192,9 @@ class LexUzCaseLawScraper(BaseScraper):
                 logger.info(f"  [{count}] {case_num} ({rec.get('dbName', '')[:40]}) — {len(text)} chars")
                 yield rec
 
-                    if sample_limit and count >= sample_limit:
-                        logger.info(f"Sample limit ({sample_limit}) reached")
-                        return
+                if sample_limit and count >= sample_limit:
+                    logger.info(f"Sample limit ({sample_limit}) reached")
+                    return
 
             if data.get("last", False):
                 break
@@ -208,25 +208,50 @@ class LexUzCaseLawScraper(BaseScraper):
 
     def bootstrap(self, sample: bool = False):
         """Run the bootstrap process."""
-        sample_dir = Path(self.source_dir) / "sample"
+        source_path = Path(self.source_dir)
+        sample_dir = source_path / "sample"
         sample_dir.mkdir(exist_ok=True)
 
-        count = 0
-        for record in self.fetch_all(sample=sample):
-            out_file = sample_dir / f"{record['_id']}.json"
-            with open(out_file, "w", encoding="utf-8") as f:
-                json.dump(record, f, indent=2, ensure_ascii=False)
-            count += 1
-            logger.info(f"Saved: {out_file.name}")
+        if sample:
+            count = 0
+            for record in self.fetch_all(sample=True):
+                normalized = self.normalize(record)
+                if not normalized:
+                    continue
+                out_file = sample_dir / f"{normalized['_id']}.json"
+                with open(out_file, "w", encoding="utf-8") as f:
+                    json.dump(normalized, f, indent=2, ensure_ascii=False)
+                count += 1
+                logger.info(f"Saved: {out_file.name}")
+            logger.info(f"Sample complete: {count} records saved to {sample_dir}")
+            return count
 
-        logger.info(f"Bootstrap complete: {count} records saved to {sample_dir}")
+        # Full mode: write JSONL for VPS pipeline
+        data_dir = source_path / "data"
+        data_dir.mkdir(exist_ok=True)
+        jsonl_path = data_dir / "records.jsonl"
+
+        count = 0
+        with open(jsonl_path, "w", encoding="utf-8") as jf:
+            for record in self.fetch_all(sample=False):
+                normalized = self.normalize(record)
+                if not normalized:
+                    continue
+                jf.write(json.dumps(normalized, ensure_ascii=False) + "\n")
+                count += 1
+                if count % 100 == 0:
+                    logger.info(f"  Written {count} records to JSONL")
+                    jf.flush()
+
+        logger.info(f"Bootstrap complete: {count} records written to {jsonl_path}")
+        print("BOOTSTRAP_COMPLETE")
         return count
 
 
 def main():
     import argparse
     parser = argparse.ArgumentParser(description="UZ/LexUzCaseLaw bootstrapper")
-    parser.add_argument("command", choices=["bootstrap", "test-api"])
+    parser.add_argument("command", choices=["bootstrap", "bootstrap-fast", "test-api"])
     parser.add_argument("--sample", action="store_true", help="Fetch sample only (15 decisions)")
     parser.add_argument("--full", action="store_true", help="Fetch all records")
     args = parser.parse_args()
@@ -236,8 +261,9 @@ def main():
     if args.command == "test-api":
         success = scraper.test_api()
         sys.exit(0 if success else 1)
-    elif args.command == "bootstrap":
-        count = scraper.bootstrap(sample=args.sample)
+    elif args.command in ("bootstrap", "bootstrap-fast"):
+        is_sample = args.sample and args.command != "bootstrap-fast"
+        count = scraper.bootstrap(sample=is_sample)
         if count == 0:
             logger.error("No records fetched!")
             sys.exit(1)

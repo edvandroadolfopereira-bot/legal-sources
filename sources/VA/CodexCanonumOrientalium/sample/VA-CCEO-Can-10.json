@@ -1,0 +1,13 @@
+{
+  "_id": "VA-CCEO-Can-10",
+  "_source": "VA/CodexCanonumOrientalium",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-18T21:48:39.064136+00:00",
+  "title": "Canon 10 (CCEO)",
+  "text": "Verbo Dei inhaerentes atque vivo Ecclesiae magisterio authentico adhaerentes tenentur christifideles fidem immenso pretio a maioribus custoditam ac transmissam integre servare et aperte profiteri necnon eam et exercendo magis intellegere et in operibus caritatis fructificare.",
+  "canon_number": 10,
+  "code": "Codex Canonum Ecclesiarum Orientalium",
+  "date": "1990-10-18",
+  "url": "https://www.vatican.va/content/john-paul-ii/la/apost_constitutions/documents/hf_jp-ii_apc_19901018_codex-can-eccl-orient-1.html",
+  "language": "la"
+}

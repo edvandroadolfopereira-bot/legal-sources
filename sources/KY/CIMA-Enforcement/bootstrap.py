@@ -228,6 +228,10 @@ class CIMAScraper(BaseScraper):
                     t = page.extract_text()
                     if t:
                         pages_text.append(t)
+                    try:
+                        page.flush_cache(); page.get_textmap.cache_clear()
+                    except Exception:
+                        pass
                 if pages_text:
                     text = "\n\n".join(pages_text)
                     if len(text) > 30:
@@ -245,6 +249,10 @@ class CIMAScraper(BaseScraper):
                 t = page.extract_text()
                 if t:
                     pages_text.append(t)
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
             if pages_text:
                 text = "\n\n".join(pages_text)
                 if len(text) > 30:

@@ -153,6 +153,10 @@ class SERCScraper(BaseScraper):
                 text = page.extract_text()
                 if text:
                     pages_text.append(text)
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
             pdf.close()
             full_text = "\n\n".join(pages_text)
             return full_text if len(full_text) >= 50 else None
@@ -272,23 +276,34 @@ if __name__ == "__main__":
     elif command in ("bootstrap", "bootstrap-fast", "update"):
         sample_dir = Path(__file__).parent / "sample"
         sample_dir.mkdir(exist_ok=True)
+        data_dir = Path(__file__).parent / "data"
+        data_dir.mkdir(exist_ok=True)
+        jsonl_path = data_dir / "records.jsonl"
 
         count = 0
         limit = 15 if sample_mode else 99999
 
         gen = scraper.fetch_all() if command != "update" else scraper.fetch_updates()
 
-        for record in gen:
-            count += 1
-            if sample_mode:
-                outpath = sample_dir / f"{count:04d}.json"
-                outpath.write_text(json.dumps(record, indent=2, ensure_ascii=False))
-                print(f"[{count}] {record['title'][:60]} ({len(record['text'])} chars)")
-            else:
-                print(json.dumps(record, ensure_ascii=False))
+        # In non-sample mode, stream every record to data/records.jsonl so the
+        # VPS ingest pipeline (which reads records.jsonl) persists the full set.
+        # Previously these were only printed to stdout → 0 records ingested.
+        jsonl_fh = None if sample_mode else jsonl_path.open("w", encoding="utf-8")
+        try:
+            for record in gen:
+                count += 1
+                if sample_mode:
+                    outpath = sample_dir / f"{count:04d}.json"
+                    outpath.write_text(json.dumps(record, indent=2, ensure_ascii=False))
+                    print(f"[{count}] {record['title'][:60]} ({len(record['text'])} chars)")
+                else:
+                    jsonl_fh.write(json.dumps(record, ensure_ascii=False) + "\n")
 
-            if count >= limit:
-                break
+                if count >= limit:
+                    break
+        finally:
+            if jsonl_fh is not None:
+                jsonl_fh.close()
 
         print(f"\nTotal records: {count}")
     else:

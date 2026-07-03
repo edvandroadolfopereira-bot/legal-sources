@@ -1,0 +1,94 @@
+source:
+  id: "NC/Juridoc-Textes"
+  country: "NC"
+  name: "New Caledonia Consolidated Legal Texts (Juridoc)"
+  url: "https://juridoc.gouv.nc/JuriDoc/JdTextes.nsf/"
+  description: |
+    Consolidated legal texts ("Textes consolidés") of New Caledonia published by
+    the Government of New Caledonia on juridoc.gouv.nc: Lois du pays, the
+    consolidated New Caledonian codes (code civil applicable en NC, code du
+    travail, code des impôts, etc.) and institutional texts. Born-digital PDFs
+    with extractable full text. French language.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+  max_workers: 3
+
+api:
+  type: "rss"
+  base_url: "https://juridoc.gouv.nc/JuriDoc/JdTextes.nsf/"
+  endpoints:
+    list: "rss.xml?ReadViewEntries"
+
+data_model:
+  type: "legislation"
+  source_nature: "consolidated"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  versioning: "consolidated"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier (source/unid)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Title of the consolidated text"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from the PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Date of the text (ISO 8601), parsed from the title"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "Direct link to the source PDF"
+      type: "string"
+      role: "reference"
+      required: true
+  secondary_fields:
+    - name: "theme"
+      description: "Subject theme (e.g., 'Lois du Pays')"
+    - name: "doc_id"
+      description: "Lotus Domino document UNID"
+    - name: "language"
+      description: "ISO language code (fr)"
+  probably_ignorable: []
+
+license:
+  id: "custom-nc"
+  name: "Government of New Caledonia — Juridoc terms"
+  url: "https://juridoc.gouv.nc/"
+  commercial_use: false
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: |
+    Each PDF carries the notice "Source : www.juridoc.gouv.nc - droits réservés
+    de reproduction et réutilisation des données". Reproduction/reuse rights are
+    reserved by the Government of New Caledonia, so commercial use is flagged as
+    restricted pending explicit confirmation.
+
+notes: |
+  French-language consolidated legislation. ~91 texts (Lois du pays + NC codes).
+  Enumerated via the Lotus Domino RSS ReadViewEntries view; PDFs are born-digital
+  and extract cleanly with PyMuPDF. Links must be host-normalized from
+  www.juridoc.gouv.nc to juridoc.gouv.nc (TLS cert mismatch on the www host).

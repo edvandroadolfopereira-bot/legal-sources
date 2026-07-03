@@ -1,0 +1,106 @@
+# ═══════════════════════════════════════════════════════════════════
+# Legal Data Hunter — Monitor Polski Configuration
+# ═══════════════════════════════════════════════════════════════════
+
+# ── Source Identity ───────────────────────────────────────────────
+source:
+  id: "PL/MonitorPolski"
+  country: "PL"
+  name: "Monitor Polski - Polish Official Gazette"
+  url: "https://monitorpolski.gov.pl"
+  description: |
+    Monitor Polski (Dziennik Urzędowy Rzeczypospolitej Polskiej "Monitor
+    Polski") is Poland's second official journal, published by the government.
+    It contains resolutions of the Council of Ministers (uchwały), orders
+    (zarządzenia), official announcements (obwieszczenia), consolidated-text
+    notices, and resolutions of the Sejm and Senate — official state-authored
+    instruments that are not generally-applicable statute law (which appears in
+    Dziennik Ustaw, covered by PL/DziennikUrzedowy).
+
+    Data is accessed via the official Sejm ELI API (api.sejm.gov.pl). Monitor
+    Polski acts are published as PDF; full text is extracted with PyMuPDF.
+
+    Coverage: ~2001 onwards (consistent PDF text).
+
+# ── Data Types ────────────────────────────────────────────────────
+data_types:
+  - doctrine
+
+# ── Authentication ────────────────────────────────────────────────
+auth:
+  type: "none"
+
+# ── Rate Limiting ─────────────────────────────────────────────────
+rate_limit:
+  requests_per_second: 2
+  burst: 5
+
+# ── API Configuration ─────────────────────────────────────────────
+api:
+  type: "rest"
+  base_url: "https://api.sejm.gov.pl/eli"
+  endpoints:
+    acts_by_year: "/acts/MP/{year}"
+    act_details: "/acts/MP/{year}/{position}"
+    act_text_pdf: "/acts/MP/{year}/{position}/text.pdf"
+
+# ── Data Model ────────────────────────────────────────────────────
+data_model:
+  type: "doctrine"
+  primary_key: "address"
+  update_strategy: "upsert"
+  versioning: "eli"
+  dedup_key:
+    - "address"
+
+# ── Schema ────────────────────────────────────────────────────────
+schema:
+  total_fields: 20
+  key_fields:
+    - name: "address"
+      description: "Unique act identifier (e.g., WMP20240001112)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Full title of the act"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from the act PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Promulgation date in ISO 8601 format"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "url"
+      description: "Direct URL to view the act"
+      type: "string"
+      role: "reference"
+      required: true
+
+# ── License ───────────────────────────────────────────────────────
+license:
+  name: "Public Domain (Polish official documents)"
+  url: "https://isap.sejm.gov.pl/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: |
+    Under Art. 4 of the Polish Copyright Act (Ustawa o prawie autorskim i
+    prawach pokrewnych), official documents, materials, marks and symbols are
+    not subject to copyright. Acts published in Monitor Polski are official
+    documents in the public domain.
+
+# ── Notes ─────────────────────────────────────────────────────────
+notes: |
+  - Language: Polish (UTF-8)
+  - API: Official Sejm ELI API (api.sejm.gov.pl), publisher code MP
+  - Monitor Polski acts are PDF-only; text extracted with PyMuPDF (fitz)
+  - Distinct from PL/DziennikUrzedowy, which covers Dziennik Ustaw (publisher DU)
+  - License: Polish official documents, public domain (Art. 4 Copyright Act)

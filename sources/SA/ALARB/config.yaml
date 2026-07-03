@@ -1,0 +1,44 @@
+source_id: SA/ALARB
+name: ALARB — Arabic Legal Argument Reasoning Benchmark (THIQAH-RD)
+country: SA
+url: https://huggingface.co/datasets/THIQAH-RD/ALARB
+description: |
+  13,341 Saudi commercial court cases from HuggingFace dataset THIQAH-RD/ALARB.
+  Each case includes structured case_facts, court_reasoning chains, applicable_laws,
+  and verdict. Arabic language. Apache 2.0 license.
+
+data_types:
+  - case_law
+
+license:
+  name: "Apache 2.0"
+  url: "https://www.apache.org/licenses/LICENSE-2.0"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Academic dataset from THIQAH-RD. Saudi commercial court judgments are public records."
+
+language: ar
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 5
+  burst: 10
+
+update_frequency: static
+
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: title
+      required: false
+      type: string
+  date_field: date
+  text_field: text
+  title_field: title
+  url_field: url

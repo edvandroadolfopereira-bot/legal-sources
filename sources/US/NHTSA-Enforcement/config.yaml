@@ -1,0 +1,42 @@
+auth: none
+country: US
+data_types:
+- case_law
+fetch:
+  api_url: https://api.nhtsa.gov/investigations
+  delay: 1.5
+  page_size: 50
+name: National Highway Traffic Safety Administration — Enforcement Investigations
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: date
+    required: true
+    type: date
+  - name: text
+    required: true
+    type: string
+  - name: investigation_number
+    required: false
+    type: string
+  - name: investigation_type
+    required: false
+    type: string
+  - name: status
+    required: false
+    type: string
+source_id: US/NHTSA-Enforcement
+url: https://www.nhtsa.gov/recalls-defects
+license:
+  name: Public Domain (US Government Work)
+  url: https://www.law.cornell.edu/uscode/text/17/105
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: US federal government work, not subject to copyright

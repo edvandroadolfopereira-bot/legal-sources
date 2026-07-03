@@ -109,6 +109,10 @@ def _extract_with_pdfplumber(pdf_bytes: bytes) -> str:
                 page_text = page.extract_text()
                 if page_text:
                     text_parts.append(page_text)
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
     except Exception as e:
         print(f"  pdfplumber error: {e}", file=sys.stderr)
     return "\n\n".join(text_parts)
@@ -124,6 +128,10 @@ def _extract_with_pypdf2(pdf_bytes: bytes) -> str:
             page_text = page.extract_text()
             if page_text:
                 text_parts.append(page_text)
+            try:
+                page.flush_cache(); page.get_textmap.cache_clear()
+            except Exception:
+                pass
     except Exception as e:
         print(f"  PyPDF2 error: {e}", file=sys.stderr)
     return "\n\n".join(text_parts)

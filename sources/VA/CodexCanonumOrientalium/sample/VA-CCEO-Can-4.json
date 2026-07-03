@@ -1,0 +1,13 @@
+{
+  "_id": "VA-CCEO-Can-4",
+  "_source": "VA/CodexCanonumOrientalium",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-18T21:48:39.063258+00:00",
+  "title": "Canon 4 (CCEO)",
+  "text": "Canones Codicis initas aut approbatas a Sancta Sede conventiones cum nationibus aliisve societatibus politicis non abrogant neque eis derogant; eaedem idcirco perinde ac in praesens vigere pergent contrariis Codicis praescriptis minime obstantibus.",
+  "canon_number": 4,
+  "code": "Codex Canonum Ecclesiarum Orientalium",
+  "date": "1990-10-18",
+  "url": "https://www.vatican.va/content/john-paul-ii/la/apost_constitutions/documents/hf_jp-ii_apc_19901018_codex-can-eccl-orient-1.html",
+  "language": "la"
+}

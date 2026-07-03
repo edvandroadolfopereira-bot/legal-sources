@@ -300,6 +300,11 @@ class JamaicaSupremeCourtScraper(BaseScraper):
 
     def _download_and_extract_pdf(self, pdf_url: str) -> str:
         """Extract text from PDF using centralized extractor."""
+        # Node pages often expose relative PDF hrefs (/sites/default/files/...).
+        # extract_pdf_markdown fetches via requests, which needs an absolute URL,
+        # so resolve against BASE_URL before handing it off.
+        if pdf_url.startswith("/"):
+            pdf_url = urljoin(BASE_URL, pdf_url)
         return extract_pdf_markdown(
             source="JM/SupremeCourt",
             source_id="",

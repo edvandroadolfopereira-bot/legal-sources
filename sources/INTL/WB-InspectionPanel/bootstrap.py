@@ -60,7 +60,12 @@ ROWS_PER_PAGE = 50
 class WBInspectionPanelScraper(BaseScraper):
     SOURCE_ID = "INTL/WB-InspectionPanel"
 
-    def __init__(self):
+    def __init__(self, source_dir=None):
+        # BaseScraper.__init__ sets self.config / rate_limiter / storage /
+        # validator. Skipping it (the old code only set self.session) caused
+        # AttributeError: 'WBInspectionPanelScraper' object has no attribute
+        # 'config' on the VPS bootstrap-fast path (issue #972).
+        super().__init__(source_dir)
         self.session = requests.Session()
         self.session.headers.update({
             "User-Agent": "LegalDataHunter/1.0 (research; open-data)",
@@ -270,9 +275,12 @@ class WBInspectionPanelScraper(BaseScraper):
                 continue
 
             doc["text"] = text
-            record = self.normalize(doc)
+            # Yield RAW per the BaseScraper contract — the framework
+            # (bootstrap / bootstrap_fast) calls self.normalize() itself.
+            # Yielding normalized records caused double-normalization on the
+            # VPS path (issue #972).
             count += 1
-            yield record
+            yield doc
 
         logger.info("Done: %d records yielded, %d skipped", count, skipped)
 
@@ -310,11 +318,22 @@ def main():
     sample = "--sample" in args
     command = args[0]
 
+    full = "--full" in args
+
+    # Full bootstrap (incl. the VPS bootstrap-fast path) streams to
+    # data/records.jsonl via BaseScraper; only sample mode writes to sample/.
+    if command == "bootstrap-fast" or (command == "bootstrap" and full):
+        stats = scraper.bootstrap_fast()
+        print(f"\nDone: {stats.get('records_new', 0)} new records "
+              f"({stats.get('records_fetched', 0)} fetched).")
+        return
+
     if command == "bootstrap":
         sample_dir = Path(__file__).parent / "sample"
         sample_dir.mkdir(exist_ok=True)
         count = 0
-        for record in scraper.fetch_all(sample=sample):
+        for raw in scraper.fetch_all(sample=sample):
+            record = scraper.normalize(raw)
             count += 1
             out_path = sample_dir / f"{count:04d}.json"
             with open(out_path, "w", encoding="utf-8") as f:
@@ -324,9 +343,10 @@ def main():
                         text_len)
         print(f"\nBootstrap complete: {count} records saved to sample/")
 
-    elif command in ("update", "bootstrap-fast"):
+    elif command == "update":
         count = 0
-        for record in scraper.fetch_updates(None):
+        for raw in scraper.fetch_updates(None):
+            record = scraper.normalize(raw)
             count += 1
             print(json.dumps(record, ensure_ascii=False))
         logger.info("Update complete: %d records", count)

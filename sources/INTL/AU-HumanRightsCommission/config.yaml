@@ -1,0 +1,75 @@
+# ===================================================================
+# INTL/AU-HumanRightsCommission -- African Commission on Human and
+# Peoples' Rights (ACHPR) — Decisions on Communications
+# ===================================================================
+# ~400 decisions on communications (merits, admissibility, strike-outs)
+# from the ACHPR. Full text extracted from linked PDFs on achpr.au.int.
+# ===================================================================
+
+source:
+  id: "INTL/AU-HumanRightsCommission"
+  country: "INTL"
+  name: "African Commission on Human and Peoples' Rights — Decisions on Communications"
+  url: "https://achpr.au.int/en/category/decisions-communications"
+  description: |
+    Decisions of the African Commission on Human and Peoples' Rights (ACHPR)
+    on individual communications since 1988. The Commission adjudicates
+    complaints alleging violations of the African Charter on Human and Peoples'
+    Rights. Decisions include findings on merits, admissibility rulings, and
+    strike-outs. Full text extracted from official PDF documents.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "html_scrape_pdf"
+  base_url: "https://achpr.au.int/en/category/decisions-communications"
+  pagination: "page_number"
+  per_page: 15
+
+data_model:
+  type: "case_law"
+  primary_key: "communication_number"
+  update_strategy: "upsert"
+  dedup_key:
+    - "_id"
+
+schema:
+  total_fields: 13
+  key_fields:
+    - name: "title"
+      description: "Case title (complainant v. respondent state)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from decision PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision/publication date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "communication_number"
+      description: "Communication number (e.g., 424/12)"
+      type: "string"
+      role: "identifier"
+      required: true
+
+license:
+  name: "Public Domain (International Commission Decisions)"
+  url: "https://achpr.au.int/en/category/decisions-communications"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official quasi-judicial decisions of an AU organ are public records."

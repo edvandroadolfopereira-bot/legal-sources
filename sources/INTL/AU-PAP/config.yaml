@@ -1,0 +1,73 @@
+# ===================================================================
+# INTL/AU-PAP -- African Union Pan-African Parliament
+# Resolutions, Recommendations, Model Laws, Activity Reports, Hansards
+# ===================================================================
+# Full text from the PAP Open Data Portal (opendata.pap.au.int),
+# powered by Laws.Africa / PeachJam. Content in Akoma Ntoso HTML.
+# ===================================================================
+
+source:
+  id: "INTL/AU-PAP"
+  country: "INTL"
+  name: "African Union Pan-African Parliament"
+  url: "https://opendata.pap.au.int/"
+  description: |
+    Resolutions, recommendations, model laws, activity reports, and
+    hansards (verbatim proceedings) from the Pan-African Parliament.
+    The PAP is the legislative body of the African Union, established
+    under Article 17 of the AU Constitutive Act. Documents sourced
+    from the PAP Open Data Portal using Akoma Ntoso URIs.
+
+data_types:
+  - legislation
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+api:
+  type: "html_scrape"
+  listing_url: "https://opendata.pap.au.int/doc/"
+  base_url: "https://opendata.pap.au.int"
+
+data_model:
+  type: "mixed"
+  primary_key: "akn_uri"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from Akoma Ntoso HTML"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "akn_uri"
+      description: "Akoma Ntoso URI (unique identifier)"
+      type: "string"
+      role: "identifier"
+      required: true
+    - name: "date"
+      description: "Document date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: true
+
+license:
+  name: "African Union Open Data"
+  url: "https://opendata.pap.au.int/about/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "PAP Open Data Portal — open access institutional publications"

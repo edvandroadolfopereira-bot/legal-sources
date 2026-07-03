@@ -1,0 +1,25 @@
+{
+  "_id": "INTL-IEA-IRENA-19",
+  "_source": "INTL/IEA-IRENA-PolicyDB",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-20T14:20:47.864476+00:00",
+  "title": "National Guidelines for Energy Certification Scheme of buildings",
+  "text": "In the framework of the on-going transposition of the European Directive EPBD 2002/91/CE, the decree implements the energy performance certificate provisions of Directive in all Regions through a homogeneous framework, with a package of instruments to harmonise government and regional legislation. The guidelines apply to Regions that have not as yet implemented provisions under the EPBD for building certification, and applies until any regional legislation takes effect. Regions will need to harmonise their implementation of the Directive with the guidelines. The guidelines specify in an Annex: The information that needs to be contained in the certificate; technical reference standards, developed nationally and at the European level; methodologies for calculating the energy performance of buildings. The specify the validity limits for certificates (10 years), and that these must be updated following significant interventions that either improve or deteriorate energy performance (e.g. renovation of at least 25% of building envelope; replace air conditionng and hot water systems). The Decree establishes a discussion and coordination forum between central government ministries, regions, provinces, and communes, supported by various agencies and bodies. The forum is designed to facilitate monitoring implementation of the legislation, sharing information and best-practice, formulating legislative proposals, assessing costs and conditions of access to certification, and ensuring the harmonisation of regional instruments.\n\nStatus: In force\nJurisdiction: National",
+  "date": "2009-01-01",
+  "url": "http://www.gazzettaufficiale.it/eli/id/2012/12/13/12A12945/sg",
+  "language": "Italian",
+  "policy_id": "19",
+  "status": "In force",
+  "year": 2009,
+  "countries": [
+    "Italy"
+  ],
+  "country_codes": [
+    "ITA"
+  ],
+  "jurisdiction": "National",
+  "technologies": [],
+  "topics": [],
+  "policy_types": [],
+  "date_modified": "2017-11-05T09:08:15.000Z"
+}

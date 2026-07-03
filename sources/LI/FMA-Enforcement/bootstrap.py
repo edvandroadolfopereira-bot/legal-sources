@@ -301,6 +301,10 @@ def fetch_praxis_pdfs(max_records: int = None) -> Generator[dict, None, None]:
                         page_text = page.extract_text()
                         if page_text:
                             pages.append(page_text)
+                        try:
+                            page.flush_cache(); page.get_textmap.cache_clear()
+                        except Exception:
+                            pass
                     text = "\n\n".join(pages)
             except Exception as e:
                 print(f"    Fallback PDF extraction failed: {e}")

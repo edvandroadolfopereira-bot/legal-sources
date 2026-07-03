@@ -179,52 +179,69 @@ class SRiSScraper(BaseScraper):
             if max_records and count >= max_records:
                 return
 
-            media_id = item.get("id", 0)
-            title = item.get("title", {}).get("rendered", "").strip()
-            source_url = item.get("source_url", "")
-            wp_date = item.get("date", "")
-            mime_type = item.get("mime_type", "")
+            # Wrap per-record processing so one malformed item/PDF can never
+            # abort the whole run (issue #978: crashed after 259 records).
+            try:
+                if not isinstance(item, dict):
+                    skipped += 1
+                    continue
 
-            if not source_url or not source_url.lower().endswith(".pdf"):
+                media_id = item.get("id", 0)
+                # WP can return title as null/absent or a non-dict — guard both.
+                title_obj = item.get("title") or {}
+                if isinstance(title_obj, dict):
+                    title = (title_obj.get("rendered") or "").strip()
+                else:
+                    title = str(title_obj).strip()
+                source_url = item.get("source_url", "") or ""
+                wp_date = item.get("date", "") or ""
+
+                if not source_url or not source_url.lower().endswith(".pdf"):
+                    skipped += 1
+                    continue
+
+                if not title:
+                    title = source_url.split("/")[-1].replace(".pdf", "").replace("-", " ")
+
+                # Download PDF
+                resp = self._request(source_url, timeout=120)
+                if resp is None:
+                    logger.warning(f"Failed to download: {title}")
+                    skipped += 1
+                    continue
+
+                if len(resp.content) > 50 * 1024 * 1024:
+                    logger.warning(f"PDF too large ({len(resp.content)} bytes): {title}")
+                    skipped += 1
+                    continue
+
+                text = self._extract_pdf_text(resp.content)
+                if not text or len(text) < 50:
+                    logger.warning(f"Insufficient text ({len(text)} chars): {title}")
+                    skipped += 1
+                    continue
+
+                doc_type = self._classify_doc(title)
+                date = self._extract_date(wp_date)
+                sb_ref = self._extract_sb_ref(title)
+                doc_id = f"SR-SRiS-{media_id}"
+
+                raw = {
+                    "doc_id": doc_id,
+                    "title": title,
+                    "text": text,
+                    "date": date,
+                    "url": item.get("link", source_url),
+                    "pdf_url": source_url,
+                    "doc_type": doc_type,
+                    "sb_reference": sb_ref,
+                }
+            except Exception as e:
+                media_id = item.get("id", "?") if isinstance(item, dict) else "?"
+                logger.warning(f"Skipping media item {media_id} due to error: {e}")
                 skipped += 1
                 continue
 
-            if not title:
-                title = source_url.split("/")[-1].replace(".pdf", "").replace("-", " ")
-
-            # Download PDF
-            resp = self._request(source_url, timeout=120)
-            if resp is None:
-                logger.warning(f"Failed to download: {title}")
-                skipped += 1
-                continue
-
-            if len(resp.content) > 50 * 1024 * 1024:
-                logger.warning(f"PDF too large ({len(resp.content)} bytes): {title}")
-                skipped += 1
-                continue
-
-            text = self._extract_pdf_text(resp.content)
-            if not text or len(text) < 50:
-                logger.warning(f"Insufficient text ({len(text)} chars): {title}")
-                skipped += 1
-                continue
-
-            doc_type = self._classify_doc(title)
-            date = self._extract_date(wp_date)
-            sb_ref = self._extract_sb_ref(title)
-            doc_id = f"SR-SRiS-{media_id}"
-
-            raw = {
-                "doc_id": doc_id,
-                "title": title,
-                "text": text,
-                "date": date,
-                "url": item.get("link", source_url),
-                "pdf_url": source_url,
-                "doc_type": doc_type,
-                "sb_reference": sb_ref,
-            }
             count += 1
             yield raw
 

@@ -347,6 +347,14 @@ class SayistayScraper(BaseScraper):
         total = None
         fetched = 0
         max_records = 6 if sample else None
+        # Track the list-API IDs we've already seen. The DataTables endpoint
+        # is session-backed: if the server ever drops our session/CSRF cookie
+        # (observed on datacenter IPs) it silently ignores the `start` offset
+        # and keeps returning page 1. Without this guard the loop re-fetches
+        # the same 100 records until `start` crosses `recordsTotal` — hours of
+        # wasted work yielding only duplicates (issue #962). Break as soon as
+        # a page contributes no new IDs.
+        seen_ids = set()
 
         logger.info(f"Starting {body['name']} decision fetch...")
 
@@ -365,9 +373,20 @@ class SayistayScraper(BaseScraper):
             if not records:
                 break
 
+            page_ids = [r.get("Id") for r in records if r.get("Id")]
+            new_ids = [i for i in page_ids if i not in seen_ids]
+            if not new_ids:
+                logger.warning(
+                    f"{body['name']}: page at offset {start} returned 0 new IDs "
+                    f"(all {len(page_ids)} already seen) — server is repeating "
+                    f"results, stopping pagination."
+                )
+                break
+            seen_ids.update(new_ids)
+
             for rec in records:
                 rec_id = rec.get("Id")
-                if not rec_id:
+                if not rec_id or rec_id not in new_ids:
                     continue
 
                 try:

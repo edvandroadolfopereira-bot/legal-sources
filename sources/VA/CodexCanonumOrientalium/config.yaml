@@ -1,0 +1,67 @@
+source:
+  id: "VA/CodexCanonumOrientalium"
+  country: "VA"
+  name: "Codex Canonum Ecclesiarum Orientalium (1990)"
+  url: "https://www.vatican.va/content/john-paul-ii/la/apost_constitutions/documents/hf_jp-ii_apc_19901018_index-codex-can-eccl-orient.html"
+  description: |
+    1990 Code of Canons of the Eastern Churches (Codex Canonum Ecclesiarum
+    Orientalium, CCEO) promulgated by Pope John Paul II via the Apostolic
+    Constitution Sacri Canones. 1546 canons in 30 titles — the common code
+    of canon law for the 23 Eastern Catholic Churches. Companion to the 1983
+    Latin Code (VA/CodexIurisCanonici). Official Latin text from vatican.va.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+api:
+  type: "html_scrape"
+  base_url: "https://www.vatican.va/content/john-paul-ii/la/apost_constitutions/documents"
+
+data_model:
+  type: "legislation"
+  source_nature: "consolidated"
+  primary_key: "canon_number"
+  update_strategy: "upsert"
+  versioning: "none"
+  dedup_key:
+    - "canon_number"
+
+license:
+  name: "Public Domain (Holy See)"
+  url: "https://www.vatican.va/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official Latin text of canon law published by the Holy See on vatican.va."
+
+schema:
+  total_fields: 11
+  key_fields:
+    - name: "_id"
+      description: "Unique canon identifier (VA-CCEO-Can-N)"
+      type: "string"
+      role: "primary_key"
+    - name: "canon_number"
+      description: "Canon number (1-1546)"
+      type: "integer"
+      role: "dedup_key"
+    - name: "text"
+      description: "Full Latin text of the canon"
+      type: "string"
+      role: "content"
+    - name: "title"
+      description: "Canon title"
+      type: "string"
+      role: "title"
+    - name: "date"
+      description: "Promulgation date (1990-10-18)"
+      type: "string"
+      role: "date"

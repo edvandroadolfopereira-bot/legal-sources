@@ -1,0 +1,45 @@
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: url
+    required: true
+    type: string
+  - name: category
+    required: false
+    type: string
+  - name: gazette
+    required: false
+    type: string
+source:
+  auth: none
+  country: BA
+  data_types:
+  - legislation
+  description: >
+    Bosnia and Herzegovina legislation from the Office of the High Representative
+    (OHR). 504 PDFs across 12 categories covering constitutions, criminal law,
+    elections, judiciary, human rights, public institutions, taxation, police,
+    and defence legislation. English translations.
+  id: BA/OHR
+  name: Bosnia OHR Laws Database
+  schedule: quarterly
+  url: https://www.ohr.int/laws-of-bih/
+license:
+  name: "Public Domain (Government)"
+  url: "https://www.ohr.int/laws-of-bih/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government legislation in public domain"

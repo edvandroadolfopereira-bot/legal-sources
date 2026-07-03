@@ -1,0 +1,18 @@
+{
+  "_id": "DP26004",
+  "_source": "US/NHTSA-Enforcement",
+  "_type": "case_law",
+  "_fetched_at": "2026-06-08T19:10:01.054342+00:00",
+  "title": "NHTSA DP DP26004: Anti-lock brake system (ABS) Malfunction Indicator Lamp (MIL) illuminated",
+  "text": "The Office of Defects Investigation (ODI) received a petition on December 22, 2025, requesting a defect investigation into the hydraulic control unit (HCU) for the Anti-lock Braking System (ABS) on the MY 2010 Ford Fusion Hybrid. The petition alleges that an illuminated ABS MIL is associated with a failure of the ABS HCU, resulting in ABS malfunction, loss of traction and electronic stability control functions, and reduced braking performance, particularly on slippery road surfaces. \n\nA defect petition has been opened to evaluate the issue and determine whether to grant or deny the petition. The petition can be reviewed at NHTSA.gov under ODI number 11647929.",
+  "date": "2026-04-09",
+  "url": "https://www.nhtsa.gov/vehicle/DP26004",
+  "investigation_number": "004",
+  "investigation_type": "DP",
+  "investigation_type_code": "DP",
+  "status": "Open",
+  "status_code": "O",
+  "subject": "Anti-lock brake system (ABS) Malfunction Indicator Lamp (MIL) illuminated",
+  "nhtsa_id": "DP26004",
+  "latest_activity_date": "2026-04-09T17:55:37Z"
+}

@@ -87,12 +87,12 @@ def create_session() -> requests.Session:
     return session
 
 
-def parse_opinions_page(html: str, opinion_type: str = "published") -> list:
+def parse_opinions_page(page_html: str, opinion_type: str = "published") -> list:
     """Parse an opinions page and extract metadata for each opinion."""
     records = []
     seen_pdfs = set()
 
-    rows = re.findall(r'<tr>(.*?)</tr>', html, re.DOTALL)
+    rows = re.findall(r'<tr>(.*?)</tr>', page_html, re.DOTALL)
     for row_html in rows:
         pdf_match = re.search(r'href=["\x27]([^"\x27]*\.pdf)["\x27]', row_html)
         if not pdf_match:
@@ -184,6 +184,10 @@ def extract_text_from_pdf(pdf_bytes: bytes) -> Optional[str]:
                 t = page.extract_text()
                 if t:
                     pages.append(t)
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
         text = "\n\n".join(pages)
         if len(text.strip()) > 100:
             return text.strip()

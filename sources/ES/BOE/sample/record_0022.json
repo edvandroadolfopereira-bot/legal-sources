@@ -1,0 +1,22 @@
+{
+  "_id": "BOE-A-2012-5043:da-3",
+  "_source": "ES/BOE",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-08T01:51:53.591177+00:00",
+  "title": "Disposición adicional tercera — Real Decreto 662/2012, de 13 de abril, por el que se establece el marco para la implantación de los sistemas inteligentes de transporte (SIT) en el sector del transporte por carretera y para las interfaces con otros modos de transporte.",
+  "text": "Disposición adicional tercera. Reutilización de la información.\nEn la implantación y el uso de aplicaciones y servicios de los sistemas inteligentes de transporte (SIT), será de aplicación la Ley 37/2007, de 16 de noviembre, sobre reutilización de la información del sector público.",
+  "date": "2012-04-13",
+  "url": "https://www.boe.es/eli/es/rd/2012/04/13/662",
+  "identifier": "BOE-A-2012-5043:da-3",
+  "parent_identifier": "BOE-A-2012-5043",
+  "parent_title": "Real Decreto 662/2012, de 13 de abril, por el que se establece el marco para la implantación de los sistemas inteligentes de transporte (SIT) en el sector del transporte por carretera y para las interfaces con otros modos de transporte.",
+  "article_id": "da-3",
+  "article_title": "Disposición adicional tercera",
+  "chapter": "",
+  "rango": "Real Decreto",
+  "publication_date": "2012-04-14",
+  "effective_date": "2012-04-15",
+  "url_eli": "https://www.boe.es/eli/es/rd/2012/04/13/662",
+  "language": "es",
+  "granularity": "article"
+}

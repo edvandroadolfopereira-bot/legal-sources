@@ -165,14 +165,14 @@ class BSURCAScraper(BaseScraper):
                 logger.warning(f"Skipping {dec['title'][:60]}: insufficient text ({len(text)} chars)")
                 continue
 
-            yield self.normalize({
+            yield {
                 "doc_id": doc_id,
                 "title": dec["title"],
                 "text": text,
                 "url": dec["link"],
                 "date": dec["date"],
                 "sector": dec["sector"],
-            })
+            }
 
     def fetch_updates(self, since: str) -> Generator[Dict[str, Any], None, None]:
         """Fetch decisions published after a given date."""
@@ -195,14 +195,14 @@ class BSURCAScraper(BaseScraper):
                             text = pdf_text.strip()
                 if len(text) < MIN_TEXT_CHARS:
                     continue
-                yield self.normalize({
+                yield {
                     "doc_id": doc_id,
                     "title": dec["title"],
                     "text": text,
                     "url": dec["link"],
                     "date": dec["date"],
                     "sector": dec["sector"],
-                })
+                }
 
     def normalize(self, raw: Dict[str, Any]) -> Dict[str, Any]:
         """Normalize a raw record into standard schema."""
@@ -242,7 +242,8 @@ def main():
     count = 0
     limit = 15 if args.sample else 9999
 
-    for record in scraper.fetch_all():
+    for raw in scraper.fetch_all():
+        record = scraper.normalize(raw)
         count += 1
         fname = re.sub(r'[^\w\-]', '_', record["_id"])[:80] + ".json"
         with open(sample_dir / fname, "w", encoding="utf-8") as f:

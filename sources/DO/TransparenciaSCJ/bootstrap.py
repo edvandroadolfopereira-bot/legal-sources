@@ -169,6 +169,10 @@ class TransparenciaSCJScraper(BaseScraper):
                 page_text = page.extract_text()
                 if page_text:
                     text_parts.append(page_text)
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
             pdf.close()
 
             text = "\n".join(text_parts)
@@ -247,9 +251,12 @@ class TransparenciaSCJScraper(BaseScraper):
                 doc["_text"] = text
                 doc["_pdf_url"] = pdf_url
 
-                normalized = self.normalize(doc)
-                if normalized:
-                    yield normalized
+                # BaseScraper contract: yield RAW; the framework calls
+                # normalize(). Yielding an already-normalized record made the
+                # framework re-normalize it, and since the normalized record has
+                # `text`/`url` (not `_text`/`_pdf_url`) the second pass produced
+                # empty text -> 0 written on the VPS pipeline (issue #915).
+                yield doc
 
             page += 1
             logger.info(f"Processed page {page}")
@@ -288,9 +295,8 @@ class TransparenciaSCJScraper(BaseScraper):
                 doc["_text"] = text
                 doc["_pdf_url"] = pdf_url
 
-                normalized = self.normalize(doc)
-                if normalized:
-                    yield normalized
+                # Yield RAW (see fetch_all note re issue #915).
+                yield doc
 
             page += 1
 
@@ -303,8 +309,10 @@ class TransparenciaSCJScraper(BaseScraper):
         count = 0
 
         gen = self.fetch_all()
-        for record in gen:
-            if not record.get("text"):
+        for raw in gen:
+            # fetch_all yields RAW now; normalize here for sample output.
+            record = self.normalize(raw)
+            if not record or not record.get("text"):
                 continue
 
             count += 1

@@ -88,6 +88,7 @@ class PoreznaUpravaMisljenja(BaseScraper):
     SOURCE_ID = "HR/PoreznaUprava-Misljenja"
 
     def __init__(self):
+        super().__init__()
         self.http = HttpClient(
             base_url=BASE_URL,
             headers={

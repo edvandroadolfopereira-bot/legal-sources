@@ -192,6 +192,10 @@ def extract_pdf_text(pdf_bytes: bytes) -> str:
                 page_text = page.extract_text() or ""
                 if page_text.strip():
                     text_parts.append(page_text)
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
     except Exception as e:
         print(f"  PDF extraction error: {e}", file=sys.stderr)
         return ""

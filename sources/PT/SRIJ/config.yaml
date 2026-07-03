@@ -1,0 +1,42 @@
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: url
+    required: true
+    type: string
+  - name: doc_type
+    required: false
+    type: string
+source:
+  auth: none
+  country: PT
+  data_types:
+  - legislation
+  description: >
+    Portuguese gaming regulation legislation from SRIJ (Serviço de Regulação e
+    Inspeção de Jogos). Includes decree-laws, instructions, orientations, and
+    guidelines governing online gambling, casinos, and bingo in Portugal.
+    PDFs downloaded and text extracted via pdfplumber. ~15-20 documents.
+  id: PT/SRIJ
+  name: Serviço de Regulação e Inspeção de Jogos (SRIJ)
+  schedule: monthly
+  url: https://www.srij.turismodeportugal.pt/pt/legislacao
+license:
+  name: Public Domain (Government)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Portuguese government regulatory documents, public domain.

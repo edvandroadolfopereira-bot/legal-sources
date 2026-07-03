@@ -1,0 +1,44 @@
+source:
+  id: INTL/BCEAO-Regulations
+  country: INTL
+  name: "BCEAO — Réglementations (UEMOA)"
+  url: https://www.bceao.int/fr/reglementations
+  data_types:
+    - legislation
+    - doctrine
+  language: fr
+license:
+  name: "Public domain (government)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official regulatory texts (instructions, avis, décisions, circulaires) issued by the Banque Centrale des États de l'Afrique de l'Ouest for the 8 UEMOA member states. Government regulatory acts, no usage restrictions stated."
+fetcher:
+  type: drupal_rest_pdf
+  rate_limit: 2.0
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: title
+      required: true
+      type: string
+    - name: text
+      required: true
+      type: string
+  date_fields:
+    - _fetched_at
+    - date
+  text_fields:
+    - text
+    - title
+notes: >
+  BCEAO regulatory texts for the West African Monetary Union (UEMOA): banking,
+  monetary policy, payment systems, microfinance (SFD), external financial
+  relations, and AML/CFT. Six server-rendered Drupal Views category listings on
+  bceao.int are paginated to enumerate node aliases; each node is fetched as
+  `<alias>?_format=json` (Drupal node REST export) yielding title, date and the
+  attached PDF (field_fichier.url). Full text is extracted from the PDFs.

@@ -1,0 +1,13 @@
+{
+  "_id": "VA-CCEO-Can-2",
+  "_source": "VA/CodexCanonumOrientalium",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-18T21:48:39.062756+00:00",
+  "title": "Canon 2 (CCEO)",
+  "text": "Canones Codicis, in quibus plerumque ius antiquum Ecclesiarum orientalium recipitur vel accommodatur, praecipue ex illo iure aestimandi sunt.",
+  "canon_number": 2,
+  "code": "Codex Canonum Ecclesiarum Orientalium",
+  "date": "1990-10-18",
+  "url": "https://www.vatican.va/content/john-paul-ii/la/apost_constitutions/documents/hf_jp-ii_apc_19901018_codex-can-eccl-orient-1.html",
+  "language": "la"
+}

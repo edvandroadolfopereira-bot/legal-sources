@@ -133,9 +133,18 @@ def _clean_html(text: str) -> str:
 # ───────────────────────── Normalization ─────────────────────────
 
 
+def _safe_int(value: str) -> Optional[int]:
+    """Parse an int from a possibly noisy value (e.g. 'n9' → 9). None if no digits."""
+    if value is None:
+        return None
+    digits = re.sub(r"\D", "", str(value))
+    return int(digits) if digits else None
+
+
 def normalize(act_uri: str, citation: str, year: str, number: str, text: str) -> Dict[str, Any]:
     """Normalize a Czech legal act into the standard schema."""
     eli_path = act_uri.split("/esel-esb/")[-1] if "/esel-esb/" in act_uri else ""
+    year_i = _safe_int(year)
     return {
         "_id": f"CZ-{year}-{number}",
         "_source": SOURCE_ID,
@@ -143,11 +152,11 @@ def normalize(act_uri: str, citation: str, year: str, number: str, text: str) ->
         "_fetched_at": datetime.now(timezone.utc).isoformat(),
         "title": citation,
         "text": text,
-        "date": f"{year}-01-01",
+        "date": f"{year_i}-01-01" if year_i else None,
         "url": f"{ESBIRKA_BASE}/{eli_path}" if eli_path else ESBIRKA_BASE,
         "citation": citation,
-        "year": int(year),
-        "number": int(number),
+        "year": year_i,
+        "number": _safe_int(number),
         "language": "cs",
         "eli_uri": act_uri,
     }
@@ -251,24 +260,39 @@ def bootstrap_sample(count: int = 12):
     return saved
 
 
+def bootstrap_full() -> int:
+    """Fetch all acts and stream them to data/records.jsonl."""
+    data_dir = Path(__file__).parent / "data"
+    data_dir.mkdir(exist_ok=True)
+    out_path = data_dir / "records.jsonl"
+    count = 0
+    with open(out_path, "w", encoding="utf-8") as f:
+        for record in fetch_all():
+            f.write(json.dumps(record, ensure_ascii=False) + "\n")
+            count += 1
+    logger.info("Wrote %d records to %s", count, out_path)
+    return count
+
+
 def main():
     import argparse
 
     parser = argparse.ArgumentParser(description="CZ/eSbirka bootstrap (SPARQL)")
-    parser.add_argument("command", choices=["bootstrap"], help="Command to run")
+    # Accept the fleet's bootstrap/bootstrap-fast commands and ignore extra flags
+    parser.add_argument("command", choices=["bootstrap", "bootstrap-fast"],
+                        help="Command to run")
     parser.add_argument("--sample", action="store_true", help="Fetch sample data only")
+    parser.add_argument("--full", action="store_true", help="Full pull (default for non-sample)")
     parser.add_argument("--count", type=int, default=12, help="Number of sample records")
-    args = parser.parse_args()
+    args, _unknown = parser.parse_known_args()
 
-    if args.command == "bootstrap":
-        if args.sample:
-            n = bootstrap_sample(count=args.count)
-            if n < 10:
-                logger.error("Only %d samples (need 10+). Check SPARQL endpoint.", n)
-                sys.exit(1)
-        else:
-            for record in fetch_all():
-                print(json.dumps(record, ensure_ascii=False))
+    if args.sample:
+        n = bootstrap_sample(count=args.count)
+        if n < 10:
+            logger.error("Only %d samples (need 10+). Check SPARQL endpoint.", n)
+            sys.exit(1)
+    else:
+        bootstrap_full()
 
 
 if __name__ == "__main__":

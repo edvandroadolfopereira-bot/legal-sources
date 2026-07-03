@@ -33,7 +33,7 @@ import pdfplumber
 import requests
 
 SOURCE_ID = "FR/OrdreMedecins"
-BASE_URL = "https://www.jurisprudence.ordre.medecin.fr"
+BASE_URL = "https://jurisprudence.ordre.medecin.fr"
 DETAIL_URL = BASE_URL + "/FicheDetailConsultation.do?ficId={fic_id}&isFromRecherche=listeResultats"
 
 HEADERS = {
@@ -43,6 +43,7 @@ HEADERS = {
 }
 
 SAMPLE_DIR = Path(__file__).parent / "sample"
+DATA_DIR = Path(__file__).parent / "data"
 
 # Known valid ficId range (non-sequential, with gaps)
 MIN_FIC_ID = 1
@@ -172,6 +173,10 @@ def extract_pdf_text(pdf_bytes: bytes) -> str:
                 text = page.extract_text()
                 if text:
                     pages.append(text)
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
             return "\n\n".join(pages)
     except Exception:
         return ""
@@ -300,25 +305,37 @@ def main():
     boot_parser = subparsers.add_parser("bootstrap", help="Fetch records")
     boot_parser.add_argument("--sample", action="store_true", help="Fetch 15 sample records only")
 
+    # VPS wrapper compatibility: bootstrap-fast == full bootstrap
+    fast_parser = subparsers.add_parser("bootstrap-fast", help="Full fetch (VPS wrapper alias)")
+    fast_parser.add_argument("--sample", action="store_true", help="Fetch 15 sample records only")
+
     updates_parser = subparsers.add_parser("updates", help="Fetch updates (not supported)")
     updates_parser.add_argument("--since", required=True, help="Date (not used)")
 
     args = parser.parse_args()
 
-    if args.command == "bootstrap":
+    if args.command in ("bootstrap", "bootstrap-fast"):
         print(f"FR/OrdreMedecins bootstrap ({'sample' if args.sample else 'full'} mode)")
         print(f"Source: {BASE_URL}")
         print()
 
-        records = list(fetch_all(sample=args.sample))
-
-        if args.sample and records:
-            save_samples(records)
-            print(f"\n{len(records)} sample records saved to {SAMPLE_DIR}/")
-        elif records:
-            # In full mode, write JSONL to stdout
-            for r in records:
-                print(json.dumps(r, ensure_ascii=False))
+        if args.sample:
+            records = list(fetch_all(sample=True))
+            if records:
+                save_samples(records)
+                print(f"\n{len(records)} sample records saved to {SAMPLE_DIR}/")
+        else:
+            # Full mode: stream to data/records.jsonl so the VPS pipeline ingests them.
+            DATA_DIR.mkdir(parents=True, exist_ok=True)
+            jsonl_path = DATA_DIR / "records.jsonl"
+            count = 0
+            with open(jsonl_path, "w", encoding="utf-8") as f:
+                for r in fetch_all(sample=False):
+                    f.write(json.dumps(r, ensure_ascii=False) + "\n")
+                    count += 1
+                    if count % 100 == 0:
+                        print(f"Progress: {count} records written")
+            print(f"\nFull bootstrap complete: {count} records -> {jsonl_path}")
 
     elif args.command == "updates":
         print("Updates not supported for this source (no date-filtered API).")

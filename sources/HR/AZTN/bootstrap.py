@@ -216,6 +216,10 @@ class CroatianAZTNScraper(BaseScraper):
                     page_text = page.extract_text()
                     if page_text:
                         text_parts.append(page_text)
+                    try:
+                        page.flush_cache(); page.get_textmap.cache_clear()
+                    except Exception:
+                        pass
 
             text = "\n\n".join(text_parts)
             text = re.sub(r"\n\s*\n\s*\n+", "\n\n", text)

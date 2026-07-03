@@ -1,0 +1,78 @@
+# ===================================================================
+# US/ASBCA -- Armed Services Board of Contract Appeals
+# ===================================================================
+# ASBCA decisions sourced via CourtListener's free search API and
+# PDF storage. No authentication required. Public domain.
+# ===================================================================
+
+source:
+  id: "US/ASBCA"
+  country: "US"
+  name: "Armed Services Board of Contract Appeals (ASBCA)"
+  url: "https://www.asbca.mil/Decisions/decisions.html"
+  description: |
+    ASBCA resolves contract disputes between government contractors
+    and the Department of Defense / NASA. 3,800+ decisions with full
+    text, sourced via CourtListener (public domain, no auth required).
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+api:
+  type: "rest_json"
+  base_url: "https://www.courtlistener.com/api/rest/v4"
+  endpoints:
+    search: "/search/?type=o&court=asbca&order_by=dateFiled+desc"
+  pdf_storage: "https://storage.courtlistener.com"
+
+data_model:
+  type: "case_law"
+  primary_key: "cluster_id"
+  update_strategy: "incremental"
+  dedup_key:
+    - "cluster_id"
+
+schema:
+  total_fields: 14
+  key_fields:
+    - name: "cluster_id"
+      description: "CourtListener cluster ID"
+      type: "integer"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Case name (appellant)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the ASBCA decision"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Date filed (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "docket_number"
+      description: "ASBCA docket number"
+      type: "string"
+      role: "classification"
+      required: false
+
+license:
+  name: "Public Domain (US Government Work)"
+  url: "https://www.law.cornell.edu/uscode/text/17/105"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "US government works are in the public domain under 17 USC 105"

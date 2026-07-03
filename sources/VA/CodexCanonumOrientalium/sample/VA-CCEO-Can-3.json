@@ -1,0 +1,13 @@
+{
+  "_id": "VA-CCEO-Can-3",
+  "_source": "VA/CodexCanonumOrientalium",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-18T21:48:39.063009+00:00",
+  "title": "Canon 3 (CCEO)",
+  "text": "Codex, etsi saepe ad praescripta librorum liturgicorum se refert, de re liturgica plerumque non decernit; quare haec praescripta sedulo servanda sunt, nisi Codicis canonibus sunt contraria.",
+  "canon_number": 3,
+  "code": "Codex Canonum Ecclesiarum Orientalium",
+  "date": "1990-10-18",
+  "url": "https://www.vatican.va/content/john-paul-ii/la/apost_constitutions/documents/hf_jp-ii_apc_19901018_codex-can-eccl-orient-1.html",
+  "language": "la"
+}

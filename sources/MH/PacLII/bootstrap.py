@@ -109,6 +109,10 @@ class PacLIIScraper(BaseScraper):
                     t = page.extract_text()
                     if t:
                         parts.append(t.strip())
+                    try:
+                        page.flush_cache(); page.get_textmap.cache_clear()
+                    except Exception:
+                        pass
                 text = "\n\n".join(parts)
                 return text if len(text) >= 50 else None
         except Exception as e:
@@ -122,6 +126,10 @@ class PacLIIScraper(BaseScraper):
                 t = page.extract_text()
                 if t:
                     parts.append(t.strip())
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
             text = "\n\n".join(parts)
             return text if len(text) >= 50 else None
         except Exception as e:

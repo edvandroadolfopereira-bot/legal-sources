@@ -1,0 +1,24 @@
+source_id: EC/CNJ-Precedentes
+name: "Corte Nacional de Justicia — Binding Jurisprudential Precedents"
+country: EC
+url: https://www.cortenacional.gob.ec/cnj/index.php/resoluciones-a/precedentes-jurisprudenciales
+data_types:
+  - case_law
+auth:
+  type: none
+schedule: monthly
+schema:
+  key_fields:
+    - _id
+    - title
+    - text
+    - date
+    - url
+license:
+  name: "Ecuador Government Public Domain"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Mandatory binding precedents published by Ecuador's highest court. Public judicial decisions."

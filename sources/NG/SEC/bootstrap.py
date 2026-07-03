@@ -211,6 +211,10 @@ class NGSECScraper(BaseScraper):
                     text = page.extract_text() or ""
                     if text.strip():
                         pages.append(text)
+                    try:
+                        page.flush_cache(); page.get_textmap.cache_clear()
+                    except Exception:
+                        pass
                 pdf.close()
                 return "\n\n".join(pages) if pages else None
         except Exception as e:

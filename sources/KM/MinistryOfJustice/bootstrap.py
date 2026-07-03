@@ -140,6 +140,10 @@ class KMMinistryOfJusticeScraper(BaseScraper):
                     t = page.extract_text()
                     if t:
                         parts.append(t)
+                    try:
+                        page.flush_cache(); page.get_textmap.cache_clear()
+                    except Exception:
+                        pass
             text = "\n\n".join(parts)
         except Exception as e:
             logger.debug(f"pdfplumber failed: {e}")

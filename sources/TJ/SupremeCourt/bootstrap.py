@@ -199,6 +199,10 @@ def _extract_pdf_text(blob: bytes) -> str:
                 ptxt = page.extract_text() or ""
                 if ptxt.strip():
                     pages.append(ptxt.strip())
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
     except Exception as e:
         logger.warning("pdfplumber failed: %s", e)
         return ""

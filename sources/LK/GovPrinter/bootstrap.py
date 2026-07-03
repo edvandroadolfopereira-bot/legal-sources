@@ -78,6 +78,10 @@ def extract_text_from_pdf(pdf_bytes: bytes) -> str:
                 text = page.extract_text()
                 if text:
                     pages.append(text)
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
             return "\n\n".join(pages)
     except Exception as e:
         print(f"  PDF extraction error: {e}")
@@ -199,41 +203,55 @@ def cmd_bootstrap(sample=False):
     output_dir = SAMPLE_DIR if sample else DATA_DIR
     output_dir.mkdir(parents=True, exist_ok=True)
 
+    # In full mode, stream every record to a single data/records.jsonl that the
+    # ingest loader expects (one JSON object per line). Sample mode keeps
+    # individual files for human inspection.
+    jsonl_fh = None
+    if not sample:
+        jsonl_fh = open(output_dir / "records.jsonl", "w", encoding="utf-8")
+
     total_saved = 0
     total_skipped = 0
     years_to_scan = YEARS[:5] if sample else YEARS  # Recent 5 years for sample
 
     print(f"{'Sample' if sample else 'Full'} bootstrap — scanning {len(years_to_scan)} years")
 
-    for year in years_to_scan:
-        if total_saved >= max_records:
-            break
-
-        print(f"\n--- Year {year} ---")
-        acts = parse_acts_page(year)
-        print(f"  Found {len(acts)} acts")
-
-        for act in acts:
+    try:
+        for year in years_to_scan:
             if total_saved >= max_records:
                 break
 
-            print(f"  Downloading Act {act['act_number']}: {act['title'][:60]}...")
-            pdf_bytes = fetch_pdf_bytes(act["pdf_url"])
-            if not pdf_bytes:
-                total_skipped += 1
-                continue
+            print(f"\n--- Year {year} ---")
+            acts = parse_acts_page(year)
+            print(f"  Found {len(acts)} acts")
 
-            text = extract_text_from_pdf(pdf_bytes)
-            if not text or len(text) < 50:
-                print(f"    Insufficient text extracted ({len(text) if text else 0} chars)")
-                total_skipped += 1
-                continue
+            for act in acts:
+                if total_saved >= max_records:
+                    break
 
-            record = normalize(act, text)
-            save_record(record, output_dir)
-            total_saved += 1
-            print(f"    Saved ({len(text)} chars)")
-            time.sleep(1)  # Rate limit
+                print(f"  Downloading Act {act['act_number']}: {act['title'][:60]}...")
+                pdf_bytes = fetch_pdf_bytes(act["pdf_url"])
+                if not pdf_bytes:
+                    total_skipped += 1
+                    continue
+
+                text = extract_text_from_pdf(pdf_bytes)
+                if not text or len(text) < 50:
+                    print(f"    Insufficient text extracted ({len(text) if text else 0} chars)")
+                    total_skipped += 1
+                    continue
+
+                record = normalize(act, text)
+                if jsonl_fh:
+                    jsonl_fh.write(json.dumps(record, ensure_ascii=False) + "\n")
+                else:
+                    save_record(record, output_dir)
+                total_saved += 1
+                print(f"    Saved ({len(text)} chars)")
+                time.sleep(1)  # Rate limit
+    finally:
+        if jsonl_fh:
+            jsonl_fh.close()
 
     print(f"\nDone: {total_saved} records saved, {total_skipped} skipped")
     return total_saved
@@ -241,22 +259,18 @@ def cmd_bootstrap(sample=False):
 
 def main():
     parser = argparse.ArgumentParser(description=f"{SOURCE_ID} bootstrap")
-    sub = parser.add_subparsers(dest="command")
+    parser.add_argument("command", nargs="?", default="bootstrap",
+                        choices=["bootstrap", "bootstrap-fast", "test"])
+    parser.add_argument("--sample", action="store_true")
+    parser.add_argument("--full", action="store_true", help="Full pull (default for non-sample)")
 
-    boot = sub.add_parser("bootstrap")
-    boot.add_argument("--sample", action="store_true")
-
-    sub.add_parser("test")
-
-    args = parser.parse_args()
+    args, _unknown = parser.parse_known_args()
 
     if args.command == "test":
         sys.exit(0 if cmd_test() else 1)
-    elif args.command == "bootstrap":
+    else:
         count = cmd_bootstrap(sample=args.sample)
         sys.exit(0 if count > 0 else 1)
-    else:
-        parser.print_help()
 
 
 if __name__ == "__main__":

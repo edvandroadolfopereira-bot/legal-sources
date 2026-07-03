@@ -296,7 +296,7 @@ class GabonCourConstitutionnelleScraper(BaseScraper):
                 found += 1
                 empty_streak = 0
                 logger.info(f"[{found}] CC decision at ID {doc_id}: {record.get('decision_number', 'N/A')}")
-                yield self.normalize(record)
+                yield record
             else:
                 empty_streak += 1
                 # Don't give up — CC decisions are sparse among 20k docs
@@ -316,7 +316,7 @@ class GabonCourConstitutionnelleScraper(BaseScraper):
             if record:
                 found += 1
                 logger.info(f"[{found}] ID {doc_id}: {record.get('decision_number', 'N/A')} - {record.get('title', '')[:60]}")
-                yield self.normalize(record)
+                yield record
             else:
                 logger.warning(f"ID {doc_id}: not a CC decision or failed to fetch")
 
@@ -333,7 +333,7 @@ class GabonCourConstitutionnelleScraper(BaseScraper):
             record = self._fetch_cc_decision(doc_id)
             if record:
                 found += 1
-                yield self.normalize(record)
+                yield record
                 if found >= 50:
                     break
         logger.info(f"Update complete. Found {found} new CC decisions.")
@@ -373,7 +373,8 @@ def main():
             gen = scraper.fetch_all()
 
         count = 0
-        for record in gen:
+        for raw in gen:
+            record = scraper.normalize(raw)
             count += 1
             out_file = sample_dir / f"{record['_id']}.json"
             with open(out_file, "w", encoding="utf-8") as f:

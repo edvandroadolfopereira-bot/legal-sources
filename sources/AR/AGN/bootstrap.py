@@ -78,6 +78,10 @@ def extract_pdf_text(pdf_bytes: bytes) -> str:
                 t = page.extract_text()
                 if t:
                     text += t + "\n"
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
         if text.strip():
             return text.strip()
     except Exception as e:
@@ -90,6 +94,10 @@ def extract_pdf_text(pdf_bytes: bytes) -> str:
             t = page.extract_text()
             if t:
                 text += t + "\n"
+            try:
+                page.flush_cache(); page.get_textmap.cache_clear()
+            except Exception:
+                pass
         if text.strip():
             return text.strip()
     except Exception as e:
@@ -293,9 +301,22 @@ def normalize(raw: dict, file_index: dict, client: AGNClient,
     }
 
 
-def fetch_all(client: AGNClient, sample: bool = False,
+def fetch_all(client: Optional[AGNClient] = None, sample: bool = False,
               download_pdfs: bool = True) -> Generator[dict, None, None]:
-    """Fetch all AGN audit reports via paginated JSON:API."""
+    """Fetch all AGN audit reports via paginated JSON:API.
+
+    ``client`` is optional so the generic VPS runner can call ``fetch_all()``
+    with no arguments; a client is constructed on demand when none is given.
+    """
+    try:
+        import urllib3
+        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+    except Exception:
+        pass
+
+    if client is None:
+        client = AGNClient()
+
     page = 0
     total = client.get_total_count()
     logger.info("Total informes: %d", total)

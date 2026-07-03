@@ -40,7 +40,10 @@ from typing import Generator, Optional, Dict, Any, List
 from urllib.parse import urljoin, unquote
 
 import requests
-import fitz  # PyMuPDF
+try:
+    import fitz  # PyMuPDF — optional; falls back to shared extractor if absent (issue #816)
+except ImportError:
+    fitz = None
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(PROJECT_ROOT))
@@ -70,18 +73,35 @@ MAX_VOLUME = 20
 
 
 def extract_pdf_text(pdf_bytes: bytes) -> str:
-    """Extract text from PDF using PyMuPDF."""
+    """Extract text from a PDF.
+
+    Prefers PyMuPDF (fitz) when installed; otherwise falls back to the shared
+    pdfplumber/pypdf extractor in common.pdf_extract, so the scraper still runs
+    on hosts without PyMuPDF (issue #816).
+    """
+    if fitz is not None:
+        try:
+            doc = fitz.open(stream=pdf_bytes, filetype="pdf")
+            parts = []
+            for page in doc:
+                text = page.get_text()
+                if text:
+                    parts.append(text.strip())
+            doc.close()
+            joined = "\n\n".join(parts)
+            if joined.strip():
+                return joined
+        except Exception as e:
+            logger.warning(f"PyMuPDF extraction failed: {e}")
+    # Fallback: shared extractor (pdfplumber/pypdf — always in requirements.txt)
     try:
-        doc = fitz.open(stream=pdf_bytes, filetype="pdf")
-        parts = []
-        for page in doc:
-            text = page.get_text()
-            if text:
-                parts.append(text.strip())
-        doc.close()
-        return "\n\n".join(parts)
+        from common.pdf_extract import extract_pdf_markdown
+        text = extract_pdf_markdown(
+            source="BD/SCOB", source_id="_pdf", pdf_bytes=pdf_bytes, force=True
+        )
+        return text or ""
     except Exception as e:
-        logger.warning(f"PyMuPDF extraction failed: {e}")
+        logger.warning(f"pdf_extract fallback failed: {e}")
         return ""
 
 

@@ -306,16 +306,33 @@ def validate_samples() -> bool:
     return ok
 
 
+def bootstrap_full(since: Optional[str] = None) -> int:
+    """Fetch all records and stream them to data/records.jsonl."""
+    data_dir = Path(__file__).parent / "data"
+    data_dir.mkdir(exist_ok=True)
+    out_path = data_dir / "records.jsonl"
+    count = 0
+    with open(out_path, "w", encoding="utf-8") as f:
+        for record in fetch_all(since=since):
+            f.write(json.dumps(record, ensure_ascii=False) + "\n")
+            count += 1
+    print(f"Wrote {count} records to {out_path}")
+    return count
+
+
 def main():
     parser = argparse.ArgumentParser(description="AR/BCRA-Normativa fetcher")
     sub = parser.add_subparsers(dest="command")
     bp = sub.add_parser("bootstrap")
     bp.add_argument("--sample", action="store_true")
     bp.add_argument("--full", action="store_true")
+    # Fleet wrapper invokes "bootstrap-fast"; alias it to the full pull.
+    bf = sub.add_parser("bootstrap-fast")
+    bf.add_argument("--sample", action="store_true")
     up = sub.add_parser("updates")
     up.add_argument("--since", required=True)
     sub.add_parser("validate")
-    args = parser.parse_args()
+    args, _unknown = parser.parse_known_args()
 
     if not args.command:
         parser.print_help()
@@ -324,8 +341,8 @@ def main():
     if args.command == "validate":
         sys.exit(0 if validate_samples() else 1)
 
-    if args.command == "bootstrap":
-        if args.sample:
+    if args.command in ("bootstrap", "bootstrap-fast"):
+        if getattr(args, "sample", False):
             print("Fetching sample BCRA A-type communications...")
             records = fetch_sample()
             if records:
@@ -335,20 +352,11 @@ def main():
             else:
                 print("No records fetched!", file=sys.stderr)
                 sys.exit(1)
-        elif args.full:
-            count = 0
-            for _ in fetch_all():
-                count += 1
-            print(f"Fetched {count} A-type communications")
         else:
-            parser.print_help()
-            sys.exit(1)
+            bootstrap_full()
 
     elif args.command == "updates":
-        count = 0
-        for _ in fetch_all(since=args.since):
-            count += 1
-        print(f"Fetched {count} updates since {args.since}")
+        bootstrap_full(since=args.since)
 
 
 if __name__ == "__main__":

@@ -262,6 +262,10 @@ def extract_pdf_text(session: requests.Session, pdf_url: str, retries: int = 3) 
                     t = page.extract_text()
                     if t:
                         text_parts.append(t)
+                    try:
+                        page.flush_cache(); page.get_textmap.cache_clear()
+                    except Exception:
+                        pass
                 pdf.close()
                 text = "\n\n".join(text_parts)
                 # Clean up text

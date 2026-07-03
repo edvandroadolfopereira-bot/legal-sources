@@ -1,0 +1,27 @@
+source_id: CV/TribunalConstitucional
+name: Cabo Verde Constitutional Court Decisions
+country: CV
+url: https://www.tribunalconstitucional.cv/
+data_types:
+  - case_law
+
+schedule:
+  frequency: weekly
+  mode: full
+
+schema:
+  key_fields:
+    - _id
+    - case_number
+    - year
+    - doc_type
+    - date
+
+license:
+  name: "Public Domain (Official Court Decisions)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official judicial decisions (acórdãos) and advisory opinions (pareceres) of the Tribunal Constitucional da República de Cabo Verde."

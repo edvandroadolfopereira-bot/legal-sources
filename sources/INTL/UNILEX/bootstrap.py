@@ -222,6 +222,12 @@ class UNILEXScraper(BaseScraper):
 
     def normalize(self, doc: dict) -> dict:
         """Transform a parsed record into the standard schema."""
+        # Idempotency guard: if handed an already-normalized record (e.g. the
+        # framework re-normalizes), pass it through unchanged. Otherwise the
+        # missing case_id would collapse every _id to "UNILEX-CISG-" (issue #854).
+        if doc.get("_id") and doc.get("_source") == SOURCE_ID:
+            return doc
+
         case_id = doc.get("case_id", "")
         instrument = doc.get("instrument", "CISG")
 

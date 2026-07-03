@@ -1,0 +1,45 @@
+auth:
+  type: none
+fetch:
+  base_url: https://www.edpb.europa.eu
+  register_path: /our-work-tools/consistency-findings/register-for-article-60-final-decisions_en
+  rate_limit_seconds: 2.0
+  timeout_seconds: 60
+  items_per_page: 10
+schema:
+  key_fields:
+  - name: case_id
+    required: true
+    type: string
+  optional_fields:
+  - lsa
+  - csa
+  - legal_references
+  - keywords
+  - outcome
+  required_fields:
+  - _id
+  - _source
+  - _type
+  - _fetched_at
+  - title
+  - text
+  - date
+  - url
+source:
+  country: EU
+  data_types:
+  - case_law
+  description: EDPB Article 60 One-Stop-Shop Register — final decisions by EU national
+    data protection authorities under GDPR cooperation mechanism
+  id: EU/EDPB-OSSRegister
+  name: EDPB Article 60 One-Stop-Shop Register of Final Decisions
+  url: https://www.edpb.europa.eu/our-work-tools/consistency-findings/register-for-article-60-final-decisions_en
+license:
+  name: "EUR-Lex Reuse Notice"
+  url: "https://eur-lex.europa.eu/content/legal-notice/legal-notice.html"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "EDPB register published under EU institutional reuse policy"

@@ -33,6 +33,7 @@ BASE_URL = "https://documentation-anbenin.org"
 API_URL = f"{BASE_URL}/api"
 SOURCE_ID = "BJ/Assemblee"
 SAMPLE_DIR = Path(__file__).parent / "sample"
+DATA_DIR = Path(__file__).parent / "data"
 PER_PAGE = 50
 DELAY = 0.5
 
@@ -77,6 +78,10 @@ class AssembleeFetcher:
                     text = page.extract_text()
                     if text:
                         pages_text.append(text)
+                    try:
+                        page.flush_cache(); page.get_textmap.cache_clear()
+                    except Exception:
+                        pass
                 full_text = "\n\n".join(pages_text)
                 return full_text if len(full_text) > 50 else None
         except Exception as e:
@@ -262,7 +267,7 @@ def main():
     parser = argparse.ArgumentParser(description="BJ/Assemblee bootstrapper")
     parser.add_argument(
         "command",
-        choices=["bootstrap", "updates"],
+        choices=["bootstrap", "bootstrap-fast", "updates"],
         help="bootstrap = full fetch or sample; updates = incremental",
     )
     parser.add_argument("--sample", action="store_true", help="Only fetch a small sample")
@@ -270,17 +275,28 @@ def main():
     parser.add_argument("--since", type=str, default=None, help="ISO date for incremental updates")
     args = parser.parse_args()
 
-    if args.command == "bootstrap":
+    if args.command in ("bootstrap", "bootstrap-fast"):
         if args.sample:
             bootstrap_sample(max_records=args.max_records)
         else:
+            # Full mode: stream every record to data/records.jsonl (one JSON per
+            # line) so ingest reads the full dataset, not just the sample subset.
+            DATA_DIR.mkdir(parents=True, exist_ok=True)
+            jsonl_path = DATA_DIR / "records.jsonl"
             fetcher = AssembleeFetcher()
             count = 0
-            for record in fetcher.fetch_all():
-                count += 1
-                if count % 20 == 0:
-                    logger.info(f"Fetched {count} records...")
-            logger.info(f"Bootstrap complete: {count} total records")
+            seen = set()
+            with open(jsonl_path, "w", encoding="utf-8") as f:
+                for record in fetcher.fetch_all():
+                    rid = record.get("_id")
+                    if rid in seen:
+                        continue
+                    seen.add(rid)
+                    f.write(json.dumps(record, ensure_ascii=False) + "\n")
+                    count += 1
+                    if count % 20 == 0:
+                        logger.info(f"Fetched {count} records...")
+            logger.info(f"Bootstrap complete: {count} total records -> {jsonl_path}")
     elif args.command == "updates":
         since = args.since or "2025-01-01"
         fetcher = AssembleeFetcher()

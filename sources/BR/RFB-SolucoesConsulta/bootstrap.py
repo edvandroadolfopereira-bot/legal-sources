@@ -68,6 +68,7 @@ class RFBSolucoesConsulta(BaseScraper):
     SOURCE_ID = "BR/RFB-SolucoesConsulta"
 
     def __init__(self):
+        super().__init__()
         self.http = HttpClient(
             base_url=BASE_URL,
             headers={

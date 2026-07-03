@@ -146,17 +146,30 @@ def main():
     boot.add_argument("--sample", action="store_true")
     boot.add_argument("--limit", type=int, default=15)
     boot.add_argument("--full", action="store_true")
+    # bootstrap-fast: VPS pipeline alias — streams the full corpus to JSONL
+    fast = sub.add_parser("bootstrap-fast")
+    fast.add_argument("--full", action="store_true")
     args = parser.parse_args()
 
-    if args.command == "bootstrap":
-        if args.sample or not args.full:
-            count = bootstrap_sample(args.limit)
-            if count < 10:
-                print(f"WARNING: Only {count} samples", file=sys.stderr)
-                sys.exit(1)
-        else:
+    if args.command == "bootstrap-fast" or (args.command == "bootstrap" and getattr(args, "full", False)):
+        # Stream every directive to data/records.jsonl so the ingest pipeline
+        # picks up the full corpus, not just the pre-existing sample/ files.
+        data_dir = Path(__file__).parent / "data"
+        data_dir.mkdir(parents=True, exist_ok=True)
+        jsonl_path = data_dir / "records.jsonl"
+        count = 0
+        with open(jsonl_path, "w", encoding="utf-8") as f:
             for record in fetch_all():
-                print(json.dumps(record, ensure_ascii=False))
+                f.write(json.dumps(record, ensure_ascii=False) + "\n")
+                count += 1
+                if count % 25 == 0:
+                    print(f"Progress: {count} records written", file=sys.stderr)
+        print(f"Wrote {count} records -> {jsonl_path}", file=sys.stderr)
+    elif args.command == "bootstrap":
+        count = bootstrap_sample(args.limit)
+        if count < 10:
+            print(f"WARNING: Only {count} samples", file=sys.stderr)
+            sys.exit(1)
     else:
         parser.print_help()
 

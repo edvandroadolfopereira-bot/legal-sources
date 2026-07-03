@@ -102,6 +102,13 @@ class CBIRegulationsScraper(BaseScraper):
                     page_text = page.extract_text()
                     if page_text:
                         pages.append(page_text)
+                    # Release per-page layout + cached textmap to cap peak RSS
+                    # on large PDFs (prevents OOM exit 137 on the fleet).
+                    page.flush_cache()
+                    try:
+                        page.get_textmap.cache_clear()
+                    except AttributeError:
+                        pass
                 text = "\n\n".join(pages)
                 if len(text.strip()) > MIN_TEXT_LENGTH:
                     return text.strip()

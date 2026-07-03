@@ -1,0 +1,33 @@
+source:
+  id: CI/CourtsJuricaf
+  country: CI
+  name: "Côte d'Ivoire Courts Decisions (Juricaf)"
+  url: https://juricaf.org/recherche/+/facet_pays:C%C3%B4te_d%27Ivoire
+  data_types:
+    - case_law
+  language: fr
+license:
+  name: "ODbL 1.0 (Juricaf/AHJUCAF)"
+  url: https://opendatacommons.org/licenses/odbl/1-0/
+  commercial_use: true
+  attribution_required: true
+  share_alike: true
+  no_derivatives: false
+  notes: "Côte d'Ivoire court decisions (Cour suprême etc.) published on Juricaf by AHJUCAF."
+fetcher:
+  type: api_json
+  pagination: page_number
+  rate_limit: 2.0
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+  date_fields:
+    - date
+    - _fetched_at
+  text_fields:
+    - text
+    - title
+notes: >
+  Côte d'Ivoire court decisions via Juricaf. Full text in French. ODbL 1.0.

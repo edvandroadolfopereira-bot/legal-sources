@@ -455,44 +455,53 @@ def bootstrap_sample():
 
 
 def bootstrap_full():
-    """Full fetch of all records."""
+    """Full fetch of all records, streamed to data/records.jsonl.
+
+    The pipeline loader ingests data/records.jsonl, so we must stream there
+    rather than writing per-record JSON files (issue #914 — previously only
+    the bundled sample/ records were ingested). One JSON object per line.
+    """
     print(f"=== {SOURCE_ID} Bootstrap (Full) ===\n")
     api = HKLIIAPI()
     DATA_DIR.mkdir(parents=True, exist_ok=True)
+    jsonl_path = DATA_DIR / "records.jsonl"
     count = 0
 
-    for record in fetch_all_cases(api):
-        safe_id = re.sub(r'[^\w\-]', '_', str(record["_id"]))[:100]
-        with open(DATA_DIR / f"{safe_id}.json", "w", encoding="utf-8") as f:
-            json.dump(record, f, ensure_ascii=False, indent=2)
-        count += 1
+    with open(jsonl_path, "w", encoding="utf-8") as f:
+        for record in fetch_all_cases(api):
+            f.write(json.dumps(record, ensure_ascii=False) + "\n")
+            count += 1
+            if count % 500 == 0:
+                print(f"Progress: {count} records written", file=sys.stderr)
 
-    for record in fetch_all_legislation(api):
-        safe_id = re.sub(r'[^\w\-]', '_', str(record["_id"]))[:100]
-        with open(DATA_DIR / f"{safe_id}.json", "w", encoding="utf-8") as f:
-            json.dump(record, f, ensure_ascii=False, indent=2)
-        count += 1
+        for record in fetch_all_legislation(api):
+            f.write(json.dumps(record, ensure_ascii=False) + "\n")
+            count += 1
+            if count % 500 == 0:
+                print(f"Progress: {count} records written", file=sys.stderr)
 
-    print(f"\nTotal: {count} records saved to {DATA_DIR}")
+    print(f"\nTotal: {count} records -> {jsonl_path}")
 
 
 def main():
     parser = argparse.ArgumentParser(description="HK/HKLII Legal Data Fetcher")
     subparsers = parser.add_subparsers(dest="command")
 
-    boot = subparsers.add_parser("bootstrap", help="Fetch data")
-    boot.add_argument("--sample", action="store_true", help="Sample mode")
-    boot.add_argument("--full", action="store_true", help="Full fetch")
+    # "bootstrap-fast" is the VPS pipeline alias; both behave identically.
+    for name in ("bootstrap", "bootstrap-fast"):
+        boot = subparsers.add_parser(name, help="Fetch data")
+        boot.add_argument("--sample", action="store_true", help="Sample mode")
+        boot.add_argument("--full", action="store_true", help="Full fetch")
 
     args = parser.parse_args()
 
-    if args.command == "bootstrap":
+    if args.command in ("bootstrap", "bootstrap-fast"):
         if args.sample:
             bootstrap_sample()
-        elif args.full:
-            bootstrap_full()
         else:
-            parser.print_help()
+            # Default to a full fetch when no --sample is given so the VPS
+            # wrapper's bare "bootstrap-fast" invocation streams the full corpus.
+            bootstrap_full()
     else:
         parser.print_help()
 

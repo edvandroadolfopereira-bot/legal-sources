@@ -1,28 +1,31 @@
 # US/RegulationsGov — Federal Rulemaking Documents
 
 Regulations.gov is the US federal government's portal for rulemaking documents —
-rules, proposed rules, and notices published in the Federal Register.
+rules, proposed rules, and notices published in the Federal Register. The full text
+of every one of those documents is published in the **Federal Register**, whose API
+is free and keyless, so this source draws both its listing and its full text from
+the Federal Register API.
 
 ## Data Coverage
 
-- **Rules**: ~98K final rules from all federal agencies
-- **Proposed Rules**: ~49K proposed rulemaking documents
-- **Notices**: ~383K agency notices
-- All documents with Federal Register cross-references include full text
+- **Rules** (legislation): ~230K final rules from all federal agencies since 1994
+- **Proposed Rules** (legislation): ~120K proposed rulemaking documents
+- **Notices** (doctrine): ~600K+ agency notices
+- **Presidential Documents** (doctrine): proclamations, executive orders, etc.
+- Every document includes full text from the Federal Register.
 
 ## Data Access Strategy
 
-1. **Regulations.gov API v4** (`api.regulations.gov/v4/documents`) — lists documents
-   with metadata (agency, docket, dates, FR doc number). Requires API key; DEMO_KEY
-   works with rate limits.
-2. **Federal Register API** (`federalregister.gov/api/v1`) — provides full text
-   body HTML using the FR document number. Free, no API key required.
+**Federal Register API v1** (`federalregister.gov/api/v1/documents.json`) — free, no
+API key required. The scraper lists documents by type and short publication-date
+windows (5 days, to stay under the API's 2,000-result deep-pagination cap), iterating
+newest-first back to the 1994 digital archive. Full text comes from each document's
+`raw_text_url` (HTML body fallback).
 
-## API Key
-
-Set `REGULATIONS_GOV_API_KEY` env var for higher rate limits.
-Default DEMO_KEY works but has low limits (~1000 req/hour).
-Sign up free at: https://open.gsa.gov/api/regulationsgov/
+> **Note:** This source previously listed documents through the Regulations.gov API
+> v4, but under the shared `DEMO_KEY` that API is capped at ~25 requests/hour, so a
+> full run only ever retrieved the first page of 25 records (issue #944). The
+> Federal Register API has no such limit and contains the same full text.
 
 ## License
 

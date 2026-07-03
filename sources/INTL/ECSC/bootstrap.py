@@ -227,39 +227,63 @@ def bootstrap(sample: bool = False):
     saved = 0
     text_count = 0
 
-    for post in fetch_posts(session, limit=limit):
-        record = normalize(post, tag_map)
+    # Full mode: also write JSONL for VPS pipeline
+    data_dir = Path(__file__).parent / "data"
+    jsonl_path = None
+    jsonl_file = None
+    if not sample:
+        data_dir.mkdir(parents=True, exist_ok=True)
+        jsonl_path = data_dir / "records.jsonl"
+        jsonl_file = open(jsonl_path, "w", encoding="utf-8")
 
-        if record["text"] and len(record["text"]) > 100:
-            text_count += 1
+    try:
+        for post in fetch_posts(session, limit=limit):
+            record = normalize(post, tag_map)
 
-        doc_id = record["_id"]
-        safe_name = re.sub(r'[^\w\-]', '_', doc_id)
-        out_path = SAMPLE_DIR / f"{safe_name}.json"
+            if record["text"] and len(record["text"]) > 100:
+                text_count += 1
 
-        with open(out_path, "w", encoding="utf-8") as f:
-            json.dump(record, f, ensure_ascii=False, indent=2)
+            doc_id = record["_id"]
+            safe_name = re.sub(r'[^\w\-]', '_', doc_id)
 
-        saved += 1
-        title_short = record["title"][:60]
-        text_len = len(record.get("text", ""))
-        print(f"  [{saved}] {title_short}... ({text_len} chars)")
+            if sample:
+                out_path = SAMPLE_DIR / f"{safe_name}.json"
+                with open(out_path, "w", encoding="utf-8") as f:
+                    json.dump(record, f, ensure_ascii=False, indent=2)
 
-    print(f"\nBootstrap complete: {saved} records saved to {SAMPLE_DIR}")
+            if jsonl_file:
+                jsonl_file.write(json.dumps(record, ensure_ascii=False) + "\n")
+                if saved % 500 == 0:
+                    jsonl_file.flush()
+
+            saved += 1
+            title_short = record["title"][:60]
+            text_len = len(record.get("text", ""))
+            print(f"  [{saved}] {title_short}... ({text_len} chars)")
+    finally:
+        if jsonl_file:
+            jsonl_file.close()
+
+    if jsonl_path:
+        print(f"\nBootstrap complete: {saved} records written to {jsonl_path}")
+    else:
+        print(f"\nSample complete: {saved} records saved to {SAMPLE_DIR}")
     print(f"Records with substantial text: {text_count}/{saved}")
+    print("BOOTSTRAP_COMPLETE")
 
 
 def main():
     parser = argparse.ArgumentParser(description="ECSC Judgments Fetcher")
-    parser.add_argument("command", choices=["bootstrap", "test"], help="Command to run")
+    parser.add_argument("command", choices=["bootstrap", "bootstrap-fast", "test"], help="Command to run")
     parser.add_argument("--sample", action="store_true", help="Fetch sample only")
     parser.add_argument("--full", action="store_true", help="Fetch all records")
     args = parser.parse_args()
 
     if args.command == "test":
         test_connectivity()
-    elif args.command == "bootstrap":
-        bootstrap(sample=args.sample)
+    elif args.command in ("bootstrap", "bootstrap-fast"):
+        is_sample = args.sample and args.command != "bootstrap-fast"
+        bootstrap(sample=is_sample)
 
 
 if __name__ == "__main__":

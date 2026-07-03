@@ -148,6 +148,10 @@ class AGONDCPScraper(BaseScraper):
                 text = page.extract_text()
                 if text:
                     parts.append(text)
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
             pdf.close()
             return "\n\n".join(parts).strip()
         except Exception as e:

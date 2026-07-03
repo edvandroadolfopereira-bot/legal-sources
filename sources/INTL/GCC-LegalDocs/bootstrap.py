@@ -86,6 +86,7 @@ class GCCLegalDocsScraper(BaseScraper):
     SOURCE_ID = SOURCE_ID
 
     def __init__(self):
+        super().__init__()
         self.http = HttpClient(headers=HEADERS)
 
     def _get(self, url: str) -> Optional[str]:
@@ -115,6 +116,10 @@ class GCCLegalDocsScraper(BaseScraper):
                     text = page.extract_text()
                     if text:
                         pages.append(text)
+                    try:
+                        page.flush_cache(); page.get_textmap.cache_clear()
+                    except Exception:
+                        pass
             return _clean_text("\n\n".join(pages))
         except Exception as e:
             logger.warning(f"PDF extraction failed: {e}")
@@ -292,7 +297,7 @@ class GCCLegalDocsScraper(BaseScraper):
 def main():
     import argparse
     parser = argparse.ArgumentParser(description="INTL/GCC-LegalDocs bootstrap")
-    parser.add_argument("command", choices=["bootstrap", "update", "test"])
+    parser.add_argument("command", choices=["bootstrap", "bootstrap-fast", "update", "test"])
     parser.add_argument("--sample", action="store_true")
     parser.add_argument("--full", action="store_true")
     args = parser.parse_args()
@@ -309,13 +314,29 @@ def main():
             sys.exit(1)
         return
 
+    # Full corpus runs (bootstrap-fast, or bootstrap --full) stream to
+    # data/records.jsonl so the whole set persists for VPS ingest.
+    is_sample = args.sample or (args.command == "bootstrap" and not args.full)
+
+    if not is_sample:
+        data_dir = Path(__file__).parent / "data"
+        data_dir.mkdir(exist_ok=True)
+        jsonl_path = data_dir / "records.jsonl"
+        count = 0
+        with open(jsonl_path, "w", encoding="utf-8") as f:
+            for record in scraper.fetch_all(sample=False):
+                f.write(json.dumps(record, ensure_ascii=False) + "\n")
+                count += 1
+                text_len = len(record.get("text", ""))
+                print(f"  [{count}] {record['title'][:60]} ({text_len} chars)")
+        print(f"\nDone: {count} records -> {jsonl_path}")
+        return
+
     sample_dir = Path(__file__).parent / "sample"
     sample_dir.mkdir(exist_ok=True)
-
-    is_sample = args.sample or (args.command == "bootstrap" and not args.full)
     count = 0
 
-    for record in scraper.fetch_all(sample=is_sample):
+    for record in scraper.fetch_all(sample=True):
         out_path = sample_dir / f"{count:04d}.json"
         with open(out_path, "w", encoding="utf-8") as f:
             json.dump(record, f, ensure_ascii=False, indent=2)

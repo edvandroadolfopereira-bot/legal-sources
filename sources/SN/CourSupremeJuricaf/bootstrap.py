@@ -25,6 +25,7 @@ from datetime import datetime, timezone
 from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any, Dict, Generator, List, Optional
+from urllib.parse import quote
 
 import requests
 
@@ -41,7 +42,13 @@ logger = logging.getLogger("legal-data-hunter.SN.CourSupremeJuricaf")
 
 SOURCE_ID = "SN/CourSupremeJuricaf"
 BASE_URL = "https://juricaf.org"
-SEARCH_URL = f"{BASE_URL}/recherche/+/facet_pays:S%C3%A9n%C3%A9gal"
+# Build the country facet by percent-encoding a raw unicode string at runtime.
+# The pre-encoded literal ".../facet_pays:S%C3%A9n%C3%A9gal" can be re-quoted
+# inconsistently by different requests/urllib3 versions (the é survives locally
+# but the VPS resolved it to a 0-result query — issue #852). quote() guarantees
+# a single, deterministic encoding regardless of environment.
+COUNTRY_FACET = "Sénégal"
+SEARCH_URL = f"{BASE_URL}/recherche/+/facet_pays:{quote(COUNTRY_FACET)}"
 MAX_PAGES = 100
 
 
@@ -125,7 +132,10 @@ class JuricafScraper(BaseScraper):
         try:
             data = resp.json()
         except (ValueError, json.JSONDecodeError):
-            logger.warning(f"Invalid JSON on page {page}")
+            # Juricaf serves an HTML bot-challenge (Anubis) to some clients/IPs
+            # instead of JSON. Surface that instead of silently reporting 0 docs.
+            snippet = (resp.text or "")[:200].replace("\n", " ")
+            logger.warning(f"Non-JSON response on page {page} (HTTP {resp.status_code}): {snippet}")
             return []
         return data.get("docs", [])
 

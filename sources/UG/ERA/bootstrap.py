@@ -145,6 +145,10 @@ class ERAScraper(BaseScraper):
                 text = page.extract_text()
                 if text:
                     pages_text.append(text)
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
             pdf.close()
             full_text = "\n\n".join(pages_text)
             return full_text if len(full_text) >= 200 else None
@@ -211,10 +215,10 @@ class ERAScraper(BaseScraper):
                 continue
 
             info["text"] = text
-            normalized = self.normalize(info)
-            if normalized:
-                yielded += 1
-                yield normalized
+            # Yield RAW per BaseScraper contract; the framework calls normalize().
+            # (Previously yielded self.normalize(...) → double-normalize → 0 records.)
+            yielded += 1
+            yield info
 
             time.sleep(1.5)
 
@@ -310,7 +314,12 @@ if __name__ == "__main__":
         limit = 15 if sample_mode else 99999
         gen = scraper.fetch_all() if command == "bootstrap" else scraper.fetch_updates()
 
-        for record in gen:
+        for raw in gen:
+            # fetch_all() yields RAW docs; normalize here to match the VPS
+            # bootstrap_fast() path and write proper sample records.
+            record = scraper.normalize(raw)
+            if not record:
+                continue
             count += 1
             if sample_mode:
                 outpath = sample_dir / f"{count:04d}.json"

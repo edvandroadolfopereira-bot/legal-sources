@@ -1,0 +1,18 @@
+{
+  "_id": "ESMA-SN-14936",
+  "_source": "EU/ESMA-Sanctions",
+  "_type": "case_law",
+  "_fetched_at": "2026-06-08T11:09:03.251992",
+  "sanction_id": "14936",
+  "entity_name": "Pareto Securities Ab",
+  "title": "Sanction against Pareto Securities Ab (MiFID) — FINLAND",
+  "text": "Yhtiöllä on ollut kaksi merkittävää katkosta kaupparaportoinnissaan, joiden aikana yhtiöltä ei ole tullut Finanssivalvonnalle lainkaan ilmoituksia yhtiön toteuttamista liiketoimista. Vuonna 2024 katkos kesti 71 päivää ja vuonna 2025 20 päivää. Lisäksi yhtiö raportoi 13 liiketoimea poikkeuksellisen monta kertaa 23.6.2023–27.5.2025. Suurin osa näistä kolmestatoista liiketoimesta oli ilmoitettu Finanssivalvonnalle yli 300 kertaa.Seuraamusmaksun määrä on perustunut kokonaisarviointiin, jossa otettiin huomioon erityisesti laiminlyöntien laatu, laajuus ja kestoaika. Seuraamusmaksua alentavana tekijänä huomioitiin muun ohella laiminlyöntien myöntäminen eli yhteistyö Finanssivalvonnan kanssa asian selvittämiseksi.",
+  "date": "2026-05-13",
+  "url": "https://registers.esma.europa.eu/publication/details?core=esma_registers_sanctions&docId=sn14936",
+  "legal_framework": "MiFID",
+  "nature": "Administrative sanction and measure",
+  "country": "FINLAND",
+  "nca": "Finanssivalvonta (FSA)",
+  "lei": "",
+  "language": "Finnish"
+}

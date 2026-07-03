@@ -35,6 +35,7 @@ BASE_URL = "https://www.finanstilsynet.no"
 SITEMAP_URL = f"{BASE_URL}/sitemap.xml"
 SOURCE_ID = "NO/Finanstilsynet"
 SAMPLE_DIR = Path(__file__).parent / "sample"
+DATA_DIR = Path(__file__).parent / "data"
 
 # Document categories we fetch (from the nyhetsarkiv)
 CATEGORIES = ["rundskriv", "tilsynsrapporter", "brev"]
@@ -54,6 +55,10 @@ def _try_pdf_extract(content: bytes) -> Optional[str]:
                 text = page.extract_text()
                 if text:
                     pages.append(text)
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
             if pages:
                 return "\n\n".join(pages)
     except Exception:
@@ -68,6 +73,10 @@ def _try_pdf_extract(content: bytes) -> Optional[str]:
             text = page.extract_text()
             if text:
                 pages.append(text)
+            try:
+                page.flush_cache(); page.get_textmap.cache_clear()
+            except Exception:
+                pass
         if pages:
             return "\n\n".join(pages)
     except Exception:
@@ -374,7 +383,7 @@ class FinanstilsynetFetcher:
 
 def main():
     parser = argparse.ArgumentParser(description="NO/Finanstilsynet - Financial Supervisory Authority Fetcher")
-    parser.add_argument("command", choices=["bootstrap", "fetch", "updates"],
+    parser.add_argument("command", choices=["bootstrap", "bootstrap-fast", "fetch", "updates"],
                         help="Command to run")
     parser.add_argument("--sample", action="store_true",
                         help="Fetch sample data only (for bootstrap)")
@@ -387,7 +396,7 @@ def main():
 
     fetcher = FinanstilsynetFetcher()
 
-    if args.command == "bootstrap":
+    if args.command in ("bootstrap", "bootstrap-fast"):
         if args.sample:
             results = fetcher.bootstrap_sample(n=args.limit)
             print(f"\nSample: {len(results)} documents fetched")
@@ -395,12 +404,18 @@ def main():
                 text_len = len(r.get("text", ""))
                 print(f"  {r['_id']} | {r['category']:20s} | {text_len:>6} chars | {r['title'][:60]}")
         else:
+            # Full fetch — stream every record to data/records.jsonl so the
+            # ingest pipeline picks up the whole corpus (not just samples).
+            DATA_DIR.mkdir(parents=True, exist_ok=True)
+            jsonl_path = DATA_DIR / "records.jsonl"
             count = 0
-            for doc in fetcher.fetch_all():
-                count += 1
-                if count % 50 == 0:
-                    logger.info(f"Fetched {count} documents")
-            print(f"Total: {count} documents fetched")
+            with open(jsonl_path, "w", encoding="utf-8") as f:
+                for doc in fetcher.fetch_all():
+                    f.write(json.dumps(doc, ensure_ascii=False) + "\n")
+                    count += 1
+                    if count % 50 == 0:
+                        logger.info(f"Fetched {count} documents")
+            print(f"Total: {count} documents written -> {jsonl_path}")
 
     elif args.command == "updates":
         if not args.since:

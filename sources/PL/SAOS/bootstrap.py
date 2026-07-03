@@ -119,7 +119,17 @@ class SAOSScraper(BaseScraper):
         """
         Fetch a page from the SAOS dump API.
         Returns full response with items containing textContent.
+
+        The dump API enforces pageSize >= 10 (returns HTTP 400 otherwise), so
+        page_size is clamped to a safe minimum.
+
+        Raises RuntimeError after exhausting retries. A persistent failure must
+        be loud, not silent: previously this returned an empty page on error,
+        which fetch_all() interpreted as "end of data" — so a transient outage
+        or an IP block masqueraded as a successful run that fetched 0 records
+        (exit 0, 0 errors). Raising lets the caller fail visibly instead.
         """
+        page_size = max(10, page_size)  # API rejects pageSize < 10
         params = {
             "pageNumber": str(page_number),
             "pageSize": str(page_size),
@@ -127,22 +137,25 @@ class SAOSScraper(BaseScraper):
         if since_modification:
             params["sinceModificationDate"] = since_modification
 
-        self.rate_limiter.wait()
-
-        try:
-            resp = self.client.get("/dump/judgments", params=params)
-            resp.raise_for_status()
-            return resp.json()
-        except Exception as e:
-            logger.error(f"Dump API error on page {page_number}: {e}")
-            time.sleep(5)
+        last_err = None
+        for attempt in range(5):
+            self.rate_limiter.wait()
             try:
                 resp = self.client.get("/dump/judgments", params=params)
                 resp.raise_for_status()
                 return resp.json()
-            except Exception as e2:
-                logger.error(f"Retry failed: {e2}")
-                return {"items": [], "links": []}
+            except Exception as e:
+                last_err = e
+                backoff = min(60, 5 * (attempt + 1))
+                logger.warning(
+                    f"Dump API error on page {page_number} "
+                    f"(attempt {attempt + 1}/5): {e}; retrying in {backoff}s"
+                )
+                time.sleep(backoff)
+
+        raise RuntimeError(
+            f"SAOS dump API failed on page {page_number} after 5 attempts: {last_err}"
+        )
 
     def _has_next(self, response: dict) -> bool:
         """Check if there's a next page based on links."""

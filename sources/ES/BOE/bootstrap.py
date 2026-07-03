@@ -184,12 +184,28 @@ class BOEScraper(BaseScraper):
 
         return documents
 
-    def _fetch_full_text(self, identifier: str) -> str:
-        """
-        Fetch the full text of a document by its identifier.
+    def _extract_version_text(self, version) -> str:
+        """Extract clean text from a version element, taking the latest version's content."""
+        parts = []
+        for p in version.findall(".//p"):
+            # Skip footnotes (nota_pie class)
+            css_class = p.get("class", "")
+            if "nota_pie" in css_class:
+                continue
+            text = self._extract_element_text(p)
+            if text and text.strip():
+                clean = self._clean_text(text)
+                if clean:
+                    parts.append(clean)
+        return '\n'.join(parts)
 
-        Uses the /texto endpoint which returns structured XML with the law content.
-        Extracts and cleans the text from the XML structure.
+    def _fetch_full_text_and_articles(self, identifier: str) -> tuple:
+        """
+        Fetch the full text of a document and extract individual articles.
+
+        Returns:
+            (full_text: str, articles: list[dict])
+            Each article dict has: article_id, article_title, text
         """
         try:
             self.rate_limiter.wait()
@@ -199,56 +215,78 @@ class BOEScraper(BaseScraper):
 
             xml_content = resp.content.decode('utf-8', errors='replace')
 
-            # Parse the XML to extract text
             text_parts = []
+            articles = []
 
             try:
                 root = ET.fromstring(xml_content)
 
-                # Check response status
                 status = root.find(".//status/code")
                 if status is not None and status.text != "200":
                     logger.warning(f"Text API returned non-200 for {identifier}: {status.text}")
-                    return ""
+                    return "", []
 
-                # Extract text from all 'bloque' elements
-                # Each bloque contains version elements with p (paragraph) elements
+                # Track structural context for articles
+                current_title = ""
+                current_chapter = ""
+
                 for bloque in root.findall(".//bloque"):
+                    bloque_id = bloque.get("id", "")
+                    bloque_tipo = bloque.get("tipo", "")
                     bloque_title = bloque.get("titulo", "")
+
                     if bloque_title:
                         text_parts.append(f"\n{bloque_title}\n")
 
-                    # Get the most recent version (or all versions)
-                    for version in bloque.findall(".//version"):
-                        # Extract all paragraph text
-                        for p in version.findall(".//p"):
-                            # Get all text content including nested elements
-                            text = self._extract_element_text(p)
-                            if text and text.strip():
-                                clean_text = self._clean_text(text)
-                                if clean_text:
-                                    text_parts.append(clean_text)
+                    # Track structural headings
+                    if bloque_tipo == "encabezado":
+                        if bloque_title:
+                            current_title = bloque_title
 
-                        # Also check for blockquotes and other text containers
-                        for element in version.findall(".//*"):
-                            if element.tag in ["blockquote", "li", "td", "th"]:
-                                text = self._extract_element_text(element)
+                    # Get the latest version (last in the list)
+                    versions = bloque.findall(".//version")
+                    latest = versions[-1] if versions else None
+
+                    if latest is not None:
+                        version_text = self._extract_version_text(latest)
+
+                        # Add to full text
+                        if version_text:
+                            text_parts.append(version_text)
+
+                        # Extract article-level records for precepto bloques
+                        if bloque_tipo == "precepto" and version_text and len(version_text) > 10:
+                            articles.append({
+                                "article_id": bloque_id,
+                                "article_title": bloque_title,
+                                "text": version_text,
+                                "chapter": current_title,
+                            })
+                    else:
+                        # Fallback: extract from all versions
+                        for version in versions:
+                            for p in version.findall(".//p"):
+                                text = self._extract_element_text(p)
                                 if text and text.strip():
                                     clean_text = self._clean_text(text)
-                                    if clean_text and clean_text not in text_parts:
+                                    if clean_text:
                                         text_parts.append(clean_text)
 
             except ET.ParseError as e:
                 logger.warning(f"Failed to parse text XML for {identifier}: {e}")
-                # Fallback: extract text using regex
                 text_parts = self._extract_text_fallback(xml_content)
 
-            full_text = '\n'.join(text_parts)
-            return full_text.strip()
+            full_text = '\n'.join(text_parts).strip()
+            return full_text, articles
 
         except Exception as e:
             logger.warning(f"Failed to fetch full text for {identifier}: {e}")
-            return ""
+            return "", []
+
+    def _fetch_full_text(self, identifier: str) -> str:
+        """Fetch the full text of a document (backward-compatible wrapper)."""
+        full_text, _ = self._fetch_full_text_and_articles(identifier)
+        return full_text
 
     def _extract_element_text(self, element) -> str:
         """Recursively extract all text from an XML element."""
@@ -336,10 +374,12 @@ class BOEScraper(BaseScraper):
         Yield all documents from the BOE consolidated legislation API.
 
         Paginates through the entire dataset, fetching full text for each document.
+        Also yields individual article-level records for laws with precepto bloques.
         """
         offset = 0
         limit = 50
         total_fetched = 0
+        total_articles = 0
 
         while True:
             documents = self._fetch_list(limit=limit, offset=offset)
@@ -353,8 +393,8 @@ class BOEScraper(BaseScraper):
                 if not identifier:
                     continue
 
-                # Fetch full text
-                full_text = self._fetch_full_text(identifier)
+                # Fetch full text and articles
+                full_text, articles = self._fetch_full_text_and_articles(identifier)
 
                 if not full_text:
                     logger.warning(f"No full text for {identifier}, skipping")
@@ -364,14 +404,33 @@ class BOEScraper(BaseScraper):
                 total_fetched += 1
                 yield doc
 
+                # Yield individual article records
+                for article in articles:
+                    article_rec = {
+                        "_is_article": True,
+                        "parent_identifier": identifier,
+                        "parent_title": doc.get("title", ""),
+                        "article_id": article["article_id"],
+                        "article_title": article["article_title"],
+                        "chapter": article["chapter"],
+                        "full_text": article["text"],
+                        "date": doc.get("date", ""),
+                        "publication_date": doc.get("publication_date", ""),
+                        "effective_date": doc.get("effective_date", ""),
+                        "rango": doc.get("rango", ""),
+                        "url_eli": doc.get("url_eli", ""),
+                        "url_html": doc.get("url_html", ""),
+                    }
+                    total_articles += 1
+                    yield article_rec
+
             offset += limit
 
-            # Safety check to avoid infinite loops
             if offset > 100000:
                 logger.warning("Reached maximum offset limit, stopping")
                 break
 
-        logger.info(f"Completed fetching {total_fetched} documents with full text")
+        logger.info(f"Completed: {total_fetched} laws + {total_articles} articles")
 
     def fetch_updates(self, since: datetime) -> Generator[dict, None, None]:
         """
@@ -415,28 +474,66 @@ class BOEScraper(BaseScraper):
         """
         Transform raw document data into standard schema.
 
+        Handles both law-level and article-level records.
         CRITICAL: Includes full text in the 'text' field.
         """
+        if raw.get("_is_article"):
+            # Article-level record
+            parent_id = raw.get("parent_identifier", "")
+            article_id = raw.get("article_id", "")
+            article_title = raw.get("article_title", "")
+            parent_title = raw.get("parent_title", "")
+            chapter = raw.get("chapter", "")
+
+            # Build descriptive title: "Art. 1105 — Código Civil [CAPÍTULO II]"
+            title = article_title
+            if parent_title:
+                title = f"{article_title} — {parent_title}"
+            if chapter:
+                title = f"{title} [{chapter}]"
+
+            url = raw.get("url_eli") or raw.get("url_html") or f"{BASE_URL}/buscar/act.php?id={parent_id}"
+
+            return {
+                "_id": f"{parent_id}:{article_id}",
+                "_source": "ES/BOE",
+                "_type": "legislation",
+                "_fetched_at": datetime.now(timezone.utc).isoformat(),
+                "title": title,
+                "text": raw.get("full_text", ""),
+                "date": raw.get("date", raw.get("publication_date", "")),
+                "url": url,
+                "identifier": f"{parent_id}:{article_id}",
+                "parent_identifier": parent_id,
+                "parent_title": parent_title,
+                "article_id": article_id,
+                "article_title": article_title,
+                "chapter": chapter,
+                "rango": raw.get("rango", ""),
+                "publication_date": raw.get("publication_date", ""),
+                "effective_date": raw.get("effective_date", ""),
+                "url_eli": raw.get("url_eli", ""),
+                "language": "es",
+                "granularity": "article",
+            }
+
+        # Law-level record (existing behavior)
         identifier = raw.get("identifier", "")
         title = raw.get("title", "")
         full_text = raw.get("full_text", "")
         date_str = raw.get("date", raw.get("publication_date", ""))
 
-        # Construct URL
         url = raw.get("url_eli") or raw.get("url_html") or f"{BASE_URL}/buscar/act.php?id={identifier}"
 
         return {
-            # Required base fields
             "_id": identifier,
             "_source": "ES/BOE",
             "_type": "legislation",
             "_fetched_at": datetime.now(timezone.utc).isoformat(),
-            # Standard fields
             "title": title,
-            "text": full_text,  # MANDATORY FULL TEXT
+            "text": full_text,
             "date": date_str,
             "url": url,
-            # Additional metadata
             "identifier": identifier,
             "rango": raw.get("rango", ""),
             "departamento": raw.get("departamento", ""),
@@ -447,6 +544,7 @@ class BOEScraper(BaseScraper):
             "estado_consolidacion": raw.get("estado_consolidacion", ""),
             "url_eli": raw.get("url_eli", ""),
             "language": "es",
+            "granularity": "law",
         }
 
     def test_connection(self):

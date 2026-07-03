@@ -167,6 +167,10 @@ class AnguillaScraper(BaseScraper):
                 t = p.extract_text()
                 if t:
                     pages_text.append(t)
+                try:
+                    p.flush_cache(); p.get_textmap.cache_clear()
+                except Exception:
+                    pass
             pdf.close()
             text = "\n\n".join(pages_text)
             return text if text.strip() else None

@@ -1,0 +1,20 @@
+{
+  "_id": "cbp-875963",
+  "_source": "US/CBP-Rulings",
+  "_type": "doctrine",
+  "_fetched_at": "2026-06-20T19:10:14Z",
+  "title": "The tariff classification of Hummingbird Door Knocker from",
+  "text": "DD 875963\n                                    July 10, 1992\n\nDAB SD  B12 \n\nCATEGORY:  Classification\n\nTARIFF NO.: 8302.41.9045\n\nMr. Stephen Dreyfuss\nWorld Link Group\n\nRE:  The tariff classification of Hummingbird Door Knocker from \n\n     DATE OF INQUIRY   :    June 23, 1992\n\n     ON BEHALF OF      :    World Link Group\n\n     DESCRIPTION OF\n     MERCHANDISE       :    Solid brass door knocker",
+  "date": "1992-07-10",
+  "url": "https://rulings.cbp.gov/ruling/875963",
+  "ruling_number": "875963",
+  "categories": "Classification",
+  "collection": "ny",
+  "tariffs": [
+    "8302.41.9045"
+  ],
+  "related_rulings": [],
+  "is_usmca": false,
+  "is_nafta": false,
+  "operationally_revoked": false
+}

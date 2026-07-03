@@ -167,6 +167,10 @@ def extract_pdf_text(pdf_bytes: bytes) -> str:
                 text = page.extract_text()
                 if text:
                     pages.append(text)
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
             return "\n\n".join(pages)
     except Exception as e:
         logger.warning("PDF extraction failed: %s", e)
@@ -449,25 +453,43 @@ def fetch_all(sample: bool = False) -> Iterator[Dict[str, Any]]:
 def main():
     parser = argparse.ArgumentParser(description="LB/BDL bootstrap")
     sub = parser.add_subparsers(dest="command")
+    # bootstrap-fast is the VPS pipeline alias for a full streaming run
     boot = sub.add_parser("bootstrap", help="Fetch circulars")
-    boot.add_argument("--sample", action="store_true", help="Fetch ~15 sample records")
+    boot.add_argument("--sample", action="store_true", help="Fetch ~20 sample records")
+    fast = sub.add_parser("bootstrap-fast", help="Fetch circulars (VPS pipeline alias)")
+    fast.add_argument("--sample", action="store_true", help="Fetch ~20 sample records")
     args = parser.parse_args()
 
-    if args.command != "bootstrap":
+    if args.command not in ("bootstrap", "bootstrap-fast"):
         parser.print_help()
         sys.exit(1)
 
-    SAMPLE_DIR.mkdir(parents=True, exist_ok=True)
+    if args.sample:
+        SAMPLE_DIR.mkdir(parents=True, exist_ok=True)
+        count = 0
+        for record in fetch_all(sample=True):
+            out = SAMPLE_DIR / f"{record['_id']}.json"
+            out.write_text(json.dumps(record, ensure_ascii=False, indent=2), encoding="utf-8")
+            count += 1
+            logger.info("Saved %s (%d chars text)", record["_id"], len(record.get("text", "")))
+        logger.info("Total sample records saved: %d", count)
+        if count == 0:
+            logger.error("No records fetched — check connectivity and PDF access")
+            sys.exit(1)
+        return
+
+    # Full run: stream every record to data/records.jsonl for the VPS ingest pipeline
+    data_dir = Path(__file__).parent / "data"
+    data_dir.mkdir(parents=True, exist_ok=True)
+    jsonl_path = data_dir / "records.jsonl"
     count = 0
-
-    for record in fetch_all(sample=args.sample):
-        out = SAMPLE_DIR / f"{record['_id']}.json"
-        out.write_text(json.dumps(record, ensure_ascii=False, indent=2), encoding="utf-8")
-        count += 1
-        text_len = len(record.get("text", ""))
-        logger.info("Saved %s (%d chars text)", record["_id"], text_len)
-
-    logger.info("Total records saved: %d", count)
+    with open(jsonl_path, "w", encoding="utf-8") as f:
+        for record in fetch_all(sample=False):
+            f.write(json.dumps(record, ensure_ascii=False) + "\n")
+            count += 1
+            if count % 25 == 0:
+                logger.info("Progress: %d records written", count)
+    logger.info("Full bootstrap complete: %d records -> %s", count, jsonl_path)
     if count == 0:
         logger.error("No records fetched — check connectivity and PDF access")
         sys.exit(1)

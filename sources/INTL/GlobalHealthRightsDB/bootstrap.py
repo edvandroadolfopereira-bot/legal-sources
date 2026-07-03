@@ -41,6 +41,7 @@ BASE_URL = "https://www.globalhealthrights.org"
 SITEMAP_URL = f"{BASE_URL}/wp-sitemap-posts-post-1.xml"
 SOURCE_ID = "INTL/GlobalHealthRightsDB"
 SAMPLE_DIR = Path(__file__).parent / "sample"
+DATA_DIR = Path(__file__).parent / "data"
 REQUEST_DELAY = 2.0
 
 
@@ -315,16 +316,27 @@ def bootstrap(sample: bool = False, full: bool = False, since: Optional[str] = N
     else:
         docs = fetcher.fetch_all(sample=sample)
 
-    count = 0
-    for doc in docs:
-        count += 1
-        text_len = len(doc.get("text", ""))
-        logger.info("  → %s | text=%d chars | country=%s", doc["title"][:70], text_len, doc.get("country"))
+    jsonl_file = None
+    if not sample:
+        DATA_DIR.mkdir(parents=True, exist_ok=True)
+        jsonl_file = open(DATA_DIR / "records.jsonl", "w", encoding="utf-8")
 
-        if sample:
-            sample_path = SAMPLE_DIR / f"{doc['_id']}.json"
-            with open(sample_path, "w", encoding="utf-8") as f:
-                json.dump(doc, f, ensure_ascii=False, indent=2)
+    count = 0
+    try:
+        for doc in docs:
+            count += 1
+            text_len = len(doc.get("text", ""))
+            logger.info("  → %s | text=%d chars | country=%s", doc["title"][:70], text_len, doc.get("country"))
+
+            if sample:
+                sample_path = SAMPLE_DIR / f"{doc['_id']}.json"
+                with open(sample_path, "w", encoding="utf-8") as f:
+                    json.dump(doc, f, ensure_ascii=False, indent=2)
+            else:
+                jsonl_file.write(json.dumps(doc, ensure_ascii=False) + "\n")
+    finally:
+        if jsonl_file is not None:
+            jsonl_file.close()
 
     logger.info("Done: %d cases fetched", count)
     return count
@@ -332,13 +344,13 @@ def bootstrap(sample: bool = False, full: bool = False, since: Optional[str] = N
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="INTL/GlobalHealthRightsDB bootstrap")
-    parser.add_argument("command", choices=["bootstrap"], help="Command to run")
+    parser.add_argument("command", choices=["bootstrap", "bootstrap-fast"], help="Command to run")
     parser.add_argument("--sample", action="store_true", help="Save sample records")
     parser.add_argument("--full", action="store_true", help="Fetch all records")
     parser.add_argument("--since", type=str, help="Fetch updates since date (ISO 8601)")
     args = parser.parse_args()
 
-    if args.command == "bootstrap":
+    if args.command in ("bootstrap", "bootstrap-fast"):
         count = bootstrap(sample=args.sample, full=args.full, since=args.since)
         if count == 0:
             logger.error("No records fetched!")

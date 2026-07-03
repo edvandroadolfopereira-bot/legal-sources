@@ -1,0 +1,18 @@
+{
+  "_id": "RQ26001",
+  "_source": "US/NHTSA-Enforcement",
+  "_type": "case_law",
+  "_fetched_at": "2026-06-08T19:10:01.056154+00:00",
+  "title": "NHTSA Recall Query RQ26001: Loss of motive power due to engine failure post recall remedy",
+  "text": "The Office of Defects Investigation (ODI) has received 36 Vehicle Owner Questionnaires (VOQs) alleging engine failure in vehicles subject to Recall 25V274. In each VOQ, the engine had the recall remedy completed prior to the reported failure incident.\n\nRecall 25V-274 addresses vehicles equipped with a L87 6.2L V8 gas engine that experienced engine damage or failure. Recall 25V-274’s remedy includes an engine inspection. Based on the results of the inspection the vehicle will receive an oil change to a higher viscosity oil or an engine replacement. The complaints received allege failures of both remedies.\n\nODI is opening this Recall Query (RQ) to assess the adequacy of the remedy for Recall 25V-274.\n\nTo review the ODI reports cited in the Opening Resume ODI Report Identification Number document, go to NHTSA.gov.",
+  "date": "2026-01-16",
+  "url": "https://www.nhtsa.gov/vehicle/RQ26001",
+  "investigation_number": "001",
+  "investigation_type": "Recall Query",
+  "investigation_type_code": "RQ",
+  "status": "Open",
+  "status_code": "O",
+  "subject": "Loss of motive power due to engine failure post recall remedy",
+  "nhtsa_id": "RQ26001",
+  "latest_activity_date": "2026-01-16T20:32:17Z"
+}

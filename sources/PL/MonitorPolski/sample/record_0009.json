@@ -1,0 +1,40 @@
+{
+  "_id": "MP/2024/1103",
+  "_source": "PL/MonitorPolski",
+  "_type": "doctrine",
+  "_fetched_at": "2026-06-10T01:33:51.904179+00:00",
+  "title": "Postanowienie Prezydenta Rzeczypospolitej Polskiej z dnia 30 lipca 2024 r. nr 1130.32.2024 o powołaniu do pełnienia urzędu na stanowisku sędziego",
+  "text": "MONITOR POLSKI\nDZIENNIK URZĘDOWY RZECZYPOSPOLITEJ POLSKIEJ\nWarszawa, dnia 27 grudnia 2024 r.\nPoz. 1103\n\nPOSTANOWIENIE\nPREZYDENTA RZECZYPOSPOLITEJ POLSKIEJ\nz dnia 30 lipca 2024 r.\nnr 1130.32.2024\no powołaniu do pełnienia urzędu na stanowisku sędziego\nNa podstawie art. 179 Konstytucji Rzeczypospolitej Polskiej z dnia 2 kwietnia 1997 r., na wniosek Krajowej Rady\nSądownictwa, powołuję niżej wymienione osoby do pełnienia urzędu:\nna stanowisku sędziego Sądu Okręgowego:\n1.\nMałgorzata Falkiewicz – w Płocku,\n2.\nMałgorzata Jędrzejewska – w Łomży,\n3.\nPiotr Wieczorek – w Opolu,\nna stanowisku sędziego Sądu Rejonowego:\n4.\nEdyta Maria Warzocha-Pliś – w Dębicy.\nPrezydent Rzeczypospolitej Polskiej: A. Duda",
+  "date": "2024-12-27",
+  "url": "https://monitorpolski.gov.pl/MP/2024/1103",
+  "eli": "MP/2024/1103",
+  "address": "WMP20240001103",
+  "display_address": "M.P. 2024 poz. 1103",
+  "year": 2024,
+  "pos": 1103,
+  "doc_type": "Postanowienie",
+  "status": "akt indywidualny",
+  "in_force": "IN_FORCE",
+  "entry_into_force": "",
+  "keywords": [
+    "sędziowie",
+    "sądy okręgowe"
+  ],
+  "released_by": [
+    "PREZYDENT RZECZYPOSPOLITEJ POLSKIEJ"
+  ],
+  "references": {
+    "Podstawa prawna": [
+      {
+        "id": "DU/1997/483"
+      }
+    ],
+    "Podstawa prawna z art.": [
+      {
+        "id": "DU/1997/483",
+        "art": "art. 179"
+      }
+    ]
+  },
+  "language": "pl"
+}

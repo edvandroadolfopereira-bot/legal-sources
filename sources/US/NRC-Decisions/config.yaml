@@ -1,0 +1,48 @@
+auth: none
+country: US
+data_types:
+- case_law
+fetch:
+  delay: 2.0
+  sources:
+  - type: commission_order
+    index: https://www.nrc.gov/reading-rm/doc-collections/commission/orders/index.html
+  - type: aslbp_order
+    index: https://www.nrc.gov/reading-rm/doc-collections/aslbp/orders/index.html
+name: Nuclear Regulatory Commission ASLBP Decisions
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: text
+    required: true
+    type: string
+  - name: decision_number
+    required: true
+    type: string
+  - name: decision_type
+    required: false
+    type: string
+  - name: licensee
+    required: false
+    type: string
+  - name: docket_number
+    required: false
+    type: string
+source_id: US/NRC-Decisions
+url: https://www.nrc.gov/about-nrc/regulatory/adjudicatory.html
+license:
+  name: "U.S. Public Domain"
+  url: "https://www.law.cornell.edu/uscode/text/17/105"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "U.S. government work — public domain under 17 U.S.C. § 105"

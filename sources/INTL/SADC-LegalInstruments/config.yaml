@@ -1,0 +1,48 @@
+source_id: INTL/SADC-LegalInstruments
+name: SADC Legal Instruments (Treaties & Protocols)
+country: INTL
+url: https://www.sadc.int/
+description: >
+  Legal instruments of the Southern African Development Community (SADC):
+  treaties, protocols, charters, declarations, memoranda of understanding,
+  pacts, and regional codes & policies. 16 member states. Open access at
+  sadc.int. PDFs extracted via pdfplumber.
+data_types:
+  - legislation
+auth:
+  type: none
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+data_model:
+  update_strategy: append_only
+  dedup_key:
+    - _id
+schema:
+  key_fields:
+    - name: _id
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: url
+      type: string
+      required: true
+    - name: instrument_type
+      type: string
+      required: false
+license:
+  name: "SADC official publications"
+  url: "https://www.sadc.int/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official legal instruments of an international organization, published for open public access"

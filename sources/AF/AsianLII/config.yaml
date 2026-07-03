@@ -1,0 +1,58 @@
+source:
+  id: AF/AsianLII
+  country: AF
+  name: "Afghanistan Laws — AsianLII English Translations"
+  url: https://www.asianlii.org/af/legis/laws/
+  data_types:
+    - legislation
+  language: en
+license:
+  name: "Free Access to Law (LII network)"
+  url: "https://www.asianlii.org/asianlii/copyright.html"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: >
+    English translations of Afghanistan's principal legislation (Civil Code,
+    Penal Code, Commercial Code, Constitution, etc.) hosted by AsianLII under
+    the Free Access to Law Movement. Underlying texts are Afghan government
+    legal acts (public domain). Accessed via the Internet Archive Wayback
+    Machine because the live AsianLII site is now behind a Cloudflare JS
+    challenge.
+fetcher:
+  type: wayback_html
+  rate_limit: 1.0
+data_model:
+  update_strategy: upsert
+  dedup_key:
+    - _id
+rate_limit:
+  requests_per_second: 1.0
+  burst: 2
+  max_workers: 4
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: title
+      required: true
+      type: string
+    - name: text
+      required: true
+      type: string
+  date_fields:
+    - _fetched_at
+    - date
+  text_fields:
+    - text
+    - title
+notes: >
+  Afghan legislation in English translation from AsianLII
+  (asianlii.org/af/legis/laws/). The live site is Cloudflare-gated, so records
+  are retrieved from the Internet Archive Wayback Machine: the CDX API
+  enumerates every archived /af/legis/laws/<slug>/ document page, and each is
+  fetched as a raw (id_) Wayback snapshot. Full statute text is extracted from
+  the AustLII-style HTML (title from <TITLE>, body between the first <HR> and
+  the AsianLII copyright footer).

@@ -1,0 +1,50 @@
+source:
+  id: BI/WIPOLex
+  country: BI
+  name: "Burundi Legislation (WIPO Lex)"
+  url: https://www.wipo.int/wipolex/en/members/profile/BI
+  data_types:
+    - legislation
+  language: fr
+license:
+  name: "Public domain (national legislation)"
+  url: https://www.wipo.int/wipolex/en/disclaimer
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: >
+    The documents are official legislative texts of the Republic of Burundi
+    (laws, codes, decrees), which are not subject to copyright. WIPO Lex
+    republishes them free of charge as a public gateway. No usage restriction is
+    placed on the underlying legal texts.
+fetcher:
+  type: html_profile_pdf
+  rate_limit: 1.5
+schema:
+  key_fields:
+    - name: _id
+      required: true
+      type: string
+    - name: title
+      required: true
+      type: string
+    - name: text
+      required: true
+      type: string
+  date_fields:
+    - _fetched_at
+    - date
+  text_fields:
+    - text
+    - title
+data_model:
+  update_strategy: upsert
+  dedup_key:
+    - _id
+notes: >
+  Burundi legislation (the industrial-property and copyright codes/laws plus
+  related commercial and investment statutes) from the WIPO Lex database. The
+  member profile is server-rendered HTML listing each text with adoption date +
+  detail-page link; each detail page exposes a CloudFront-signed PDF URL (signed
+  query string required). Full text extracted from PDFs (French preferred).

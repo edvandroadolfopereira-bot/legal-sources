@@ -59,6 +59,10 @@ def extract_pdf_text(pdf_bytes: bytes) -> Optional[str]:
                 page_text = page.extract_text()
                 if page_text:
                     pages_text.append(page_text)
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
         text = "\n\n".join(pages_text).strip()
         return text if len(text) > 50 else None
     except Exception as e:

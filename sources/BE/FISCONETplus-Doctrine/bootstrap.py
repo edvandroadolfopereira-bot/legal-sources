@@ -90,6 +90,7 @@ class FISCONETplusDoctrine(BaseScraper):
     SOURCE_ID = "BE/FISCONETplus-Doctrine"
 
     def __init__(self):
+        super().__init__()
         self.http = HttpClient(
             base_url=API_BASE,
             headers={

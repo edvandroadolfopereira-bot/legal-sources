@@ -207,6 +207,10 @@ class OfficialGazetteScraper(BaseScraper):
                             text_parts.append(page_text)
                     except Exception:
                         continue
+                    try:
+                        page.flush_cache(); page.get_textmap.cache_clear()
+                    except Exception:
+                        pass
 
             full_text = "\n\n".join(text_parts)
             logger.info(f"Extracted {len(full_text)} chars from PDF ({size_mb:.1f} MB)")

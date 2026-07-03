@@ -79,7 +79,10 @@ def _parse_sk_date(date_str: str) -> Optional[str]:
 class PMUScraper(BaseScraper):
     """Scraper for Slovakia Antimonopoly Office decisions."""
 
-    def __init__(self, source_dir: str):
+    def __init__(self, source_dir=None):
+        # source_dir is optional so the VPS bootstrap-fast wrapper can do
+        # PMUScraper() by introspection (issue #971); BaseScraper.__init__
+        # resolves None to this module's directory.
         super().__init__(source_dir)
         self.client = HttpClient(
             base_url=BASE_URL,
@@ -225,6 +228,10 @@ class PMUScraper(BaseScraper):
                     page_text = page.extract_text()
                     if page_text:
                         pages.append(page_text)
+                    try:
+                        page.flush_cache(); page.get_textmap.cache_clear()
+                    except Exception:
+                        pass
                 return "\n\n".join(pages)
         except Exception as e:
             logger.warning(f"PDF extraction failed for {pdf_url}: {e}")
@@ -321,7 +328,8 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(description="SK/PMU Decision Fetcher")
-    parser.add_argument("command", choices=["bootstrap", "update", "test"],
+    parser.add_argument("command",
+                        choices=["bootstrap", "bootstrap-fast", "update", "test"],
                         help="Command to run")
     parser.add_argument("--sample", action="store_true",
                         help="Sample mode: fetch only 10+ records")
@@ -341,6 +349,10 @@ def main():
         except Exception as e:
             logger.error(f"Connection failed: {e}")
             sys.exit(1)
+
+    elif args.command == "bootstrap-fast":
+        stats = scraper.bootstrap_fast()
+        logger.info(f"Bootstrap-fast complete: {json.dumps(stats, indent=2)}")
 
     elif args.command == "bootstrap":
         sample_mode = args.sample or not args.full

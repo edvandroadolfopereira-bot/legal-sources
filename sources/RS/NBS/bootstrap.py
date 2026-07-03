@@ -174,6 +174,15 @@ class NBSScraper(BaseScraper):
                 page_text = page.extract_text()
                 if page_text:
                     text_parts.append(page_text)
+                # Release per-page cached objects/textmap before moving on.
+                # Without this, pdfplumber holds every visited page's parsed
+                # layout in memory and a single large regulation PDF can grow to
+                # multiple GB, OOM-killing the VPS (exit 137, issue #934).
+                try:
+                    page.flush_cache()
+                    page.get_textmap.cache_clear()
+                except Exception:
+                    pass
             pdf.close()
             return '\n\n'.join(text_parts)
         except Exception as e:

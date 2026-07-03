@@ -73,6 +73,10 @@ def extract_pdf_text(pdf_bytes: bytes) -> str:
                 text = page.extract_text()
                 if text:
                     pages.append(text)
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
             return "\n\n".join(pages)
     except Exception as e:
         logger.warning(f"pdfplumber failed: {e}, trying pypdf")
@@ -86,6 +90,10 @@ def extract_pdf_text(pdf_bytes: bytes) -> str:
             text = page.extract_text()
             if text:
                 pages.append(text)
+            try:
+                page.flush_cache(); page.get_textmap.cache_clear()
+            except Exception:
+                pass
         return "\n\n".join(pages)
     except Exception as e:
         logger.error(f"All PDF extraction failed: {e}")

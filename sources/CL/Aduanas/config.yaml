@@ -1,0 +1,78 @@
+source:
+  id: "CL/Aduanas"
+  country: "CL"
+  name: "Servicio Nacional de Aduanas — Normativas"
+  url: "https://www.aduana.cl/aduana/site/edic/base/port/normativas.html"
+  description: |
+    Chilean National Customs Service. Publishes customs regulations,
+    circular letters (oficios circulares), classification rulings
+    (dictámenes de clasificación), and the consolidated Compendium
+    of Customs Norms (Compendio de Normas Aduaneras).
+    Language: Spanish.
+
+data_types:
+  - legislation
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "html_scrape"
+  base_url: "https://www.aduana.cl"
+
+data_model:
+  type: "mixed"
+  primary_key: "doc_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: 9
+  key_fields:
+    - name: "doc_id"
+      description: "Unique identifier (e.g. compendio-cap1, oficio-2024-257, dictamen-2009-001)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Document title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text content (HTML extraction or PDF text)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Date of the document"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "section"
+      description: "Category (Compendio, Oficio Circular, Dictamen, etc.)"
+      type: "string"
+      role: "status"
+      required: true
+
+license:
+  id: "pd-gov"
+  name: "Chilean Government Public Domain"
+  url: "https://www.leychile.cl/navegar?idNorma=276363"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official customs regulations published under Chile's Transparency Law (Ley 20.285)"
+
+notes: |
+  - 7 Compendio de Normas Aduaneras chapters (consolidated customs legislation)
+  - ~70-100 Oficios Circulares per year (2007-2026)
+  - Dictámenes de Clasificación (1993-2009, classification case law)
+  - Most documents are PDFs; Compendio chapters are full-text HTML

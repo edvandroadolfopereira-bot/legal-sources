@@ -135,6 +135,10 @@ def extract_text_from_pdf(content: bytes) -> str:
                 text = page.extract_text()
                 if text:
                     pages.append(text)
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
             return "\n\n".join(pages)
     except Exception as e:
         logger.warning("pdfplumber failed: %s", e)
@@ -220,8 +224,13 @@ class ESMLegalScraper(BaseScraper):
         resp.raise_for_status()
         return extract_text_from_pdf(resp.content)
 
-    def fetch_all(self, sample: bool = False) -> Generator[dict, None, None]:
-        """Yield all ESM governance documents with full text."""
+    def fetch_all(self) -> Generator[dict, None, None]:
+        """Yield raw document metadata (title + PDF link) for every section.
+
+        Per the BaseScraper contract, fetch_all yields RAW records; the
+        framework calls normalize(raw) (concurrently, in bootstrap_fast),
+        which downloads the PDF and extracts full text.
+        """
         all_docs = []
         for section in SECTIONS:
             try:
@@ -232,37 +241,33 @@ class ESMLegalScraper(BaseScraper):
                 logger.error("Failed to fetch section %s: %s", section["label"], e)
 
         logger.info("Total documents found: %d", len(all_docs))
-
-        if sample:
-            all_docs = all_docs[:15]
-            logger.info("Sample mode: limiting to %d documents", len(all_docs))
-
-        for i, doc in enumerate(all_docs, 1):
-            logger.info(
-                "[%d/%d] Downloading: %s", i, len(all_docs), doc["title"][:70]
-            )
-            try:
-                text = self._download_pdf_text(doc["pdf_href"])
-                if not text or len(text.strip()) < 50:
-                    logger.warning("  Insufficient text (%d chars), skipping", len(text))
-                    continue
-
-                record = self.normalize(doc, text)
-                yield record
-                time.sleep(2)
-
-            except Exception as e:
-                logger.error("  Failed to process %s: %s", doc["title"][:50], e)
-                continue
+        for doc in all_docs:
+            yield doc
 
     def fetch_updates(self, since: str) -> Generator[dict, None, None]:
         """Fetch all docs (small corpus, no incremental endpoint)."""
         yield from self.fetch_all()
 
-    def normalize(self, doc: dict, text: str) -> dict:
-        """Transform raw document data into standard schema."""
-        title = doc["title"]
-        pdf_url = doc["pdf_href"]
+    def normalize(self, raw: dict) -> Optional[dict]:
+        """Download the PDF, extract full text, return the standard schema.
+
+        Returns None (intentional skip) if the PDF is unreachable or yields
+        insufficient text.
+        """
+        title = raw["title"]
+        pdf_url = raw["pdf_href"]
+
+        try:
+            text = self._download_pdf_text(pdf_url)
+        except Exception as e:
+            logger.warning("  Failed to download %s: %s", title[:50], e)
+            return None
+
+        if not text or len(text.strip()) < 50:
+            logger.warning("  Insufficient text (%d chars) for %s",
+                           len(text or ""), title[:50])
+            return None
+
         doc_id = make_doc_id(title, pdf_url)
         date = extract_date(title, pdf_url)
 
@@ -275,8 +280,8 @@ class ESMLegalScraper(BaseScraper):
             "text": text.strip(),
             "date": date,
             "url": pdf_url,
-            "category": doc.get("category", ""),
-            "section": doc.get("section", ""),
+            "category": raw.get("category", ""),
+            "section": raw.get("section", ""),
         }
 
     # ── CLI entry point ──────────────────────────────────────────────
@@ -296,43 +301,28 @@ class ESMLegalScraper(BaseScraper):
 
 
 def main():
+    import argparse
+
+    parser = argparse.ArgumentParser(description="INTL/ESM-Legal data fetcher")
+    parser.add_argument(
+        "command", choices=["bootstrap", "bootstrap-fast", "update", "test"]
+    )
+    parser.add_argument("--sample", action="store_true", help="Fetch 15 samples only")
+    parser.add_argument("--full", action="store_true", help="Fetch all records")
+    args = parser.parse_args()
+
     scraper = ESMLegalScraper()
 
-    if len(sys.argv) < 2:
-        print("Usage: bootstrap.py [bootstrap|update|test] [--sample]")
-        sys.exit(1)
+    if args.command == "test":
+        sys.exit(0 if scraper.test_connection() else 1)
 
-    cmd = sys.argv[1]
-    sample = "--sample" in sys.argv
+    elif args.command == "bootstrap-fast":
+        stats = scraper.bootstrap_fast()
+        logger.info("Done: %s", stats)
 
-    if cmd == "test":
-        ok = scraper.test_connection()
-        sys.exit(0 if ok else 1)
-
-    elif cmd in ("bootstrap", "update"):
-        sample_dir = Path(__file__).parent / "sample"
-        sample_dir.mkdir(exist_ok=True)
-
-        gen = scraper.fetch_all(sample=sample) if cmd == "bootstrap" else scraper.fetch_updates("")
-
-        count = 0
-        for record in gen:
-            count += 1
-            text_len = len(record.get("text", ""))
-            logger.info(
-                "  Record %d: %s (%d chars)",
-                count, record["title"][:60], text_len,
-            )
-            if sample or count <= 15:
-                fname = sample_dir / f"{record['_id'][:80]}.json"
-                with open(fname, "w", encoding="utf-8") as f:
-                    json.dump(record, f, ensure_ascii=False, indent=2)
-
-        logger.info("Done. Total records: %d", count)
-
-    else:
-        print(f"Unknown command: {cmd}")
-        sys.exit(1)
+    elif args.command in ("bootstrap", "update"):
+        stats = scraper.bootstrap(sample_mode=args.sample, sample_size=15)
+        logger.info("Done: %s", stats)
 
 
 if __name__ == "__main__":

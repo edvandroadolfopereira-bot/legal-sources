@@ -1,0 +1,61 @@
+fetcher:
+  base_url: https://balochistancode.gob.pk
+  list_path: /laws_rules.aspx?wise=alphabetical&opento=1
+  document_path: /Document.aspx?wise=opendoc&docid={docid}&docc={docc}
+  pdf_path: /lawdir/{uuid}.pdf
+  method: GET
+  rate_limit_seconds: 1.5
+  type: html_scraping
+  user_agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 LegalDataHunter/1.0 (+https://github.com/ZachLaik/LegalDataHunter)
+license:
+  name: Public Domain (Government)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: >-
+    Acts, ordinances, rules and regulations of the Province of Balochistan
+    published by the Balochistan Law & Parliamentary Affairs Department are
+    public legislative records of the Government of Pakistan / Province of
+    Balochistan. No formal open licence is published; standard
+    government-publication public-domain treatment applies.
+schema:
+  date_field: date
+  text_field: text
+  dedup_key:
+  - _id
+  key_fields:
+  - name: title
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: number
+    required: false
+    type: string
+  - name: year
+    required: false
+    type: integer
+  - name: pdf_url
+    required: false
+    type: string
+source:
+  auth: none
+  country: PK
+  data_types:
+  - legislation
+  id: PK/BalochistanCode
+  license: Public Domain (Government)
+  name: Balochistan Laws — Provincial Legislation
+  update_frequency: monthly
+  url: https://balochistancode.gob.pk/
+  description: |
+    The official online code of Balochistan provincial legislation, published
+    by the Balochistan Law & Parliamentary Affairs Department
+    (balochistancode.gob.pk). Covers ~1,700 substantive acts, ordinances,
+    rules and subordinate/delegated legislation. Full text is extracted from
+    the per-law PDFs served under /lawdir/. Completes the Pakistan provincial
+    code set (Punjab, Sindh, Khyber Pakhtunkhwa already covered). Language:
+    English. Jurisdiction: PK-BA.

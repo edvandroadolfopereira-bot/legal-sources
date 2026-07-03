@@ -122,6 +122,10 @@ def extract_pdf_text(pdf_bytes: bytes) -> str:
                 t = page.extract_text() or ""
                 if t.strip():
                     parts.append(t.strip())
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
             return "\n\n".join(parts).strip()
     except Exception as e:  # noqa: BLE001
         logger.warning(f"PDF parse failed: {e}")

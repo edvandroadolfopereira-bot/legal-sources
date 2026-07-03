@@ -1,0 +1,13 @@
+{
+  "_id": "VA-CCEO-Can-7",
+  "_source": "VA/CodexCanonumOrientalium",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-18T21:48:39.063725+00:00",
+  "title": "Canon 7 (CCEO)",
+  "text": "§ 1. Christifideles sunt, qui per baptismum Christo incorporati in populum Dei sunt constituti atque hac ratione muneris Christi sacerdotalis, prophetici et regalis suo modo participes secundum suam cuiusque condicionem ad missionem exercendam vocantur, quam Deus Ecclesiae in mundo implendam concredidit.\n\n§ 2. Haec Ecclesia in hoc mundo ut societas constituta et ordinata subsistit in Ecclesia catholica a successore Petri et Episcopis in communione cum eo gubernata.",
+  "canon_number": 7,
+  "code": "Codex Canonum Ecclesiarum Orientalium",
+  "date": "1990-10-18",
+  "url": "https://www.vatican.va/content/john-paul-ii/la/apost_constitutions/documents/hf_jp-ii_apc_19901018_codex-can-eccl-orient-1.html",
+  "language": "la"
+}

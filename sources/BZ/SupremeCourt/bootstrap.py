@@ -153,6 +153,10 @@ class SupremeCourtFetcher:
                     text = page.extract_text()
                     if text:
                         pages_text.append(text)
+                    try:
+                        page.flush_cache(); page.get_textmap.cache_clear()
+                    except Exception:
+                        pass
                 full_text = "\n\n".join(pages_text)
                 return full_text if len(full_text) > 100 else None
         except Exception as e:

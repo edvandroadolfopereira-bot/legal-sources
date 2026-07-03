@@ -1,0 +1,22 @@
+{
+  "_id": "BOE-A-2012-5043:da-2",
+  "_source": "ES/BOE",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-08T01:51:52.995213+00:00",
+  "title": "Disposición adicional segunda — Real Decreto 662/2012, de 13 de abril, por el que se establece el marco para la implantación de los sistemas inteligentes de transporte (SIT) en el sector del transporte por carretera y para las interfaces con otros modos de transporte.",
+  "text": "Disposición adicional segunda. Comunicación al Ministerio del Interior.\n1. Las entidades, Administraciones y demás proveedores que a la entrada en vigor de este real decreto hayan implantado aplicaciones o servicios de sistemas inteligentes de transporte (SIT), remitirán al organismo autónomo Jefatura Central de Tráfico en el plazo de dos meses, el informe sobre sus actividades y proyectos para el período de cinco años, conforme se establece en el artículo 4.2.\n2. Las entidades, Administraciones y demás proveedores que establezcan aplicaciones y servicios de sistemas inteligentes de transporte (SIT) con posterioridad a la entrada en vigor de este real decreto, remitirán al organismo autónomo Jefatura Central de Tráfico el citado informe en el plazo de dos meses desde su implantación.",
+  "date": "2012-04-13",
+  "url": "https://www.boe.es/eli/es/rd/2012/04/13/662",
+  "identifier": "BOE-A-2012-5043:da-2",
+  "parent_identifier": "BOE-A-2012-5043",
+  "parent_title": "Real Decreto 662/2012, de 13 de abril, por el que se establece el marco para la implantación de los sistemas inteligentes de transporte (SIT) en el sector del transporte por carretera y para las interfaces con otros modos de transporte.",
+  "article_id": "da-2",
+  "article_title": "Disposición adicional segunda",
+  "chapter": "",
+  "rango": "Real Decreto",
+  "publication_date": "2012-04-14",
+  "effective_date": "2012-04-15",
+  "url_eli": "https://www.boe.es/eli/es/rd/2012/04/13/662",
+  "language": "es",
+  "granularity": "article"
+}

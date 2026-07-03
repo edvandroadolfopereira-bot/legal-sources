@@ -1,0 +1,46 @@
+{
+  "_id": "MP/2024/1107",
+  "_source": "PL/MonitorPolski",
+  "_type": "doctrine",
+  "_fetched_at": "2026-06-10T01:33:45.778761+00:00",
+  "title": "Obwieszczenie Ministra Przemysłu z dnia 23 grudnia 2024 r. w sprawie stawek opłaty egzaminacyjnej oraz opłaty za wydanie świadectwa stwierdzającego kwalifikacje w zakresie górnictwa i ratownictwa górniczego na rok 2025",
+  "text": "MONITOR POLSKI\nDZIENNIK URZĘDOWY RZECZYPOSPOLITEJ POLSKIEJ\nWarszawa, dnia 30 grudnia 2024 r.\nPoz. 1107\n\nOBWIESZCZENIE\nMINISTRA PRZEMYSŁU 1)\nz dnia 23 grudnia 2024 r.\nw sprawie stawek opłaty egzaminacyjnej oraz opłaty za wydanie świadectwa stwierdzającego kwalifikacje\nw zakresie górnictwa i ratownictwa górniczego na rok 2025\nNa podstawie art. 66 ust. 5 ustawy z dnia 9 czerwca 2011 r. – Prawo geologiczne i górnicze (Dz. U. z 2024 r. poz. 1290)\nogłasza się, że w 2025 r. stawka:\n1)\nopłaty egzaminacyjnej uiszczanej w ramach postępowania w sprawie stwierdzenia kwalifikacji w zakresie górnictwa\ni ratownictwa górniczego wynosi 391,94 zł;\n2)\nopłaty za wydanie świadectwa stwierdzającego kwalifikacje w zakresie górnictwa i ratownictwa górniczego wynosi 47,09 zł.\nMinister Przemysłu: M. Czarnecka\n\n1) Minister Przemysłu kieruje działem administracji rządowej – gospodarka surowcami energetycznymi, na podstawie § 1 ust. 2 roz-\nporządzenia Prezesa Rady Ministrów z dnia 19 grudnia 2023 r. w sprawie szczegółowego zakresu działania Ministra Przemysłu\n(Dz. U. poz. 2727 oraz z 2024 r. poz. 289 i 999).",
+  "date": "2024-12-30",
+  "url": "https://monitorpolski.gov.pl/MP/2024/1107",
+  "eli": "MP/2024/1107",
+  "address": "WMP20240001107",
+  "display_address": "M.P. 2024 poz. 1107",
+  "year": 2024,
+  "pos": 1107,
+  "doc_type": "Obwieszczenie",
+  "status": "bez statusu",
+  "in_force": "IN_FORCE",
+  "entry_into_force": "",
+  "keywords": [
+    "ratownictwo",
+    "egzaminy",
+    "górnictwo",
+    "górnicy",
+    "kwalifikacje",
+    "świadectwa i dyplomy",
+    "opłaty",
+    "geologiczne prawo"
+  ],
+  "released_by": [
+    "MIN. PRZEMYSŁU"
+  ],
+  "references": {
+    "Podstawa prawna": [
+      {
+        "id": "DU/2011/981"
+      }
+    ],
+    "Podstawa prawna z art.": [
+      {
+        "id": "DU/2011/981",
+        "art": "art. 66 ust. 5"
+      }
+    ]
+  },
+  "language": "pl"
+}

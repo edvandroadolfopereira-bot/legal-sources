@@ -272,6 +272,13 @@ class BNMScraper(BaseScraper):
                         t = page.extract_text()
                         if t:
                             pages_text.append(t)
+                        # Release per-page layout + cached textmap to cap peak
+                        # RSS on large PDFs (prevents OOM exit 137 on the fleet).
+                        page.flush_cache()
+                        try:
+                            page.get_textmap.cache_clear()
+                        except AttributeError:
+                            pass
                     return "\n\n".join(pages_text) if pages_text else None
         except Exception as e:
             logger.warning(f"PDF extraction failed for {pdf_url}: {e}")

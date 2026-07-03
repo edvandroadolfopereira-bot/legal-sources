@@ -1,0 +1,48 @@
+auth:
+  type: none
+fetch:
+  base_url: https://registers.esma.europa.eu
+  solr_core: esma_registers_sanctions
+  rate_limit_seconds: 1.0
+  timeout_seconds: 30
+  rows_per_page: 500
+schema:
+  key_fields:
+  - name: sanction_id
+    required: true
+    type: string
+  - name: entity_name
+    required: false
+    type: string
+  optional_fields:
+  - legal_framework
+  - nature
+  - country
+  - nca
+  - lei
+  - language
+  required_fields:
+  - _id
+  - _source
+  - _type
+  - _fetched_at
+  - title
+  - text
+  - date
+  - url
+source:
+  country: EU
+  data_types:
+  - case_law
+  description: ESMA Sanctions Register — administrative sanctions and measures imposed by EU national competent authorities under MiFID, MAR, MAD, UCITS, AIFMD, EMIR, SFTR, BMR, CSDR, and other EU financial legislation
+  id: EU/ESMA-Sanctions
+  name: ESMA Sanctions Register
+  url: https://registers.esma.europa.eu/publication/searchRegister?core=esma_registers_sanctions
+license:
+  name: "EUR-Lex Reuse Notice"
+  url: "https://eur-lex.europa.eu/content/legal-notice/legal-notice.html"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Public register data from EU agency"

@@ -1,0 +1,22 @@
+{
+  "_id": "BOE-A-2012-5043:a4",
+  "_source": "ES/BOE",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-08T01:51:51.075650+00:00",
+  "title": "Artículo 4 — Real Decreto 662/2012, de 13 de abril, por el que se establece el marco para la implantación de los sistemas inteligentes de transporte (SIT) en el sector del transporte por carretera y para las interfaces con otros modos de transporte.",
+  "text": "Artículo 4. Deber de información.\n1. El Ministerio del Interior, a través del organismo autónomo Jefatura Central de Tráfico, facilitará a la Comisión Europea como fecha límite el 27 de agosto de 2012, información sobre las medidas nacionales previstas en el campo de los sistemas inteligentes de transporte (SIT) para el período de cinco años.\nAdemás, con posterioridad a haber remitido esa información, cada tres años, informará a la Comisión Europea sobre los progresos realizados en la implantación de las actividades y los proyectos nacionales en los ámbitos prioritarios que se recogen en el anexo I.\n2. Para poder prestar la citada información, las entidades, Administraciones y demás proveedores de aplicaciones y servicios de sistemas inteligentes de transporte (SIT), remitirán al organismo autónomo Jefatura Central de Tráfico un informe sobre sus actividades y proyectos en relación a los sistemas inteligentes de transporte (SIT) para el período de cinco años y, previa solicitud, una memoria explicativa sobre los progresos realizados en la implantación de las actividades y los proyectos nacionales, a efectos de remitir la información a que se hace referencia en el segundo párrafo del apartado anterior.\n3. La información a que se refiere el apartado anterior se podrá remitir en los modelos que proporcionará el organismo autónomo Jefatura Central de Tráfico o que podrán descargarse en la siguiente dirección electrónica: https://sede.dgt.gob.es",
+  "date": "2012-04-13",
+  "url": "https://www.boe.es/eli/es/rd/2012/04/13/662",
+  "identifier": "BOE-A-2012-5043:a4",
+  "parent_identifier": "BOE-A-2012-5043",
+  "parent_title": "Real Decreto 662/2012, de 13 de abril, por el que se establece el marco para la implantación de los sistemas inteligentes de transporte (SIT) en el sector del transporte por carretera y para las interfaces con otros modos de transporte.",
+  "article_id": "a4",
+  "article_title": "Artículo 4",
+  "chapter": "",
+  "rango": "Real Decreto",
+  "publication_date": "2012-04-14",
+  "effective_date": "2012-04-15",
+  "url_eli": "https://www.boe.es/eli/es/rd/2012/04/13/662",
+  "language": "es",
+  "granularity": "article"
+}

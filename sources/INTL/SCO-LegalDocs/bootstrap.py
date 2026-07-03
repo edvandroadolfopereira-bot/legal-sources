@@ -89,6 +89,7 @@ class SCOLegalDocsScraper(BaseScraper):
     SOURCE_ID = SOURCE_ID
 
     def __init__(self):
+        super().__init__()
         self.http = HttpClient(headers=HEADERS)
 
     def _get(self, url: str) -> Optional[str]:
@@ -118,6 +119,10 @@ class SCOLegalDocsScraper(BaseScraper):
                     text = page.extract_text()
                     if text:
                         pages_text.append(text)
+                    try:
+                        page.flush_cache(); page.get_textmap.cache_clear()
+                    except Exception:
+                        pass
             return _clean_pdf_text("\n\n".join(pages_text))
         except Exception as e:
             logger.warning(f"PDF extraction failed: {e}")

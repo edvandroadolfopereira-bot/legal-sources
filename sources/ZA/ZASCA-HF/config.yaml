@@ -1,0 +1,44 @@
+source_id: ZA/ZASCA-HF
+name: South Africa Supreme Court of Appeal Judgments (HuggingFace)
+country: ZA
+url: https://huggingface.co/datasets/dsfsi/zasca-sum
+description: |
+  ~2,000+ judgments from the South African Supreme Court of Appeal (SCA).
+  Full English text from the dsfsi/zasca-sum HuggingFace dataset.
+  Streamed via HuggingFace datasets library — no large downloads needed.
+
+data_types:
+  - case_law
+
+license:
+  name: "CC BY-SA 4.0"
+  url: "https://creativecommons.org/licenses/by-sa/4.0/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: true
+  no_derivatives: false
+  notes: "Dataset by DSFSI (Data Science for Social Impact) research group."
+
+language: en
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 5
+  burst: 10
+
+update_frequency: unknown
+
+schema:
+  key_fields:
+    - name: id
+      required: true
+      type: string
+    - name: year
+      required: true
+      type: string
+  date_field: date
+  text_field: text
+  title_field: title
+  url_field: url

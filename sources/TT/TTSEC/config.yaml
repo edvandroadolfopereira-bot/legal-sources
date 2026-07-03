@@ -29,11 +29,15 @@ rate_limit:
   notes: "WordPress site on Nginx/Plesk. No rate limiting observed."
 
 api:
-  type: "rest"
+  # The WordPress REST API (/wp-json/wp/v2/posts) is now blocked by the
+  # site's Kadence Security settings (HTTP 401). Sources are enumerated
+  # from the public XML sitemaps and full text pulled from linked PDFs.
+  type: "html"
   base_url: "https://www.ttsec.org.tt"
   endpoints:
-    posts: "/wp-json/wp/v2/posts?per_page=100&categories={cats}&page={page}"
-  response_format: "json"
+    sitemap_index: "/wp-sitemap.xml"
+    post_sitemap: "/post-sitemap{n}.xml"
+  response_format: "html"
 
 schema:
   total_fields: 9

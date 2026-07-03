@@ -64,6 +64,7 @@ DETAIL_PATH = "/en/home/publications/publication-detail-pages/"
 
 class SARBNoticesScraper(BaseScraper):
     def __init__(self):
+        super().__init__()
         self.source_dir = Path(__file__).parent
         self.config = self._load_config()
         self.status = self._load_status()
@@ -234,7 +235,12 @@ class SARBNoticesScraper(BaseScraper):
                 errors += 1
                 continue
 
-            record = self.normalize({
+            # Yield RAW per the BaseScraper contract — the framework calls
+            # normalize() once. (Previously this yielded self.normalize(...),
+            # so framework-routed runs double-normalized → KeyError 'id' →
+            # every record dropped, leaving only the stale committed samples.)
+            count += 1
+            yield {
                 "id": doc_id,
                 "title": meta["title"],
                 "text": text,
@@ -243,10 +249,7 @@ class SARBNoticesScraper(BaseScraper):
                 "date": meta["date"],
                 "year": meta["year"],
                 "category": category,
-            })
-
-            count += 1
-            yield record
+            }
 
         logger.info("Completed: %d records, %d errors", count, errors)
 
@@ -305,7 +308,8 @@ def main():
     if args.command == "bootstrap":
         sample_dir = scraper.sample_dir
         count = 0
-        for record in scraper.fetch_all(sample=sample_mode):
+        for raw in scraper.fetch_all(sample=sample_mode):
+            record = scraper.normalize(raw)
             out_path = sample_dir / f"{count:04d}.json"
             with open(out_path, "w", encoding="utf-8") as f:
                 json.dump(record, f, ensure_ascii=False, indent=2)

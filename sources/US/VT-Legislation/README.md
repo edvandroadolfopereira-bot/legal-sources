@@ -1,21 +1,16 @@
 # Vermont Statutes Online (legislature.vermont.gov)
 
 **Source:** [https://legislature.vermont.gov/statutes/](https://legislature.vermont.gov/statutes/)
-**Country:** US
+**Country:** US (Vermont)
 **Data types:** legislation
-**Status:** Blocked
+**Status:** Complete
 
-## Why this source is blocked
+## Description
 
-**Category:** connection_timeout
+Vermont Statutes Annotated from the official Vermont General Assembly website.
+Covers all 33+ titles of Vermont law organized by chapters.
+Each record contains the full text of one chapter (all sections concatenated).
 
-**Technical reason:** `connection_timeout`
+## License
 
-**Details:** legislature.vermont.gov times out (connection refused/timeout). No alternative bulk source found.
-
-## How you can help
-
-- If you have access to this data source or know of an alternative, please file an issue
-- Open a PR with suggestions or a working scraper
-
-- File an issue or open a PR at [worldwidelaw/legal-sources](https://github.com/worldwidelaw/legal-sources)
+[Public Domain — 17 U.S.C. § 105](https://www.law.cornell.edu/uscode/text/17/105) — U.S. state legislation is generally in the public domain.

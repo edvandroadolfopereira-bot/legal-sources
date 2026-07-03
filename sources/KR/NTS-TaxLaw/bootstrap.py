@@ -115,6 +115,7 @@ class NTSTaxLaw(BaseScraper):
     SOURCE_ID = "KR/NTS-TaxLaw"
 
     def __init__(self):
+        super().__init__()
         self.session = requests.Session()
         retry = Retry(total=5, backoff_factor=2, status_forcelist=[500, 502, 503, 504])
         self.session.mount("https://", TLS12Adapter(max_retries=retry))

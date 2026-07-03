@@ -1,0 +1,39 @@
+{
+  "_id": "MP/2024/1101",
+  "_source": "PL/MonitorPolski",
+  "_type": "doctrine",
+  "_fetched_at": "2026-06-10T01:33:55.596171+00:00",
+  "title": "Postanowienie Prezydenta Rzeczypospolitej Polskiej z dnia 5 lipca 2024 r. nr 1130.26.2024 o powołaniu do pełnienia urzędu na stanowisku sędziego",
+  "text": "MONITOR POLSKI\nDZIENNIK URZĘDOWY RZECZYPOSPOLITEJ POLSKIEJ\nWarszawa, dnia 27 grudnia 2024 r.\nPoz. 1101\n\nPOSTANOWIENIE\nPREZYDENTA RZECZYPOSPOLITEJ POLSKIEJ\nz dnia 5 lipca 2024 r.\nnr 1130.26.2024\no powołaniu do pełnienia urzędu na stanowisku sędziego\nNa podstawie art. 179 Konstytucji Rzeczypospolitej Polskiej z dnia 2 kwietnia 1997 r., na wniosek Krajowej Rady\nSądownictwa, powołuję niżej wymienione osoby do pełnienia urzędu:\nna stanowisku sędziego Naczelnego Sądu Administracyjnego:\n1.\nKrzysztof Sobieralski,\n2.\nSławomir Stanisław Wojciechowski,\nna stanowisku sędziego Sądu Okręgowego:\n3.\nPaweł Konrad Błasiak – w Warszawie,\n4.\nNatalia Joanna Górska-Gawrak – w Poznaniu,\n5.\nSławomir Grudzień – w Lublinie,\n6.\nTomasz Andrzej Jabłoński – w Gdańsku,\n7.\nTomasz Michał Łatanik – w Rybniku,\n8.\nJoanna Izabela Niewiadoma-Wysmolińska – w Radomiu,\n9.\nKatarzyna Sobczyk – w Lublinie,\nna stanowisku sędziego Sądu Rejonowego:\n10. Karolina Adamowicz – dla Wrocławia-Fabrycznej we Wrocławiu,\n11. Jakub Sylwester Dylewski – w Lęborku,\n12. Berenika Polańska – w Goleniowie,\n13. Piotr Raś – dla Łodzi-Śródmieścia w Łodzi,\n14. Anna Maria Rydzewska-Mierzejewska – w Ostrołęce,\n15. Michał Adam Szulczewski – dla Łodzi-Śródmieścia w Łodzi.\nPrezydent Rzeczypospolitej Polskiej: A. Duda",
+  "date": "2024-12-27",
+  "url": "https://monitorpolski.gov.pl/MP/2024/1101",
+  "eli": "MP/2024/1101",
+  "address": "WMP20240001101",
+  "display_address": "M.P. 2024 poz. 1101",
+  "year": 2024,
+  "pos": 1101,
+  "doc_type": "Postanowienie",
+  "status": "akt indywidualny",
+  "in_force": "IN_FORCE",
+  "entry_into_force": "2024-07-05",
+  "keywords": [
+    "sędziowie"
+  ],
+  "released_by": [
+    "PREZYDENT RZECZYPOSPOLITEJ POLSKIEJ"
+  ],
+  "references": {
+    "Podstawa prawna": [
+      {
+        "id": "DU/1997/483"
+      }
+    ],
+    "Podstawa prawna z art.": [
+      {
+        "id": "DU/1997/483",
+        "art": "art. 179"
+      }
+    ]
+  },
+  "language": "pl"
+}

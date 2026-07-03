@@ -170,6 +170,10 @@ def _extract_text_from_pdf(pdf_bytes: bytes, doc_id: str = "") -> str:
                     t = page.extract_text()
                     if t:
                         pages.append(t)
+                    try:
+                        page.flush_cache(); page.get_textmap.cache_clear()
+                    except Exception:
+                        pass
                 return "\n\n".join(pages)
         finally:
             os.unlink(tmp_path)

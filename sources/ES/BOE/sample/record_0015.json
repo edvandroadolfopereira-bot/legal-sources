@@ -1,0 +1,22 @@
+{
+  "_id": "BOE-A-2012-5043:a1",
+  "_source": "ES/BOE",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-08T01:51:49.142051+00:00",
+  "title": "Artículo 1 — Real Decreto 662/2012, de 13 de abril, por el que se establece el marco para la implantación de los sistemas inteligentes de transporte (SIT) en el sector del transporte por carretera y para las interfaces con otros modos de transporte.",
+  "text": "Artículo 1. Objeto y ámbito de aplicación.\n1. Este real decreto establece el marco para la implantación y el uso de manera coordinada y coherente de los sistemas inteligentes de transporte (SIT) en España, y fija las condiciones generales necesarias para alcanzar ese objetivo.\n2. Constituye el ámbito de aplicación de este real decreto la implantación de las aplicaciones y servicios de los sistemas inteligentes de transporte (SIT) en el ámbito del transporte por carretera y sus interfaces con otros modos de transporte, sin perjuicio de materias relativas a la seguridad nacional o necesarias para la defensa.",
+  "date": "2012-04-13",
+  "url": "https://www.boe.es/eli/es/rd/2012/04/13/662",
+  "identifier": "BOE-A-2012-5043:a1",
+  "parent_identifier": "BOE-A-2012-5043",
+  "parent_title": "Real Decreto 662/2012, de 13 de abril, por el que se establece el marco para la implantación de los sistemas inteligentes de transporte (SIT) en el sector del transporte por carretera y para las interfaces con otros modos de transporte.",
+  "article_id": "a1",
+  "article_title": "Artículo 1",
+  "chapter": "",
+  "rango": "Real Decreto",
+  "publication_date": "2012-04-14",
+  "effective_date": "2012-04-15",
+  "url_eli": "https://www.boe.es/eli/es/rd/2012/04/13/662",
+  "language": "es",
+  "granularity": "article"
+}

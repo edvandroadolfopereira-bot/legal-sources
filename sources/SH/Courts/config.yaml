@@ -1,0 +1,50 @@
+fetcher:
+  base_url: https://www.bailii.org
+  rate_limit: 2
+  type: html_scraping
+  user_agent: LegalDataHunter/1.0 (Open Data Research)
+schema:
+  key_fields:
+  - name: citation
+    required: false
+    type: string
+  normalized_fields:
+  - _id
+  - _source
+  - _type
+  - _fetched_at
+  - title
+  - text
+  - date
+  - url
+  - citation
+  - court
+  - court_code
+source:
+  auth: none
+  country: SH
+  data_types:
+  - case_law
+  id: SH/Courts
+  name: St Helena Senior Courts (BAILII)
+  url: https://www.bailii.org/sh/
+  notes: 'St Helena, Ascension and Tristan da Cunha senior courts via BAILII.
+
+    Courts covered:
+
+    - Supreme Court of St Helena (SHSC)
+
+    - St Helena Court of Appeal (SHCA)
+
+    Full judgment text in HTML. A non-browser User-Agent is required to bypass
+    BAILII''s Anubis bot challenge.
+
+    '
+license:
+  name: "BAILII Terms of Use"
+  url: "https://www.bailii.org/bailii/terms.html"
+  commercial_use: false
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Judgments are Crown Copyright (UK Overseas Territory). BAILII provides free-of-charge access; its terms restrict bulk/commercial reuse of the compiled database."

@@ -206,6 +206,10 @@ class MZTSLegislacaoScraper(BaseScraper):
                         text = page.extract_text()
                         if text:
                             pages_text.append(text)
+                        try:
+                            page.flush_cache(); page.get_textmap.cache_clear()
+                        except Exception:
+                            pass
                     full_text = "\n\n".join(pages_text)
                     # Clean up CID artifacts and excessive whitespace
                     full_text = CID_RE.sub("", full_text)

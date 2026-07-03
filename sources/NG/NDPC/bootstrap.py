@@ -285,6 +285,10 @@ class NDPCScraper(BaseScraper):
                 text = pg.extract_text()
                 if text:
                     pages_text.append(text)
+                try:
+                    pg.flush_cache(); pg.get_textmap.cache_clear()
+                except Exception:
+                    pass
             pdf.close()
             full_text = "\n\n".join(pages_text)
             full_text = _clean_text(full_text)
@@ -353,20 +357,17 @@ class NDPCScraper(BaseScraper):
     # ------------------------------------------------------------------
 
     def fetch_all(self) -> Generator[dict, None, None]:
-        """Fetch all NDPC publications (WP posts + resource PDFs)."""
+        """Fetch all NDPC publications (WP posts + resource PDFs).
+
+        Yields RAW records per the BaseScraper contract; the framework calls
+        normalize(). (Previously yielded already-normalized records, which the
+        framework's bootstrap would double-normalize → KeyError on wp_id.)
+        """
         # Fetch PDFs first (higher-value regulatory content)
-        pdf_records = self._fetch_resource_pdfs()
-        for rec in pdf_records:
-            normalized = self.normalize(rec)
-            if normalized:
-                yield normalized
+        yield from self._fetch_resource_pdfs()
 
         # Then fetch WP posts
-        wp_posts = self._fetch_wp_posts()
-        for rec in wp_posts:
-            normalized = self.normalize(rec)
-            if normalized:
-                yield normalized
+        yield from self._fetch_wp_posts()
 
     def fetch_updates(self, since: Optional[str] = None) -> Generator[dict, None, None]:
         """Fetch recent WP posts (incremental by date)."""
@@ -416,10 +417,8 @@ class NDPCScraper(BaseScraper):
                 page += 1
                 time.sleep(1.0)
 
-            for rec in posts:
-                normalized = self.normalize(rec)
-                if normalized:
-                    yield normalized
+            # Yield RAW records; the framework normalizes.
+            yield from posts
         else:
             yield from self.fetch_all()
 
@@ -488,7 +487,7 @@ if __name__ == "__main__":
     scraper = NDPCScraper()
 
     if len(sys.argv) < 2:
-        print("Usage: bootstrap.py [bootstrap|update|test] [--sample]")
+        print("Usage: bootstrap.py [bootstrap|bootstrap-fast|update|test] [--sample]")
         sys.exit(1)
 
     command = sys.argv[1]
@@ -497,28 +496,23 @@ if __name__ == "__main__":
     if command == "test":
         result = scraper.test()
         print(json.dumps(result, indent=2))
-    elif command in ("bootstrap", "update"):
-        sample_dir = Path(__file__).parent / "sample"
-        sample_dir.mkdir(exist_ok=True)
-
-        count = 0
-        limit = 15 if sample_mode else 99999
-
-        gen = scraper.fetch_all() if command == "bootstrap" else scraper.fetch_updates()
-
-        for record in gen:
-            count += 1
-            if sample_mode:
-                outpath = sample_dir / f"{count:04d}.json"
-                outpath.write_text(json.dumps(record, indent=2, ensure_ascii=False))
-                print(f"[{count}] {record['title'][:60]} ({len(record['text'])} chars)")
-            else:
-                print(json.dumps(record, ensure_ascii=False))
-
-            if count >= limit:
-                break
-
-        print(f"\nTotal records: {count}")
+    elif command == "bootstrap":
+        # Route through the framework so records are normalized and persisted
+        # to data/records.jsonl (previously full runs only printed to stdout →
+        # nothing ingested on the VPS).
+        if sample_mode:
+            stats = scraper.run_sample(n=15)
+            print(f"\nSample complete: {stats.get('sample_records_saved', 0)} records saved")
+        else:
+            stats = scraper.bootstrap()
+            print(f"\nBootstrap complete: {stats['records_new']} new, "
+                  f"{stats['records_updated']} updated, {stats['errors']} errors")
+    elif command == "bootstrap-fast":
+        stats = scraper.bootstrap_fast()
+        print(json.dumps(stats, indent=2, default=str))
+    elif command == "update":
+        stats = scraper.update()
+        print(f"\nUpdate: {stats['records_new']} new, {stats['records_updated']} updated")
     else:
         print(f"Unknown command: {command}")
         sys.exit(1)

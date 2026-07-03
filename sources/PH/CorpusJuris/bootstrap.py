@@ -42,6 +42,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 SOURCE_ID = "PH/CorpusJuris"
 SOURCE_DIR = Path(__file__).parent
 SAMPLE_DIR = SOURCE_DIR / "sample"
+DATA_DIR = SOURCE_DIR / "data"
 
 logging.basicConfig(
     level=logging.INFO,
@@ -415,22 +416,27 @@ def bootstrap(sample: bool = False):
             sys.exit(1)
     else:
         logger.info("Running FULL bootstrap")
+        DATA_DIR.mkdir(parents=True, exist_ok=True)
+        jsonl_path = DATA_DIR / "records.jsonl"
         count = 0
-        for rec in fetch_all():
-            count += 1
-            if count % 100 == 0:
-                logger.info(f"Progress: {count} records fetched")
-        logger.info(f"Full bootstrap complete: {count} records")
+        with open(jsonl_path, "w", encoding="utf-8") as f:
+            for rec in fetch_all():
+                rec = normalize(rec)
+                f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+                count += 1
+                if count % 100 == 0:
+                    logger.info(f"Progress: {count} records written")
+        logger.info(f"Full bootstrap complete: {count} records -> {jsonl_path}")
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="PH/CorpusJuris bootstrap")
-    parser.add_argument("command", choices=["bootstrap", "test-api"])
+    parser.add_argument("command", choices=["bootstrap", "bootstrap-fast", "test-api"])
     parser.add_argument("--sample", action="store_true")
     args = parser.parse_args()
 
     if args.command == "test-api":
         success = test_api()
         sys.exit(0 if success else 1)
-    elif args.command == "bootstrap":
+    elif args.command in ("bootstrap", "bootstrap-fast"):
         bootstrap(sample=args.sample)

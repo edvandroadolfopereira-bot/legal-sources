@@ -113,6 +113,10 @@ def extract_text_from_pdf(session, pdf_url):
             page_text = page.extract_text()
             if page_text:
                 text_parts.append(page_text)
+            try:
+                page.flush_cache(); page.get_textmap.cache_clear()
+            except Exception:
+                pass
 
     return "\n\n".join(text_parts)
 

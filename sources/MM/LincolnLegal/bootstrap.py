@@ -152,6 +152,10 @@ class LincolnLegalScraper(BaseScraper):
                 t = page.extract_text()
                 if t:
                     pages.append(t)
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
             pdf.close()
             return "\n\n".join(pages) if pages else None
         except Exception as e:

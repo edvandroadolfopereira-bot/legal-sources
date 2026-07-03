@@ -1,0 +1,28 @@
+source_id: CU/GacetaLegislaciones
+name: Cuba Consolidated Key Laws (Gaceta Oficial)
+country: CU
+url: https://www.gacetaoficial.gob.cu/es/algunas-legislaciones-cubanas
+data_types:
+  - legislation
+language: es
+auth:
+  type: none
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - text
+    - date
+    - url
+    - law_number
+    - law_type
+
+license:
+  name: Open Government Data (Cuba)
+  url: https://www.gacetaoficial.gob.cu/
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: Official Cuban government gazette — public law texts

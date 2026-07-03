@@ -1,0 +1,102 @@
+# ===================================================================
+# BH/MOLA-Laws -- Bahrain Ministry of Legal Affairs: Consolidated Laws
+# ===================================================================
+# Consolidated laws and legislative decrees of the Kingdom of Bahrain,
+# published bilingually (English + Arabic) by the Ministry of Legal
+# Affairs (MoLA). Each law is a PDF with full consolidated text and
+# inline notes of subsequent amendments.
+# Listing: https://www.mola.gov.bh/Legislation/Laws/
+# Text extracted via PyMuPDF.
+# ===================================================================
+
+source:
+  id: "BH/MOLA-Laws"
+  country: "BH"
+  name: "Bahrain Ministry of Legal Affairs Consolidated Laws"
+  url: "https://www.mola.gov.bh/Legislation/Laws/"
+  description: |
+    Consolidated laws and legislative decrees of the Kingdom of Bahrain
+    published by the Ministry of Legal Affairs (MoLA). Each entry is a
+    bilingual (English + Arabic) PDF containing the full consolidated
+    text of the law, with amendments noted inline. ~58 laws/decrees.
+    Text extracted with PyMuPDF.
+
+data_types:
+  - legislation
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+
+api:
+  type: "pdf_download"
+  base_url: "https://www.mola.gov.bh"
+  endpoints:
+    listing: "/Legislation/Laws/"
+    law_pdf: "/MediaManager/Media/Documents/Laws/{file}.pdf"
+  pagination:
+    type: "single_page_listing"
+    note: "All laws listed in one structured HTML table; PDF link per row"
+
+data_model:
+  type: "legislation"
+  primary_key: "_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "url"
+
+schema:
+  total_fields: 12
+  key_fields:
+    - name: "_id"
+      description: "Unique ID derived from the PDF filename (BH-MOLA-{slug})"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "English title of the law/decree"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full extracted text of the consolidated law (EN+AR)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "law_number"
+      description: "Law/decree number"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "year"
+      description: "Year of enactment"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "instrument_type"
+      description: "law or decree"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "date"
+      description: "Approximate date (year-01-01 when only year is known)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "url"
+      description: "URL to the law PDF"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "Bahrain Government Open Data"
+  url: "https://www.data.gov.bh/en/ODPolicy"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official government legislation published by the Ministry of Legal Affairs, open access"

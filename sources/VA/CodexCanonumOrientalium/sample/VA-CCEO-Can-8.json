@@ -1,0 +1,13 @@
+{
+  "_id": "VA-CCEO-Can-8",
+  "_source": "VA/CodexCanonumOrientalium",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-18T21:48:39.063860+00:00",
+  "title": "Canon 8 (CCEO)",
+  "text": "In plena communione cum Ecclesia catholica his in terris sunt illi baptizati, qui in eius compage visibili cum Christo iunguntur vinculis professionis fidei, sacramentorum et ecclesiastici regiminis.",
+  "canon_number": 8,
+  "code": "Codex Canonum Ecclesiarum Orientalium",
+  "date": "1990-10-18",
+  "url": "https://www.vatican.va/content/john-paul-ii/la/apost_constitutions/documents/hf_jp-ii_apc_19901018_codex-can-eccl-orient-1.html",
+  "language": "la"
+}

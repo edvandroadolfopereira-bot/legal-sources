@@ -43,6 +43,14 @@ logger = logging.getLogger("legal-data-hunter.TJ.Andoz-TaxLaws")
 BASE_URL = "https://andoz.tj"
 DELAY = 2.0
 
+# Per-PDF download guards. requests' `timeout` is a per-socket-read timeout, not
+# a wall-clock cap: a large file that streams slowly but steadily (e.g. a
+# multi-volume dictionary over a slow link) never trips it, so `r.content`
+# blocks for hours and wedges the whole run (issue #969). Stream the body
+# instead and abort on either a total-time deadline or a max-bytes cap.
+MAX_PDF_BYTES = 80 * 1024 * 1024   # 80 MB — skip anything larger
+PDF_DEADLINE_SECONDS = 180         # hard wall-clock cap per file
+
 # Legislation category pages to scrape: (path, category, doc_type_hint)
 LEGISLATION_PAGES = [
     ("Legislation/TaxCode", "tax_code", "Tax Code"),
@@ -144,15 +152,53 @@ def _make_id(url: str) -> str:
 
 
 def _download_pdf(session, url: str) -> Optional[bytes]:
-    """Download a PDF from andoz.tj."""
+    """Download a PDF from andoz.tj.
+
+    Streams the body so a single slow/oversized file cannot wedge the run:
+    aborts if the download exceeds PDF_DEADLINE_SECONDS of wall-clock time or
+    MAX_PDF_BYTES of data (issue #969).
+    """
     for attempt in range(3):
         try:
             time.sleep(DELAY)
-            r = session.get(url, timeout=60)
-            if r.status_code == 200 and len(r.content) > 200:
-                return r.content
-            logger.warning("PDF download attempt %d: HTTP %d, %d bytes for %s",
-                           attempt + 1, r.status_code, len(r.content), url)
+            with session.get(url, timeout=60, stream=True) as r:
+                if r.status_code != 200:
+                    logger.warning("PDF download attempt %d: HTTP %d for %s",
+                                   attempt + 1, r.status_code, url)
+                    if attempt < 2:
+                        time.sleep(3)
+                    continue
+
+                # Skip if the server advertises an oversized file upfront.
+                clen = r.headers.get("Content-Length")
+                if clen and clen.isdigit() and int(clen) > MAX_PDF_BYTES:
+                    logger.warning("Skip oversized PDF (%s bytes): %s", clen, url)
+                    return None
+
+                start = time.monotonic()
+                chunks = bytearray()
+                aborted = False
+                for chunk in r.iter_content(chunk_size=65536):
+                    if not chunk:
+                        continue
+                    chunks.extend(chunk)
+                    if len(chunks) > MAX_PDF_BYTES:
+                        logger.warning("Abort oversized PDF (>%d bytes): %s",
+                                       MAX_PDF_BYTES, url)
+                        aborted = True
+                        break
+                    if time.monotonic() - start > PDF_DEADLINE_SECONDS:
+                        logger.warning("Abort slow PDF (>%ds): %s",
+                                       PDF_DEADLINE_SECONDS, url)
+                        aborted = True
+                        break
+
+                if aborted:
+                    return None
+                if len(chunks) > 200:
+                    return bytes(chunks)
+                logger.warning("PDF download attempt %d: %d bytes for %s",
+                               attempt + 1, len(chunks), url)
         except Exception as e:
             logger.warning("PDF download attempt %d: %s for %s", attempt + 1, e, url)
         if attempt < 2:

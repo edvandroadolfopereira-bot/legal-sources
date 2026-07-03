@@ -1,0 +1,95 @@
+# ===================================================================
+# PR/TribunalSupremo -- Puerto Rico Supreme Court Opinions
+# ===================================================================
+# Full-text opinions of the Supreme Court of Puerto Rico (Tribunal
+# Supremo) from the official Rama Judicial site dts.poderjudicial.pr.
+# PDF full text, Spanish language, no auth. Archive from 1998 onward.
+# ===================================================================
+
+source:
+  id: "PR/TribunalSupremo"
+  country: "PR"
+  name: "Puerto Rico Supreme Court Opinions"
+  url: "https://dts.poderjudicial.pr/opiniones/"
+  description: |
+    Opinions and resolutions of the Supreme Court of Puerto Rico
+    (Tribunal Supremo de Puerto Rico), published officially by the
+    Rama Judicial. Each opinion is a full-text PDF cited as
+    "YYYY TSPR NNN". Spanish language. No authentication required.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1.0
+  burst: 2
+  max_workers: 4
+
+data_model:
+  type: "case_law"
+  primary_key: "_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "_id"
+
+schema:
+  total_fields: 10
+  key_fields:
+    - name: "_id"
+      description: "Document ID (e.g., PR-TSPR-2020-0156)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Case caption / parties"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the opinion"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "citation"
+      description: "Official citation (e.g., 2020 TSPR 156)"
+      type: "string"
+      role: "metadata"
+      required: true
+    - name: "case_number"
+      description: "Court case number (Número del Caso)"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "court"
+      description: "Issuing court"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "url"
+      description: "URL to the opinion PDF"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "Public domain (US government)"
+  url: "https://www.law.cornell.edu/uscode/text/17/105"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Puerto Rico court opinions are US government works in the public domain"
+
+notes: |
+  - ~150-250 opinions per year, archived from 1998 onward.
+  - Two PDF URL schemes: /ts/{year}/{year}tsprNNN.pdf (newer) and
+    relative {year}TSPRNNN.pdf (older) — both resolved via urljoin.
+  - Citation, case number, date and parties parsed from the PDF header.

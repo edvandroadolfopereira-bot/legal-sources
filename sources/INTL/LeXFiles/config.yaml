@@ -1,0 +1,45 @@
+source_id: INTL/LeXFiles
+name: LeXFiles — 5.8M Legal Documents across 6 Jurisdictions (HuggingFace)
+country: INTL
+url: https://huggingface.co/datasets/lexlms/lex_files
+description: |
+  5.8M English-language legal documents across 11 sub-corpora from 6 jurisdictions
+  (EU, UK, US, Canada, India, ECtHR). Covers legislation, court cases, and contracts.
+  18.8B tokens total. Streamed from HuggingFace. ~93% US-skewed (CourtListener).
+
+data_types:
+  - case_law
+  - legislation
+
+license:
+  name: "CC BY-NC-SA 4.0"
+  url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+  commercial_use: false
+  attribution_required: true
+  share_alike: true
+  no_derivatives: false
+  notes: "Non-commercial use only. Compiled by Chalkidis et al. (ACL 2023)."
+
+language: en
+
+auth:
+  type: none
+
+rate_limit:
+  requests_per_second: 5
+  burst: 10
+
+update_frequency: static
+
+schema:
+  key_fields:
+    - name: doc_id
+      required: true
+      type: string
+    - name: title
+      required: true
+      type: string
+  date_field: date
+  text_field: text
+  title_field: title
+  url_field: url

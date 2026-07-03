@@ -1,0 +1,18 @@
+{
+  "_id": "PE25020",
+  "_source": "US/NHTSA-Enforcement",
+  "_type": "case_law",
+  "_fetched_at": "2026-06-08T19:10:01.056330+00:00",
+  "title": "NHTSA Preliminary Evaluation PE25020: Timing Belt Failure",
+  "text": "The Office of Defects Investigation (ODI) has received 44 complaints alleging loss of motive power in model year (MY) 2015-2017 Ford Fiesta and MY 2015-2018 Ford Focus vehicles manufactured by Ford Motor Company. These vehicles are equipped with a 1.0L engine and manual transmission. Some consumers report a low engine oil pressure warning lamp immediately preceding a complete loss or reduction of motive power while the vehicle is in motion. Based on a preliminary review of data currently available to ODI, this may be due to fragments of timing belt material that wear off and accumulate inside the oil pump. This debris can gradually clog the oil pump pick-up screen and result in sudden oil starvation of the engine and ultimately engine seizure. \n\nODI is opening this Preliminary Evaluation (PE) to determine the scope and severity of the potential problem and to fully assess the potential safety-related problems. To review the ODI reports cited in the Opening Resume ODI Report Identification Number document, go to NHTSA.gov.",
+  "date": "2025-12-18",
+  "url": "https://www.nhtsa.gov/vehicle/PE25020",
+  "investigation_number": "020",
+  "investigation_type": "Preliminary Evaluation",
+  "investigation_type_code": "PE",
+  "status": "Open",
+  "status_code": "O",
+  "subject": "Timing Belt Failure",
+  "nhtsa_id": "PE25020",
+  "latest_activity_date": "2025-12-18T20:21:31Z"
+}

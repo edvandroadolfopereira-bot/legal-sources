@@ -152,6 +152,10 @@ class LCGovtPortalScraper(BaseScraper):
                     text = page.extract_text()
                     if text:
                         pages_text.append(text)
+                    try:
+                        page.flush_cache(); page.get_textmap.cache_clear()
+                    except Exception:
+                        pass
             full_text = "\n\n".join(pages_text)
             if len(full_text.strip()) < 50:
                 logger.warning("Insufficient text from %s: %d chars",

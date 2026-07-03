@@ -262,6 +262,10 @@ def _extract_pdf_text(pdf_url: str, timeout: int = 60) -> str:
                 text = page.extract_text()
                 if text:
                     pages.append(text)
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
             return "\n\n".join(pages)
     except Exception as e:
         logger.warning("PDF extraction failed for %s: %s", pdf_url, e)

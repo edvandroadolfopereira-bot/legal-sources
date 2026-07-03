@@ -1,0 +1,108 @@
+# ===================================================================
+# UK/NominetDRS -- Nominet Dispute Resolution Service Decisions
+# ===================================================================
+# Session-based scraping of the public DRS decision search tool +
+# PDF text extraction. Nominet is the .uk domain registry; the DRS is
+# its administrative dispute-resolution procedure for .uk domain names.
+# Decisions are written by Independent Experts (Summary or Full) and
+# are published openly via the search tool.
+# ===================================================================
+
+source:
+  id: "UK/NominetDRS"
+  country: "UK"
+  name: "Nominet Dispute Resolution Service (DRS) Decisions"
+  url: "https://secure.nominet.org.uk/drs/search-disputes.html"
+  description: |
+    Decisions of Nominet's Dispute Resolution Service (DRS), the
+    administrative procedure resolving disputes over .uk domain-name
+    registrations. Each decision (Summary or Full) is an Independent
+    Expert's ruling on rights and abusive registration, with the outcome
+    (Transfer / No Action / etc.). Full text extracted from the
+    published decision PDFs.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+  notes: "2-second delay between requests; session cookie required."
+
+api:
+  type: "scraping"
+  base_url: "https://secure.nominet.org.uk"
+  endpoints:
+    listing: "/drs/search-disputes.html (POST action.showAllDecisions)"
+    paginate: "/drs/search-disputes.html?action.browseBasicSearchResults=y&page={page}"
+    document: "/drs/search-disputes.html (POST action.viewDecisionDocument, decisionDocumentId={id})"
+  response_format: "html+pdf"
+
+data_model:
+  type: "case_law"
+  primary_key: "document_id"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 14
+  key_fields:
+    - name: "_id"
+      description: "Nominet DRS case number (e.g. D00029141)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Synthesised title (case number, domain, parties)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from the decision PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "domain_name"
+      description: "Disputed .uk domain name"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "outcome"
+      description: "Decision outcome (Transfer / No Action / etc.)"
+      type: "string"
+      role: "metadata"
+      required: false
+    - name: "url"
+      description: "DRS decision search tool"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "© Nominet UK — all rights reserved (publicly accessible, commercial use restricted)"
+  url: "https://nominet.uk/terms-of-use/"
+  commercial_use: false
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: >
+    DRS decisions are published openly via Nominet's search tool with no login
+    or paywall. Nominet's website terms reserve all IP rights and permit only
+    personal/internal reference; commercial reuse requires a licence from
+    Nominet. Flagged commercial-restricted.
+
+notes: |
+  - Public DRS decision search at secure.nominet.org.uk/drs/search-disputes.html.
+  - Session cookie established by a GET, then POST action.showAllDecisions lists
+    all decisions (most recent first), 10 per page.
+  - Each row exposes a decisionDocumentId; POST action.viewDecisionDocument
+    returns the decision PDF (Summary or Full Decision).
+  - Full text extracted via the shared pdf_extract backend.
+  - Type: case_law (.uk domain-name dispute decisions).

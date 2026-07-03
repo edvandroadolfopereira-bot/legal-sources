@@ -1,0 +1,48 @@
+source_id: INTL/SAARC-Legal
+name: SAARC Legal Instruments (Conventions, Agreements & Declarations)
+country: INTL
+url: https://www.saarc-sec.org/
+description: >
+  Legal instruments of the South Asian Association for Regional Cooperation
+  (SAARC): conventions, agreements, protocols, summit declarations, and the
+  founding Charter. 8 member states (AF, BD, BT, IN, MV, NP, PK, LK).
+  Fetched via saarc-sec.org CMS JSON API with PDF text extraction.
+data_types:
+  - legislation
+auth:
+  type: none
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+data_model:
+  update_strategy: append_only
+  dedup_key:
+    - _id
+schema:
+  key_fields:
+    - name: _id
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: date
+      type: string
+      required: false
+    - name: url
+      type: string
+      required: true
+    - name: instrument_type
+      type: string
+      required: false
+license:
+  name: "SAARC official publications"
+  url: "https://www.saarc-sec.org/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official legal instruments of an international organization, published for open public access"

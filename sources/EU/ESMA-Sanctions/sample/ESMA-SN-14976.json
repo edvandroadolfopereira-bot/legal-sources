@@ -1,0 +1,18 @@
+{
+  "_id": "ESMA-SN-14976",
+  "_source": "EU/ESMA-Sanctions",
+  "_type": "case_law",
+  "_fetched_at": "2026-06-08T11:09:03.251329",
+  "sanction_id": "14976",
+  "entity_name": "MASTERINVEST Kapitalanlage GmbH",
+  "title": "Sanction against MASTERINVEST Kapitalanlage GmbH (UCITS) — AUSTRIA",
+  "text": "Bekanntmachung: FMA verhängt Sanktion gegen die MASTERINVEST Kapitalanlage GmbH wegen Verstößen gegen Fondsbestimmungen\n\nÖsterreichs Finanzmarktaufsichtsbehörde FMA hat gegen die MASTERINVEST Kapitalanlage GmbH eine Geldstrafe iHv. 1.360,00 Euro verhängt. Die Kapitalanlagegesellschaft hat in Bezug auf einen Miteigentumsfonds nach dem Investmentfondgesetz 2011 (InvFG 2011) im Rahmen der Veranlagung zwei Mal gegen die von der FMA bewilligten Fondsbestimmungen verstoßen. Das Straferkenntnis erging im Rahmen der beschleunigten Verfahrensbeendigung gemäß § 22 Absatz 2b Finanzmarktaufsichtsbehördengesetz (FMABG) und ist rechtskräftig.",
+  "date": "2026-05-20",
+  "url": "https://registers.esma.europa.eu/publication/details?core=esma_registers_sanctions&docId=sn14976",
+  "legal_framework": "UCITS",
+  "nature": "Administrative sanction and measure",
+  "country": "AUSTRIA",
+  "nca": "Austrian Financial Market Authority (FMA)",
+  "lei": "",
+  "language": "German"
+}

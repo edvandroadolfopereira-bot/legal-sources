@@ -1,0 +1,81 @@
+# ===================================================================
+# US/CBP-Rulings -- Customs and Border Protection Rulings (CROSS)
+# ===================================================================
+# CBP binding rulings, internal advice memoranda, and HQ rulings
+# on tariff classification, valuation, country of origin, and trade.
+# Full text via the CROSS JSON API. No authentication required.
+# ===================================================================
+
+source:
+  id: "US/CBP-Rulings"
+  country: "US"
+  name: "Customs and Border Protection Rulings (CROSS)"
+  url: "https://rulings.cbp.gov/"
+  description: |
+    The Customs Rulings Online Search System (CROSS) contains 220K+
+    binding rulings, internal advice memoranda, and headquarters
+    rulings letters from CBP, covering tariff classification,
+    valuation, country of origin, and trade issues since 1989.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1.0
+  burst: 1
+
+api:
+  type: "rest_json"
+  base_url: "https://rulings.cbp.gov"
+  endpoints:
+    search: "/api/search"
+    ruling: "/api/ruling/{rulingNumber}"
+    stats: "/api/stat/lastupdate"
+
+data_model:
+  type: "doctrine"
+  primary_key: "ruling_number"
+  update_strategy: "incremental"
+  dedup_key:
+    - "ruling_number"
+
+schema:
+  total_fields: 14
+  key_fields:
+    - name: "ruling_number"
+      description: "CBP ruling number (e.g., H289712, N123456)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Ruling subject line"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text of the CBP ruling"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Ruling date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "categories"
+      description: "Ruling category (Classification, Valuation, Origin, etc.)"
+      type: "string"
+      role: "classification"
+      required: false
+
+license:
+  name: "Public Domain (US Government Work)"
+  url: "https://www.law.cornell.edu/uscode/text/17/105"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "US government works are in the public domain under 17 USC 105"

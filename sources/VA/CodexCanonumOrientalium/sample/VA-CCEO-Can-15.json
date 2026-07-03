@@ -1,0 +1,13 @@
+{
+  "_id": "VA-CCEO-Can-15",
+  "_source": "VA/CodexCanonumOrientalium",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-18T21:48:39.064812+00:00",
+  "title": "Canon 15 (CCEO)",
+  "text": "§ 1. Quae Ecclesiae Pastores Christum repraesentantes tamquam fidei magistri declarant aut tamquam Ecclesiae rectores statuunt, christifideles propriae responsabilitatis conscii christiana oboedientia prosequi tenentur.\n\n§ 2. Christifidelibus integrum est, ut necessitates suas, praesertim spirituales, suaque optata. Ecclesiae Pastoribus patefaciant.\n\n§ 3. Pro scientia, competentia et praestantia, quibus pollent, ipsis ius est, immo et aliquando obligatio, ut sententiam suam de his, quae ad bonum Ecclesiae pertinent, Ecclesiae Pastoribus manifestent eamque, salva integritate fidei et morum ac reverentia erga eosdem Pastores attentisque utilitate communi et personarum dignitate, ceteris christifidelibus notam faciant.",
+  "canon_number": 15,
+  "code": "Codex Canonum Ecclesiarum Orientalium",
+  "date": "1990-10-18",
+  "url": "https://www.vatican.va/content/john-paul-ii/la/apost_constitutions/documents/hf_jp-ii_apc_19901018_codex-can-eccl-orient-1.html",
+  "language": "la"
+}

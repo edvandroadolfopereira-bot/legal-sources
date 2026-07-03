@@ -186,6 +186,10 @@ class LACStatutesScraper(BaseScraper):
                     page_text = page.extract_text()
                     if page_text:
                         text_parts.append(page_text)
+                    try:
+                        page.flush_cache(); page.get_textmap.cache_clear()
+                    except Exception:
+                        pass
             text = "\n".join(text_parts)
             return text if len(text) > 50 else None
         except Exception as e:

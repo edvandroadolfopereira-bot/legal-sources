@@ -64,6 +64,21 @@ ARABIC_MONTHS = {
 }
 
 
+# Map Arabic-Indic (U+0660–U+0669) and Eastern-Arabic/Persian (U+06F0–U+06F9)
+# digits to ASCII. Python's \d matches these, so a captured year like "٢٠١٣"
+# would otherwise leak through into the ISO date string and break Postgres date
+# parsing on ingest (issue #866).
+_ARABIC_DIGITS = str.maketrans(
+    "٠١٢٣٤٥٦٧٨٩۰۱۲۳۴۵۶۷۸۹",
+    "01234567890123456789",
+)
+
+
+def _ascii_digits(s: str) -> str:
+    """Convert any Arabic-Indic / Eastern-Arabic digits in s to ASCII."""
+    return s.translate(_ARABIC_DIGITS)
+
+
 def extract_date_from_text(text: str) -> Optional[str]:
     """Extract publication date from gazette header text.
 
@@ -73,8 +88,8 @@ def extract_date_from_text(text: str) -> Optional[str]:
         pattern = rf'(\d{{4}})\s+{re.escape(month_ar)}\s*(\d{{1,2}})'
         m = re.search(pattern, text)
         if m:
-            year = m.group(1)
-            day = m.group(2).zfill(2)
+            year = _ascii_digits(m.group(1))
+            day = _ascii_digits(m.group(2)).zfill(2)
             return f"{year}-{month_num}-{day}"
     return None
 

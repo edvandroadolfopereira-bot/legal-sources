@@ -1,0 +1,40 @@
+{
+  "_id": "MP/2024/1106",
+  "_source": "PL/MonitorPolski",
+  "_type": "doctrine",
+  "_fetched_at": "2026-06-10T01:33:46.673310+00:00",
+  "title": "Obwieszczenie Ministra Rozwoju i Technologii z dnia 19 grudnia 2024 r. w sprawie wysokości odsetek ustawowych za opóźnienie w transakcjach handlowych",
+  "text": "MONITOR POLSKI\nDZIENNIK URZĘDOWY RZECZYPOSPOLITEJ POLSKIEJ\nWarszawa, dnia 27 grudnia 2024 r.\nPoz. 1106\n\nOBWIESZCZENIE\nMINISTRA ROZWOJU I TECHNOLOGII 1)\nz dnia 19 grudnia 2024 r.\nw sprawie wysokości odsetek ustawowych za opóźnienie w transakcjach handlowych\nNa podstawie art. 11c ustawy z dnia 8 marca 2013 r. o przeciwdziałaniu nadmiernym opóźnieniom w transakcjach\nhandlowych (Dz. U. z 2023 r. poz. 1790) ogłasza się, że wysokość odsetek ustawowych za opóźnienie w transakcjach\nhandlowych, od dnia 1 stycznia 2025 r. do dnia 30 czerwca 2025 r., wynosi:\n1)\n13,75 % w stosunku rocznym ‒ w przypadku transakcji handlowych, w których dłużnikiem jest podmiot publiczny\nbędący podmiotem leczniczym;\n2)\n15,75 % w stosunku rocznym ‒ w przypadku transakcji handlowych, w których dłużnikiem nie jest podmiot publiczny\nbędący podmiotem leczniczym.\nMinister Rozwoju i Technologii: K. Paszyk\n\n1) Minister Rozwoju i Technologii kieruje działem administracji rządowej ‒ gospodarka, na podstawie § 1 ust. 2 pkt 2 rozporządzenia\nPrezesa Rady Ministrów z dnia 16 maja 2024 r. w sprawie szczegółowego zakresu działania Ministra Rozwoju i Technologii (Dz. U.\npoz. 739).",
+  "date": "2024-12-27",
+  "url": "https://monitorpolski.gov.pl/MP/2024/1106",
+  "eli": "MP/2024/1106",
+  "address": "WMP20240001106",
+  "display_address": "M.P. 2024 poz. 1106",
+  "year": 2024,
+  "pos": 1106,
+  "doc_type": "Obwieszczenie",
+  "status": "bez statusu",
+  "in_force": "IN_FORCE",
+  "entry_into_force": "",
+  "keywords": [
+    "handel",
+    "odsetki ustawowe"
+  ],
+  "released_by": [
+    "MIN. ROZWOJU I TECHNOLOGII"
+  ],
+  "references": {
+    "Podstawa prawna": [
+      {
+        "id": "DU/2013/403"
+      }
+    ],
+    "Podstawa prawna z art.": [
+      {
+        "id": "DU/2013/403",
+        "art": "art. 11c"
+      }
+    ]
+  },
+  "language": "pl"
+}

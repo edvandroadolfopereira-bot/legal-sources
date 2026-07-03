@@ -1,0 +1,76 @@
+source:
+  id: AU/NSWCaselaw
+  name: New South Wales Caselaw (NSW Courts & Tribunals)
+  country: AU
+  language: en
+  url: https://www.caselaw.nsw.gov.au/
+  auth: none
+  data_types:
+    - case_law
+  description: >
+    Official database of judgments and decisions of the New South Wales courts
+    and tribunals (Court of Appeal, Court of Criminal Appeal, Supreme Court,
+    District Court, Land and Environment Court, NCAT and others). Full-text
+    decisions are read via the ungated HuggingFace mirror corto-ai/nsw-caselaw
+    (~27,453 decisions harvested from caselaw.nsw.gov.au) through the
+    datasets-server rows API; canonical caselaw.nsw.gov.au/decision/<id> URLs
+    are reconstructed for every record.
+
+fetch:
+  method: huggingface_rows_api
+  dataset: corto-ai/nsw-caselaw
+  config: default
+  split: train
+  batch_size: 100
+  rate_limit_seconds: 1
+  total_rows: 27453
+
+license:
+  name: Copyright in Judicial Decisions Notice 1995 (NSW)
+  url: https://www.caselaw.nsw.gov.au/policy.html
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: >
+    Copyright in NSW judicial decisions resides in the State, but the Copyright
+    in Judicial Decisions Notice 1995 (NSW) authorises any person to reproduce,
+    publish and otherwise deal with any judicial decision, provided third-party
+    law-report editorial material (headnotes etc.) is not reproduced. The
+    judgment bodies captured here are the courts' own text.
+
+schema:
+  key_fields:
+    - name: _id
+      type: string
+      required: true
+    - name: _source
+      type: string
+      required: true
+    - name: _type
+      type: string
+      required: true
+    - name: title
+      type: string
+      required: true
+    - name: text
+      type: string
+      required: true
+    - name: citation
+      type: string
+      required: false
+    - name: court_code
+      type: string
+      required: false
+    - name: doc_type
+      type: string
+      required: false
+    - name: jurisdiction
+      type: string
+      required: false
+    - name: date
+      type: string
+      required: false
+    - name: url
+      type: string
+      required: false

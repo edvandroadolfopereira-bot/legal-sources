@@ -51,6 +51,7 @@ class OPCWDecisionsScraper(BaseScraper):
     SOURCE_ID = "INTL/OPCW-Decisions"
 
     def __init__(self):
+        super().__init__()
         self.session = requests.Session()
         self.session.headers.update({
             "User-Agent": "LegalDataHunter/1.0 (legal research; +https://github.com/worldwidelaw/legal-sources)",

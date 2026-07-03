@@ -7,6 +7,7 @@ public database (Domsdatabasen). Greenland courts are part of the Danish judicia
 
 Courts covered:
 - Grønlands landsret (Greenland High Court)
+- Sermersooq Kredsret (Nuuk district court — capital/most populous district)
 - Kujalleq Kredsret (district court)
 - Qeqqa Kredsret (district court)
 - Qaasuitsoq Kredsret (district court)
@@ -39,6 +40,7 @@ API_BASE = "https://domsdatabasen.dk/webapi/api"
 
 GREENLAND_COURTS = [
     "Grønlands landsret",
+    "Sermersooq Kredsret",
     "Kujalleq Kredsret",
     "Qeqqa Kredsret",
     "Qaasuitsoq Kredsret",

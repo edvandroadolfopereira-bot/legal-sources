@@ -212,21 +212,38 @@ def fetch_all(sample: bool = False) -> Generator[Dict, None, None]:
 
 
 def run_bootstrap(sample: bool = False):
-    """Run the bootstrap and save results."""
+    """Run the bootstrap and save results.
+
+    In sample mode, writes individual JSON files to sample/ (for repo
+    validation). In full mode, streams every record to data/records.jsonl
+    so the VPS ingest pipeline can pick them up (sample/ only ever holds
+    the 15-record validation set, never the full corpus).
+    """
     source_dir = Path(__file__).resolve().parent
     sample_dir = source_dir / "sample"
     sample_dir.mkdir(exist_ok=True)
 
     count = 0
-    for record in fetch_all(sample=sample):
-        count += 1
-        fname = f"{record['_id']}.json"
-        out = sample_dir / fname
-        with open(out, "w", encoding="utf-8") as f:
-            json.dump(record, f, indent=2, ensure_ascii=False)
-        logger.info("Saved: %s", out.name)
-
-    logger.info("Bootstrap complete: %d records saved to %s", count, sample_dir)
+    if sample:
+        for record in fetch_all(sample=True):
+            count += 1
+            out = sample_dir / f"{record['_id']}.json"
+            with open(out, "w", encoding="utf-8") as f:
+                json.dump(record, f, indent=2, ensure_ascii=False)
+            logger.info("Saved: %s", out.name)
+        logger.info("Bootstrap complete: %d records saved to %s", count, sample_dir)
+    else:
+        data_dir = source_dir / "data"
+        data_dir.mkdir(exist_ok=True)
+        jsonl_path = data_dir / "records.jsonl"
+        with open(jsonl_path, "w", encoding="utf-8") as f:
+            for record in fetch_all(sample=False):
+                f.write(json.dumps(record, ensure_ascii=False) + "\n")
+                f.flush()
+                count += 1
+                if count % 25 == 0:
+                    logger.info("  Streamed %d records...", count)
+        logger.info("Bootstrap complete: %d records streamed to %s", count, jsonl_path)
     return count
 
 
@@ -259,7 +276,13 @@ def main():
         success = run_test()
         sys.exit(0 if success else 1)
     elif args.command in ("bootstrap", "bootstrap-fast"):
-        sample_mode = args.sample or (not args.full)
+        # bootstrap-fast is the VPS wrapper alias and must default to a FULL
+        # fetch (stream to data/records.jsonl); plain `bootstrap` defaults to
+        # sample mode unless --full is given.
+        if args.command == "bootstrap-fast":
+            sample_mode = args.sample
+        else:
+            sample_mode = args.sample or (not args.full)
         count = run_bootstrap(sample=sample_mode)
         sys.exit(0 if count > 0 else 1)
 

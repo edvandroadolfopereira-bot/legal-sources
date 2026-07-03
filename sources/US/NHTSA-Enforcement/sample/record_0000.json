@@ -1,0 +1,18 @@
+{
+  "_id": "PE26004",
+  "_source": "US/NHTSA-Enforcement",
+  "_type": "case_law",
+  "_fetched_at": "2026-06-08T19:10:01.053529+00:00",
+  "title": "NHTSA Preliminary Evaluation PE26004: Rear Toe Link May Separate",
+  "text": "The Office of Defects Investigation (ODI) has received two Vehicle Owner Questionnaires (VOQs) reporting left rear toe link separation in certain Model Year (MY) 2023-2024 Rivian R1S vehicles. Both VOQs report component separation while driving, causing the vehicles to swerve across multiple lanes of traffic. One incident resulted in a collision with an adjacent vehicle and roadside barrier. In both separations, the bolt that maintains the integrity of the toe link fractured. Evidence collected from the complaint vehicles included repair histories, onboard video, imagery of the damaged components, and a police accident report.\n\n \n\nThe two vehicles with reported separation have different vehicle histories. One vehicle received prior service and the other was involved in a previous collision. In both instances, the vehicles operated for multiple months and thousands of miles of usage with no apparent problems between the previous service or the previous collision and the failures that prompted this investigation.\n\n \n\nRivian recognized the subject toe link joint’s sensitivity to service procedures in March of 2025 in its updated service procedures. In January 2026 through recall 26V-003, Rivian extended the improved repair procedure to vehicles that received toe link service prior to the March 2025 improvement.\n\n \n\nODI is opening a Preliminary Evaluation (PE) to (1) assess the sensitivity of the rear toe link joint to foreseeable road and service conditions, (2) compare the physical failure evidence from the two VOQs to identify apparent similarities and potential differences, (3) evaluate Rivian’s current toe link repair procedure, and (4) assess the in-field subject population’s toe links conditions.\n\n \n\nTo review the ODI reports cited in the Opening Resume ODI Report Identification Number document, go to NHTSA.gov",
+  "date": "2026-05-26",
+  "url": "https://www.nhtsa.gov/vehicle/PE26004",
+  "investigation_number": "004",
+  "investigation_type": "Preliminary Evaluation",
+  "investigation_type_code": "PE",
+  "status": "Open",
+  "status_code": "O",
+  "subject": "Rear Toe Link May Separate",
+  "nhtsa_id": "PE26004",
+  "latest_activity_date": "2026-05-26T19:45:25Z"
+}

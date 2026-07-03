@@ -1,0 +1,13 @@
+{
+  "_id": "VA-CCEO-Can-1",
+  "_source": "VA/CodexCanonumOrientalium",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-18T21:48:39.062010+00:00",
+  "title": "Canon 1 (CCEO)",
+  "text": "Canones huius Codicis omnes et solas Ecclesias orientales catholicas respiciunt, nisi, relationes cum Ecclesia latina quod attinet, aliud expresse statuitur.",
+  "canon_number": 1,
+  "code": "Codex Canonum Ecclesiarum Orientalium",
+  "date": "1990-10-18",
+  "url": "https://www.vatican.va/content/john-paul-ii/la/apost_constitutions/documents/hf_jp-ii_apc_19901018_codex-can-eccl-orient-1.html",
+  "language": "la"
+}

@@ -1,0 +1,18 @@
+{
+  "_id": "ESMA-SN-14875",
+  "_source": "EU/ESMA-Sanctions",
+  "_type": "case_law",
+  "_fetched_at": "2026-06-08T11:09:03.256168",
+  "sanction_id": "14875",
+  "entity_name": "",
+  "title": "Sanction (MiFID) — AUSTRIA",
+  "text": "Die österreichische Finanzmarktaufsichtsbehörde (FMA) teilt mit, dass sie gegen einen Geschäftspartner („Business Partner“) einer Emittentin eine Geldstrafe in Höhe von 5.000 Euro gemäß § 94 und § 3 Abs. 2 Z 1 Wertpapieraufsichtsgesetz 2018 (WAG 2018) wegen unerlaubter Anlageberatung in Bezug auf Finanzinstrumente verhängt hat. Es wurde Kunden zur Auflösung von Finanzanlagen und Investition in Finanzinstrumente geraten. Das Straferkenntnis ist nicht rechtskräftig",
+  "date": "2026-03-09",
+  "url": "https://registers.esma.europa.eu/publication/details?core=esma_registers_sanctions&docId=sn14875",
+  "legal_framework": "MiFID",
+  "nature": "Administrative sanction and measure",
+  "country": "AUSTRIA",
+  "nca": "Austrian Financial Market Authority (FMA)",
+  "lei": "",
+  "language": "German"
+}

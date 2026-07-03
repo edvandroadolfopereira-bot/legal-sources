@@ -112,6 +112,12 @@ class CantabriaScraper(BaseScraper):
                     text = page.extract_text()
                     if text:
                         pages.append(text)
+                    # Release per-page cache to avoid pdfplumber OOM (exit 137, #955)
+                    try:
+                        page.flush_cache()
+                        page.get_textmap.cache_clear()
+                    except Exception:
+                        pass
                 full_text = "\n\n".join(pages)
 
                 # Strip BOC header/footer lines that appear on every page

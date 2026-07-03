@@ -1,0 +1,20 @@
+{
+  "_id": "cbp-886425",
+  "_source": "US/CBP-Rulings",
+  "_type": "doctrine",
+  "_fetched_at": "2026-06-20T19:10:17Z",
+  "title": "The tariff classification of Oscillating heater/fan from",
+  "text": "DD 886425\n                                    June 1, 1993\n\nDAB B12  \n\nCATEGORY:  Classification\n\nTARIFF NO.: 8516.29.0030\n\nMr. Warren Coe\nAmway Corp.\n\nRE:  The tariff classification of Oscillating heater/fan from \n\n     DATE OF INQUIRY   :    May 17, 1993\n\n     ON BEHALF OF      :    \n\n     DESCRIPTION OF\n     MERCHANDISE       :    Model SKU No. X5933 \"Heat Director\"",
+  "date": "1993-06-01",
+  "url": "https://rulings.cbp.gov/ruling/886425",
+  "ruling_number": "886425",
+  "categories": "Classification",
+  "collection": "ny",
+  "tariffs": [
+    "8516.29.0030"
+  ],
+  "related_rulings": [],
+  "is_usmca": false,
+  "is_nafta": false,
+  "operationally_revoked": false
+}

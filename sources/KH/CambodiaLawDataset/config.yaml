@@ -1,0 +1,30 @@
+source_id: KH/CambodiaLawDataset
+name: Cambodia Law Dataset (Open-Source Markdown Collection)
+country: KH
+url: https://github.com/rinn7e/cambodia-law-dataset
+data_types:
+  - legislation
+auth:
+  type: none
+
+schema:
+  key_fields:
+    - name: _id
+      required: true
+    - name: title
+      required: true
+    - name: text
+      required: true
+    - name: date
+      required: false
+    - name: url
+      required: true
+
+license:
+  name: "GPL-2.0"
+  url: "https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html"
+  commercial_use: true
+  attribution_required: true
+  share_alike: true
+  no_derivatives: false
+  notes: "GPL-2.0 licensed open-source dataset of Cambodian laws from GitHub"

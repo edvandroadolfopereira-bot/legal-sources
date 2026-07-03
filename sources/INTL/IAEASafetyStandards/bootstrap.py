@@ -2,17 +2,19 @@
 """
 INTL/IAEASafetyStandards -- IAEA Safety Standards Database
 
-Fetches the full text of IAEA Safety Standards from two sources:
-1. NSS-OUI (Nuclear Safety and Security Online User Interface) — HTML full text
-   for Fundamentals, Requirements, and select legacy guides (~20 publications)
-2. INIS API + www-pub.iaea.org — PDF downloads for Safety Guides (SSG/GSG)
+Fetches the full text of the published IAEA Safety Standards from NSS-OUI
+(the Nuclear Safety and Security Online User Interface) — clean HTML full text
+for the Safety Fundamentals, General/Specific Safety Requirements, and select
+legacy Safety Guides. The published full-text corpus exposed by NSS-OUI's
+``collections/publishedcollections`` endpoint is exactly the 20 standards
+enumerated below.
 
-All PDFs are freely downloadable from www-pub.iaea.org without authentication.
-NSS-OUI is publicly accessible at nucleus-apps.iaea.org/nss-oui.
+NSS-OUI is publicly accessible at nucleus-apps.iaea.org/nss-oui without auth.
 
 Usage:
   python bootstrap.py bootstrap            # Full initial pull
   python bootstrap.py bootstrap --sample   # Fetch sample records
+  python bootstrap.py bootstrap-fast       # Alias for bootstrap (VPS pipeline)
   python bootstrap.py update               # Same as bootstrap
   python bootstrap.py test-api             # Quick connectivity test
 """
@@ -357,25 +359,23 @@ class IAEASafetyStandardsScraper(BaseScraper):
                 break
 
     def _fetch_documents(self, sample: bool = False) -> Generator[Dict, None, None]:
-        """Core fetcher combining NSS-OUI and INIS sources."""
+        """Core fetcher. Full text comes from the NSS-OUI published collections.
+
+        Note: a former Phase 2 enumerated extra Safety Guides via the INIS API
+        (inis.iaea.org) by reading www-pub.iaea.org PDF URLs out of each record's
+        ``identifiers`` block. As of 2026-06 the INIS API no longer exposes those
+        PDF URLs (records now carry only DOIs), so that path always yielded zero
+        records — it was the cause of issue #868's "0 records / only samples
+        ingest" on the VPS. The NSS-OUI ``collections/publishedcollections``
+        endpoint confirms the published full-text corpus is exactly the 20
+        standards listed below, all of which return clean HTML full text.
+        """
         total = 0
 
-        # Phase 1: NSS-OUI full text (Fundamentals + Requirements)
-        logger.info("Phase 1: Fetching from NSS-OUI (HTML full text)...")
+        logger.info("Fetching from NSS-OUI (HTML full text)...")
         for raw in self._fetch_nss_oui_standards(sample=sample):
             total += 1
             logger.info(f"[{total}] {raw['standard_id']}: {len(raw['text'])} chars")
-            yield raw
-
-        if sample:
-            logger.info(f"Sample mode: {total} records from NSS-OUI")
-            return
-
-        # Phase 2: INIS API + PDF downloads (Safety Guides)
-        logger.info("Phase 2: Fetching Safety Guides from INIS/PDF...")
-        existing = preload_existing_ids(SOURCE_ID, table="legislation")
-        for raw in self._fetch_inis_pdf_standards(existing, sample=False):
-            total += 1
             yield raw
 
         logger.info(f"TOTAL: {total} records")
@@ -421,7 +421,7 @@ def main():
 
     if command == "test-api":
         scraper.test_api()
-    elif command in ("bootstrap", "update"):
+    elif command in ("bootstrap", "bootstrap-fast", "update"):
         stats = scraper.bootstrap(sample_mode=sample, sample_size=15)
         fetched = stats.get("records_fetched", 0) or stats.get("sample_records_saved", 0)
         logger.info(f"Bootstrap complete: {fetched} records — {stats}")

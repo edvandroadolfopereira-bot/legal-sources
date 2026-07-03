@@ -1,0 +1,22 @@
+{
+  "_id": "BOE-A-2012-5043:da",
+  "_source": "ES/BOE",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-08T01:51:52.346068+00:00",
+  "title": "Disposición adicional primera — Real Decreto 662/2012, de 13 de abril, por el que se establece el marco para la implantación de los sistemas inteligentes de transporte (SIT) en el sector del transporte por carretera y para las interfaces con otros modos de transporte.",
+  "text": "Disposición adicional primera. Tratamiento de datos de carácter personal.\nEl tratamiento de los datos de carácter personal necesarios para el funcionamiento de las aplicaciones y los servicios de los sistemas inteligentes de transporte (SIT) se llevará a cabo conforme a lo previsto en la Ley Orgánica 15/1999, de 13 de diciembre, de Protección de Datos de Carácter Personal.\nAsimismo, en el funcionamiento de las aplicaciones se garantizará siempre que sea posible, el anonimato del interesado y, en todo caso, que sólo se recogerán los datos que resulten imprescindibles para la prestación de los servicios derivados de las mismas.",
+  "date": "2012-04-13",
+  "url": "https://www.boe.es/eli/es/rd/2012/04/13/662",
+  "identifier": "BOE-A-2012-5043:da",
+  "parent_identifier": "BOE-A-2012-5043",
+  "parent_title": "Real Decreto 662/2012, de 13 de abril, por el que se establece el marco para la implantación de los sistemas inteligentes de transporte (SIT) en el sector del transporte por carretera y para las interfaces con otros modos de transporte.",
+  "article_id": "da",
+  "article_title": "Disposición adicional primera",
+  "chapter": "",
+  "rango": "Real Decreto",
+  "publication_date": "2012-04-14",
+  "effective_date": "2012-04-15",
+  "url_eli": "https://www.boe.es/eli/es/rd/2012/04/13/662",
+  "language": "es",
+  "granularity": "article"
+}

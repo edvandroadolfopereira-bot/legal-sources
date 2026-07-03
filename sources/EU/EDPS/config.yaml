@@ -1,0 +1,87 @@
+# ===================================================================
+# EU/EDPS -- European Data Protection Supervisor Opinions
+# ===================================================================
+# HTML scraping of the EDPS "Opinions" listing + PDF text extraction.
+# Drupal site, no public JSON API. Opinions are the EDPS's official
+# advice to the EU legislator on data-protection aspects of proposed
+# EU legislation (doctrine).
+# ===================================================================
+
+source:
+  id: "EU/EDPS"
+  country: "EU"
+  name: "European Data Protection Supervisor Opinions"
+  url: "https://www.edps.europa.eu/data-protection/our-work/our-work-by-type/opinions_en"
+  description: |
+    EDPS Opinions on EU legislative proposals — the Supervisor's formal
+    advice to the EU legislator on the data-protection implications of
+    proposed regulations and directives. ~400 opinions, full text
+    extracted from the published English PDFs.
+
+data_types:
+  - doctrine
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 1
+  notes: "2-second delay between requests; WAF may 429 on rapid requests."
+
+api:
+  type: "scraping"
+  base_url: "https://www.edps.europa.eu"
+  endpoints:
+    listing: "/data-protection/our-work/our-work-by-type/opinions_en?page={page}"
+    pdf: "/system/files/{path}"
+  response_format: "html+pdf"
+
+data_model:
+  type: "doctrine"
+  primary_key: "document_id"
+  update_strategy: "upsert"
+
+schema:
+  total_fields: 8
+  key_fields:
+    - name: "_id"
+      description: "Unique document ID derived from URL slug"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Opinion title"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from the opinion PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Publication date (from URL slug)"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "url"
+      description: "Opinion detail-page URL"
+      type: "string"
+      role: "reference"
+      required: true
+
+license:
+  name: "© European Union — reuse authorised (Decision 2011/833/EU)"
+  url: "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32011D0833"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "EU institutional documents reusable under the Commission reuse decision; source acknowledgement required."
+
+notes: |
+  - ~80 listing pages, 5 opinions per page (~400 opinions total).
+  - Each opinion page links an English PDF under /system/files/.
+  - Full text extracted via the shared pdf_extract backend.
+  - Type: doctrine (official advisory opinions on EU legislation).

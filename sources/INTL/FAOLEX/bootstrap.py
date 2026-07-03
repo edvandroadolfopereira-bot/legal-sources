@@ -83,16 +83,31 @@ def fetch_full_text(text_url: str, session: requests.Session) -> str:
 
 
 def normalize_date(date_str: str) -> Optional[str]:
-    """Parse FAOLEX date formats to ISO 8601."""
+    """Parse FAOLEX date formats to ISO 8601.
+
+    FAOLEX emits placeholder/zero dates like "0000-01-01" that Python's
+    strptime rejects (year 0 is out of range) and that Postgres also rejects
+    on insert. Any value we cannot parse into a real, in-range date is coerced
+    to None rather than passed through raw — returning the raw string is what
+    crashed ingest with DatetimeFieldOverflow (issue #917).
+    """
     if not date_str or not date_str.strip():
         return None
     date_str = date_str.strip()
+    # Explicitly drop zero/placeholder dates (e.g. "0000-01-01", "0000").
+    if date_str.startswith("0000"):
+        return None
     for fmt in ("%Y-%m-%d", "%d-%m-%Y", "%d/%m/%Y", "%m/%d/%Y", "%Y"):
         try:
-            return datetime.strptime(date_str, fmt).strftime("%Y-%m-%d")
+            parsed = datetime.strptime(date_str, fmt)
         except ValueError:
             continue
-    return date_str
+        # Postgres DATE range is 4713 BC .. 5874897 AD; keep to sane 4-digit years.
+        if 1 <= parsed.year <= 9999:
+            return parsed.strftime("%Y-%m-%d")
+        return None
+    # Unparseable in any known format -> NULL, never the raw string.
+    return None
 
 
 def normalize(row: dict, full_text: str) -> dict:

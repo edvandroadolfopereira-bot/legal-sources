@@ -167,10 +167,13 @@ class FiscaliaScraper(BaseScraper):
                 break
 
             for post in posts:
-                record = self.normalize(post)
-                if record:
-                    yield record
-                    total_yielded += 1
+                # Yield RAW posts — BaseScraper.bootstrap()/bootstrap_fast()
+                # calls self.normalize() on each item itself. Yielding already
+                # normalized records here would double-normalize (normalize()
+                # expects raw WP shape, e.g. title.rendered) and drop every
+                # record, persisting nothing. See "fetch_all must yield raw".
+                yield post
+                total_yielded += 1
 
             self._save_checkpoint({"last_page": page, "last_id": posts[-1]["id"]})
 
@@ -186,7 +189,13 @@ class FiscaliaScraper(BaseScraper):
         logger.info("Completed: %d total records.", total_yielded)
 
     def fetch_updates(self, since: Optional[str] = None) -> Generator[dict, None, None]:
-        """Yield documents modified since a date."""
+        """Yield documents modified since a date.
+
+        Accepts either an ISO string or a datetime (BaseScraper.update()
+        passes a datetime); the WP REST `after` param needs an ISO8601 string.
+        """
+        if isinstance(since, datetime):
+            since = since.strftime("%Y-%m-%dT%H:%M:%S")
         if not since:
             since_dt = datetime.now(timezone.utc) - timedelta(days=90)
             since = since_dt.strftime("%Y-%m-%dT00:00:00")
@@ -201,10 +210,9 @@ class FiscaliaScraper(BaseScraper):
                 break
 
             for post in posts:
-                record = self.normalize(post)
-                if record:
-                    yield record
-                    total += 1
+                # Yield RAW — framework normalizes (see fetch_all).
+                yield post
+                total += 1
 
             if len(posts) < PER_PAGE:
                 break
@@ -250,29 +258,30 @@ def main():
         ok = scraper.test_connection()
         sys.exit(0 if ok else 1)
 
-    if command == "bootstrap":
+    if command in ("bootstrap", "bootstrap-fast"):
         sample_mode = "--sample" in sys.argv
-
-        if sample_mode:
-            records = scraper.fetch_sample(15)
-            SAMPLE_DIR.mkdir(parents=True, exist_ok=True)
-            for i, rec in enumerate(records):
-                path = SAMPLE_DIR / f"sample_{i:03d}.json"
-                with open(path, 'w', encoding='utf-8') as f:
-                    json.dump(rec, f, ensure_ascii=False, indent=2)
-            logger.info("Saved %d sample records to %s", len(records), SAMPLE_DIR)
-        else:
-            count = 0
-            for record in scraper.fetch_all():
-                count += 1
-            logger.info("Bootstrap complete: %d records.", count)
+        # Route through BaseScraper so records persist to data/records.jsonl
+        # (the file the ingest pipeline reads) and samples are saved via the
+        # framework. Previously the full path only counted records and wrote
+        # nothing, so only the committed samples ever got ingested.
+        stats = scraper.bootstrap(sample_mode=sample_mode, sample_size=15)
+        logger.info(
+            "Bootstrap complete: fetched=%d new=%d updated=%d skipped=%d errors=%d",
+            stats.get("records_fetched", 0),
+            stats.get("records_new", 0),
+            stats.get("records_updated", 0),
+            stats.get("records_skipped", 0),
+            stats.get("errors", 0),
+        )
 
     elif command == "update":
-        since = sys.argv[2] if len(sys.argv) > 2 and not sys.argv[2].startswith("-") else None
-        count = 0
-        for record in scraper.fetch_updates(since):
-            count += 1
-        logger.info("Update complete: %d records.", count)
+        # BaseScraper.update() uses fetch_updates() under the hood and persists.
+        stats = scraper.update()
+        logger.info(
+            "Update complete: new=%d updated=%d",
+            stats.get("records_new", 0),
+            stats.get("records_updated", 0),
+        )
 
     else:
         print(f"Unknown command: {command}")

@@ -1,0 +1,27 @@
+source_id: INTL/CAN-Gacetas
+name: Gaceta Oficial del Acuerdo de Cartagena (Andean Community legislation)
+country: INTL
+url: https://www.comunidadandina.org/normativa-andina/gacetas/1/
+data_types:
+  - legislation
+
+schedule:
+  frequency: weekly
+  mode: full
+
+schema:
+  key_fields:
+    - _id
+    - nomenclature
+    - document_kind
+    - gaceta
+    - date
+
+license:
+  name: "Andean Community Official Publication (Open Government Data)"
+  url: "https://www.comunidadandina.org/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official supranational legislation (Decisiones, Resoluciones, Dictámenes, Tratados) of the Comunidad Andina, published in the Gaceta Oficial del Acuerdo de Cartagena. Binding on member states BO/CO/EC/PE."

@@ -1,0 +1,74 @@
+# ===================================================================
+# INTL/AJUDATA -- African Jurisprudence Database (African Court)
+# ===================================================================
+# ~470 decisions (judgments, orders, rulings, advisory opinions)
+# from the African Court on Human and Peoples' Rights.
+# JSON API at /ajudata/apidata/decisions + PDF download & extraction.
+# ===================================================================
+
+source:
+  id: "INTL/AJUDATA"
+  country: "INTL"
+  name: "African Jurisprudence Database (African Court on Human and Peoples' Rights)"
+  url: "https://www.african-court.org/ajudata/"
+  description: |
+    Decisions of the African Court on Human and Peoples' Rights since 2006.
+    AJUDATA provides judgments on merits and reparations, orders, rulings on
+    jurisdiction and admissibility, advisory opinions, and provisional measures.
+    Data fetched via paginated JSON API, full text extracted from linked PDFs.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 2
+
+api:
+  type: "json_api_pdf"
+  base_url: "https://www.african-court.org/ajudata/apidata/decisions"
+  pagination: "page_number"
+  per_page: 150
+
+data_model:
+  type: "case_law"
+  primary_key: "decision_id"
+  update_strategy: "upsert"
+  dedup_key:
+    - "_id"
+
+schema:
+  total_fields: 14
+  key_fields:
+    - name: "title"
+      description: "Case title (applicant v. respondent state)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from decision PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: true
+    - name: "case_number"
+      description: "Application number (e.g., 066/2019)"
+      type: "string"
+      role: "identifier"
+      required: true
+
+license:
+  name: "Public Domain (International Court Decisions)"
+  url: "https://www.african-court.org/wpafc/online-database/"
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official court decisions are public records."

@@ -1,0 +1,25 @@
+source_id: TD/FinancesCodesLois
+name: Chad Ministry of Finance — Tax Codes & Finance Laws
+country: TD
+url: https://finances.gouv.td/index.php/publications/codes-lois-textes
+data_types:
+  - legislation
+auth:
+  type: none
+
+schema:
+  key_fields:
+    - _id
+    - title
+    - date
+    - text
+    - url
+
+license:
+  name: "Public Domain (government legislation)"
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: "Official tax/customs legislation of Chad published by the Ministry of Finance."

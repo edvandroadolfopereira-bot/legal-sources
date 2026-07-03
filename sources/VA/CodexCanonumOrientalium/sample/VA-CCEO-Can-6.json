@@ -1,0 +1,13 @@
+{
+  "_id": "VA-CCEO-Can-6",
+  "_source": "VA/CodexCanonumOrientalium",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-18T21:48:39.063581+00:00",
+  "title": "Canon 6 (CCEO)",
+  "text": "Codice vim obtinente:\n\n1° abrogatae sunt omnes leges iuris communis vel iuris particularis, quae sunt canonibus Codicis contrariae aut quas materiam respiciunt in Codice ex integro ordinatam;\n\n2° revocatae sunt omnes consuetudines, quae canonibus Codicis reprobantur aut quae eis contrariae sunt nec centenariae vel immemorabiles.\n\nTITULUS I\n\nDE CHRISTIFIDELIBUS \nEORUMQUE OMNIUM IURIBUS ET OBLIGATIONIBUS",
+  "canon_number": 6,
+  "code": "Codex Canonum Ecclesiarum Orientalium",
+  "date": "1990-10-18",
+  "url": "https://www.vatican.va/content/john-paul-ii/la/apost_constitutions/documents/hf_jp-ii_apc_19901018_codex-can-eccl-orient-1.html",
+  "language": "la"
+}

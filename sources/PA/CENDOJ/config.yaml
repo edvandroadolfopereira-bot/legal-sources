@@ -1,0 +1,72 @@
+source_id: PA/CENDOJ
+name: Panama CENDOJ — Fallos de Interés (Significant Rulings)
+country: PA
+url: https://www.organojudicial.gob.pa/cendoj/files/fallos-de-interes
+data_types:
+- case_law
+- doctrine
+auth: none
+description: >
+  Curated collection of significant rulings ("fallos de interés") published by
+  the Centro de Documentación Judicial (CENDOJ) of Panama's Órgano Judicial.
+  Covers Supreme Court (Corte Suprema de Justicia) unconstitutionality rulings,
+  contentious-administrative (Sala Tercera) decisions, habeas corpus / habeas
+  data decisions, and jurisprudential digests ("extractos"/"recopilaciones")
+  from 2009 to 2026. The scraper paginates the server-rendered listing
+  (?page=N), then downloads each ruling PDF from /uploads/blogs.dir/ and
+  extracts its text layer with PyMuPDF (fitz). Born-digital PDFs carry full
+  text; a minority are signed scans with no text layer and are skipped via a
+  chars-per-page quality gate.
+notes: >
+  The HTML listing pages sit behind a Radware Bot Manager (perfdrive /
+  ShieldSquare hCaptcha) that issues a CAPTCHA challenge under sustained or
+  datacenter-IP traffic; the scraper warms a session and retries with backoff.
+  The ruling PDFs themselves are static files and are not behind the bot wall.
+api:
+  type: html_listing
+  listing_url: https://www.organojudicial.gob.pa/cendoj/files/fallos-de-interes
+  pagination: "?page=N"
+  pdf_host: https://www.organojudicial.gob.pa/uploads/blogs.dir/
+license:
+  name: Public Domain (government work)
+  url: null
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: >
+    Decisions of the Supreme Court of Justice of Panama are official acts of a
+    government authority, published by CENDOJ for public access. Treated as
+    public-domain government works.
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: _source
+    required: true
+    type: string
+  - name: _type
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: url
+    required: true
+    type: string
+  - name: pdf_url
+    required: false
+    type: string
+  - name: court
+    required: false
+    type: string
+  - name: pages
+    required: false
+    type: integer

@@ -152,6 +152,7 @@ class SARSInterpretationsScraper(BaseScraper):
     SOURCE_ID = "ZA/SARS-Interpretations"
 
     def __init__(self):
+        super().__init__()
         self.http = HttpClient(
             base_url=BASE_URL,
             headers={
@@ -222,6 +223,10 @@ class SARSInterpretationsScraper(BaseScraper):
                     text = page.extract_text()
                     if text:
                         pages.append(text)
+                    try:
+                        page.flush_cache(); page.get_textmap.cache_clear()
+                    except Exception:
+                        pass
                 return "\n\n".join(pages)
         except Exception as e:
             logger.warning("Failed to extract PDF from %s: %s", path, e)

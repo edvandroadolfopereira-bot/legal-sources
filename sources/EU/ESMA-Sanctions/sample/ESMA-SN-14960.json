@@ -1,0 +1,18 @@
+{
+  "_id": "ESMA-SN-14960",
+  "_source": "EU/ESMA-Sanctions",
+  "_type": "case_law",
+  "_fetched_at": "2026-06-08T11:09:03.255278",
+  "sanction_id": "14960",
+  "entity_name": "XTB S.A.",
+  "title": "Sanction against XTB S.A. (MiFID) — POLAND",
+  "text": "Nałożenie kary pieniężnej w wysokości 20 000 000 zł na XTB S.A. w związku z niedopełnieniem przez XTB wymogów nałożonych na firmy inwestycyjne przepisami prawa skutkowało prowadzeniem przez tę spółkę działalności w sposób nierzetelny i nieprofesjonalny.",
+  "date": "2026-03-30",
+  "url": "https://registers.esma.europa.eu/publication/details?core=esma_registers_sanctions&docId=sn14960",
+  "legal_framework": "MiFID",
+  "nature": "Administrative sanction and measure",
+  "country": "POLAND",
+  "nca": "Polish Financial Supervisory Authority (KNF)",
+  "lei": "259400AVUPSABLEXNT19",
+  "language": "Polish"
+}

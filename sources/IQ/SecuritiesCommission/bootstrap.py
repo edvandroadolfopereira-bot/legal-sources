@@ -86,6 +86,10 @@ class ISCScraper(BaseScraper):
                     page_text = page.extract_text()
                     if page_text:
                         pages.append(page_text)
+                    try:
+                        page.flush_cache(); page.get_textmap.cache_clear()
+                    except Exception:
+                        pass
                 text = "\n\n".join(pages)
                 if len(text.strip()) >= MIN_TEXT_LENGTH:
                     return text.strip()

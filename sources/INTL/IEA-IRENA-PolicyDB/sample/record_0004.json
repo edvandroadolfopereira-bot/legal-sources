@@ -1,0 +1,25 @@
+{
+  "_id": "INTL-IEA-IRENA-6",
+  "_source": "INTL/IEA-IRENA-PolicyDB",
+  "_type": "legislation",
+  "_fetched_at": "2026-06-20T14:20:36.668512+00:00",
+  "title": "Mandatory Energy Audits",
+  "text": "In compliance with Article 8 of the EU Energy Efficiency Directive (EED), Greece implemented in December 2016 a requirement for large industry to either conduct an energy audit every four years, or implement an energy or environmental management system. Small to medium-sized enterprises will also have access to quality energy audits due to these policies.\nThe EED has been formally transposed into the Greek legislative framework with Law 4342/2015. The law provides a framework to promote energy efficiency measures, and sets the institutional framework for carrying out energy audits. According to Article 14 of this law, energy audits are designed to identify potential energy efficiency improvement measures and are applied independently to all final consumers, including domestic, commercial customers and small industrial customers. \nA Joint Ministerial Decision (JMD) defines the procedures, requirements and guidelines of energy inspection on the premises and spaces of an industrial or building complex in order to guarantee effective and high quality services. Energy audits\nunder schemes based on voluntary agreements between interested bodies and public organisations are carried out in accordance with the above requirements.\n\nStatus: In force\nJurisdiction: National",
+  "date": "2016-01-01",
+  "url": "http://www.et.gr/idocs-nph/search/pdfViewerForm.html?args=5C7QrtC22wE4q6ggiv8WTXdtvSoClrL86BYA0d1yFht5MXD0LzQTLWPU9yLzB8V68knBzLCmTXKaO6fpVZ6Lx3UnKl3nP8NxdnJ5r9cmWyJWelDvWS_18kAEhATUkJb0x1LIdQ163nV9K--td6SIuQpuAYsfWnZnOjEVWl0sgT4NCgtlEtCJDePk6QIHe_RU",
+  "language": "Greek",
+  "policy_id": "6",
+  "status": "In force",
+  "year": 2016,
+  "countries": [
+    "Greece"
+  ],
+  "country_codes": [
+    "GRC"
+  ],
+  "jurisdiction": "National",
+  "technologies": [],
+  "topics": [],
+  "policy_types": [],
+  "date_modified": "2019-12-08T14:05:58.000Z"
+}

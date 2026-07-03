@@ -1,0 +1,18 @@
+{
+  "_id": "PE26003",
+  "_source": "US/NHTSA-Enforcement",
+  "_type": "case_law",
+  "_fetched_at": "2026-06-08T19:10:01.053823+00:00",
+  "title": "NHTSA Preliminary Evaluation PE26003: Automated Driving System (ADS) conflict avoidance, driving behavior competence and assertiveness",
+  "text": "The Office of Defects Investigation (ODI) has received several reports of crashes involving automated vehicles (AVs) equipped with the Avride automated driving system (ADS) engaged at the time of the crash. The crashes occurred in Dallas, Texas and Austin, Texas. Each of the crashes involved the competence of the ADS with respect to performing at least one of the following driving behaviors: changing lanes, responding to other vehicles present in or entering the lane ahead, and responding to stationary objects partially obstructing the lane ahead. \n\n \n\nODI has performed a preliminary review of videos of each crash. The videos show instances of the AVs changing lanes into the path of or directly into other vehicles traveling in an adjacent lane and in close proximity to an AV; failing to slow or stop for slow-moving or stopped vehicles in the lane and path ahead; failing to slow for or avoid vehicles entering the lane and path ahead; and striking stationary objects partially obstructing the lane and path ahead. These crashes have resulted in property damage and one alleged minor injury. During each of these crashes, the AVs were operating with the ADS performing the dynamic driving task while under the supervision of an in-vehicle operator in the driver's seat. Furthermore, ODI understands that Avride is operating some of its AVs on the Uber ride-hailing platform and has offered passenger service to the public since December 3, 2025 in Dallas where many of the reported crashes have occurred. The ADS performance in these crashes may indicate inappropriate assertiveness and insufficient competence to execute these driving behaviors in a safe manner and may also constitute traffic safety violations. \n\n \n\nODI has opened this Preliminary Evaluation to investigate the performance of the Avride ADS in order to determine the scope, nature and severity of the potential problems and to assess the potential safety risks to passengers and other road users. This will include an assessment of technical and operational contributing factors and safeguards already in place, as well as any mitigating actions taken subsequent to a crash. If additional evidence received during this investigation implicates the competence of the Avride ADS with respect to other driving behaviors, these may be considered as part of this investigation as well. \n\n \n\nThe SGO reports cited in this Opening Resume are listed below by report ID and are available for download at NHTSA.gov/laws-regulations/standing-general-order-crash-reporting. \n\n \n\n31101-13612-1\n\n31101-13612-2\n\n31101-13612-3\n\n31101-13616-1\n\n31101-13621-1\n\n31101-13624-1\n\n31101-13625-1\n\n31101-14066-1\n\n31101-14070-1\n\n31101-14148-1\n\n31101-14150-1\n\n31101-14166-1\n\n31101-14200-1\n\n31101-14235-1\n\n31101-14286-1\n\n31101-14328-1\n\n31101-14509-1\n\n31101-14653-1",
+  "date": "2026-05-06",
+  "url": "https://www.nhtsa.gov/vehicle/PE26003",
+  "investigation_number": "003",
+  "investigation_type": "Preliminary Evaluation",
+  "investigation_type_code": "PE",
+  "status": "Open",
+  "status_code": "O",
+  "subject": "Automated Driving System (ADS) conflict avoidance, driving behavior competence and assertiveness",
+  "nhtsa_id": "PE26003",
+  "latest_activity_date": "2026-05-06T19:28:08Z"
+}

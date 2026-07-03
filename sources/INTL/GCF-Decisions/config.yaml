@@ -1,0 +1,53 @@
+fetch:
+  base_url: https://www.greenclimate.fund
+  list_url: https://www.greenclimate.fund/boardroom/decisions
+  detail_url_pattern: https://www.greenclimate.fund/decision/{slug}
+  method: html_scrape
+  rate_limit_seconds: 1.5
+  total_pages: 18
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: decision_no
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: text
+    required: true
+    type: string
+  - name: date
+    required: false
+    type: date
+  - name: meeting
+    required: false
+    type: string
+  - name: decision_type
+    required: false
+    type: string
+source:
+  auth: none
+  country: INTL
+  data_types:
+  - legislation
+  - doctrine
+  description: >
+    Green Climate Fund Board decisions and policies. ~877 decisions from
+    B.01 (2012) through B.44 (2026), covering climate finance policies,
+    project approvals, accreditation, and governance. Full text from
+    greenclimate.fund/boardroom/decisions.
+  id: INTL/GCF-Decisions
+  language: en
+  name: Green Climate Fund — Board Decisions and Policies
+  url: https://www.greenclimate.fund/boardroom/decisions
+license:
+  name: "Custom Terms (UN International Organization)"
+  url: "https://www.greenclimate.fund/terms-conditions"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "GCF is a UN body; board decisions are public official documents. Terms require attribution."

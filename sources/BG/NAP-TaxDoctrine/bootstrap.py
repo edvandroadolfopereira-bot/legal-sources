@@ -105,6 +105,7 @@ class NAPTaxDoctrine(BaseScraper):
     SOURCE_ID = "BG/NAP-TaxDoctrine"
 
     def __init__(self):
+        super().__init__()
         self.index_http = HttpClient(
             base_url=INDEX_BASE,
             headers={

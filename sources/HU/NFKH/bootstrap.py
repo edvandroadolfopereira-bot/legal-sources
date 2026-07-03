@@ -193,7 +193,9 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description="NFKH data fetcher")
-    parser.add_argument("command", choices=["bootstrap"], help="Command to run")
+    parser.add_argument(
+        "command", choices=["bootstrap", "bootstrap-fast"], help="Command to run"
+    )
     parser.add_argument("--sample", action="store_true", help="Fetch sample data only")
     parser.add_argument(
         "--max-pages", type=int, default=None,
@@ -201,10 +203,19 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    if args.command == "bootstrap":
+    if args.command in ("bootstrap", "bootstrap-fast"):
         if args.sample:
             bootstrap_sample()
         else:
+            # Full run: stream every record to data/records.jsonl so the ingest
+            # pipeline finds the whole corpus (previously printed to stdout only).
+            data_dir = Path(__file__).parent / "data"
+            data_dir.mkdir(exist_ok=True)
+            jsonl_path = data_dir / "records.jsonl"
             session = make_session()
-            for record in fetch_all(session, max_pages=args.max_pages):
-                print(json.dumps(record, ensure_ascii=False))
+            count = 0
+            with open(jsonl_path, "w", encoding="utf-8") as f:
+                for record in fetch_all(session, max_pages=args.max_pages):
+                    f.write(json.dumps(record, ensure_ascii=False) + "\n")
+                    count += 1
+            print(f"Total: {count} records written -> {jsonl_path}", file=sys.stderr)

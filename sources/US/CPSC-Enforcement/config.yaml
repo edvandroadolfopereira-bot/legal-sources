@@ -1,0 +1,45 @@
+auth: none
+country: US
+data_types:
+- case_law
+fetch:
+  api_url: https://www.saferproducts.gov/RestWebServices/Recall
+  delay: 1.5
+  batch_months: 6
+name: Consumer Product Safety Commission — Enforcement Actions
+schema:
+  key_fields:
+  - name: _id
+    required: true
+    type: string
+  - name: title
+    required: true
+    type: string
+  - name: date
+    required: true
+    type: date
+  - name: text
+    required: true
+    type: string
+  - name: recall_number
+    required: false
+    type: string
+  - name: products
+    required: false
+    type: string
+  - name: hazards
+    required: false
+    type: string
+  - name: remedies
+    required: false
+    type: string
+source_id: US/CPSC-Enforcement
+url: https://www.cpsc.gov/Recalls/Violations
+license:
+  name: Public Domain (US Government Work)
+  url: https://www.law.cornell.edu/uscode/text/17/105
+  commercial_use: true
+  attribution_required: false
+  share_alike: false
+  no_derivatives: false
+  notes: US federal government work, not subject to copyright

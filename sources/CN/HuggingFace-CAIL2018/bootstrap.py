@@ -66,10 +66,28 @@ SPLITS = [
 ]
 
 
-def _request_with_retry(url, params=None, retries=3, backoff=5):
+def _request_with_retry(url, params=None, retries=6, backoff=5):
+    """GET with retry. Handles transient network errors and, critically, the
+    HuggingFace datasets-server /rows 429 throttle (issue #890): the rows API
+    rate-limits paged access, so we back off (honoring Retry-After) instead of
+    dying on the first 429. 503 (server busy) is treated the same way."""
     for attempt in range(retries):
         try:
             resp = requests.get(url, params=params, headers=HEADERS, timeout=30)
+            if resp.status_code in (429, 503):
+                if attempt < retries - 1:
+                    retry_after = resp.headers.get("Retry-After")
+                    try:
+                        wait = int(retry_after) if retry_after else backoff * (2 ** attempt)
+                    except ValueError:
+                        wait = backoff * (2 ** attempt)
+                    wait = min(wait, 120)
+                    logger.warning(
+                        f"HTTP {resp.status_code} (rate-limited); "
+                        f"retry {attempt+1}/{retries} after {wait}s"
+                    )
+                    time.sleep(wait)
+                    continue
             resp.raise_for_status()
             return resp
         except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
@@ -79,6 +97,9 @@ def _request_with_retry(url, params=None, retries=3, backoff=5):
                 time.sleep(wait)
             else:
                 raise
+    # Exhausted retries on 429/503 — raise so the caller sees the failure
+    resp.raise_for_status()
+    return resp
 
 
 def _make_doc_id(split: str, row_idx: int) -> str:

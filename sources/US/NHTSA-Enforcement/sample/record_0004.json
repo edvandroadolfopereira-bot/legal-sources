@@ -1,0 +1,18 @@
+{
+  "_id": "DP26003",
+  "_source": "US/NHTSA-Enforcement",
+  "_type": "case_law",
+  "_fetched_at": "2026-06-08T19:10:01.054452+00:00",
+  "title": "NHTSA DP DP26003: Fuel smell and loss of motive power",
+  "text": "The Office of Defects Investigation (ODI) received a Petition dated February 5, 2026, requesting an investigation into model year (MY) 2006 Nissan Frontier vehicles. The Petitioner alleges that the vehicle poses an imminent fire hazard due to “[a] powerful and persistent odor of raw gasoline” that he says “emanates from the vehicle” and “indicat[es] a breach in fuel system integrity.” He further alleges that the vehicles can experience sudden engine stalling “during startup and operation,” which he believes could cause collisions or loss of vehicle control.\n\nThe Petitioner further alleges these symptoms are identical to conditions addressed in previous NHTSA recalls (10V-517, 07V-435, and 10V-075) and that the issues persist in the 2006 MY Nissan fleet despite these past actions.\n\nODI is opening this Defect Petition to evaluate the Petitioner’s allegations and determine whether to grant or deny the Petition. The Petition can be viewed at NHTSA.gov under NHTSA Number 11718552.",
+  "date": "2026-03-30",
+  "url": "https://www.nhtsa.gov/vehicle/DP26003",
+  "investigation_number": "003",
+  "investigation_type": "DP",
+  "investigation_type_code": "DP",
+  "status": "Open",
+  "status_code": "O",
+  "subject": "Fuel smell and loss of motive power",
+  "nhtsa_id": "DP26003",
+  "latest_activity_date": "2026-03-30T12:02:12Z"
+}

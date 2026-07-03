@@ -19,7 +19,7 @@ schema:
   - name: _id
     required: true
     type: string
-  - name: policyId
+  - name: policy_id
     required: true
     type: string
 source_id: INTL/IEA-IRENA-PolicyDB

@@ -1,0 +1,41 @@
+country: AX
+data_types:
+- doctrine
+endpoints:
+  base: https://www.ambetsverket.ax
+  listing: https://www.ambetsverket.ax/alandsdelegationen/arenden
+fetcher:
+  max_retries: 3
+  rate_limit_ms: 1500
+  ssl_verify: true
+  timeout_s: 60
+language: sv
+license:
+  name: "Open Government Data (Statens ämbetsverk på Åland)"
+  url: https://www.ambetsverket.ax/alandsdelegationen/arenden
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: "Official documents of an authority. Under the Finnish Copyright Act § 9, decisions and statements of public authorities are excluded from copyright protection. Åland Delegation opinions are public records. No explicit open licence stated — verify before commercial redistribution."
+name: "Åland Delegation Opinions (Ålandsdelegationens utlåtanden)"
+notes: >
+  Ålandsdelegationen issues formal opinions (utlåtanden) under § 56 of the Act on
+  the Autonomy of Åland on the division of legislative/administrative competence
+  between Finland and the autonomous province of Åland. Newer years (2025+) attach
+  the full opinion as a PDF; older years (2007-2024) embed the full text inline as
+  list items under div.view-content. Swedish language.
+schema:
+  date_format: ISO8601
+  text_field: text
+  key_fields:
+  - name: case_number
+    required: false
+    type: string
+  - name: recipient
+    required: false
+    type: string
+  - name: year
+    required: false
+    type: integer
+source_id: AX/Alandsdelegationen

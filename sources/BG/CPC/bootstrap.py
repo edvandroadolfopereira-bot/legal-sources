@@ -406,6 +406,10 @@ class BulgarianCPCScraper(BaseScraper):
                     page_text = page.extract_text()
                     if page_text:
                         text_parts.append(page_text)
+                    try:
+                        page.flush_cache(); page.get_textmap.cache_clear()
+                    except Exception:
+                        pass
 
             text = "\n\n".join(text_parts)
 
@@ -497,7 +501,7 @@ def main():
     scraper = BulgarianCPCScraper()
 
     if len(sys.argv) < 2:
-        print("Usage: python bootstrap.py [bootstrap|update] [--sample] [--sample-size N]")
+        print("Usage: python bootstrap.py [bootstrap|bootstrap-fast|update] [--sample] [--sample-size N]")
         sys.exit(1)
 
     command = sys.argv[1]
@@ -507,7 +511,11 @@ def main():
         idx = sys.argv.index("--sample-size")
         sample_size = int(sys.argv[idx + 1])
 
-    if command == "bootstrap":
+    # "bootstrap-fast" is the VPS pipeline wrapper's entry point; it is an alias
+    # for the full bootstrap. The full (non-sample) path streams every record to
+    # data/records.jsonl via StorageManager, so ingest reads the whole dataset
+    # rather than only the capped sample subset.
+    if command in ("bootstrap", "bootstrap-fast"):
         if sample_mode:
             stats = scraper.run_sample(n=sample_size)
             print(f"\nSample complete: {stats.get('sample_records_saved', 0)} records saved to sample/")

@@ -1,0 +1,21 @@
+{
+  "_id": "cbp-800749",
+  "_source": "US/CBP-Rulings",
+  "_type": "doctrine",
+  "_fetched_at": "2026-06-20T19:10:28Z",
+  "title": "The tariff classification of a sporting rifle and scope from England",
+  "text": "NY 800749\n\n\tAugust 15, 1994\n\nCLA-2-93:S:N:N3:119 800749  \n\nCATEGORY:  Classification\n\nTARIFF NO.: 9303.30.8005; 9303.30.8015  \n\nMr. Jerome Holliday\n80 Neshaminy Avenue\nNewtown, PA 18940\n\nRE:  The tariff classification of a sporting rifle and scope from England\n\nDear Mr. Holliday:\n\n\tIn your letter dated July 22, 1994, you requested a tariff classification ruling.         \n\n   The firearm to be imported is a .300 H & H Magnum Rigby bolt-action sporting rifle.  A Leupold variable 1.5 x 5 scope will be imported with the rifle.\n\n\tThe rifle and the scope will be classified under the provision for other sporting, hunting or target shooting rifles... other.  The tariff number and rate of duty for the rifle will be 9303.30.8015, Harmonized Tariff Schedule of the United States (HTS) at 4.7 percent.  The tariff number and rate of duty for the scope will be 9303.30.8005 at 20 percent.\n\n\tThis ruling is being issued under the provisions of Section 177 of the Customs Regulations (19 C.F.R. 177).\n\n\tA copy of this ruling letter should be attached to the entry documents filed at the time this merchandise is imported.  If the documents have been filed without a copy, this ruling should be brought to the attention of the Customs officer handling the transaction.\n\n                          \t\tSincerely,\n\n                                   \n  \n                         \t\tJean F. Maguire\n\t                         \tArea Director\n\t                         \tNew York Seaport",
+  "date": "1994-08-15",
+  "url": "https://rulings.cbp.gov/ruling/800749",
+  "ruling_number": "800749",
+  "categories": "Classification",
+  "collection": "ny",
+  "tariffs": [
+    "9303.30.8005",
+    "9303.30.8015"
+  ],
+  "related_rulings": [],
+  "is_usmca": false,
+  "is_nafta": false,
+  "operationally_revoked": false
+}

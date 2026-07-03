@@ -1,0 +1,59 @@
+source:
+  id: IN/IndiaCode-StateActs
+  name: India Code - State & UT Acts
+  country: IN
+  url: https://www.indiacode.nic.in/handle/123456789/2180
+  data_types:
+    - legislation
+  auth: none
+  schedule: monthly
+  description: |
+    Indian state and union-territory legislation (acts) with full text from the
+    India Code digital repository (indiacode.nic.in), "State Act" community.
+    Covers ~35 states/UTs. Full text comes from section-level HTML where
+    available, otherwise from the attached (English) PDF bitstream.
+
+rate_limit:
+  requests_per_second: 0.5
+  burst: 2
+
+schema:
+  key_fields:
+    - name: "_id"
+      type: "string"
+      required: true
+    - name: "title"
+      type: "string"
+      required: true
+    - name: "act_number"
+      type: "string"
+      required: false
+    - name: "year"
+      type: "string"
+      required: false
+    - name: "jurisdiction_code"
+      type: "string"
+      required: false
+    - name: "text"
+      type: "string"
+      required: true
+
+fetch:
+  base_url: https://www.indiacode.nic.in
+  state_community_handle: "123456789/2180"
+  browse_url: https://www.indiacode.nic.in/handle/123456789/{state_handle}/browse?type=shorttitle&order=ASC&rpp=100&offset={offset}
+  section_api: https://www.indiacode.nic.in/SectionPageContent?actid={actid}&sectionID={section_id}
+  rate_limit_seconds: 2
+
+license:
+  name: "Government Open Data License – India (GODL)"
+  url: "https://www.indiacode.nic.in/"
+  commercial_use: true
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: >
+    India Code is the official digital repository of acts maintained by the
+    Legislative Department, Ministry of Law and Justice, Government of India.
+    Statutory text is a government work in the public domain; the portal is
+    distributed under the Government Open Data License – India (GODL).

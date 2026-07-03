@@ -28,6 +28,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 SOURCE_ID = "DK/Domsdatabasen"
 SAMPLE_DIR = Path(__file__).parent / "sample"
+DATA_DIR = Path(__file__).parent / "data"
 
 # HuggingFace dataset viewer API
 HF_API = "https://datasets-server.huggingface.co"
@@ -214,15 +215,17 @@ def bootstrap_sample(session: requests.Session, count: int = 15) -> list:
 
 def main():
     parser = argparse.ArgumentParser(description="DK/Domsdatabasen bootstrap")
-    parser.add_argument("command", choices=["bootstrap", "fetch-all", "fetch-updates"])
+    parser.add_argument("command", nargs="?", default="bootstrap",
+                        choices=["bootstrap", "bootstrap-fast", "fetch-all", "fetch-updates"])
+    parser.add_argument("--full", action="store_true", help="Full pull (default for non-sample)")
     parser.add_argument("--sample", action="store_true", help="Fetch sample records only")
     parser.add_argument("--since", type=str, help="ISO date for incremental fetch")
     parser.add_argument("--limit", type=int, default=None, help="Limit records")
-    args = parser.parse_args()
+    args, _unknown = parser.parse_known_args()
 
     session = get_session()
 
-    if args.command == "bootstrap":
+    if args.command in ("bootstrap", "bootstrap-fast"):
         if args.sample:
             SAMPLE_DIR.mkdir(parents=True, exist_ok=True)
             records = bootstrap_sample(session, count=15)
@@ -240,8 +243,14 @@ def main():
             print(f"Min text length: {min(texts):,} chars")
             print(f"Max text length: {max(texts):,} chars")
         else:
-            for record in fetch_all(session, limit=args.limit):
-                print(json.dumps(record, ensure_ascii=False))
+            DATA_DIR.mkdir(parents=True, exist_ok=True)
+            out_path = DATA_DIR / "records.jsonl"
+            count = 0
+            with open(out_path, "w", encoding="utf-8") as f:
+                for record in fetch_all(session, limit=args.limit):
+                    f.write(json.dumps(record, ensure_ascii=False) + "\n")
+                    count += 1
+            print(f"Wrote {count} records to {out_path}")
 
     elif args.command == "fetch-all":
         for record in fetch_all(session, limit=args.limit):

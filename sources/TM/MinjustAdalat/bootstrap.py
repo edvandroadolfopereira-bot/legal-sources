@@ -70,6 +70,10 @@ def _extract_pdf_text(pdf_bytes: bytes) -> str:
                 t = page.extract_text()
                 if t:
                     pages_text.append(t)
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
         return "\n\n".join(pages_text)
     except Exception as e:
         logger.warning(f"pdfplumber failed: {e}, trying PyPDF2")
@@ -81,6 +85,10 @@ def _extract_pdf_text(pdf_bytes: bytes) -> str:
                 t = page.extract_text()
                 if t:
                     pages_text.append(t)
+                try:
+                    page.flush_cache(); page.get_textmap.cache_clear()
+                except Exception:
+                    pass
             return "\n\n".join(pages_text)
         except Exception as e2:
             logger.error(f"PyPDF2 also failed: {e2}")

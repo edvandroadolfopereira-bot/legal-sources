@@ -1,0 +1,100 @@
+source:
+  id: "NC/Juridoc-Juris"
+  country: "NC"
+  name: "New Caledonia Jurisprudence (Juridoc)"
+  url: "https://juridoc.gouv.nc/JuriDoc/JdJuris.nsf/"
+  description: |
+    Jurisprudence of New Caledonia published by the Government of New Caledonia on
+    juridoc.gouv.nc — chiefly decisions of the Tribunal administratif de
+    Nouvelle-Calédonie, plus occasional Conseil d'État rulings concerning NC.
+    Born-digital PDFs with extractable full text. French language.
+
+data_types:
+  - case_law
+
+auth:
+  type: "none"
+
+rate_limit:
+  requests_per_second: 1
+  burst: 3
+  max_workers: 3
+
+api:
+  type: "rss"
+  base_url: "https://juridoc.gouv.nc/JuriDoc/JdJuris.nsf/"
+  endpoints:
+    list: "rss.xml?ReadViewEntries"
+
+data_model:
+  type: "case_law"
+  source_nature: "bulk_archive"
+  primary_key: "doc_id"
+  update_strategy: "append_only"
+  versioning: "none"
+  dedup_key:
+    - "doc_id"
+
+schema:
+  total_fields: 11
+  key_fields:
+    - name: "_id"
+      description: "Unique identifier (source/unid)"
+      type: "string"
+      role: "primary_key"
+      required: true
+    - name: "title"
+      description: "Decision title (court, type, number, date)"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "text"
+      description: "Full text extracted from the PDF"
+      type: "string"
+      role: "content"
+      required: true
+    - name: "date"
+      description: "Decision date (ISO 8601)"
+      type: "date"
+      role: "temporal_key"
+      required: false
+    - name: "court"
+      description: "Issuing court"
+      type: "string"
+      role: "reference"
+      required: false
+    - name: "url"
+      description: "Direct link to the source PDF"
+      type: "string"
+      role: "reference"
+      required: true
+  secondary_fields:
+    - name: "decision_number"
+      description: "Decision/judgment number"
+    - name: "matiere"
+      description: "Subject matter (e.g., 'Contributions fiscales et taxes')"
+    - name: "doc_id"
+      description: "Lotus Domino document UNID"
+    - name: "language"
+      description: "ISO language code (fr)"
+  probably_ignorable: []
+
+license:
+  id: "custom-nc"
+  name: "Government of New Caledonia — Juridoc terms"
+  url: "https://juridoc.gouv.nc/"
+  commercial_use: false
+  attribution_required: true
+  share_alike: false
+  no_derivatives: false
+  notes: |
+    Each PDF carries the notice "Source : www.juridoc.gouv.nc - droits réservés
+    de reproduction et réutilisation des données". Reproduction/reuse rights are
+    reserved by the Government of New Caledonia, so commercial use is flagged as
+    restricted pending explicit confirmation.
+
+notes: |
+  French-language jurisprudence. ~103 decisions (Tribunal administratif de NC,
+  Conseil d'État). Enumerated via the Lotus Domino RSS ReadViewEntries view;
+  PDFs are born-digital and extract cleanly with PyMuPDF. Links must be
+  host-normalized from www.juridoc.gouv.nc to juridoc.gouv.nc (TLS cert mismatch).

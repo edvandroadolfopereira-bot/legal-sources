@@ -1,0 +1,18 @@
+{
+  "_id": "D00029026",
+  "_source": "UK/NominetDRS",
+  "_type": "case_law",
+  "_fetched_at": "2026-06-10T03:25:11.158702+00:00",
+  "title": "Nominet DRS D00029026 (syensqoco.uk) — Syensqo v Andy Jones",
+  "text": "DISPUTE RESOLUTION SERVICE\nD29026\nDecision of Independent Expert\n(Summary Decision)\nSyensqo\nand\nAndy Jones\n1. The Parties:\nComplainant: Syensqo\nRue de la Fusée 98\n1130 Bruxelles\nBelgium\nRespondent: Andy Jones\n[redacted for privacy]\n2. The Domain Name:\nsyensqoco.uk\n3. Notification of Complaint\nI hereby certify that I am satisfied that Nominet has sent the complaint to the\nRespondent in accordance with section 3 and 6 of the Policy.\n\nYes\n\nNo\n1\n\n4. Rights\nThe Complainant has, to my reasonable satisfaction, shown rights in respect\nof a name or mark which is identical or similar to the domain name.\n\nYes\n\nNo\n5. Abusive Registration\nThe Complainant has, to my reasonable satisfaction, shown that the domain\nname syensqoco.uk is an abusive registration\n\nYes\n\nNo\n6. Other Factors\nI am satisfied that no other factors apply which would make a summary\ndecision unconscionable in all the circumstances\n\nYes\n\nNo\n7. Comments (optional)\n8. Decision\nI grant the Complainant’s application for a summary decision. In accordance\nwith section 12 of the Policy, the domain name will therefore be transferred\nto the Complainant.\nSigned: Dated: 24 May 2026\nNial Vivian\n2",
+  "date": "2026-05-26",
+  "url": "https://secure.nominet.org.uk/drs/search-disputes.html",
+  "case_number": "D00029026",
+  "domain_name": "syensqoco.uk",
+  "complainant": "Syensqo",
+  "respondent": "Andy Jones",
+  "decision_type": "Summary Decision",
+  "outcome": "Transfer",
+  "court": "Nominet Dispute Resolution Service",
+  "jurisdiction": "GB"
+}

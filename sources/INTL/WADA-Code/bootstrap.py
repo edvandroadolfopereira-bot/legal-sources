@@ -197,6 +197,10 @@ def _extract_text(pdf_bytes: bytes) -> str:
         for page in pdf.pages:
             t = page.extract_text() or ""
             pages_text.append(t)
+            try:
+                page.flush_cache(); page.get_textmap.cache_clear()
+            except Exception:
+                pass
     text = "\n\n".join(pages_text)
     # Clean up excessive whitespace
     text = re.sub(r"\n{3,}", "\n\n", text)

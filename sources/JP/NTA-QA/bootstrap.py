@@ -78,6 +78,7 @@ class NTAQACases(BaseScraper):
     SOURCE_ID = "JP/NTA-QA"
 
     def __init__(self):
+        super().__init__()
         self.session = requests.Session()
         retry = Retry(total=3, backoff_factor=2, status_forcelist=[500, 502, 503])
         self.session.mount("https://", HTTPAdapter(max_retries=retry))

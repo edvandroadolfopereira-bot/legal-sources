@@ -1,0 +1,20 @@
+{
+  "_id": "cbp-895108",
+  "_source": "US/CBP-Rulings",
+  "_type": "doctrine",
+  "_fetched_at": "2026-06-20T19:10:24Z",
+  "title": "The tariff classification of an automatic pool vacuum from Canada.",
+  "text": "NY 895108\n\n\tMarch 23, 1994\n\nCLA-2-95:S:N:N8:224 895108  \n\nCATEGORY:\t\tClassification\n\nTARIFF NO.: \t9506.99.5500  \n\nScott Wilson\nSplendor Viscount Company, LTD.\n3966 Walker Road\nWindsor, Ontario N8W 3T3\nCanada\n\nRE:\tThe tariff classification of an automatic pool vacuum from Canada.\n\nDear Mr. Wilson:\n\n\tIn your letter dated January 28, 1994, received by the United States Customs Service on February 25, 1994, you requested a tariff classification ruling.  \n\n\tThe merchandise consists of an automatic pool vacuum that runs off the pool's existing filtration system.  There are two models, one for concrete or fiberglass and one model for vinyl liner pools.  The vacuums are used solely in pools and are considered pool accessories for tariff classification purposes; parts and accessories which are suitable for use solely or principally with pools are classified under the tariff provision for pools.\n\n\tThe applicable tariff provision for the pool vacuum will be 9506.99.5500, Harmonized Tariff Schedule of the United States Annotated (HTSUSA), which provides for \"Swimming pools and wading pools and parts and accessories thereof.\"  The general rate of duty will be 5.1 percent ad valorem.      \n\n     This ruling is being issued under the provisions of Part 177 of the Customs Regulations (19 CFR 177).\n\n                     \n                          \t\t     Sincerely,\n\n                                   \n  \n                         \t\t     Jean F. Maguire\n\t                         \t     Area Director\n\t                         \t     New York Seaport",
+  "date": "1994-03-23",
+  "url": "https://rulings.cbp.gov/ruling/895108",
+  "ruling_number": "895108",
+  "categories": "Classification",
+  "collection": "ny",
+  "tariffs": [
+    "9506.99.5500"
+  ],
+  "related_rulings": [],
+  "is_usmca": false,
+  "is_nafta": false,
+  "operationally_revoked": false
+}
